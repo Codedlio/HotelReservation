@@ -1,0 +1,49 @@
+.footerBar {
+    background-color: #363636;
+    color: #ffffff;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 150px;
+    padding-right: 100px;
+  position: relative;
+  bottom: 78px;
+  z-index: -1;
+  }
+  
+  .logo img {
+    height: 90px;
+    padding-right: 250px;
+  }
+  
+  .linkawesome {
+    display: flex;
+    gap: 10px;
+    
+    
+    font-size: 24px;
+    text-decoration: none;
+    transition: color 0.3s;
+    justify-content: center;
+    align-items: center;
+  }
+  .linkawesome a {
+    color: rgb(215, 215, 222);
+    margin-left: 10px;
+  }
+  
+  .linkawesome a:hover {
+    color: darkblue;
+  }
+  
+  
+  
+  
+  /* .socialMedia a {
+    color: #ffffff;
+  }
+  
+  .socialMedia a:hover {
+    color: #f8f8f8;
+  } */
