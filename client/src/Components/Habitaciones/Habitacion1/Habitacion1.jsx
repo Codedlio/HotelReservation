@@ -65,7 +65,8 @@ const Habitacion1 = () => {
     </div>
         
         </section>
-      <div className="container">
+      <div 
+      className="container w-100">
         <Carousel activeIndex={index} onSelect={handleSelect}>
           <Carousel.Item>
             <img
@@ -171,7 +172,8 @@ const Habitacion1 = () => {
           <p>Verifica la disponibilidad y realiza tu reserva en línea:</p>
         
         </section>
-        <a className={style.linka} href="#">Ver disponibilidad</a>
+        <div className={style.containerlink}><a className={style.linka} href="#">Ver disponibilidad</a></div>
+        
         <FooterBar className={style.footer} />
       
       
