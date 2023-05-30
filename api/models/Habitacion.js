@@ -1,17 +1,24 @@
 
 const mongoose = require('mongoose');
 
+const imagenSchema = new mongoose.Schema({
+  url: { type: String, required: true },
+  // Otros campos relacionados con la imagen si es necesario
+});
+
 const habitacionSchema = new mongoose.Schema({
   numero: { type: Number, required: true },
   tipo: { type: String, required: true },
   precio: { type: Number, required: true },
-  disponible: { type: Boolean, default: true }
+  disponible: { type: Boolean, default: true },
+  descripción: { type: String },
+  imagenes: [imagenSchema]
 });
 
 const Habitacion = mongoose.model('Habitacion', habitacionSchema);
 
-module.exports = Habitacion;
 
+module.exports =  Habitacion;
 
 
 
