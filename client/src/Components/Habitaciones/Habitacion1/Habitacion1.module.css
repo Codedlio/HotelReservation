@@ -1,15 +1,40 @@
 
+.containertotal{
+    background-color: rgb(220, 193, 193);
+}
 .container {
     display: flex;
     flex-direction: column;
     align-items: center;
     position: relative;
-    background-color: white;
+    
+    background-color: rgb(220, 193, 193);
    
-
+  }
+  .titulo{
+    
+    font-family: Arial, sans-serif;
+    line-height: 1.5;
+  color: #333333;
+    padding-top: 50px;
+    padding-left:271px;
+  }
+  .texto{
+    
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    padding-right: 560px;
+    font-family: Arial, sans-serif;
+    line-height: 1.5;
+  color: #333333;
+    
   }
   .title {
-    padding-top: 80px;
+   
+    padding-top: 50px;
     font-family: Arial, sans-serif;
     font-size: 28px;
     font-weight: 100;
@@ -19,7 +44,57 @@
     animation: underline-slide 3s infinite linear;
     
   }
+  .caracteristicastitulo{
+    padding-top: 80px;
+    padding-left:271px;
+    font-family: Arial, sans-serif;
+    font-size: 28px;
+    line-height: 1.5;
+  color: #333333;
+    display: flex;
+    animation: underline-slide 3s infinite linear;
+    
+  }
   
+ .caracteristicas{
+    padding-top: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    padding-right: 800px;
+    font-family: Arial, sans-serif;
+    line-height: 1.5;
+  color: #333333;
+ }
+
+ .titulodisponibilidad{
+    padding-top: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    line-height: 1.5;
+  color: #333333;
+ }
+  .disponibilidad{
+    padding-top: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    line-height: 1.5;
+  color: #333333;
+  }
+  .linka{
+    padding-top: 20px;
+    padding-bottom: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+ 
   @keyframes underline-slide {
     0% {
       background-position: 0 100%;
@@ -53,7 +128,7 @@
   }
   
   .image1{
-    padding-top: 90px;
+    padding-top: 45px;
     display: flex;
     position: relative;
     right: 150%;
@@ -83,7 +158,7 @@
    right: 8%;
   }
   .centerrigth {
-    padding-top: 10px;
+    padding-top: 30px;
     display: flex;
     position: relative;
     bottom: 170px;
@@ -97,14 +172,14 @@
   }
   .image3{
     position: relative;
-    top: 52px;
+    top: 45px;
     text-align: justify;
     text-align: center;
     right: 60%;
   }
   .center {
     position: relative;
-    bottom: 50px;
+    bottom: 70px;
     text-align: justify;
     text-align: center;
     font-family: Arial, sans-serif;

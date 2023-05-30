@@ -21,14 +21,21 @@ const Habitacion1 = () => {
   };
 
   return (
-    <div className="suite-roca">
+    <div className={style.containertotal}>
       <NavBar></NavBar>
-      <section className="hero">
-          <h1>Suite Roma</h1>
+      <section >
+      <h1 className={style.titulo}>Suite Roma</h1>
+        <div className={style.texto}>
+        
+       
           <p>
-            Disfruta de la máxima comodidad en nuestra Suite Roma. La habitación
-            perfecta para relajarte y disfrutar de las vistas panorámicas.
+            Disfruta de la máxima comodidad en nuestra Suite Roma. <br></br>La habitación
+            perfecta para relajarte y disfrutar de las <br></br>vistas panorámicas.
           </p>
+          </div>
+
+
+          
           <div className={style.container}>
       <h2 className={style.title}>Características</h2>
       
@@ -46,17 +53,17 @@ const Habitacion1 = () => {
   
     <div className={style.centerrigth}>
     <div className={style.image2}>< FontAwesomeIcon icon={faPersonBooth} /></div>
-      <p>Este tipo de habitación se encuentra disponible para un máximo de dos personas..</p>
+      <p>Este tipo de habitación se encuentra disponible para <br></br>un máximo de dos personas..</p>
     </div>
   
   
     <div className={style.center}>
     <div className={style.image3}>< FontAwesomeIcon icon={faMoneyBill} /></div>
      
-      <p>Revisa el detalle de los valores de esta habitación en <br></br>nuestra <br></br>política de precios y estadía en nuestro Centro de Ayuda.</p>
+      <p>Revisa el detalle de los valores de esta habitación en <br></br>nuestra política de precios y estadía en nuestro<br></br> Centro de Ayuda.</p>
     </div>
     </div>
-          <a href="#">Ver más</a>
+        
         </section>
       <div className="container">
         <Carousel activeIndex={index} onSelect={handleSelect}>
@@ -65,9 +72,10 @@ const Habitacion1 = () => {
               className="d-block w-100"
               src={image1}
               alt="First slide"
-              width="100%"
-              height="750px"
+              width={"100%"}
+              height={"750px"}
             />
+            
             <Carousel.Caption>
               {/* <h3>First slide label</h3>
               <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> */}
@@ -140,10 +148,13 @@ const Habitacion1 = () => {
           </Carousel.Item>
         </Carousel>
       </div>
-      <main>
-        
-        <section className="features">
-          <h2>Características</h2>
+      
+        <div >
+            <h2 className={style.caracteristicastitulo}>Incluye</h2>
+            </div>
+        <section className={style.caracteristicas}>
+          
+          
           <ul>
             <li>Vistas panorámicas</li>
             <li>Cama king-size</li>
@@ -152,16 +163,18 @@ const Habitacion1 = () => {
             <li>TV de pantalla plana</li>
           </ul>
         </section>
-        
-        <section className="availability">
-          <h2>Disponibilidad</h2>
-          <p>Verifica la disponibilidad y realiza tu reserva en línea:</p>
-         
 
-          <a href="#">Ver disponibilidad</a>
+
+        <div className={style.titulodisponibilidad}><h2>Disponibilidad</h2></div>
+        <section className={style.disponibilidad}>
+          
+          <p>Verifica la disponibilidad y realiza tu reserva en línea:</p>
+        
         </section>
-      </main>
-      <FooterBar></FooterBar>
+        <a className={style.linka} href="#">Ver disponibilidad</a>
+        <FooterBar className={style.footer} />
+      
+      
     </div>
   );
 };
