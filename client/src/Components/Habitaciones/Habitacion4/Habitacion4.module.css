@@ -24,7 +24,7 @@ body{
     line-height: 1.5;
   color: #333333;
     padding-top: 50px;
-    padding-left:271px;
+    padding-left:280px;
   }
   .texto{
     
@@ -169,7 +169,7 @@ body{
   }
   
   .image1{
-    padding-top: 45px;
+    padding-top: 80px;
     display: flex;
     position: relative;
     right: 150%;
@@ -202,7 +202,7 @@ body{
     padding-top: 30px;
     display: flex;
     position: relative;
-    bottom: 170px;
+    bottom: 220px;
     left: 17%;
     text-align: justify;
     font-family: Arial, sans-serif;
