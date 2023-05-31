@@ -2,7 +2,7 @@ import React from "react";
 import style from './NavBar.module.css'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInstagram, faFacebook, faTwitter } from "@fortawesome/free-brands-svg-icons";
-import imagen from './logo hotel.png';
+import imagen from './logo hotel2.png';
 import { Link } from "react-router-dom";
 
 function NavBar() {
@@ -10,9 +10,9 @@ function NavBar() {
     <div className={style.contenedor}>
       <img className={style.imagen} src={imagen} alt="" />
       
-      <a className={style.link}><Link to='/'><p>Inicio</p></Link></a>
-      <a className={style.link}><p>Iniciar sesion</p></a>
-      <a className={style.link}><p>Contacto</p></a>
+      <Link className={style.link} to='/'>Inicio</Link>
+      <Link className={style.link} to='/'>Iniciar sesion</Link>
+      <Link className={style.link} to='/contacto'>Contacto</Link>
       <p><a className={style.icon} href="#"><FontAwesomeIcon icon={faInstagram} /></a></p>
         <p><a className={style.icon} href="#"><FontAwesomeIcon icon={faFacebook} /></a></p>
         <p><a className={style.icon} href="#"><FontAwesomeIcon icon={faTwitter} /></a></p>

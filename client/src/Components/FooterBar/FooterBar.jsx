@@ -2,7 +2,7 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebookF, faInstagram, faTwitter } from "@fortawesome/free-brands-svg-icons";
 import style from "./FooterBar.module.css";
-import imagen from './logo hotel.png'
+import imagen from './logo hotel2.png';
 
 function FooterBar() {
   return (
@@ -15,7 +15,7 @@ function FooterBar() {
         <a href="#"><FontAwesomeIcon icon={faInstagram} /></a>
         <a href="#"><FontAwesomeIcon icon={faTwitter} /></a>
       </div>
-      <p className={style.footerText}>&copy; 2023 Nombre Hotel. Todos los derechos reservados.</p>
+      <p className={style.footerText}>&copy; 2023 Hotel Eterno. Todos los derechos reservados.</p>
     </div>
   );
 }

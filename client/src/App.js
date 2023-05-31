@@ -7,6 +7,7 @@ import Habitacion3 from './Components/Habitaciones/Habitacion3/Habitacion3.jsx'
 import Habitacion4 from './Components/Habitaciones/Habitacion4/Habitacion4.jsx'
 import Habitacion5 from './Components/Habitaciones/Habitacion5/Habitacion5.jsx'
 import Reserva from './Components/Reserva/Reserva';
+import Contactanos from './Components/Contactanos/Contactanos';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/habitacion4" element={<Habitacion4 />} />
           <Route path="/habitacion5" element={<Habitacion5 />} />
           <Route path="/reserva" element={<Reserva />} />
+          <Route path="/contacto" element={<Contactanos />} />
           <Route path="/" element={<Home />} />
         </Routes>
        
