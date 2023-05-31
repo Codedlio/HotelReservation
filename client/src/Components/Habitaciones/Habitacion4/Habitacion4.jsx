@@ -24,13 +24,16 @@ const Habitacion1 = () => {
     <div className={style.containertotal}>
       <NavBar></NavBar>
       <section >
-      <h1 className={style.titulo}>Suite Roma</h1>
+      <h1 className={style.titulo}>Suite Bosque</h1>
         <div className={style.texto}>
         
        
           <p>
-            Disfruta de la máxima comodidad en nuestra Suite Roma. <br></br>La habitación
-            perfecta para relajarte y disfrutar de las <br></br>vistas panorámicas.
+          Con lindas vistas hacia el bosque, y en medio de un <br></br>
+          entorno natural único, nuestras habitaciones destacan <br></br>
+          por su acogedor entorno, luminosidad y decoración con<br></br>
+           cálidos materiales y elementos sureños. Queremos que <br></br>
+           tengas la más cómoda y acogedora estadía.
           </p>
           </div>
 
@@ -47,13 +50,21 @@ const Habitacion1 = () => {
      
       
     </div>
-      <p>Esta habitación posee cama súper King con la posibilidad de <br></br>cama adicional, tina con agua termal, caja de seguridad,<br></br> minibar, aire acondicionado y calefacción termal, TV cable, batas,<br></br> mesa de desayuno, desayuno buffet,<br></br> teléfono, vistas al bosque y río.</p>
+      <p>Posee 1 habitación con cama súper King, <br></br>
+      Tv cable y baño en suite con ducha de agua termal,<br></br>
+       1 habitación con dos camas de una plaza, dos baños,<br></br>
+        uno con bañera de agua termal y el segundo con <br></br>
+        ducha de agua termal, living con cama Nido <br></br>
+        (para 2 personas), futón para una persona, mesa<br></br>
+         de desayuno, TV cable, caja de seguridad, minibar,<br></br>
+          jardín privado, batas, desayuno buffet y vistas <br></br>
+          al bosque.</p>
     </div>
   
   
     <div className={style.centerrigth}>
     <div className={style.image2}>< FontAwesomeIcon icon={faPersonBooth} /></div>
-      <p>Este tipo de habitación se encuentra disponible para <br></br>un máximo de dos personas..</p>
+      <p>Este tipo de habitación se encuentra disponible para <br></br>un máximo de sieste personas.</p>
     </div>
   
   
@@ -145,11 +156,16 @@ const Habitacion1 = () => {
           
           
           <ul>
-            <li>Vistas panorámicas</li>
-            <li>Cama king-size</li>
-            <li>Hidromasaje</li>
-            <li>Chimenea</li>
-            <li>TV de pantalla plana</li>
+            <li>Vistas al Bosque</li>
+            <li>TV por cable</li>
+            <li>Cama Super King</li>
+            <li>Baño de agua termal</li>
+            <li>Living con cama nido</li>
+            <li>MiniBar</li>
+            <li>Caja de seguridad</li>
+            <li>Jardin privado</li>
+            <li>Batas</li>
+
           </ul>
         </section>
 

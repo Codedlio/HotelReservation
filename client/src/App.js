@@ -6,6 +6,7 @@ import Habitacion2 from './Components/Habitaciones/Habitacion2/Habitacion2.jsx';
 import Habitacion3 from './Components/Habitaciones/Habitacion3/Habitacion3.jsx'
 import Habitacion4 from './Components/Habitaciones/Habitacion4/Habitacion4.jsx'
 import Habitacion5 from './Components/Habitaciones/Habitacion5/Habitacion5.jsx'
+import Reserva from './Components/Reserva/Reserva';
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
           <Route path="/habitacion3" element={<Habitacion3 />} />
           <Route path="/habitacion4" element={<Habitacion4 />} />
           <Route path="/habitacion5" element={<Habitacion5 />} />
-          
+          <Route path="/reserva" element={<Reserva />} />
           <Route path="/" element={<Home />} />
         </Routes>
        

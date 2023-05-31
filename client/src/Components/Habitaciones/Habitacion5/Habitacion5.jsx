@@ -25,13 +25,16 @@ const Habitacion1 = () => {
     <div className={style.containertotal}>
       <NavBar></NavBar>
       <section >
-      <h1 className={style.titulo}>Suite Roma</h1>
+      <h1 className={style.titulo}>Suite Rio</h1>
         <div className={style.texto}>
         
        
           <p>
-            Disfruta de la máxima comodidad en nuestra Suite Roma. <br></br>La habitación
-            perfecta para relajarte y disfrutar de las <br></br>vistas panorámicas.
+          Con lindas vistas hacia el río, el bosque, y en medio<br></br>
+           de un entorno natural único, nuestras habitaciones<br></br> 
+            destacan por su acogedor entorno, luminosidad y<br></br> 
+             decoración con cálidos materiales y elementos sureños. <br></br> 
+             Queremos que tengas la más cómoda y acogedora estadía.
           </p>
           </div>
 
@@ -48,13 +51,20 @@ const Habitacion1 = () => {
      
       
     </div>
-      <p>Esta habitación posee cama súper King con la posibilidad de <br></br>cama adicional, tina con agua termal, caja de seguridad,<br></br> minibar, aire acondicionado y calefacción termal, TV cable, batas,<br></br> mesa de desayuno, desayuno buffet,<br></br> teléfono, vistas al bosque y río.</p>
+      <p>Posee 3 habitaciones, dos con cama súper King <br></br>
+      y baño privado, una habitación mansarda con 3 <br></br>
+      camas de 1 plaza. Cuenta con: 4 ambientes, vistas<br></br>
+       frente al río y bosque, living con mesa de desayuno,<br></br>
+        pileta termal dentro del living rodeada de<br></br>
+         cristales con vistas al río, jardín privado,<br></br>
+          minibar, teléfono, caja de seguridad, <br></br>
+          TV cable, desayuno buffet y batas.</p>
     </div>
   
   
     <div className={style.centerrigth}>
     <div className={style.image2}>< FontAwesomeIcon icon={faPersonBooth} /></div>
-      <p>Este tipo de habitación se encuentra disponible para <br></br>un máximo de dos personas..</p>
+      <p>Este tipo de habitación se encuentra disponible para <br></br>un máximo de siete personas.</p>
     </div>
   
   
@@ -173,11 +183,16 @@ const Habitacion1 = () => {
           
           
           <ul>
-            <li>Vistas panorámicas</li>
-            <li>Cama king-size</li>
-            <li>Hidromasaje</li>
-            <li>Chimenea</li>
-            <li>TV de pantalla plana</li>
+            <li>Cama Super King</li>
+            <li>Baño Privado</li>
+            <li>1 Habitacion con 3 camas de un plaza</li>
+            <li>Pileta termal en el living</li>
+            <li>Vista al rio</li>
+            <li>Jardin privado</li>
+            <li>Minibar</li>
+            <li>TV por cable</li>
+            <li>Telefono</li>
+            <li>Caja de Seguridad</li>
           </ul>
         </section>
 

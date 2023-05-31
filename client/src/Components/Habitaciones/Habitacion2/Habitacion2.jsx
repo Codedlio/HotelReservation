@@ -158,6 +158,7 @@ const Habitacion1 = () => {
           <ul>
             <li>Vistas panorámicas</li>
             <li>Aire Acondicionado</li>
+            <li>Calefaccion termal</li>
             <li>Cama Super King</li>
             <li>Hidromasaje</li>
             <li>Telefono</li>
