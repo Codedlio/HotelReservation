@@ -9,6 +9,7 @@ import image3 from './Suite Canelo/3.jpg'
 import image4 from './Suite Canelo/4.jpg'
 import image5 from './Suite Canelo/5.jpg'
 import image6 from './Suite Canelo/6.jpg'
+import image7 from './Suite Canelo/7.jpg'
 import style from './Habitacion2.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBed, faMoneyBill, faPersonBooth  } from '@fortawesome/free-solid-svg-icons';
@@ -70,7 +71,7 @@ const Habitacion1 = () => {
           <Carousel.Item>
             <img
               className="d-block w-100"
-              src={image1}
+              src={image7}
               alt="First slide"
               width={"100%"}
               height={"750px"}
@@ -141,6 +142,20 @@ const Habitacion1 = () => {
               width="100%"
               height="750px"
             />
+            <Carousel.Caption>
+              {/* <h3>First slide label</h3>
+              <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> */}
+            </Carousel.Caption>
+          </Carousel.Item>
+          <Carousel.Item>
+            <img
+              className="d-block w-100"
+              src={image1}
+              alt="First slide"
+              width={"100%"}
+              height={"750px"}
+            />
+            
             <Carousel.Caption>
               {/* <h3>First slide label</h3>
               <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> */}

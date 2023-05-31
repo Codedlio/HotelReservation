@@ -48,7 +48,7 @@ const Habitacion1 = () => {
     </div>
       <p>
         Esta habitación posee cama matrimonial súper <br></br>
-        King con la posibilidad de cama adicional, tina con<br></br>
+        King , tina con<br></br>
          agua termal, vistas a bosque y con orilla de río, <br></br>
          caja de seguridad, minibar, aire acondicionado y <br></br>
          calefacción central termal, TV cable, batas, mesa de<br></br>

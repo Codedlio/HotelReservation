@@ -127,19 +127,7 @@ const Habitacion1 = () => {
               width="100%"
               height="750px"
             />
-            <Carousel.Caption>
-              {/* <h3>First slide label</h3>
-              <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> */}
-            </Carousel.Caption>
-          </Carousel.Item>
-          <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src={image5}
-              alt="First slide"
-              width="100%"
-              height="750px"
-            />
+           
             <Carousel.Caption>
               {/* <h3>First slide label</h3>
               <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> */}
@@ -183,8 +171,8 @@ const Habitacion1 = () => {
           
           
           <ul>
-            <li>Cama Super King</li>
-            <li>Baño Privado</li>
+            <li>Camas Super King</li>
+            <li>Baños Privado</li>
             <li>1 Habitacion con 3 camas de un plaza</li>
             <li>Pileta termal en el living</li>
             <li>Vista al rio</li>

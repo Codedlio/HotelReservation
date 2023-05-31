@@ -11,19 +11,19 @@ function Habitaciones() {
         <div className={style.links}>
           <h2 className={style.title}>Habitaciones</h2>
           <Link to="/habitacion1" className={style.link}>
-            HABITACION 1
+            Suite Roca
           </Link>
           <Link to="/habitacion2" className={style.link}>
-            HABITACION 2
+            Suite Canelo
           </Link>
           <Link to="/habitacion3" className={style.link}>
-            HABITACION 3
+            Suite Liucura
           </Link>
           <Link to="/habitacion4" className={style.link}>
-            HABITACION 4
+            Villa Bosque
           </Link>
           <Link to="/habitacion5" className={style.link}>
-            HABITACION 5
+            Villa Rio
           </Link>
         </div>
       </div>
