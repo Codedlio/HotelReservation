@@ -3,13 +3,13 @@ import NavBar from '../../NavBar/NavBar';
 import FooterBar from '../../FooterBar/FooterBar';
 import Carousel from 'react-bootstrap/Carousel';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import image1 from './Suite Roca/image1.jpg'
-import image2 from './Suite Roca/image2.jpg'
-import image3 from './Suite Roca/image3.jpg'
-import image4 from './Suite Roca/image4.jpg'
-import image5 from './Suite Roca/image5.jpg'
-import image6 from './Suite Roca/image6.jpg'
-import style from './Habitacion1.module.css'
+import image1 from './Suite Liucura/1.jpg'
+import image2 from './Suite Liucura/2.jpg'
+import image3 from './Suite Liucura/3.jpg'
+import image4 from './Suite Liucura/4.jpg'
+import image5 from './Suite Liucura/5.jpg'
+import image6 from './Suite Liucura/6.jpg'
+import style from './Habitacion3.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBed, faMoneyBill, faPersonBooth  } from '@fortawesome/free-solid-svg-icons';
 
@@ -24,13 +24,12 @@ const Habitacion1 = () => {
     <div className={style.containertotal}>
       <NavBar></NavBar>
       <section >
-      <h1 className={style.titulo}>Suite Roma</h1>
+      <h1 className={style.titulo}>Suite Licura</h1>
         <div className={style.texto}>
         
        
           <p>
-            Disfruta de la máxima comodidad en nuestra Suite Roma. <br></br>La habitación
-            perfecta para relajarte y disfrutar de las <br></br>vistas panorámicas.
+          Con lindas vistas hacia el río, el bosque, y en medio<br></br> de un entorno natural único, nuestras habitaciones<br></br> destacan por su acogedor entorno, luminosidad <br></br>y decoración con cálidos materiales y elementos sureños.<br></br> Queremos que tengas la más cómoda y acogedora estadía.
           </p>
           </div>
 
@@ -47,7 +46,14 @@ const Habitacion1 = () => {
      
       
     </div>
-      <p>Esta habitación posee cama súper King con la posibilidad de <br></br>cama adicional, tina con agua termal, caja de seguridad,<br></br> minibar, aire acondicionado y calefacción termal, TV cable, batas,<br></br> mesa de desayuno, desayuno buffet,<br></br> teléfono, vistas al bosque y río.</p>
+      <p>
+        Esta habitación posee cama matrimonial súper <br></br>
+        King con la posibilidad de cama adicional, tina con<br></br>
+         agua termal, vistas a bosque y con orilla de río, <br></br>
+         caja de seguridad, minibar, aire acondicionado y <br></br>
+         calefacción central termal, TV cable, batas, mesa de<br></br>
+          desayuno, desayuno buffet y teléfono.
+        </p>
     </div>
   
   
@@ -157,11 +163,13 @@ const Habitacion1 = () => {
           
           
           <ul>
-            <li>Vistas panorámicas</li>
-            <li>Cama king-size</li>
-            <li>Hidromasaje</li>
-            <li>Chimenea</li>
-            <li>TV de pantalla plana</li>
+            <li>Caja de Seguridad</li>
+            <li>Minibar</li>
+            <li>Vista al bosque</li>
+            <li>Aire Acondicionado</li>
+            <li>Calefaccion central termal</li>
+            <li>Batas</li>
+            <li>Mesa de Desayuno</li>
           </ul>
         </section>
 

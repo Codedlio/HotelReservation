@@ -82,7 +82,7 @@ body{
     justify-content: center;
     align-items: center;
     font-size: 18px;
-    padding-right: 800px;
+    padding-right: 680px;
     font-family: Arial, sans-serif;
     line-height: 1.5;
   color: #333333;
@@ -169,7 +169,7 @@ body{
   }
   
   .image1{
-    padding-top: 45px;
+    padding-top: 80px;
     display: flex;
     position: relative;
     right: 150%;
@@ -199,7 +199,7 @@ body{
    right: 8%;
   }
   .centerrigth {
-    padding-top: 30px;
+    padding-top: 10px;
     display: flex;
     position: relative;
     bottom: 170px;

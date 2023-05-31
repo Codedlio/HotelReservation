@@ -3,13 +3,13 @@ import NavBar from '../../NavBar/NavBar';
 import FooterBar from '../../FooterBar/FooterBar';
 import Carousel from 'react-bootstrap/Carousel';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import image1 from './Suite Roca/image1.jpg'
-import image2 from './Suite Roca/image2.jpg'
-import image3 from './Suite Roca/image3.jpg'
-import image4 from './Suite Roca/image4.jpg'
-import image5 from './Suite Roca/image5.jpg'
-import image6 from './Suite Roca/image6.jpg'
-import style from './Habitacion1.module.css'
+import image1 from './Villa Bosque/1.jpg'
+import image2 from './Villa Bosque/2.jpg'
+import image3 from './Villa Bosque/3.jpg'
+import image4 from './Villa Bosque/4.jpg'
+import image5 from './Villa Bosque/5.jpg'
+
+import style from './Habitacion4.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBed, faMoneyBill, faPersonBooth  } from '@fortawesome/free-solid-svg-icons';
 
@@ -24,13 +24,16 @@ const Habitacion1 = () => {
     <div className={style.containertotal}>
       <NavBar></NavBar>
       <section >
-      <h1 className={style.titulo}>Suite Roma</h1>
+      <h1 className={style.titulo}>Suite Bosque</h1>
         <div className={style.texto}>
         
        
           <p>
-            Disfruta de la máxima comodidad en nuestra Suite Roma. <br></br>La habitación
-            perfecta para relajarte y disfrutar de las <br></br>vistas panorámicas.
+          Con lindas vistas hacia el bosque, y en medio de un <br></br>
+          entorno natural único, nuestras habitaciones destacan <br></br>
+          por su acogedor entorno, luminosidad y decoración con<br></br>
+           cálidos materiales y elementos sureños. Queremos que <br></br>
+           tengas la más cómoda y acogedora estadía.
           </p>
           </div>
 
@@ -47,13 +50,21 @@ const Habitacion1 = () => {
      
       
     </div>
-      <p>Esta habitación posee cama súper King con la posibilidad de <br></br>cama adicional, tina con agua termal, caja de seguridad,<br></br> minibar, aire acondicionado y calefacción termal, TV cable, batas,<br></br> mesa de desayuno, desayuno buffet,<br></br> teléfono, vistas al bosque y río.</p>
+      <p>Posee 1 habitación con cama súper King, <br></br>
+      Tv cable y baño en suite con ducha de agua termal,<br></br>
+       1 habitación con dos camas de una plaza, dos baños,<br></br>
+        uno con bañera de agua termal y el segundo con <br></br>
+        ducha de agua termal, living con cama Nido <br></br>
+        (para 2 personas), futón para una persona, mesa<br></br>
+         de desayuno, TV cable, caja de seguridad, minibar,<br></br>
+          jardín privado, batas, desayuno buffet y vistas <br></br>
+          al bosque.</p>
     </div>
   
   
     <div className={style.centerrigth}>
     <div className={style.image2}>< FontAwesomeIcon icon={faPersonBooth} /></div>
-      <p>Este tipo de habitación se encuentra disponible para <br></br>un máximo de dos personas..</p>
+      <p>Este tipo de habitación se encuentra disponible para <br></br>un máximo de sieste personas.</p>
     </div>
   
   
@@ -134,19 +145,7 @@ const Habitacion1 = () => {
               <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> */}
             </Carousel.Caption>
           </Carousel.Item>
-          <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src={image6}
-              alt="First slide"
-              width="100%"
-              height="750px"
-            />
-            <Carousel.Caption>
-              {/* <h3>First slide label</h3>
-              <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> */}
-            </Carousel.Caption>
-          </Carousel.Item>
+          
         </Carousel>
       </div>
       
@@ -157,11 +156,16 @@ const Habitacion1 = () => {
           
           
           <ul>
-            <li>Vistas panorámicas</li>
-            <li>Cama king-size</li>
-            <li>Hidromasaje</li>
-            <li>Chimenea</li>
-            <li>TV de pantalla plana</li>
+            <li>Vistas al Bosque</li>
+            <li>TV por cable</li>
+            <li>Cama Super King</li>
+            <li>Baño de agua termal</li>
+            <li>Living con cama nido</li>
+            <li>MiniBar</li>
+            <li>Caja de seguridad</li>
+            <li>Jardin privado</li>
+            <li>Batas</li>
+
           </ul>
         </section>
 

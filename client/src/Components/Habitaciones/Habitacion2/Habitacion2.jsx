@@ -3,13 +3,13 @@ import NavBar from '../../NavBar/NavBar';
 import FooterBar from '../../FooterBar/FooterBar';
 import Carousel from 'react-bootstrap/Carousel';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import image1 from './Suite Roca/image1.jpg'
-import image2 from './Suite Roca/image2.jpg'
-import image3 from './Suite Roca/image3.jpg'
-import image4 from './Suite Roca/image4.jpg'
-import image5 from './Suite Roca/image5.jpg'
-import image6 from './Suite Roca/image6.jpg'
-import style from './Habitacion1.module.css'
+import image1 from './Suite Canelo/1.jpg'
+import image2 from './Suite Canelo/2.jpg'
+import image3 from './Suite Canelo/3.jpg'
+import image4 from './Suite Canelo/4.jpg'
+import image5 from './Suite Canelo/5.jpg'
+import image6 from './Suite Canelo/6.jpg'
+import style from './Habitacion2.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBed, faMoneyBill, faPersonBooth  } from '@fortawesome/free-solid-svg-icons';
 
@@ -24,13 +24,12 @@ const Habitacion1 = () => {
     <div className={style.containertotal}>
       <NavBar></NavBar>
       <section >
-      <h1 className={style.titulo}>Suite Roma</h1>
+      <h1 className={style.titulo}>Suite Canell</h1>
         <div className={style.texto}>
         
        
           <p>
-            Disfruta de la máxima comodidad en nuestra Suite Roma. <br></br>La habitación
-            perfecta para relajarte y disfrutar de las <br></br>vistas panorámicas.
+          Con una cómoda tinaja privada a los pies del río,<br></br>  vistas hacia el bosque,y en medio de un entorno<br></br>  natural único, suite Canell destaca por por su acogedor<br></br>  entorno, 2 ambientes, luminosidad y decoración con <br></br>cálidos materiales y elementos sureños.<br></br> Queremos que tengas la más cómoda y acogedora estadía.
           </p>
           </div>
 
@@ -47,13 +46,13 @@ const Habitacion1 = () => {
      
       
     </div>
-      <p>Esta habitación posee cama súper King con la posibilidad de <br></br>cama adicional, tina con agua termal, caja de seguridad,<br></br> minibar, aire acondicionado y calefacción termal, TV cable, batas,<br></br> mesa de desayuno, desayuno buffet,<br></br> teléfono, vistas al bosque y río.</p>
+      <p>Esta habitación posee cama súper King,<br></br> cama Nido y/o camas adicionales. Cuenta con<br></br> terraza y salida directa al río Liucura, vistas al<br></br> bosque, caja de seguridad, aire acondicionado y<br></br> calefacción termal, Tv cable,<br></br> batas, desayuno buffet y teléfono.</p>
     </div>
   
   
     <div className={style.centerrigth}>
     <div className={style.image2}>< FontAwesomeIcon icon={faPersonBooth} /></div>
-      <p>Este tipo de habitación se encuentra disponible para <br></br>un máximo de dos personas..</p>
+      <p>Este tipo de habitación se encuentra disponible <br></br>para un máximo de 4 personas.</p>
     </div>
   
   
@@ -158,10 +157,15 @@ const Habitacion1 = () => {
           
           <ul>
             <li>Vistas panorámicas</li>
-            <li>Cama king-size</li>
+            <li>Aire Acondicionado</li>
+            <li>Calefaccion termal</li>
+            <li>Cama Super King</li>
             <li>Hidromasaje</li>
-            <li>Chimenea</li>
-            <li>TV de pantalla plana</li>
+            <li>Telefono</li>
+            <li>Salida al rio</li>
+            <li>Terraza</li>
+            <li>Caja de Seguridad</li>
+            <li>TV por cable</li>
           </ul>
         </section>
 
