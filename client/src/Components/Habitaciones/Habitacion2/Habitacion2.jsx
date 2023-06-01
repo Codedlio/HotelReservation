@@ -47,7 +47,7 @@ const Habitacion1 = () => {
      
       
     </div>
-      <p>Esta habitación posee cama súper King,<br></br> cama Nido y/o camas adicionales. Cuenta con<br></br> terraza y salida directa al río Liucura, vistas al<br></br> bosque, caja de seguridad, aire acondicionado y<br></br> calefacción termal, Tv cable,<br></br> batas, desayuno buffet y teléfono.</p>
+      <p>Esta habitación posee cama súper King,<br></br>. Cuenta con<br></br> terraza y salida directa al río Liucura, vistas al<br></br> bosque, caja de seguridad, aire acondicionado y<br></br> calefacción termal, Tv cable,<br></br> batas, desayuno buffet y teléfono.</p>
     </div>
   
   
