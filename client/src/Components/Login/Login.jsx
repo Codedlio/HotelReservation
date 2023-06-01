@@ -8,7 +8,7 @@ function Reserva() {
   const [correo, setCorreo] = useState('');
   const [contrasena, setContrasena] = useState('');
   const [telefono, setTelefono] = useState('');
-
+  const [isOpen, setIsOpen] = useState(true);
   const handleNombreChange = (e) => {
     setNombre(e.target.value);
   };
@@ -28,13 +28,16 @@ function Reserva() {
   const handleTelefonoChange = (e) => {
     setTelefono(e.target.value);
   };
+  const handleClose = () => {
+    setIsOpen(false);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // Aquí puedes realizar acciones con los datos enviados, como enviarlos a un servidor
     console.log('Datos enviados:', {
       nombre,
-      apellido,
+      
       correo,
       contrasena,
       telefono
@@ -43,6 +46,11 @@ function Reserva() {
 
   return (
     <div className={style.contenedor}>
+         <Link className={style.linkContainer} to="/">
+          <button className={style.botoncerrar} onClick={handleClose}>
+            X
+          </button>
+        </Link>
       <div className={style.tamano}>
         <h3 className={style.title}>Reserva tu estadía</h3>
         <form onSubmit={handleSubmit}>
