@@ -39,7 +39,7 @@ function Home() {
 
   return (
     <div className={style.container}>
-      <a href="https://api.whatsapp.com/send?phone=NUMERO_TELEFONO&text=Hola,%20me%20gustaría%20hacer%20una%20consulta" target="_blank" rel="noopener noreferrer" className={style.whatsapp}>
+      <a href="https://api.whatsapp.com/send?phone=3815222222&text=Hola,%20me%20gustaría%20hacer%20una%20consulta" target="_blank" rel="noopener noreferrer" className={style.whatsapp}>
         <FontAwesomeIcon icon={faWhatsapp} />
       </a>
       <NavBar />

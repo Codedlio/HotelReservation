@@ -9,7 +9,14 @@ import { Link } from "react-router-dom";
   const handleInstagramClick = () => {
     window.open('https://www.instagram.com/hoteleternotermal/', '_blank');
   }
+    const handleTwitterClick = () => {
+    window.open('https://twitter.com/Hoteltereterno', '_blank');
+  }
+  const handleFacebookClick = () => {
+    window.open('https://www.facebook.com/profile.php?id=100093402330219', '_blank');
+  }
 
+  
 function NavBar() {
   return (
     <div className={style.contenedor}>
@@ -19,8 +26,8 @@ function NavBar() {
       <Link className={style.link} to='/'>Iniciar sesion</Link>
       <Link className={style.link} to='/contacto'>Contacto</Link>
       <p><a className={style.icon} href="#" onClick={handleInstagramClick}><FontAwesomeIcon icon={faInstagram} /></a></p>
-        <p><a className={style.icon} href="#"><FontAwesomeIcon icon={faFacebook} /></a></p>
-        <p><a className={style.icon} href="#"><FontAwesomeIcon icon={faTwitter} /></a></p>
+        <p><a className={style.icon} href="#" onClick={handleFacebookClick}><FontAwesomeIcon icon={faFacebook} /></a></p>
+        <p><a className={style.icon} href="#" onClick={handleTwitterClick}><FontAwesomeIcon icon={faTwitter} /></a></p>
       <Link  className={style.button} to='/reserva'>RESERVAR AHORA</Link>
     </div>
   );
