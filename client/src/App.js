@@ -9,6 +9,7 @@ import Habitacion5 from './Components/Habitaciones/Habitacion5/Habitacion5.jsx'
 import Reserva from './Components/Reserva/Reserva';
 import Paquetes from './Components/Paquetes/Paquetes';
 import Contacto from './Components/Contacto/Contacto';
+import Login from './Components/Login/Login';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/reserva" element={<Reserva />} />
           <Route path="/paquetes" element={<Paquetes/>} />
           <Route path="/contacto" element={<Contacto/>} />
+          <Route path="/login" element={<Login/>} />
           <Route path="/" element={<Home />} />
         </Routes>
        
