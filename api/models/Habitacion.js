@@ -8,11 +8,13 @@ const imagenSchema = new mongoose.Schema({
 
 const habitacionSchema = new mongoose.Schema({
   numero: { type: Number, required: true },
-  tipo: { type: String, required: true },
-  precio: { type: Number, required: true },
-  disponible: { type: Boolean, default: true },
+  tipo: { type: mongoose.Schema.Types.ObjectId, ref: 'Tipo_habitacion', required: true },
   descripción: { type: String },
-  imagenes: [imagenSchema]
+  capacidad: { type: Number, required: true},
+  precio: { type: Number, required: true },
+  puntuacion: { type: Number, required: true},
+  disponible: { type: Boolean, default: true },
+  activo: { type: Boolean, default:true},
 });
 
 const Habitacion = mongoose.model('Habitacion', habitacionSchema);
