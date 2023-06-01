@@ -1,0 +1,21 @@
+.cardsContainer{
+    /* border: 2px solid #2a9d8f; */
+    /* border-radius: 10px; */
+    transition: transform 0.3s, box-shadow 0.3s;
+    column-count: 2; 
+    column-gap: 40px;
+    row-gap: 40px;
+  }
+  .cardsContainer:hover{
+    transform: translateY(-10px);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+    opacity: 5;
+    z-index: 2;
+  }
+  .cardImage{
+    /* border-radius: 10%; */
+    padding: 10px 15px;
+    width: 700px;
+    height: 500px; 
+
+  }
