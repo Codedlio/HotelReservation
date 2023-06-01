@@ -1,316 +1,97 @@
-import styles from "./Contacto.module.css";
-import { useState } from "react";
-import { NavLink } from "react-router-dom";
-import { createGames } from "../../redux/actions";
+import React, { useState } from 'react';
+import style from './Contacto.module.css';
+import NavBar from '../NavBar/NavBar';
+import FooterBar from '../FooterBar/FooterBar';
+import PreguntasFrecuentes from '../Preguntas  Frecuentes/Preguntas';
 
-// //export default function Form({ formCreate, genres, platforms }) {
-  export default function Form({ allGenres ,allPlatforms}) {
-    console.log("Entro a allGenres");
-    console.log(allGenres);
-  //const [allGenres, setDataGeneres] = useState([]);
-  //const [allPlatforms, setDataPlatforms] = useState([]);
-  let allPlatformsSelect=[];
-  let allGenresSelect=[];
-  
-  /*useEffect(() => {
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPhone, faEnvelope, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 
-    if (!genres) {
-      getAllGenres().then((response) => {
-        setDataGeneres(response.data);
-      });
-    }
-    if (!platforms) {
-      getAllPlatforms().then((response) => {
-        setDataPlatforms(response.data);
-      });
-    }
-  }, [genres, platforms]);*/
+function CentroDeAyuda() {
+  const [showTextArea, setShowTextArea] = useState(false);
+  const [showButton, setShowButton] = useState(true);
 
-  const [inputs, setInputs] = useState({
-    name: "",
-    image: "",
-    description: "",
-    released: "",
-    rating: "",
-    platforms: "",
-    genres: "",  
+  const handleReclamosClick = () => {
+    setShowTextArea(true);
+    setShowButton(false);
+  };
 
-  });
-  const [errors, setErrors] = useState({
-    name: "",
-    image: "",
-    description: "",
-    released: "",
-    rating: "",
-    platforms: "",
-    genres: "",
-  });
-  const AddSelectGenres = (event) => {   
-    const isChecked = event.target.checked;
-    const Value = event.target.value;
-    if(isChecked){   
-      console.log("isChecked");  
-      allGenresSelect.push(Value);
-      inputs.genres=allGenresSelect;
-    }else{
-      console.log("desscheck");
-      allGenresSelect=allGenresSelect.filter((g) => g !== Value);
-      inputs.genres=allGenresSelect;
-    }
-}
-const handleSelectPlatform =(event)=>{
-  //event.preventDefault();
-  /*allPlatformsSelect=event.target.value;
-  console.log("allPlatformsSelect-allPlatformsSelect");
-  console.log(allPlatformsSelect);
-  inputs.platforms=allPlatformsSelect;*/
-  const isChecked = event.target.checked;
-    const Value = event.target.value;
-    if(isChecked){   
-      console.log("handleSelectPlatform-isChecked");  
-      allPlatformsSelect.push(Value);
-      inputs.platforms=allPlatformsSelect ? allPlatformsSelect.map(vg => vg).join(" , ") : ''
-      console.log(inputs.platforms); 
+  return (
+    <div className={style.container}>
+      <NavBar />
+      
+      <PreguntasFrecuentes />
+      <div className={style.container2}>
+      <h1 className={style.title}>Centro de Ayuda</h1>
 
-      //ch.genres ?  ch.genres.map(vg => vg.name).join(" , ") : '',
-
-    }else{
-      console.log("desscheck");
-      allPlatformsSelect=allPlatformsSelect.filter((f) => f !== Value);
-      inputs.platforms=allPlatformsSelect ? allPlatformsSelect.map(vg => vg).join(" , ") : ''
-
-      console.log(inputs.platforms); 
-    }
- 
-}
-
-  function validate(inputs) {
-    console.log("validate-inputs"); 
-    console.log(inputs); 
-    const errors = {};
-    if (!inputs.name) {
-      errors.name = "Ingrese Nombre de videogame";
-    } else if (!inputs.image) {
-      errors.image = "Ingrese la ruta de la imagen del videojuego";
-    } else if (!inputs.description) {
-      errors.description = "Ingrese Descripcion de videogame";
-    }else if (!inputs.released) {
-      errors.released = "Ingrese la fecha del videogame";
-    } else if (!inputs.rating) {
-      errors.rating = "Ingrese rating del videogame";
-    }/*else if(allGenresSelect.length===0){
-      errors.genres="Selecciona al menos un género";
-    }else if(allPlatformsSelect==="All")*/
-    errors.platforms="Selecciona al menos una plataforma";
-    return errors;
-  }
-
-  function handleChange(e) {
-    setInputs({
-      ...inputs,
-      [e.target.name]: e.target.value,
-      [e.target.image]: e.target.value,
-      [e.target.description]: e.target.value,
-      [e.target.platforms]: e.target.value,
-      [e.target.released]: e.target.value,
-      [e.target.rating]: e.target.value,
-      [e.target.genres]: e.target.value,
-
-    });
-    setErrors(
-      validate({
-        ...inputs,
-        [e.target.name]: e.target.value,
-        [e.target.image]: e.target.value,        
-      [e.target.description]: e.target.value,
-      [e.target.platforms]: e.target.value,
-      [e.target.released]: e.target.value,
-      [e.target.rating]: e.target.value,
-      [e.target.genres]: e.target.value,
-      })
-    );
-  }
-  function handleSubmit(e) {
-    
-      e.preventDefault();
-      const aux = Object.keys(errors);      
-      console.log("submit-aux");
-      console.log(aux.length);
-      //Form(inputs);
-      if (aux.length === 0) {
-        console.log("aux.length-0");   
-        //formCreate(inputs);
-        //Form(inputs);        
-        setInputs({
-          name: "",
-          image: "",
-          description: "",
-          platforms: "",
-          released: "",
-          rating: "",
-          genres: "",
-
-        });
-        setErrors({
-          name: "",
-          image: "",
-          description: "",
-          platforms: "",
-          released: "",
-          rating: "",
-          genres: "",
-        });
-       
-      } else {        
-        console.log("submit-alerta");      
-        if (!inputs.name) {
-          return alert("Ingrese Nombre de videogame");
-        } else if (!inputs.image) {
-          return alert("Ingrese la ruta de la imagen del videojuego");
-        } else if (!inputs.description) {
-          return alert("Ingrese Descripcion de videogame");
-        }else if (!inputs.released) {
-          return alert("Ingrese la fecha del videogame");
-        } else if (!inputs.rating) {
-          return alert("Ingrese rating del videogame");
-        }else if(allGenresSelect.length===0){
-            return alert("Selecciona al menos un género");
-        }else if(allPlatformsSelect==="All")
-            return alert("Selecciona al menos una plataforma");
-
-            let resp="";
-            createGames(inputs).then((response) => {                            
-                for( var message in response.data){                  
-                  for(let r of response.data[message]){                    
-                    resp+=r;
-                  }
-                }                
-                alert(resp);      
-            });
-            setInputs({
-              name: "",
-              image: "",
-              description: "",
-              platforms: "",
-              released: "",
-              rating: "",
-              genres: "",
-    
-            });
-            setErrors({
-              name: "",
-              image: "",
-              description: "",
-              platforms: "",
-              released: "",
-              rating: "",
-              genres: "",
-            });
-            allGenresSelect=[];
-            allPlatformsSelect=[];
-            document.getElementById("name").value = "";
-            document.getElementById("image").value = "";
-            document.getElementById("description").value = "";
-            document.getElementById("rating").value = "";
-            var chec=document.querySelectorAll('.platforms');
-            for( var i=0; i<chec.length;i++){
-              chec[i].checked=false;
-
-            }
-            var chec1=document.querySelectorAll('.genres');
-            for( var i=0; i<chec1.length;i++){
-              chec1[i].checked=false;
-
-            }
-      }
-    
-  }
-   return (    
-    <div>
-      {/* {showSuccessMessage && (
-        <div className={styles.successMessage}>
-          The videogame was created successfully.
+      <div className={style.section}>
+        <h2 className={style.sectionTitle}>Contáctanos</h2>
+        <p className={style.contactText}>
+          Si tienes alguna otra pregunta o necesitas más ayuda,<br></br> no dudes en contactarnos.
+        </p>
+        <div className={style.contactItem}>
+          <FontAwesomeIcon icon={faPhone} className={style.contactIcon} />
+          <span className={style.contactLabel}>Teléfono:</span> (+123) 456-7890
         </div>
-      )} */}
-      <ul id="Nav_menu">
-        <li>
-          <NavLink
-            to="/home"
-            className="Nav_link">
-            🏡HOME
-          </NavLink>
-        </li>
-      </ul>
+        <div className={style.contactItem}>
+          <FontAwesomeIcon icon={faEnvelope} className={style.contactIcon} />
+          <span className={style.contactLabel}>Correo electrónico:</span> hoteltermaleterno@gmail.com
+        </div>
+        <div className={style.contactItem}>
+          <FontAwesomeIcon icon={faMapMarkerAlt} className={style.contactIcon} />
+          <span className={style.contactLabel}>Dirección:</span> Calle Principal 123, Termas Huife
+        </div>
+      </div>
 
-      <form className={styles.formContainer} method='post' onSubmit={handleSubmit}>
-        <br />
-        <label htmlFor="titulo" className={styles.Titulo}>CREATE VIDEOGAME </label>
-        <label htmlFor="name">Name: </label>
-        <input className={styles.inputForm} id="name" type="text" name="name" onChange={handleChange} />
-        <p className={styles.danger}>{errors.name}</p>        
-        <label htmlFor="image" >Image URL: </label>
-        <input className={styles.inputForm} id="image" type="url"  name="image" onChange={handleChange}></input>
-        <p className={styles.danger}>{errors.image}</p>        
-        <label htmlFor="description" >Description:</label>
-        <input className={styles.inputForm} id="description" type="text" name="description" onChange={handleChange} ></input>
-        <p className={styles.danger}>{errors.description}</p> 
+      <section className={style.section}>
+        <h2 className={style.sectionTitle}>Escríbenos</h2>
+        <div className={style.contactForm}>
+          <div className={style.contactItem}>
+            <input type="text" id="name" className={style.contactInput} placeholder="Ingresa tu nombre" required />
+          </div>
+          <div className={style.contactItem}>
+            <input type="email" id="email" className={style.contactInput} placeholder="Ingresa tu correo electrónico" required />
+          </div>
+          <div className={style.contactItem}>
+            <input type="tel" id="phone" className={style.contactInput} placeholder="Ingresa tu número de teléfono" required />
+          </div>
+          <div className={style.contactItem}>
+            <select id="message" className={style.contactSelect} required>
+              <option value="">Asunto</option>
+              <option value="termas">Termas</option>
+              <option value="alojamiento">Alojamiento</option>
+              <option value="restaurant">Restaurant</option>
+              <option value="actividades">Actividades</option>
+            </select>
+          </div>
 
-         <label htmlFor="platforms" className={styles.label}>Choose at least one Platform:</label>
-        <br />
-
-        <div className={styles.containercheckbox}>
-          {
-            allPlatforms?.map((pl) => (
-              <div>
-                <input className={styles.checkbox} class="platforms" type="checkbox" onClick={(event) => handleSelectPlatform(event)} value={pl.name} />
-                <label className={styles.Labelcheckbox} key={pl.name} htmlFor={pl.id}>{pl.name}</label>
+          <div className={style.contactItem}>
+                <button className={style.contactButtonenviar}>Enviar</button>
               </div>
-            ))
-          }
-        </div> 
-
-
-        {/* <label htmlFor="platforms" >Platforms:</label>             
-        <br />
-        <select className={styles.SelecPlatform} onChange={handleSelectPlatform}>                  
-                <option value="All" >Todos</option>
-                    {
-                        allPlatforms?.map((pl)=>(
-                            <option key={pl.id} value={pl.name}>{pl.name}</option>
-                        ))
-                    }
-        </select>    */}
-        
-        {/* <p className={styles.danger}>{errors.platforms}</p>        */}
-        <br />       
-        <br />   
-        <br /> 
-        <label htmlFor="released" className={styles.label}>Released:</label>
-        <input className={styles.inputForm} id="released" type="date" name="released" onChange={handleChange} ></input>
-        <p className={styles.danger}>{errors.released}</p>        
-        <label htmlFor="rating" className={styles.label}>Rating</label>
-        <input className={styles.inputForm} id="rating"
-          type="number"
-          name="rating"
-          // onBlur={(event) => ratingInCero(event)}
-          onChange={handleChange} step="0.01"></input>
-        <p className={styles.danger}>{errors.rating}</p>
-        <br />
-        <label htmlFor="genres" className={styles.label}>Choose your favorites Genres:</label>
-        <br />
-        <div className={styles.containercheckbox}>
-        {
-            allGenres?.map((gen)=>(
-                  <div>
-                    <input className={styles.checkbox} class="genres" type="checkbox" onClick={(event) => AddSelectGenres(event)} value={gen.id}/>                  
-                    <label className={styles.Labelcheckbox} key={gen.name} htmlFor={gen.name}>{gen.name}</label>
-                  </div>      
-            ))
-        }
-        </div>        
-        <br />
-        <button className={styles.ButtonCreate} type="submit">Save</button>
-      </form>
+          {showButton && (
+            <div className={style.contactItem}>
+              <button className={style.contactButtonreclamo} onClick={handleReclamosClick}>
+                RECLAMOS Y SUGERENCIAS
+              </button>
+            </div>
+          )}
+          {showTextArea && (
+            <>
+              <div className={style.contactItem}>
+                <textarea id="reclamo" className={style.contactTextarea} placeholder="Escribe tu reclamo o sugerencia" required></textarea>
+              </div>
+              <div className={style.contactItem}>
+                <button className={style.enviar}>Enviar Reclamo o Sugerencia</button>
+              </div>
+            </>
+          )}
+        </div>
+      </section>
+      </div>
+      <FooterBar className={style.footer} />
+      
     </div>
   );
 }
+
+export default CentroDeAyuda;

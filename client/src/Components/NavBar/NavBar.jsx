@@ -21,23 +21,36 @@ import { Link } from "react-router-dom";
 //     </div>
 //   );
 // }
+
+const handleInstagramClick = () => {
+  window.open('https://www.instagram.com/hoteleternotermal/', '_blank');
+}
+  const handleTwitterClick = () => {
+  window.open('https://twitter.com/Hoteltereterno', '_blank');
+}
+const handleFacebookClick = () => {
+  window.open('https://www.facebook.com/profile.php?id=100093402330219', '_blank');
+}
+
 function NavBar() {
   return (
     <div className={style.contenedor}>
       <img className={style.imagen} src={imagen} alt="" />
       <Nav>
-    <Nav.Item  className={style.link} active>Inicio</Nav.Item>
-    <Nav.Item  className={style.link}>Iniciar sesion</Nav.Item>
+      <Link className={style.link} to='/'>Inicio</Link>
+      <Link className={style.link} to='/'>Iniciar sesion</Link>
+      <Link className={style.link} to='/contacto'>Contacto</Link>
+  
 <div className={style.dropdown} >
-  {/* <button className={style.dropbtn} to='/reserva'>Paquetes</button> */}
-  <Link  className={style.dropbtn} to='/paquetes'>Paquetes</Link>
+  
+  <Link  className={style.link} to='/paquetes'>Paquetes</Link>
   <div className={style.dropdowncontent}>
     <a href="#">3 días y 2 noches</a>
     <a href="#">3 días y 2 noches</a>
     <a href="#">5 días y 4 noches</a>
   </div>
 </div>
-    <Nav.Item  className={style.link}>Contacto</Nav.Item>  
+   
     <Nav.Item  className={style.icon} href="#"><FontAwesomeIcon icon={faInstagram} /></Nav.Item>
     <Nav.Item  className={style.icon} href="#"><FontAwesomeIcon icon={faFacebook} /></Nav.Item>
     <Nav.Item  className={style.icon} href="#"><FontAwesomeIcon icon={faTwitter} /></Nav.Item>
