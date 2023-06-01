@@ -1,12 +1,26 @@
 import React, { useState } from 'react';
 import style from './Reserva.module.css';
 import { Link } from 'react-router-dom';
-
+import { useEffect } from 'react';
 
 function Reserva() {
-  const [adults, setAdults] = useState(1);
-  const [children, setChildren] = useState(0);
+  const [adults, setAdults] = useState('');
+  const [children, setChildren] = useState('');
+  const [selectedRoom, setSelectedRoom] = useState('');
   const [isOpen, setIsOpen] = useState(true);
+
+    // Almacenar el hotel seleccionado en el almacenamiento local al cambiarlo
+  useEffect(() => {
+    localStorage.setItem('selectedRoom', selectedRoom);
+  }, [selectedRoom]);
+
+  // Obtener el hotel seleccionado del almacenamiento local al cargar el componente
+  useEffect(() => {
+    const storedSelectedRoom = localStorage.getItem('selectedRoom');
+    if (storedSelectedRoom) {
+      setSelectedRoom(storedSelectedRoom);
+    }
+  }, []);
 
   const handleAdultsChange = (e) => {
     setAdults(parseInt(e.target.value));
@@ -16,25 +30,73 @@ function Reserva() {
     setChildren(parseInt(e.target.value));
   };
 
+  const handleRoomChange = (e) => {
+    const roomName = e.target.value;
+    let roomId;
+
+    switch (roomName) {
+      case 'Suite Roma (2 camas super King)':
+        roomId = 1;
+        break;
+      case 'Suite Canell (1 cama super king)':
+        roomId = 2;
+        break;
+      case 'Suite Licura (1 cama super king)':
+        roomId = 3;
+        break;
+      case 'Villa Bosque (cama super king + 2 camas de 1 plaza)':
+        roomId = 4;
+        break;
+      case 'Villa Rio (cama super king + 3 camas de 1 plaza)':
+        roomId = 5;
+        break;
+      default:
+        roomId = '';
+        break;
+    }
+
+    setSelectedRoom(roomId);
+  };
+
   const handleClose = () => {
     setIsOpen(false);
   };
 
   if (!isOpen) {
-    return null; // Retorna null para ocultar el componente cuando no está abierto
+    return null; // Return null to hide the component when it's not open
   }
 
+  const getAvailableRooms = (adults, children) => {
+    const total = adults + children;
+
+    if (adults === 1) {
+      return ["Suite Canell (1 cama super king)", "Suite Licura (1 cama super king)"];
+    } else if (adults === 2 && children === 0) {
+      return ["Suite Canelo (1 cama super king)", "Suite Licura (1 cama super king)"];
+    } else if (adults === 3 && children === 0) {
+      return ["Suite Roma (2 camas super King)", "Villa Bosque (cama super king + 2 camas de 1 plaza)", "Villa Rio (cama super king + 3 camas de 1 plaza)"];
+    } else if (adults === 2 && children >= 1) {
+      return ["Suite Roma (2 camas super King)", "Villa Bosque (cama super king + 2 camas de 1 plaza)", "Villa Rio (cama super king + 3 camas de 1 plaza)"];
+    } else if (adults === 4 && children === 0) {
+      return ["Suite Roma (2 camas super King)", "Villa Bosque (cama super king + 2 camas de 1 plaza)", "Villa Rio"];
+    } else if (adults >= 2 && total <= 7) {
+      return ["Villa Bosque (cama super king + 2 camas de 1 plaza)", "Villa Rio (cama super king + 3 camas de 1 plaza)"];
+    } else {
+      return [];
+    }
+  };
+
+  const availableRooms = getAvailableRooms(adults, children);
+
   return (
-    
     <div className={style.contenedor}>
-     
       <div className={style.tamano}>
-      <Link className={style.linkContainer} to="/">
-            <button className={style.closeButton} onClick={handleClose}>
-              X
-            </button>
-          </Link>
-        
+        <Link className={style.linkContainer} to="/">
+          <button className={style.closeButton} onClick={handleClose}>
+            X
+          </button>
+        </Link>
+
         <h3 className={style.title}>Reserva tu estadía</h3>
         <form>
           <div className={style.formGroup}>
@@ -77,9 +139,33 @@ function Reserva() {
               required
             />
           </div>
-          <button className={style.button}>
-            Reservar ahora
-          </button>
+          {adults !== '' && (
+            <div className={style.formGroup}>
+              <label htmlFor="roomName" className={style.label}>
+                Seleccione una habitación:
+              </label>
+              <select
+                id="roomName"
+                className={style.input}
+                value={selectedRoom}
+                onChange={handleRoomChange}
+                required
+              >
+                <option value="">Seleccione una habitación</option>
+                {availableRooms.map((room) => (
+                  <option key={room} value={room}>
+                    {room}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+          {selectedRoom !== '' && (
+            <Link to={`/habitacion${selectedRoom}`}>
+              <button className={style.hab}>Ver Habitación</button>
+            </Link>
+          )}
+          <button className={style.button}>Reservar ahora</button>
         </form>
       </div>
     </div>
