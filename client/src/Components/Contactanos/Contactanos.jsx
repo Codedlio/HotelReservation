@@ -35,7 +35,7 @@ function CentroDeAyuda() {
         </div>
         <div className={style.contactItem}>
           <FontAwesomeIcon icon={faEnvelope} className={style.contactIcon} />
-          <span className={style.contactLabel}>Correo electrónico:</span> info@hoteleterno.com
+          <span className={style.contactLabel}>Correo electrónico:</span> hoteltermaleterno@gmail.com
         </div>
         <div className={style.contactItem}>
           <FontAwesomeIcon icon={faMapMarkerAlt} className={style.contactIcon} />
