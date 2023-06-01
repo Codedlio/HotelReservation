@@ -1,5 +1,9 @@
 
-  
+  .container2{
+    
+    position: relative;
+    bottom: 480px;
+  }
   .title {
     
     font-size: 32px;

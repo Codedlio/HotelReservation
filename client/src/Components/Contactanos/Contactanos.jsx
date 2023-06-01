@@ -19,7 +19,9 @@ function CentroDeAyuda() {
   return (
     <div className={style.container}>
       <NavBar />
+      
       <PreguntasFrecuentes />
+      <div className={style.container2}>
       <h1 className={style.title}>Centro de Ayuda</h1>
 
       <div className={style.section}>
@@ -85,8 +87,9 @@ function CentroDeAyuda() {
           )}
         </div>
       </section>
-
+      </div>
       <FooterBar className={style.footer} />
+      
     </div>
   );
 }
