@@ -41,7 +41,10 @@
   font-weight: 700;
   transition: 1s;
   padding-bottom: 8px;
-  
+  text-decoration: none;
+}
+Link{
+  text-decoration: none;
 }
 
 .link:hover {
@@ -67,6 +70,7 @@
   letter-spacing: 1px;
   cursor: pointer;
   transition: 1s;
+  text-decoration: none;
 }
 
 .button:hover {

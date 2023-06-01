@@ -1,19 +1,23 @@
 
   
   .title {
-    text-align: center;
+    
     font-size: 32px;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
+    margin-top: 50px;
+    margin-left: 200px;
+    
   }
   
   .section {
-    margin-left: 100px;
+    margin-left: 200px;
     margin-bottom: 40px;
   }
   
   .sectionTitle {
     font-size: 24px;
-    margin-bottom: 10px;
+    margin-bottom: 30px;
+
   }
   
   .contactText {
@@ -47,16 +51,53 @@
   
   .contactButton {
     padding: 8px 16px;
-    background-color: #4CAF50;
+    background-color: #a34b49;
     color: #fff;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
-margin-bottom: 100px;  }
-  
-  .contactButton:hover {
-    background-color: #45a049;
+margin-bottom: 30px; 
+ }
+
+.contactButtonenviar {
+    padding: 8px 16px;
+    background-color: #a34b49;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+margin-bottom: 50px;  }
+
+.contactButtonreclamo{
+    padding: 8px 16px;
+    background-color: #a34b49;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+margin-bottom: 120px;
+margin-top: 40px;
+
+}
+.enviar{
+    padding: 8px 16px;
+    background-color: #d79090;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 10px;
+margin-bottom: 150px;
+}
+
+.enviar:hover{
+    background-color: #3c3939;
+}
+  .contactButtonenviar:hover {
+    background-color: #651408;
   }
   .footer{
     margin-top: 200px;
