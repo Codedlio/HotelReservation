@@ -62,7 +62,7 @@ const getPaqueteById = async (req,res) => {
 const postPaquete = async (req,res) => {
     const {nombre,arrIdHabitaciones,arrIdServicios,costo} = req.body;
 
-    if (!nombre || !arrIdHabitaciones || !arrIdServicios || !costo) {return res.status(400).send("Error. No se enviaron los datos necesarios para crear la habitacion")};
+    if (!nombre || !arrIdHabitaciones || !arrIdServicios || !costo) {return res.status(400).send("Error. No se enviaron los datos necesarios para crear el paquete")};
 
     try {
         const data = new Paquete ({nombre,habitaciones:arrIdHabitaciones,servicios:arrIdServicios,costo});
