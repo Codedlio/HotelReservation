@@ -30,7 +30,7 @@ const postHabitacion = async (req,res) => {
             for (const key of Object.keys(req.files)) {
               const file = req.files[key];
               const result = await uploadImage(file.tempFilePath);
-              data [key] =  result.secure_url
+              data.image1.push(result.secure_url) 
         
               await fs.unlink(file.tempFilePath);
             }
