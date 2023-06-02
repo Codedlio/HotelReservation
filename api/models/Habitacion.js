@@ -1,12 +1,7 @@
-
 const mongoose = require('mongoose');
 
-const imagenSchema = new mongoose.Schema({
-  url: { type: String, required: true },
-  // Otros campos relacionados con la imagen si es necesario
-});
-
 const habitacionSchema = new mongoose.Schema({
+  nombre: { type: Number, required: true },
   numero: { type: Number, required: true },
   tipo: { type: mongoose.Schema.Types.ObjectId, ref: 'Tipo_habitacion', required: true },
   descripción: { type: String },
