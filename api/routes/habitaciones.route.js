@@ -1,10 +1,12 @@
-const {getHabitaciones, postHabitacion, putHabitacion, deleteHabitacion} = require('../controllers/controllerHabitaciones');
+const {getHabitaciones, getHabitacionById, postHabitacion, putHabitacion, deleteHabitacion, getHabitacionById} = require('../controllers/controllerHabitaciones');
+const fileUpload = require ("express-fileupload");
 const express = require('express');
 const routerHabitaciones = express.Router();
 
 routerHabitaciones 
     .get('/', getHabitaciones)
-    .post('/', postHabitacion)
+    .get('/:id', getHabitacionById)
+    .post('/', fileUpload({ useTempFiles: true, tempFileDir: "./uploads" }), postHabitacion)
     .put('/:id', putHabitacion)
     .delete('/id', deleteHabitacion);
 

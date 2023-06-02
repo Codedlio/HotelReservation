@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
 
 const habitacionSchema = new mongoose.Schema({
+  nombre: { type: Number, required: true },
   numero: { type: Number, required: true },
   tipo: { type: mongoose.Schema.Types.ObjectId, ref: 'Tipo_habitacion', required: true },
-  image:{ secure_url: String, public_id: String },
+  image: { secure_url: String, public_id: String },
   descripción: { type: String },
   capacidad: { type: Number, required: true},
   precio: { type: Number, required: true },
