@@ -3,7 +3,7 @@ const Usuario= require('../models/Usuario');
 const bcrypt = require('bcrypt');
 const postRegistro =  async (req, res) => {
     try {
-      const { correo, contraseña, telefono, nombre } = req.body;
+      const { correo, contraseña, telefono, nombre,activo } = req.body;
       if (!correo || !contraseña || !telefono || !nombre) {
   return res.status(400).json({ mensaje: 'Faltan campos obligatorios' });
       }
