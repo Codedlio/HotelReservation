@@ -9,5 +9,4 @@ server.use(morgan("dev"));
 server.use(cors())
 server.use('/', routes);
 
-
 module.exports=server;
