@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Reservacion = require('../models/Reservacion');
 const Habitacion = require('../models/Habitacion');
-const Usuario = require('../models/User');
+const Usuario = require('../models/Usuario');
 
 const getReservations= async (req, res) => {
   // Obtener un cursor con todas las colecciones
