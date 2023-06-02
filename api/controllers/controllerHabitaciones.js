@@ -1,5 +1,3 @@
-const fs = require ('fs-extra');
-const {uploadImage}= require ('../cloudinary/cloudinary.js');
 const Habitacion = require('../models/Habitacion');
 const Tipo_habitacion = require('../models/Tipo_habitacion');
 
@@ -38,16 +36,6 @@ const postHabitacion = async (req,res) => {
 
     try {
         const data = new Habitacion ({nombre,numero,tipo:tipoId,descripcion,capacidad,precio,puntuacion});
-
-        if (req.files?.image) {
-            const result = await uploadImage(req.files.image.tempFilePath)
-            data.image = {
-              public_id: result.public_id,
-              secure_url: result.secure_url
-            }
-            await fs.unlink(req.files.image.tempFilePath)
-        }
-        
         return res.status(201).json(await data.save());
     } 
     catch (error) {
