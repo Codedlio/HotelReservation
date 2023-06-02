@@ -9,8 +9,8 @@ const getPaquetes = async (req,res) => {
         for(let paquete of paquetes) {
             let numerosHabitaciones = [];
             for (let habitacionId of paquete.habitaciones) {
-                const {numero} = await Habitacion.find({_id:habitacionId});
-                numerosHabitaciones.push(numero);
+                const {nombre} = await Habitacion.find({_id:habitacionId});
+                numerosHabitaciones.push(nombre);
             }
 
             let nombresServicios = [];
@@ -39,8 +39,8 @@ const getPaqueteById = async (req,res) => {
 
         let numerosHabitaciones = [];
         for (let habitacionId of paquete.habitaciones) {
-            const {numero} = await Habitacion.find({_id:habitacionId});
-            numerosHabitaciones.push(numero);
+            const {nombre} = await Habitacion.find({_id:habitacionId});
+            numerosHabitaciones.push(nombre);
         }
 
         let nombresServicios = [];
