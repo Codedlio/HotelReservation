@@ -17,7 +17,10 @@ const miSchema = new mongoose.Schema({
   reservation: {
     type: Date,
     
-  }
+  },
+  image1:{ secure_url: String, public_id: String },
+  image2:{ secure_url: String, public_id: String },
+  image3:{ secure_url: String, public_id: String },
 });
 
 const Hotel = mongoose.model('Hotel', miSchema);

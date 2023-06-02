@@ -7,7 +7,7 @@ routerReservation
     .get('/', getReservations)
     .post('/', postReservation)
     .put('/:id', putReservation)
-    .delete('/:id', deleteReservation);
+   .delete('/:id', deleteReservation);
 
 module.exports=routerReservation;
  
