@@ -16,12 +16,26 @@ const getHabitaciones = async (req,res) => {
     }
 };
 
-const postHabitacion = async (req,res) => {
-    const {nombre, tipoId, descripcion, capacidad, precio, puntuacion} = req.body;
-    if (!nombre || !tipoId || !descripcion || !capacidad || !precio || !puntuacion) {return res.status(400).send("Error. No se enviaron los datos necesarios para crear la habitacion")};
+const getHabitacionById = async (req,res) => {
+    let {id} = req.params;
 
     try {
-        const data = new Habitacion ({nombre,tipo:tipoId,descripcion,capacidad,precio,puntuacion});
+        let habitacion = await Habitacion.findOne({_id:id,activo:true});
+        if (!habitacion) {return res.status(400).send("La habitación no existe")};
+        let {nombre} = await Tipo_habitacion.findOne({_id:habitacion.tipo});
+        habitacion.tipo = nombre;
+    } 
+    catch (error) {
+        return res.status(500).send("Internal server error");
+    }
+};
+
+const postHabitacion = async (req,res) => {
+    const {nombre, numero, tipoId, descripcion, capacidad, precio, puntuacion} = req.body;
+    if (!nombre || !numero || !tipoId || !descripcion || !capacidad || !precio || !puntuacion) {return res.status(400).send("Error. No se enviaron los datos necesarios para crear la habitacion")};
+
+    try {
+        const data = new Habitacion ({nombre,numero,tipo:tipoId,descripcion,capacidad,precio,puntuacion});
         return res.status(201).json(await data.save());
     } 
     catch (error) {
@@ -75,4 +89,4 @@ const deleteHabitacion = async (req,res) => {
     }
 };
 
-module.exports = {getHabitaciones,postHabitacion,putHabitacion,deleteHabitacion};
+module.exports = {getHabitaciones,getHabitacionById,postHabitacion,putHabitacion,deleteHabitacion};
