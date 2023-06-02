@@ -7,7 +7,7 @@ import { store } from './Components/redux/store'; // Importa el store de Redux
 import App from './App';
 
 ReactDOM.render(
-  <Provider store={store}> {/* Pasa el store como prop al componente Provider */}
+  <Provider store={store}> 
     <BrowserRouter>
       <App />
     </BrowserRouter>
