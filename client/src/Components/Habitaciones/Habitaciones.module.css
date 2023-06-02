@@ -49,7 +49,9 @@ bottom: 80px;
   left: 400px;
   top: 80px;
 }
-
+.linksordenamiento:hover{
+  cursor: pointer;
+}
 .link {
     font-size: 15px;
   display: inline-block;
