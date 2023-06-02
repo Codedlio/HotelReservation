@@ -16,7 +16,10 @@ const miSchema = new mongoose.Schema({
   },
   reservation: {
     type: Date,
-    
+  },
+  image:{ 
+    secure_url: String,
+    public_id: String
   }
 });
 

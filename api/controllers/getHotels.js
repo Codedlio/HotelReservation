@@ -1,4 +1,7 @@
 const mongoose = require('mongoose');
+const fs = require ('fs-extra')
+const {uploadImage, deleteImage}= require ('../cloudinary/cloudinary.js')
+
 const Hotel= require('../models/Hotel')
 
 const getIdHotel =async (req, res) => {
@@ -28,8 +31,8 @@ const getAllCollections =async (req, res) => {
         }
   
 const postDataHotel= async (req, res) => {
-    const{location, status, room, reservation}=req.body
-    const data = new Hotel({
+    const {location, status, room, reservation}= req.body
+    const newHotel = new Hotel({
         location,
         status,
         room,
@@ -37,8 +40,17 @@ const postDataHotel= async (req, res) => {
     })
 
     try {
-        const dataToSave =  await data.save();
-        res.status(201).json(dataToSave)
+      if (req.files?.image) {
+        const result = await uploadImage(req.files.image.tempFilePath)
+        console.log(result)
+        newHotel.image = {
+          public_id: result.public_id,
+          secure_url: result.secure_url
+        }
+        await fs.unlink(req.files.image.tempFilePath)
+      }
+      const dateToSave =  await newHotel.save();
+      res.status(201).json(dateToSave)
     }
     catch (error) {
       if (error.name === 'ValidationError') {
@@ -53,7 +65,12 @@ const postDataHotel= async (req, res) => {
 
 const deleteHotel = async (req, res) => {
     try {
-      await Hotel.findByIdAndDelete(req.params.id);
+      const deleteHotel= await Hotel.findByIdAndDelete(req.params.id);
+
+      if (deleteHotel.image && deleteHotel.image.public_id) {
+        await deleteImage(deleteHotel.image.public_id);
+      } 
+
       res.status(200).json({ message: 'Hotel deleted successfully' });
     } catch (error) {
       res.status(400).json({ error: error.message });
