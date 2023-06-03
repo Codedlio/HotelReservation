@@ -1,6 +1,7 @@
 const auth = require('../config/firebase');
 const Usuario= require('../models/Usuario');
 const bcrypt = require('bcrypt');
+const { ObjectId } = require('mongoose').Types;
 const postRegistro =  async (req, res) => {
     try {
       const { correo, contraseña, telefono, nombre,activo } = req.body;
@@ -11,8 +12,13 @@ const postRegistro =  async (req, res) => {
       //   correo,
       //   contraseña
       //   });
-       // Crear documento de usuario en tu base de datos propia
-       const bcrypt = require('bcrypt');
+       
+   // Verificar si el correo ya existe en la base de datos
+   const usuarioExistente = await Usuario.findOne({ correo });
+   if (usuarioExistente) {
+     return res.status(400).json({ mensaje: 'El correo ya está registrado' });
+   }
+   // Crear documento de usuario en tu base de datos propia
        const saltRounds = 10;
        const hash = await bcrypt.hash(contraseña, saltRounds);
        const nuevoUsuario = new Usuario({
@@ -52,4 +58,68 @@ const  postLogin= async (req, res) => {
       res.status(500).json({ mensaje: 'Error al iniciar sesión' });
     }
   }
-  module.exports={postRegistro, postLogin};
+
+  const putUsuario =async (req, res) => {
+    
+      const { id } = req.params;
+      if (!ObjectId.isValid(id)) {
+        return res.status(400).json({ mensaje: 'ID de usuario inválido' });
+      }
+      const { correo, contraseña, telefono, nombre, activo } = req.body;
+  
+      if (!correo || !contraseña || !telefono || !nombre) {
+        return res.status(400).json({ mensaje: 'Faltan campos obligatorios' });
+      }
+  
+      const usuarioActualizado = {
+        nombre,
+        correo,
+        telefono,
+        activo,
+      };
+  
+      // Actualizar el documento de usuario en tu base de datos propia
+     try { 
+      await Usuario.findByIdAndUpdate(id, usuarioActualizado);
+  
+      res.status(200).json({ mensaje: 'Usuario actualizado exitosamente' });
+    } catch (error) {
+      console.error('Error al actualizar usuario:', error);
+      res.status(500).json({ mensaje: 'Error al actualizar usuario en la base de datos' });
+    }
+  };
+  const getUsuario=async (req, res) => {
+    try {
+      const { id } = req.params;
+      if (!ObjectId.isValid(id)) {
+        return res.status(400).json({ mensaje: 'ID de usuario inválido' });
+      }
+      // Obtener el documento de usuario en tu base de datos propia por su ID
+      const usuario = await Usuario.findById(id).select('-contraseña');
+  
+      if (!usuario) {
+        return res.status(404).json({ mensaje: 'Usuario no encontrado' });
+      }
+  
+      res.json(usuario);
+    } catch (error) {
+      console.error('Error al obtener usuario:', error);
+      res.status(500).json({ mensaje: 'Error al obtener usuario' });
+    }
+  }
+  const deleteUsuario= async (req, res) => {
+    try {
+      const { id } = req.params;
+      if (!ObjectId.isValid(id)) {
+        return res.status(400).json({ mensaje: 'ID de usuario inválido' });
+      }
+      // Eliminar el documento de usuario en tu base de datos propia
+      const usuario = await Usuario.findOneAndUpdate({_id: id, activo: true}, {activo: false});
+      if (!usuario) {return res.status(404).send("El usuario no existe o ya ha sido eliminado")};
+      res.status(200).json({ mensaje: 'Usuario eliminado exitosamente' });
+    } catch (error) {
+     
+      res.status(500).json({ mensaje: 'Error al eliminar usuario' });
+    }
+  }
+  module.exports={postRegistro, postLogin, deleteUsuario,getUsuario,putUsuario};
