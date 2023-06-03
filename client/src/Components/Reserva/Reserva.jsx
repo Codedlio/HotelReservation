@@ -82,18 +82,137 @@ function Reserva() {
     const total = adults + children;
 
     if (adults === 1) {
-      return ["Suite Canell (1 cama super king)", "Suite Licura (1 cama super king)"];
-    } else if (adults === 2 && children === 0) {
-      return ["Suite Canelo (1 cama super king)", "Suite Licura (1 cama super king)"];
-    } else if (adults === 3 && children === 0) {
-      return ["Suite Roma (2 camas super King)", "Villa Bosque (cama super king + 2 camas de 1 plaza)", "Villa Rio (cama super king + 3 camas de 1 plaza)"];
-    } else if (adults === 2 && children >= 1) {
-      return ["Suite Roma (2 camas super King)", "Villa Bosque (cama super king + 2 camas de 1 plaza)", "Villa Rio (cama super king + 3 camas de 1 plaza)","Villa Madrid (cama 2 Plazas + 3 camas de 1 plaza)","Villa Cedra (cama 2 Plazas + 3 camas de 1 plaza)", "Villa Madrid (cama 2 Plazas, 3 camas 1 plaza", "Villa Tilo (cama 2 Plazas + 3 camas de 1 plaza)", "Villa Arce (cama super king + 2 camas de 1 plaza)"];
-    } else if (adults === 4 && children === 0) {
-      return ["Suite Roma (2 camas super King)", "Villa Bosque (cama super king + 2 camas de 1 plaza)", "Villa Rio"];
-    } else if (adults >= 2 && total <= 7) {
-      return ["Villa Bosque (cama super king + 2 camas de 1 plaza)", "Villa Rio (cama super king + 3 camas de 1 plaza)","Villa Cedra (cama 2 Plazas + 3 camas de 1 plaza)", "Villa Madrid (cama 2 Plazas + 3 camas de 1 plaza)", "Villa Tilo (cama 2 Plazas + 3 camas de 1 plaza)", "Villa Arce (cama super king + 2 camas de 1 plaza)"];
-    } else {
+      return ["Suite Roma (2 camas super King)", "Suite Licura (1 cama super king)"];
+    } else if (adults === 2 ) {
+      return ["Suite Roma (2 camas super King)", "Suite Licura (1 cama super king)"];
+      
+    } else if (adults === 3 && children === 1 ) {
+      return [
+        
+        "Villa Arce (cama super king + 2 camas de 1 plaza)",
+        "Villa Tilo (cama 2 Plazas + 3 camas de 1 plaza)",
+        "Villa Cedra (cama 2 Plazas + 3 camas de 1 plaza)",
+        "Suite Canell (1 cama super king)"
+      ];
+    }else if (adults === 3  ) {
+      return [
+        
+        "Villa Arce (cama super king + 2 camas de 1 plaza)",
+        "Villa Tilo (cama 2 Plazas + 3 camas de 1 plaza)",
+        "Villa Cedra (cama 2 Plazas + 3 camas de 1 plaza)",
+        "Suite Canell (1 cama super king)"
+      ];
+    }else if (adults === 4 ) {
+      return [
+        
+        "Villa Arce (cama super king + 2 camas de 1 plaza)",
+        "Villa Tilo (cama 2 Plazas + 3 camas de 1 plaza)",
+        "Villa Cedra (cama 2 Plazas + 3 camas de 1 plaza)",
+        "Suite Canell (1 cama super king)"
+      ];
+    } 
+    else if (adults === 2 && children === 2 ) {
+      return [
+        
+        "Villa Arce (cama super king + 2 camas de 1 plaza)",
+        "Villa Tilo (cama 2 Plazas + 3 camas de 1 plaza)",
+        "Villa Cedra (cama 2 Plazas + 3 camas de 1 plaza)",
+        "Suite Canell (1 cama super king)"
+      ];
+    }else if (adults === 1 && children === 3 ) {
+      return [
+        
+        "Villa Arce (cama super king + 2 camas de 1 plaza)",
+        "Villa Tilo (cama 2 Plazas + 3 camas de 1 plaza)",
+        "Villa Cedra (cama 2 Plazas + 3 camas de 1 plaza)",
+        "Suite Canell (1 cama super king)"
+      ];
+    }else if (adults === 4 && children === 1) {
+      return [
+        "Villa Arce (cama super king + 2 camas de 1 plaza)",
+        "Villa Tilo (cama 2 Plazas + 3 camas de 1 plaza)",
+        "Villa Cedra (cama 2 Plazas + 3 camas de 1 plaza)",
+      ];
+    } else if (adults === 4 && children === 2) {
+      return [
+        "Villa Arce (cama super king + 2 camas de 1 plaza)",
+        "Villa Tilo (cama 2 Plazas + 3 camas de 1 plaza)",
+        "Villa Cedra (cama 2 Plazas + 3 camas de 1 plaza)",
+         "Villa Bosque (cama super king + 2 camas de 1 plaza)",
+        "Villa Rio (cama super king + 3 camas de 1 plaza)",
+        "Villa Madrid (cama 2 Plazas + 3 camas de 1 plaza)"
+      ];
+    } else if (adults === 4 && children === 3) {
+      return [
+         "Villa Bosque (cama super king + 2 camas de 1 plaza)",
+        "Villa Rio (cama super king + 3 camas de 1 plaza)",
+        "Villa Madrid (cama 2 Plazas + 3 camas de 1 plaza)"
+      ];
+    }else if (adults === 5 && children === 2) {
+      return [
+         "Villa Bosque (cama super king + 2 camas de 1 plaza)",
+        "Villa Rio (cama super king + 3 camas de 1 plaza)",
+        "Villa Madrid (cama 2 Plazas + 3 camas de 1 plaza)"
+      ];
+    }else if (adults === 6 && children === 1) {
+      return [
+         "Villa Bosque (cama super king + 2 camas de 1 plaza)",
+        "Villa Rio (cama super king + 3 camas de 1 plaza)",
+        "Villa Madrid (cama 2 Plazas + 3 camas de 1 plaza)"
+      ];
+    }else if (adults === 3 && children === 2) {
+      return [
+        "Villa Arce (cama super king + 2 camas de 1 plaza)",
+        "Villa Tilo (cama 2 Plazas + 3 camas de 1 plaza)",
+        "Villa Cedra (cama 2 Plazas + 3 camas de 1 plaza)",
+      ];
+    }  else if (adults === 2 && children === 3) {
+      return [
+        "Villa Arce (cama super king + 2 camas de 1 plaza)",
+        "Villa Tilo (cama 2 Plazas + 3 camas de 1 plaza)",
+        "Villa Cedra (cama 2 Plazas + 3 camas de 1 plaza)",
+      ];
+    }  else if (adults === 1 && children === 4) {
+      return [
+        "Villa Arce (cama super king + 2 camas de 1 plaza)",
+        "Villa Tilo (cama 2 Plazas + 3 camas de 1 plaza)",
+        "Villa Cedra (cama 2 Plazas + 3 camas de 1 plaza)",
+         "Villa Bosque (cama super king + 2 camas de 1 plaza)",
+        "Villa Rio (cama super king + 3 camas de 1 plaza)",
+        "Villa Madrid (cama 2 Plazas + 3 camas de 1 plaza)"
+      ];
+    } else if (adults === 5) {
+      return [
+        "Villa Arce (cama super king + 2 camas de 1 plaza)",
+        "Villa Tilo (cama 2 Plazas + 3 camas de 1 plaza)",
+        "Villa Cedra (cama 2 Plazas + 3 camas de 1 plaza)",
+         "Villa Bosque (cama super king + 2 camas de 1 plaza)",
+        "Villa Rio (cama super king + 3 camas de 1 plaza)",
+        "Villa Madrid (cama 2 Plazas + 3 camas de 1 plaza)"
+      ];
+    } else if (adults === 6) {
+      return [
+        "Villa Arce (cama super king + 2 camas de 1 plaza)",
+        "Villa Tilo (cama 2 Plazas + 3 camas de 1 plaza)",
+        "Villa Cedra (cama 2 Plazas + 3 camas de 1 plaza)",
+         "Villa Bosque (cama super king + 2 camas de 1 plaza)",
+        "Villa Rio (cama super king + 3 camas de 1 plaza)",
+        "Villa Madrid (cama 2 Plazas + 3 camas de 1 plaza)"
+      ];
+    }else if (adults === 7) {
+      return [
+        "Villa Arce (cama super king + 2 camas de 1 plaza)",
+        "Villa Tilo (cama 2 Plazas + 3 camas de 1 plaza)",
+        "Villa Cedra (cama 2 Plazas + 3 camas de 1 plaza)",
+         "Villa Bosque (cama super king + 2 camas de 1 plaza)",
+        "Villa Rio (cama super king + 3 camas de 1 plaza)",
+        "Villa Madrid (cama 2 Plazas + 3 camas de 1 plaza)"
+      ];
+    } else if (total >7) {
+      return [
+        
+      ];
+    }else {
       return [];
     }
   };
