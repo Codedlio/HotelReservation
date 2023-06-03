@@ -84,7 +84,7 @@ const postReservacion = async (req,res) => {
   const {usuarioId,arrIdHabitaciones,arrIdServicios,arrIdPaquetes,fechaInicio,fechaFin} = req.body;
 
   
-  if (!usuarioId || !arrIdHabitaciones || !arrIdServicios || !arrIdPaquetes || !fechaInicio || !fechaFin) {return res.status(400).send("Error. No se enviaron los datos necesarios para crear la reserva")};
+  if (!usuarioId || !fechaInicio || !fechaFin) {return res.status(400).send("Error. No se enviaron los datos necesarios para crear la reserva")};
   
   try {
     const usuario = await Usuario.findOne({_id:usuarioId,activo:true});
