@@ -15,6 +15,8 @@ import Reserva from './Components/Reserva/Reserva';
 import Paquetes from './Components/Paquetes/Paquetes';
 import Contacto from './Components/Contacto/Contacto';
 import Login from './Components/Login/Login';
+import ContenedorLogin from './Components/ContenedorLogin/ContenedorLogin';
+import Login2 from './Components/Login2/Login2'
 
 function App() {
   return (
@@ -33,7 +35,10 @@ function App() {
           <Route path="/reserva" element={<Reserva />} />
           <Route path="/paquetes" element={<Paquetes/>} />
           <Route path="/contacto" element={<Contacto/>} />
-          <Route path="/login" element={<Login/>} />
+          <Route path="/contenedor" element={<ContenedorLogin/>} />
+          <Route path="/registrarse" element={<Login/>} />
+          <Route path="/ingresar" element={<Login2/>} />
+
           <Route path="/" element={<Home />} />
         </Routes>
        
