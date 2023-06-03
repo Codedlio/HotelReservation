@@ -34,7 +34,7 @@ const getHabitacionById = async (req,res) => {
 
 const postHabitacion = async (req,res) => {
     const {nombre, numero, tipoId, descripcion, capacidad, precio, puntuacion} = req.body;
-    //if (!nombre || !numero || !tipoId || !descripcion || !capacidad || !precio || !puntuacion) {return res.status(400).send("Error. No se enviaron los datos necesarios para crear la habitacion")};
+    if (!nombre || !numero || !tipoId || !descripcion || !capacidad || !precio || !puntuacion) {return res.status(400).send("Error. No se enviaron los datos necesarios para crear la habitacion")};
 
     try {
         const data = new Habitacion ({nombre,numero,tipo:tipoId,descripcion,capacidad,precio,puntuacion});
