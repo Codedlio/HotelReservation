@@ -8,7 +8,6 @@ const getReservaciones= async (req, res) => {
     const reservaciones = await Reservacion.find({activo:true});
 
     for (let reservacion of reservaciones) {
-      let {correo} = await Usuario.findOne({_id: reservacion.usuario});
       
       let nombresHabitaciones = [];
       for (let habitacionId of reservacion.habitaciones) {
@@ -21,8 +20,7 @@ const getReservaciones= async (req, res) => {
         let {nombre} = await Servicio.findOne({_id:servicioId});
         nombresServicios.push(nombre);
       }
-
-      reservacion.usuario = correo;
+      
       reservacion.habitaciones = nombresHabitaciones;
       reservacion.servicios = nombresServicios;
     }
