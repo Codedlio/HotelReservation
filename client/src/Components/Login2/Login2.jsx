@@ -1,30 +1,19 @@
 import React, { useState } from 'react';
-import style from './Login.module.css';
+import style from './Login2.module.css';
 import { Link } from 'react-router-dom';
 
-
-function Reserva() {
-  const [nombre, setNombre] = useState('');
+function Login2() {
   const [correo, setCorreo] = useState('');
   const [contraseña, setContraseña] = useState('');
-  const [telefono, setTelefono] = useState('');
+  const [usuarioCreado, setUsuarioCreado] = useState(false);
   const [isOpen, setIsOpen] = useState(true);
-  const [usuarioCreado, setUsuarioCreado] = useState(false); // Estado para controlar si el usuario se ha creado exitosamente
-
-  const handleNombreChange = (e) => {
-    setNombre(e.target.value);
-  };
 
   const handleCorreoChange = (e) => {
     setCorreo(e.target.value);
   };
 
-  const handleContrasenaChange = (e) => {
+  const handleContraseñaChange = (e) => {
     setContraseña(e.target.value);
-  };
-
-  const handleTelefonoChange = (e) => {
-    setTelefono(e.target.value);
   };
 
   const handleClose = () => {
@@ -35,20 +24,16 @@ function Reserva() {
     e.preventDefault();
     // Aquí puedes realizar acciones con los datos enviados, como enviarlos a un servidor
     console.log('Datos enviados:', {
-      nombre,
       correo,
-      contraseña,
-      telefono
+      contraseña
     });
 
     // Envío de datos al servidor
-    fetch('http://localhost:3001/auth/registro', {
+    fetch('http://localhost:3001/auth/login', {
       method: 'POST',
       body: JSON.stringify({
-        nombre,
         correo,
-        contraseña,
-        telefono
+        contraseña
       }),
       headers: {
         'Content-Type': 'application/json'
@@ -73,24 +58,11 @@ function Reserva() {
         </button>
       </Link>
       <div className={style.tamano}>
-        <h3 className={style.title}>Crear Nueva Cuenta</h3>
+        <h3 className={style.title}>Ingresar</h3>
         {usuarioCreado && (
           <div className={style.mensajeExito}>Usuario creado con éxito</div>
         )}
         <form onSubmit={handleSubmit}>
-          <div className={style.formGroup}>
-            <label htmlFor="nombre" className={style.label}>
-              Nombre:
-            </label>
-            <input
-              type="text"
-              id="nombre"
-              className={style.input}
-              value={nombre}
-              onChange={handleNombreChange}
-              required
-            />
-          </div>
           <div className={style.formGroup}>
             <label htmlFor="correo" className={style.label}>
               Correo Electrónico:
@@ -113,20 +85,7 @@ function Reserva() {
               id="contraseña"
               className={style.input}
               value={contraseña}
-              onChange={handleContrasenaChange}
-              required
-            />
-          </div>
-          <div className={style.formGroup}>
-            <label htmlFor="telefono" className={style.label}>
-              Teléfono:
-            </label>
-            <input
-              type="tel"
-              id="telefono"
-              className={style.input}
-              value={telefono}
-              onChange={handleTelefonoChange}
+              onChange={handleContraseñaChange}
               required
             />
           </div>
@@ -139,4 +98,4 @@ function Reserva() {
   );
 }
 
-export default Reserva;
+export default Login2;
