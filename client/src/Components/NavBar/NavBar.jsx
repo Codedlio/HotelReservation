@@ -39,7 +39,7 @@ function NavBar() {
       <img className={style.imagen} src={imagen} alt="" />
       <Nav>
       <Link className={style.link} to='/'>Inicio</Link>
-      <Link className={style.link} to='/login'>Iniciar sesion</Link>
+      <Link className={style.link} to='/contenedor'>Iniciar sesion</Link>
       <Link className={style.link} to='/contacto'>Contacto</Link>
   
 <div className={style.dropdown} >
