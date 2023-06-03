@@ -1,5 +1,7 @@
 const Habitacion = require('../models/Habitacion');
 const Tipo_habitacion = require('../models/Tipo_habitacion');
+const {uploadImage }= require ('../cloudinary/cloudinary.js')
+const fs = require ('fs-extra')
 
 const getHabitaciones = async (req,res) => {
     try {
@@ -32,10 +34,21 @@ const getHabitacionById = async (req,res) => {
 
 const postHabitacion = async (req,res) => {
     const {nombre, numero, tipoId, descripcion, capacidad, precio, puntuacion} = req.body;
-    if (!nombre || !numero || !tipoId || !descripcion || !capacidad || !precio || !puntuacion) {return res.status(400).send("Error. No se enviaron los datos necesarios para crear la habitacion")};
+    //if (!nombre || !numero || !tipoId || !descripcion || !capacidad || !precio || !puntuacion) {return res.status(400).send("Error. No se enviaron los datos necesarios para crear la habitacion")};
 
     try {
         const data = new Habitacion ({nombre,numero,tipo:tipoId,descripcion,capacidad,precio,puntuacion});
+
+        if (req.files) {
+            for (const key of Object.keys(req.files)) {
+              const file = req.files[key];
+              const result = await uploadImage(file.tempFilePath);
+              data.image.push(result.secure_url) 
+        
+              await fs.unlink(file.tempFilePath);
+            }
+          }
+
         return res.status(201).json(await data.save());
     } 
     catch (error) {
