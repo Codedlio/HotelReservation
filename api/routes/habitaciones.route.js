@@ -1,4 +1,4 @@
-const {getHabitaciones, getHabitacionById, postHabitacion, putHabitacion, deleteHabitacion, getHabitacionById} = require('../controllers/controllerHabitaciones');
+const {getHabitaciones, getHabitacionById, postHabitacion, putHabitacion, deleteHabitacion} = require('../controllers/controllerHabitaciones');
 const express = require('express');
 const routerHabitaciones = express.Router();
 
@@ -9,4 +9,4 @@ routerHabitaciones
     .put('/:id', putHabitacion)
     .delete('/id', deleteHabitacion);
 
-// module.exports = routerHabitaciones;
+module.exports = routerHabitaciones;
