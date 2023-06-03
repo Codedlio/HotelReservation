@@ -1,15 +1,17 @@
 const mongoose = require('mongoose');
 
 const reservacionSchema = new mongoose.Schema({
-  habitacion: { type: mongoose.Schema.Types.ObjectId, ref: 'Habitacion', required: true },
+  usuario: { type: mongoose.Schema.Types.ObjectId, ref: 'Usuario', required: true },
+  habitaciones: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Habitacion'}],
+  servicios: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Servicio'}],
+  paquete: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Paquete'}],
   fechaInicio: { type: Date, required: true },
   fechaFin: { type: Date, required: true },
-  huesped: {
-    nombre: { type: String, required: true },
-    direccion: { type: String },
-    telefono: { type: String }
-  }
+  activo: { type: Boolean, default: true}
+  //Mas campos
 });
+
+// Reservacion.find({ user: userId })
 
 const Reservacion = mongoose.model('Reservacion', reservacionSchema);
 

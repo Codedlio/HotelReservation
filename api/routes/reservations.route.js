@@ -1,9 +1,13 @@
 
-const getReservations=require('../controllers/getReservations');
+const {getReservaciones,postReservacion,putReservacion, deleteReservacion} = require('../controllers/controllerReservations');
 const express =require('express')
 const routerReservation=express.Router()
 
-routerReservation.get('/', getReservations)
+routerReservation
+    .get('/', getReservaciones)
+    .post('/', postReservacion)
+    .put('/:id', putReservacion)
+    .delete('/:id', deleteReservacion);
 
- module.exports=routerReservation;
+module.exports=routerReservation;
  

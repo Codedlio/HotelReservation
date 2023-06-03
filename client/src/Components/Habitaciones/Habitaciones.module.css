@@ -31,9 +31,27 @@ bottom: 80px;
 .links {
   display: flex;
   flex-direction: column;
+  
   text-align: center;
 }
-
+.linksordenamiento{
+  font-size: 11px;
+  display: inline-block;
+  padding: 10px 20px;
+  margin-bottom: 47px; 
+  background-color: #913b23;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+  position: relative;
+  left: 400px;
+  top: 80px;
+}
+.linksordenamiento:hover{
+  cursor: pointer;
+}
 .link {
     font-size: 15px;
   display: inline-block;
@@ -60,6 +78,6 @@ bottom: 80px;
     top:22px;
     right: 10px;
     
-  max-width: 1200px;
+  max-width: 1500px;
   margin-left: 30px; 
 }

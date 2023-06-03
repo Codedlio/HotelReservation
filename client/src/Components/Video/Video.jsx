@@ -1,17 +1,17 @@
 import React from 'react';
 import style from './Video.module.css';
-import LazyLoad from 'react-lazyload';
+// import LazyLoad from 'react-lazyload';
 
 
 const VideoPlayer = () => {
   return (
     <div className={style.container}>
-        <LazyLoad>
+        {/* <LazyLoad>
             <video className={style.player} 
             // src={video}
              alt='' autoPlay muted />
             </LazyLoad>
-      
+       */}
       <div className={style.overlay}>
         <div className={style.overlayContent}>
           <h2>La experiencia de<br></br> Nombre te revitaliza!</h2>

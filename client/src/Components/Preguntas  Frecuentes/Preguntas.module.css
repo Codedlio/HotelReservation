@@ -1,0 +1,22 @@
+.container {
+    max-width: 600px; /* Ajusta el ancho máximo del contenedor del Accordion */
+    position: relative;
+    left: 700px;
+    top: 110px;
+    z-index: 1;
+    
+  }
+  
+  .question {
+    font-size: 16px; /* Ajusta el tamaño de fuente de las preguntas */
+  }
+  .question:hover{
+    color:grey;
+  }
+  
+  .answer {
+    font-size: 14px; /* Ajusta el tamaño de fuente de las respuestas */
+  }
+  .title{
+    font-size: 24px;
+  }
