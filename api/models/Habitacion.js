@@ -1,15 +1,15 @@
 const mongoose = require('mongoose');
 
 const habitacionSchema = new mongoose.Schema({
-  nombre: { type: Number, required: false },
-  numero: { type: Number, required: false },
-  //tipo: { type: mongoose.Schema.Types.ObjectId, ref: 'Tipo_habitacion', required: true },
+  nombre: { type: Number, required: true },
+  numero: { type: Number, required: true },
+  tipo: { type: mongoose.Schema.Types.ObjectId, ref: 'Tipo_habitacion', required: true },
   descripción: { type: String },
-  capacidad: { type: Number, required: false},
-  precio: { type: Number, required: false },
-  puntuacion: { type: Number, required: false},
-  disponible: { type: Boolean, default: false },
-  activo: { type: Boolean, default:false},
+  capacidad: { type: Number, required: true},
+  precio: { type: Number, required: true },
+  puntuacion: { type: Number, required: true},
+  disponible: { type: Boolean, default: true },
+  activo: { type: Boolean, default:true},
   image:[],
 
 });
