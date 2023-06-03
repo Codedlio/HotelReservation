@@ -1,5 +1,4 @@
 const Reservacion = require('../models/Reservacion');
-const Paquete = require('../models/Paquete');
 const Habitacion = require('../models/Habitacion');
 const Usuario = require('../models/Usuario');
 const Servicio = require('../models/Servicio');
