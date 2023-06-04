@@ -10,6 +10,8 @@ const habitacionSchema = new mongoose.Schema({
   puntuacion: { type: Number, required: true},
   disponible: { type: Boolean, default: true },
   activo: { type: Boolean, default:true},
+  image:[],
+
 });
 
 const Habitacion = mongoose.model('Habitacion', habitacionSchema);

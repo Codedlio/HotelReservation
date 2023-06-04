@@ -8,6 +8,8 @@ function Reserva() {
   const [children, setChildren] = useState('');
   const [selectedRoom, setSelectedRoom] = useState('');
   const [isOpen, setIsOpen] = useState(true);
+  const [roomPrice, setRoomPrice] = useState('');
+
 
     // Almacenar el hotel seleccionado en el almacenamiento local al cambiarlo
   useEffect(() => {
@@ -33,41 +35,53 @@ function Reserva() {
   const handleRoomChange = (e) => {
     const roomName = e.target.value;
     let roomId;
+    let price;
 
     switch (roomName) {
       case 'Suite Roma (2 camas super King)':
         roomId = 1;
+        price = "$290";
         break;
       case 'Suite Canell (1 cama super king)':
         roomId = 2;
+        price = "$350";
         break;
       case 'Suite Licura (1 cama super king)':
         roomId = 3;
+        price = "$290";
         break;
       case 'Villa Bosque (cama super king + 2 camas de 1 plaza)':
         roomId = 4;
+        price = "$700";
         break;
       case 'Villa Rio (cama super king + 3 camas de 1 plaza)':
         roomId = 5;
+        price = "$750";
         break;
         case 'Villa Arce (cama super king + 2 camas de 1 plaza)':
           roomId = 6;
+          price = "$500";
           break;
           case 'Villa Tilo (cama 2 Plazas + 3 camas de 1 plaza)' :
             roomId = 7;
+            price = "$550";
             break;
             case 'Villa Cedra (cama 2 Plazas + 3 camas de 1 plaza)':
               roomId = 8;
+              price = "$550";
               break;
               case 'Villa Madrid (cama 2 Plazas + 3 camas de 1 plaza)':
                 roomId = 9;
+                price = "$600";
                 break;
       default:
         roomId = '';
-        break;
+      price = '';
+      break;
     }
 
     setSelectedRoom(roomId);
+    setRoomPrice(price);
   };
 
   const handleClose = () => {
@@ -291,11 +305,13 @@ function Reserva() {
               </select>
             </div>
           )}
-          {selectedRoom !== '' && (
-            <Link to={`/habitacion${selectedRoom}`}>
-              <button className={style.hab}>Ver Habitación</button>
-            </Link>
-          )}
+         {selectedRoom !== '' && (
+  <Link to={`/habitacion${selectedRoom}`}>
+    <button className={style.hab}>Ver Habitación</button>
+    <p className={style.price}>Precio: {roomPrice}</p>
+  </Link>
+)}
+
           <button className={style.button}>Reservar ahora</button>
         </form>
       </div>
