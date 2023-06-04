@@ -1,5 +1,5 @@
 // reducer.js
-import { SET_ORDER_BY_NAME, SET_ORDER_BY_CAPACITY } from "./action";
+import { SET_ORDER_BY_NAME, SET_ORDER_BY_CAPACITY,GET_PAQUETES } from "./action";
 
 const initialState = {
   orderByName: '',
@@ -25,7 +25,10 @@ const initialState = {
     { nombre: 'Villa Tilo', capacidad: 6 },
     { nombre: 'Villa Cedra', capacidad: 6 },
     { nombre: 'Villa Madrid', capacidad: 7 }
-  ]
+  ],
+  allpaquetes: [],
+  orderPaquetes: [],
+  filterPaquetes: []
 };
 
 const reducer = (state = initialState, action) => {
@@ -66,8 +69,13 @@ const reducer = (state = initialState, action) => {
         ...state,
         orderByCapacity: action.payload,
         habitacionesData: sortedArrByCapacity
-      };
-
+      };      
+      case GET_PAQUETES: return {
+          ...state,
+          allpaquetes: action.payload ,           
+          orderPaquetes: action.payload,//aca lleno 
+          filterPaquetes: action.payload
+      }
     default:
       return state;
   }

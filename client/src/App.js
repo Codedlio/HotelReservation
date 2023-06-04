@@ -13,10 +13,15 @@ import VillaCedra from './Components/Habitaciones/Habitacion8/VillaCedra';
 import VillaMadrid from './Components/Habitaciones/Habitacion9/VillaMadrid';
 import Reserva from './Components/Reserva/Reserva';
 import Paquetes from './Components/Paquetes/Paquetes';
+import Historia from './Components/Historia/Historia';
+import InfoHotel from './Components/InfoHotel/Infohotel';
+import Filosofia from './Components/Filosofia/Filosofia';
+import Bienestar from './Components/Bienestar/Bienestar';
 import Contacto from './Components/Contacto/Contacto';
 import Login from './Components/Login/Login';
 import ContenedorLogin from './Components/ContenedorLogin/ContenedorLogin';
 import Login2 from './Components/Login2/Login2'
+
 
 function App() {
   return (
@@ -38,6 +43,11 @@ function App() {
           <Route path="/contenedor" element={<ContenedorLogin/>} />
           <Route path="/registrarse" element={<Login/>} />
           <Route path="/ingresar" element={<Login2/>} />
+          
+          <Route path="/historia" element={<Historia />} />
+          <Route path="/infoHotel" element={<InfoHotel />} />
+          <Route path="/filosofia" element={<Filosofia />} />
+          <Route path="/bienestar" element={<Bienestar />} />
 
           <Route path="/" element={<Home />} />
         </Routes>

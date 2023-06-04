@@ -30,8 +30,10 @@
     flex-direction: column;
     padding-left: 150px;
     text-align: left;
-    color: #fff;
-    background-color: rgba(0, 0, 0, 0.5);
+    /* color: #fff; */
+    color: black;
+    background-color: rgb(220, 193, 193)
+     /* rgba(0, 0, 0, 0.5); */
   }
   
   .overlay h2 {

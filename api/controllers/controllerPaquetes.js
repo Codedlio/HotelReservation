@@ -2,9 +2,13 @@ const Paquete = require('../models/Paquete');
 const Habitacion = require('../models/Habitacion');
 const Servicio = require('../models/Servicio');
 
+
 const getPaquetes = async (req,res) => {
     try {
         const paquetes = await Paquete.find({activo:true});
+        console.log("getPaquetes-paquetes-activos");
+        console.log(paquetes);
+        
 
         for(let paquete of paquetes) {
             let numerosHabitaciones = [];
@@ -22,8 +26,8 @@ const getPaquetes = async (req,res) => {
             paquete.habitaciones = numerosHabitaciones;
             paquete.servicios = nombresServicios;
         }
-
-        return res.status(200).json(paquetes);
+        return res.status(200).json(paquete);
+        
     } 
     catch (error) {
         return res.status(500).send(error.message);

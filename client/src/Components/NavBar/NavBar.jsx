@@ -6,23 +6,6 @@ import { faInstagram, faFacebook, faTwitter } from "@fortawesome/free-brands-svg
 import imagen from './logo hotel.png';
 import { Link } from "react-router-dom";
 
-// function NavBar() {
-//   return (
-//     <div className={style.contenedor}>
-//       <img className={style.imagen} src={imagen} alt="" />
-      
-//       <a className={style.link}><Link to='/'><p>Inicio</p></Link></a>
-//       <a className={style.link}><p>Iniciar sesion</p></a>
-//       <a className={style.link}><p>Contacto</p></a>
-//       <p><a className={style.icon} href="#"><FontAwesomeIcon icon={faInstagram} /></a></p>
-//         <p><a className={style.icon} href="#"><FontAwesomeIcon icon={faFacebook} /></a></p>
-//         <p><a className={style.icon} href="#"><FontAwesomeIcon icon={faTwitter} /></a></p>
-//       <Link  className={style.button} to='/reserva'>RESERVAR AHORA</Link>
-//     </div>
-//   );
-// }
-
-
 function NavBar() {
   const handleInstagramClick = () => {
     window.open('https://www.instagram.com/hoteleternotermal/', '_blank');
@@ -39,10 +22,16 @@ function NavBar() {
       <img className={style.imagen} src={imagen} alt="" />
       <Nav>
       <Link className={style.link} to='/'>Inicio</Link>
-      <Link className={style.link} to='/contenedor'>Iniciar sesion</Link>
-      <Link className={style.link} to='/contacto'>Contacto</Link>
-  
-<div className={style.dropdown} >
+      <div className={style.dropdown} >      
+      <Link  className={style.link} >El hotel</Link>
+      <div className={style.dropdowncontent}>        
+        <Link  className={style.link} to='/historia'>Historia</Link>
+        <Link  className={style.link} to='/filosofia'>Filosofía</Link>
+        <Link  className={style.link} to='/bienestar'>Bienestar</Link>
+      
+      </div>
+    </div>
+    <div className={style.dropdown} >
   
   <Link  className={style.link} to='/paquetes'>Paquetes</Link>
   <div className={style.dropdowncontent}>
@@ -51,7 +40,8 @@ function NavBar() {
     <a href="#">5 días y 4 noches</a>
   </div>
 </div>
-   
+      <Link className={style.link} to='/contenedor'>Iniciar sesion</Link>
+      <Link className={style.link} to='/contacto'>Contacto</Link>
     <Nav.Item  className={style.icon} href="#" onClick={handleInstagramClick}><FontAwesomeIcon icon={faInstagram} /></Nav.Item>
     <Nav.Item  className={style.icon} href="#" onClick={handleTwitterClick} ><FontAwesomeIcon icon={faFacebook} /></Nav.Item>
     <Nav.Item  className={style.icon} href="#" onClick={handleTwitterClick}><FontAwesomeIcon icon={faTwitter} /></Nav.Item>
