@@ -1,0 +1,71 @@
+.titulo{
+   margin-right: 170px;
+}
+.container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    margin-left: 150px;
+    margin-bottom: 70px;
+  }
+  
+  
+  .buttonContainer2 {
+    /* Estilos para los contenedores individuales de los botones */
+   
+    padding: 10px;
+    margin-bottom: 10px;
+    width: fit-content;
+    margin-left:20px;
+    position: relative;
+   
+    height: 290px;
+    background-color:rgb(242, 241, 241) ;
+     box-shadow: 0 0 8px 0.5px rgba(20, 17, 17, 0.3);
+     transition: background-color 0.5s ease;
+  }
+  .buttonContainer1{
+    
+    padding: 10px;
+    margin-bottom: 10px;
+    width: fit-content;
+    margin-left:20px;
+    position: relative;
+   
+    height: 290px;
+    background-color:rgb(242, 241, 241) ;
+     box-shadow: 0 0 8px 0.5px rgba(20, 17, 17, 0.3);
+     transition: background-color 0.5s ease;
+  }
+  .buttonContainer1:hover{
+    background-color: rgb(176, 173, 173);
+  }
+  .buttonContainer2:hover{
+    background-color: rgb(176, 173, 173);
+  }
+  .text{
+    text-decoration: none;
+    color: black;
+    font-family: Arial, sans-serif;
+    padding-top: 20px;
+  }
+  .button {
+    /* Estilos para cada botón */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    text-decoration: none;
+  }
+  
+  .button img {
+    /* Estilos para las imágenes */
+    width: 240px; /* Ajusta el tamaño según tus necesidades */
+    height: auto;
+  }
+  
+  .button span {
+    /* Estilos para el texto */
+  }
+  

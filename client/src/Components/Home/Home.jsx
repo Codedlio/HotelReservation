@@ -11,6 +11,7 @@ import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
 import FooterBar from "../FooterBar/FooterBar";
 import Caracteristicas from "../Caracteristicas/Caracteristicas";
 import Imagenes from "../Imagenes/Imagenes";
+import Servicios from "../Servicios/Servicios/Servicios";
 
 function Home() {
   const [isVisible, setIsVisible] = useState(false);
@@ -58,7 +59,7 @@ function Home() {
       >
         <FontAwesomeIcon icon={faArrowUp} />
       </Link>
-
+      <Servicios />
       <FooterBar />
     </div>
   );

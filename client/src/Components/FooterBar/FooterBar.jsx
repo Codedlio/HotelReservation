@@ -24,7 +24,7 @@ function FooterBar() {
         <a href="#" onClick={handleInstagramClick}><FontAwesomeIcon icon={faInstagram} /></a>
         <a href="#" onClick={handleTwitterClick}><FontAwesomeIcon icon={faTwitter} /></a>
       </div>
-      <p className={style.footerText}>&copy; 2023 Nombre Hotel. Todos los derechos reservados.</p>
+      <p className={style.footerText}>&copy; 2023 Eterno Hotel. Todos los derechos reservados.</p>
     </div>
   );
 }
