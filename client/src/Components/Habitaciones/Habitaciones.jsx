@@ -59,6 +59,12 @@ class Habitaciones extends React.Component {
           <option value="desc">Mayor a Menor</option>
         </select>
 
+        <select className={style.linksordenamiento} value={this.props.orderByCapacity} onChange={(e) => this.props.setOrderByCapacity(e.target.value)}>
+          <option value="">Ordenar por Precio</option>
+          <option value="asc">Menor a Mayor</option>
+          <option value="desc">Mayor a Menor</option>
+        </select>
+
         <div className={style.content}>
           <img src={imagen} alt="Habitación" className={style.image} />
           <div className={style.links}>

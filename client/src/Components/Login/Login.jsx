@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import style from './Login.module.css';
 import { Link } from 'react-router-dom';
+import NavBar from '../NavBar/NavBar';
 
-
-function Reserva() {
+function Login() {
   const [nombre, setNombre] = useState('');
   const [correo, setCorreo] = useState('');
   const [contraseña, setContraseña] = useState('');
@@ -139,4 +139,4 @@ function Reserva() {
   );
 }
 
-export default Reserva;
+export default Login;
