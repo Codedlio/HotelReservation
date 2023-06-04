@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import style from './Reserva.module.css';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
-
+  
 
 function Reserva() {
   const [adults, setAdults] = useState('');

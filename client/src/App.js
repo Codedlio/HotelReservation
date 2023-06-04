@@ -17,6 +17,8 @@ import Contacto from './Components/Contacto/Contacto';
 import Login from './Components/Login/Login';
 import ContenedorLogin from './Components/ContenedorLogin/ContenedorLogin';
 import Login2 from './Components/Login2/Login2'
+import Trekking from './Components/Servicios/Trekking/Trekking';
+import Piscinatermal from './Components/Servicios/Piscinatermal/Piscinatermal';
 
 function App() {
   return (
@@ -38,6 +40,9 @@ function App() {
           <Route path="/contenedor" element={<ContenedorLogin/>} />
           <Route path="/registrarse" element={<Login/>} />
           <Route path="/ingresar" element={<Login2/>} />
+          <Route path="/piscina" element={<Piscinatermal/>} />
+          <Route path="/trekking" element={ <Trekking/>} />
+          
 
           <Route path="/" element={<Home />} />
         </Routes>
