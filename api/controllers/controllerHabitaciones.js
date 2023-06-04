@@ -26,6 +26,7 @@ const getHabitacionById = async (req,res) => {
         if (!habitacion) {return res.status(400).send("La habitación no existe")};
         let {nombre} = await Tipo_habitacion.findOne({_id:habitacion.tipo});
         habitacion.tipo = nombre;
+        return res.status(200).json(habitacion);
     } 
     catch (error) {
         return res.status(500).send("Internal server error");
@@ -33,18 +34,20 @@ const getHabitacionById = async (req,res) => {
 };
 
 const postHabitacion = async (req,res) => {
-    const {nombre, numero, tipoId, descripcion, capacidad, precio, puntuacion} = req.body;
+    let {nombre, numero, tipoId, descripcion, capacidad, precio, puntuacion} = req.body;
     if (!nombre || !numero || !tipoId || !descripcion || !capacidad || !precio || !puntuacion) {return res.status(400).send("Error. No se enviaron los datos necesarios para crear la habitacion")};
 
     try {
+        numero = Number(numero);
+        capacidad = Number(capacidad);
+        precio = Number(precio);
+        puntuacion = Number(puntuacion);
         const data = new Habitacion ({nombre,numero,tipo:tipoId,descripcion,capacidad,precio,puntuacion});
-
         if (req.files) {
             for (const key of Object.keys(req.files)) {
-              const file = req.files[key];
-              const result = await uploadImage(file.tempFilePath);
-              data.image.push(result.secure_url) 
-        
+                const file = req.files[key];
+                const result = await uploadImage(file.tempFilePath);
+              data.image.push(result.secure_url)
               await fs.unlink(file.tempFilePath);
             }
           }
@@ -58,27 +61,28 @@ const postHabitacion = async (req,res) => {
         if (error.name === 'MongoError' && error.code === 11000) {
         return res.status(500).send('Duplicate key error');
         }
-        return res.status(500).send('Internal server error');
+        return res.status(400).send(error.message);
     }
 };
 
 const putHabitacion = async (req,res) => {
     const {id} = req.params;
-    const {nombre, tipoId, descripcion, capacidad, precio, puntuacion, disponible} = req.body;
-    if (!nombre || !tipoId || !descripcion || !capacidad || !precio || !puntuacion || disponible === undefined) {return res.status(400).send("Error. No se enviaron los datos necesarios para actualizar")};
+    let {nombre, numero, tipoId, descripcion, capacidad, precio, puntuacion, disponible} = req.body;
 
-    try {
-        const habitacion = await Habitacion.findOne({_id:id,activo:true});
+    if (!nombre || !numero || !tipoId || !descripcion || !capacidad || !precio || !puntuacion || disponible === undefined) {return res.status(400).send("Error. No se enviaron los datos necesarios para actualizar")};
+    try { 
+        let habitacion = await Habitacion.findOne({_id:id,activo:true});
         if (!habitacion) {return res.status(400).send("La habitación no existe")};
 
         habitacion.nombre = nombre;
+        habitacion.numero = numero;
         habitacion.tipo = tipoId;
         habitacion.descripcion = descripcion;
         habitacion.capacidad = capacidad;
         habitacion.precio = precio;
         habitacion.puntuacion = puntuacion;
-        habitacion.disponible = disponible;
-        return res.status(200).json(await habitacion.save());
+        let savedData = await habitacion.save()
+        return res.status(200).json(savedData);
     } 
     catch (error) {
         return res.status(500).send('Internal server error');
