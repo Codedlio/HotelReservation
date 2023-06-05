@@ -56,23 +56,24 @@ const handleSubmit = (e) => {
     checkIn: e.target['check-in'].value,
     checkOut: e.target['check-out'].value,
   };
+  console.log(data);
 
-  fetch('http://localhost:3001/reservations', {
+  fetch('http://localhost:3001/reservation', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(data),
   })
-    .then((response) => response.json())
-    .then((data) => {
-      // Manejar la respuesta de la API si es necesario
-      console.log(data);
-    })
-    .catch((error) => {
-      // Manejar errores en la solicitud
-      console.error('Error:', error);
-    });
+  .then(response => {
+    // Manejar la respuesta del servidor
+    if (response.ok) {
+      console.log("quedo"); 
+    }
+  })
+  .catch(error => {
+    // Manejar errores
+  });
 };
 
   const handleRoomChange = (e) => {
