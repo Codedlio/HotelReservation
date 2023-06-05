@@ -8,6 +8,7 @@ function Reserva() {
   const [adults, setAdults] = useState('');
   const [children, setChildren] = useState('');
   const [selectedRoom, setSelectedRoom] = useState('');
+  const [selectedRoom1, setSelectedRoom1] = useState('');
   const [isOpen, setIsOpen] = useState(true);
   const [roomPrice, setRoomPrice] = useState('');
   const [email, setEmail] = useState('');
@@ -26,10 +27,17 @@ function Reserva() {
       setSelectedRoom(storedSelectedRoom);
     }
   }, []);
+  useEffect(() => {
+    const storedSelectedRoom1 = localStorage.getItem('selectedRoom1');
+    if (storedSelectedRoom1) {
+      setSelectedRoom1(storedSelectedRoom1);
+    }
+  }, []);
 
   const handleAdultsChange = (e) => {
     setAdults(parseInt(e.target.value));
   };
+
 
   const handleChildrenChange = (e) => {
     setChildren(parseInt(e.target.value));
@@ -43,7 +51,7 @@ const handleSubmit = (e) => {
   const data = {
     adults,
     children,
-    selectedRoom,
+    selectedRoom1,
     email,
     checkIn: e.target['check-in'].value,
     checkOut: e.target['check-out'].value,
@@ -116,6 +124,7 @@ const handleSubmit = (e) => {
     }
 
     setSelectedRoom(roomId);
+    setSelectedRoom1(roomName); 
     setRoomPrice(price);
   };
 
@@ -341,7 +350,7 @@ const handleSubmit = (e) => {
               <select
                 id="roomName"
                 className={style.input}
-                value={selectedRoom}
+                value={selectedRoom1}
                 onChange={handleRoomChange}
                 required
               >
