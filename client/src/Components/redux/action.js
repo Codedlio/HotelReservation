@@ -1,7 +1,7 @@
 // action.js
 export const SET_ORDER_BY_NAME = "SET_ORDER_BY_NAME";
 export const SET_ORDER_BY_CAPACITY = "SET_ORDER_BY_CAPACITY";
-export const SET_ORDER_BY_PRICE = "SET_ORDER_BY_PRICE";
+// export const SET_ORDER_BY_PRICE = "SET_ORDER_BY_PRICE";
 
 export const setOrderByName = (orderType) => {
   return {
@@ -16,9 +16,9 @@ export const setOrderByCapacity = (orderType) => {
     payload: orderType
   };
 };
-export const setOrderByPrice = (orderType) => {
-  return {
-    type: SET_ORDER_BY_PRICE,
-    payload: orderType
-  };
-};
+// export const setOrderByPrice = (orderType) => {
+//   return {
+//     type: SET_ORDER_BY_PRICE,
+//     payload: orderType
+//   };
+// };

@@ -3,27 +3,30 @@ import { Link } from "react-router-dom";
 import style from "./Habitaciones.module.css";
 import imagen from './habitacion.jpg';
 import { connect } from 'react-redux';
-import { setOrderByName, setOrderByCapacity } from '../redux/action';
+import { setOrderByName, setOrderByCapacity, setOrderByPrice } from '../redux/action';
 
 const mapStateToProps = (state) => {
   return {
     orderByName: state.orderByName,
     orderByCapacity: state.orderByCapacity,
-    habitacionesData: state.habitacionesData
+    orderByPrice: state.orderByPrice,
+    habitacionesData: state.habitacionesData,
+    // habitacionesPrecio: state.habitacionesPrecio,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     setOrderByName: (orderType) => dispatch(setOrderByName(orderType)),
-    setOrderByCapacity: (orderType) => dispatch(setOrderByCapacity(orderType))
+    setOrderByCapacity: (orderType) => dispatch(setOrderByCapacity(orderType)),
+    // setOrderByPrice: (orderType) => dispatch(setOrderByPrice(orderType))
   };
 };
 
 class Habitaciones extends React.Component {
   render() {
     const habitacionesFiltradas = this.props.habitacionesData.slice();
-    
+
     // Filtrar y ordenar las habitaciones según el estado de ordenamiento por nombre
     if (this.props.orderByName === 'asc') {
       habitacionesFiltradas.sort((a, b) => a.nombre.localeCompare(b.nombre));
@@ -37,6 +40,13 @@ class Habitaciones extends React.Component {
     } else if (this.props.orderByCapacity === 'desc') {
       habitacionesFiltradas.sort((a, b) => b.capacidad - a.capacidad);
     }
+
+    // // Filtrar y ordenar las habitaciones según el estado de ordenamiento por precio
+    // if (this.props.orderByPrice === 'asc') {
+    //   habitacionesFiltradas.sort((a, b) => a.Precio - b.Precio);
+    // } else if (this.props.orderByPrice === 'desc') {
+    //   habitacionesFiltradas.sort((a, b) => b.Precio - a.Precio);
+    // }
 
     // Renderizar los enlaces de las habitaciones filtradas
     const habitacionLinks = habitacionesFiltradas.map((habitacion, index) => (
@@ -59,11 +69,11 @@ class Habitaciones extends React.Component {
           <option value="desc">Mayor a Menor</option>
         </select>
 
-        <select className={style.linksordenamiento} value={this.props.orderByCapacity} onChange={(e) => this.props.setOrderByCapacity(e.target.value)}>
+        {/* <select className={style.linksordenamiento} value={this.props.orderByPrice} onChange={(e) => this.props.setOrderByPrice(e.target.value)}>
           <option value="">Ordenar por Precio</option>
           <option value="asc">Menor a Mayor</option>
           <option value="desc">Mayor a Menor</option>
-        </select>
+        </select> */}
 
         <div className={style.content}>
           <img src={imagen} alt="Habitación" className={style.image} />

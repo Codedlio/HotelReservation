@@ -17,7 +17,7 @@ const initialState = {
     { nombre: 'Villa Madrid' }
   ],
   habitacionesData: [
-    { nombre: 'Suite Roca', capacidad: 2 },
+    { nombre: 'Suite Roca', capacidad: 2, },
     { nombre: 'Suite Canelo', capacidad: 4 },
     { nombre: 'Suite Liucura', capacidad: 2 },
     { nombre: 'Villa Bosque', capacidad: 7 },
@@ -27,17 +27,17 @@ const initialState = {
     { nombre: 'Villa Cedra', capacidad: 6 },
     { nombre: 'Villa Madrid', capacidad: 7 }
   ],
-  habitacionesPrecio: [
-    { nombre: 'Suite Roca', Precio: 290 },
-    { nombre: 'Suite Canelo', Precio: 350 },
-    { nombre: 'Suite Liucura', Precio: 290 },
-    { nombre: 'Villa Bosque', Precio: 700 },
-    { nombre: 'Villa Rio', Precio: 750 },
-    { nombre: 'Villa Arce', Precio: 500 },
-    { nombre: 'Villa Tilo', Precio: 550 },
-    { nombre: 'Villa Cedra', Precio: 550 },
-    { nombre: 'Villa Madrid', Precio: 600 },
-  ]
+  // habitacionesPrecio: [
+  //   { nombre: 'Suite Roca', Precio: 290 },
+  //   { nombre: 'Suite Canelo', Precio: 350 },
+  //   { nombre: 'Suite Liucura', Precio: 290 },
+  //   { nombre: 'Villa Bosque', Precio: 700 },
+  //   { nombre: 'Villa Rio', Precio: 750 },
+  //   { nombre: 'Villa Arce', Precio: 500 },
+  //   { nombre: 'Villa Tilo', Precio: 550 },
+  //   { nombre: 'Villa Cedra', Precio: 550 },
+  //   { nombre: 'Villa Madrid', Precio: 600 },
+  // ]
 };
 
 const reducer = (state = initialState, action) => {
@@ -79,24 +79,24 @@ const reducer = (state = initialState, action) => {
         orderByCapacity: action.payload,
         habitacionesData: sortedArrByCapacity
       };
-      case SET_ORDER_BY_PRICE:
-        let sortedArrByPrice;
-        if (action.payload === 'asc') {
-          sortedArrByPrice = state.habitacionesPrecio
-            .slice()
-            .sort((a, b) => a.Precio - b.Precio);
-        } else if (action.payload === 'desc') {
-          sortedArrByPrice = state.habitacionesPrecio
-            .slice()
-            .sort((a, b) => b.Precio - a.Precio);
-        } else {
-          sortedArrByPrice = state.habitacionesPrecio;
-        }
-        return {
-          ...state,
-          orderByPrice: action.payload,
-          habitacionesPrecio: sortedArrByPrice
-        };
+      // case SET_ORDER_BY_PRICE:
+      //   let sortedArrByPrice;
+      //   if (action.payload === 'asc') {
+      //     sortedArrByPrice = state.habitacionesPrecio
+      //       .slice()
+      //       .sort((a, b) => a.Precio - b.Precio);
+      //   } else if (action.payload === 'desc') {
+      //     sortedArrByPrice = state.habitacionesPrecio
+      //       .slice()
+      //       .sort((a, b) => b.Precio - a.Precio);
+      //   } else {
+      //     sortedArrByPrice = state.habitacionesPrecio;
+      //   }
+      //   return {
+      //     ...state,
+      //     orderByPrice: action.payload,
+      //     habitacionesPrecio: sortedArrByPrice
+      //   };
 
     default:
       return state;
