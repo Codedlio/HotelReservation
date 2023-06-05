@@ -6,13 +6,16 @@ import Habitacion2 from './Components/Habitaciones/Habitacion2/Habitacion2.jsx';
 import Habitacion3 from './Components/Habitaciones/Habitacion3/Habitacion3.jsx'
 import Habitacion4 from './Components/Habitaciones/Habitacion4/Habitacion4.jsx'
 import Habitacion5 from './Components/Habitaciones/Habitacion5/Habitacion5.jsx'
-
 import VillaArce from './Components/Habitaciones/Habitacion6/VillaArce.jsx'
 import VillaTilo from './Components/Habitaciones/Habitacion7/VillaTilo.jsx' 
 import VillaCedra from './Components/Habitaciones/Habitacion8/VillaCedra';
 import VillaMadrid from './Components/Habitaciones/Habitacion9/VillaMadrid';
 import Reserva from './Components/Reserva/Reserva';
 import Paquetes from './Components/Paquetes/Paquetes';
+import Historia from './Components/Historia/Historia';
+import InfoHotel from './Components/InfoHotel/Infohotel';
+import Filosofia from './Components/Filosofia/Filosofia';
+import Bienestar from './Components/Bienestar/Bienestar';
 import Contacto from './Components/Contacto/Contacto';
 import Login from './Components/Login/Login';
 import ContenedorLogin from './Components/ContenedorLogin/ContenedorLogin';
@@ -42,6 +45,10 @@ function App() {
           <Route path="/ingresar" element={<Login2/>} />
           <Route path="/piscina" element={<Piscinatermal/>} />
           <Route path="/trekking" element={ <Trekking/>} />
+          <Route path="/historia" element={<Historia />} />
+          <Route path="/infoHotel" element={<InfoHotel />} />
+          <Route path="/filosofia" element={<Filosofia />} />
+          <Route path="/bienestar" element={<Bienestar />} />
           
 
           <Route path="/" element={<Home />} />
