@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import styles from "./Servicios.module.css";
 import image1 from './imagenes/image1.png'
 import image2 from './imagenes/image2.jpg'
+import image3 from  "./imagenes/image3.jpg"
 
 const Servicios = () => {
   return (
@@ -21,6 +22,14 @@ const Servicios = () => {
         <Link to="/trekking" className={styles.button}>
           <img src={image1} alt="Imagen 2" />
           <span className={styles.text}>Trekking</span>
+        </Link>
+      </div>
+      <div className={styles.buttonContainer2}>
+        <Link to="/yoga" className={styles.button}>
+          <img src={image3} alt="Imagen 2" />
+          <span className={styles.text}>Yoga en el <br></br>
+          fondo de la naturaleza
+        </span>
         </Link>
       </div>
     </div>
