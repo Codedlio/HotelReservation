@@ -1,5 +1,5 @@
 // reducer.js
-import { SET_ORDER_BY_NAME, SET_ORDER_BY_CAPACITY, SET_ORDER_BY_PRICE, GET_PAQUETES, SET_USUARIO, DELETE_USUARIO, GET_HABITACIONES} from "./action";
+import { SET_ORDER_BY_NAME, SET_ORDER_BY_CAPACITY, SET_ORDER_BY_PRICE, GET_PAQUETES,SET_CURRENT_PAGE, SET_USUARIO, DELETE_USUARIO, GET_HABITACIONES} from "./action";
 
 const initialState = {
   orderByName: '',
@@ -51,6 +51,7 @@ const initialState = {
   allpaquetes: [],
   orderPaquetes: [],
   filterPaquetes: [],
+  set_Current_Page: [],
   usuario: undefined,
   gethabitaciones: []
 };
@@ -94,6 +95,11 @@ const reducer = (state = initialState, action) => {
         orderByCapacity: action.payload,
         habitacionesData: sortedArrByCapacity
       };
+      case SET_CURRENT_PAGE:
+  return {
+    ...state,
+    currentPage: action.payload
+  };
       // case SET_ORDER_BY_PRICE:
       //   let sortedArrByPrice;
       //   if (action.payload === 'asc') {
