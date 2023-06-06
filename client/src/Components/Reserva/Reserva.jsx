@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import style from './Reserva.module.css';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
   
 
 function Reserva() {
@@ -11,9 +12,8 @@ function Reserva() {
   const [selectedRoom1, setSelectedRoom1] = useState('');
   const [isOpen, setIsOpen] = useState(true);
   const [roomPrice, setRoomPrice] = useState('');
-  const [email, setEmail] = useState('');
 
-
+  const usuario = useSelector(state => state.usuario);
 
     // Almacenar el hotel seleccionado en el almacenamiento local al cambiarlo
   useEffect(() => {
@@ -42,17 +42,14 @@ function Reserva() {
   const handleChildrenChange = (e) => {
     setChildren(parseInt(e.target.value));
   };
-  const handleEmailChange = (e) => {
-  setEmail(e.target.value);
-};
 
 const handleSubmit = (e) => {
   e.preventDefault();
   const data = {
     adults,
     children,
+    email:usuario,
     selectedRoom1,
-    email,
     checkIn: e.target['check-in'].value,
     checkOut: e.target['check-out'].value,
   };
@@ -356,17 +353,6 @@ const handleSubmit = (e) => {
         <h3 className={style.title}>Reserva tu estadía</h3>
         <form onSubmit={handleSubmit}>
         <div className={style.formGroup}>
-  <label htmlFor="email" className={style.label}>
-    Correo electrónico:
-  </label>
-  <input
-    type="email"
-    id="email"
-    className={style.input}
-    value={email}
-    onChange={handleEmailChange}
-    required
-  />
 </div>
 
           <div className={style.formGroup}>

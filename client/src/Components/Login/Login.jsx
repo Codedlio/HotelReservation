@@ -1,54 +1,53 @@
 import React, { useState } from 'react';
 import style from './Login.module.css';
 import { Link } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
+import validate from './validate';
 import NavBar from '../NavBar/NavBar';
 
 function Login() {
-  const [nombre, setNombre] = useState('');
-  const [correo, setCorreo] = useState('');
-  const [contraseña, setContraseña] = useState('');
-  const [telefono, setTelefono] = useState('');
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(true);
   const [usuarioCreado, setUsuarioCreado] = useState(false); // Estado para controlar si el usuario se ha creado exitosamente
 
-  const handleNombreChange = (e) => {
-    setNombre(e.target.value);
-  };
+  const [form,setForm] = useState({
+    nombre: "",
+    correo: "",
+    contraseña: "",
+    telefono: ""
+  });
 
-  const handleCorreoChange = (e) => {
-    setCorreo(e.target.value);
-  };
+  const [validatePass, setValidatePass] = useState("");
 
-  const handleContrasenaChange = (e) => {
-    setContraseña(e.target.value);
-  };
+  const [errors, setErrors] = useState({count: 1});
 
-  const handleTelefonoChange = (e) => {
-    setTelefono(e.target.value);
+  function changeHandler(e){  
+    const property = e.target.name;
+    const value = e.target.value;
+    setForm({...form, [property]:value});
+    setErrors(validate({...form, [property]:value}));
+    return;
   };
 
   const handleClose = () => {
     setIsOpen(false);
   };
 
+  const handlerValidatePasswordChange = (e) => {
+    setValidatePass(e.target.value)
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // Aquí puedes realizar acciones con los datos enviados, como enviarlos a un servidor
-    console.log('Datos enviados:', {
-      nombre,
-      correo,
-      contraseña,
-      telefono
-    });
-
     // Envío de datos al servidor
     fetch('http://localhost:3001/auth/registro', {
       method: 'POST',
       body: JSON.stringify({
-        nombre,
-        correo,
-        contraseña,
-        telefono
+        nombre: form.nombre,
+        correo: form.correo,
+        contraseña: form.contraseña,
+        telefono: form.telefono
       }),
       headers: {
         'Content-Type': 'application/json'
@@ -58,11 +57,23 @@ function Login() {
         // Manejar la respuesta del servidor
         if (response.ok) {
           setUsuarioCreado(true); // Actualizar el estado para indicar que el usuario se ha creado exitosamente
+          navigate("/ingresar");
         }
       })
       .catch(error => {
         // Manejar errores
+        alert("Se produjo un error: " + error.message);
       });
+
+      if (usuarioCreado) {
+        setForm({
+          nombre: "",
+          correo: "",
+          contraseña: "",
+          telefono: ""
+        });
+        setErrors({count: 1});
+      }
   };
 
   return (
@@ -74,9 +85,7 @@ function Login() {
       </Link>
       <div className={style.tamano}>
         <h3 className={style.title}>Crear Nueva Cuenta</h3>
-        {usuarioCreado && (
-          <div className={style.mensajeExito}>Usuario creado con éxito</div>
-        )}
+        {usuarioCreado && <div className={style.mensajeExito}>Usuario creado con éxito</div>}
         <form onSubmit={handleSubmit}>
           <div className={style.formGroup}>
             <label htmlFor="nombre" className={style.label}>
@@ -84,12 +93,13 @@ function Login() {
             </label>
             <input
               type="text"
-              id="nombre"
+              name="nombre"
               className={style.input}
-              value={nombre}
-              onChange={handleNombreChange}
-              required
+              value={form.nombre}
+              onChange={changeHandler}
+              
             />
+            {errors.nombre && <p>{errors.nombre}</p>}
           </div>
           <div className={style.formGroup}>
             <label htmlFor="correo" className={style.label}>
@@ -97,12 +107,13 @@ function Login() {
             </label>
             <input
               type="email"
-              id="correo"
+              name="correo"
               className={style.input}
-              value={correo}
-              onChange={handleCorreoChange}
-              required
+              value={form.correo}
+              onChange={changeHandler}
+              
             />
+            {errors.correo && <p>{errors.correo}</p>}
           </div>
           <div className={style.formGroup}>
             <label htmlFor="contraseña" className={style.label}>
@@ -110,12 +121,26 @@ function Login() {
             </label>
             <input
               type="password"
-              id="contraseña"
+              name="contraseña"
               className={style.input}
-              value={contraseña}
-              onChange={handleContrasenaChange}
-              required
+              value={form.contraseña}
+              onChange={changeHandler}
+              
             />
+            {errors.contraseña && <p>{errors.contraseña}</p>}
+          </div>
+          <div className={style.formGroup}>
+            <label htmlFor="validarContraseña" className={style.label}>
+              Validar contraseña:
+            </label>
+            <input
+              type="password"
+              name="validarContraseña"
+              className={style.input}
+              value={validatePass}
+              onChange={handlerValidatePasswordChange}
+            />
+            {validatePass !== form.contraseña && <p>Las contraseñas no son iguales</p>}
           </div>
           <div className={style.formGroup}>
             <label htmlFor="telefono" className={style.label}>
@@ -123,16 +148,23 @@ function Login() {
             </label>
             <input
               type="tel"
-              id="telefono"
+              name="telefono"
               className={style.input}
-              value={telefono}
-              onChange={handleTelefonoChange}
-              required
+              value={form.telefono}
+              onChange={changeHandler}
+            
             />
+            {errors.telefono && <p>{errors.telefono}</p>}
           </div>
-          <button type="submit" className={style.button}>
-            Enviar
-          </button>
+          {errors.count < 1 && validatePass === form.contraseña ? (
+						<button type="submit" className={style.button}>
+							Enviar
+						</button>
+					) : (
+						<button type="submit" disabled className={style.button}>
+							Enviar
+						</button>
+					)}
         </form>
       </div>
     </div>
