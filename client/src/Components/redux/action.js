@@ -4,8 +4,10 @@ export const SET_ORDER_BY_NAME = "SET_ORDER_BY_NAME";
 export const SET_ORDER_BY_CAPACITY = "SET_ORDER_BY_CAPACITY";
 export const SET_ORDER_BY_PRICE = "SET_ORDER_BY_PRICE";
 export const GET_PAQUETES = "GET_PAQUETES";
+export const GET_HABITACIONES = "GET_HABITACIONES";
 export const SET_USUARIO = "SET_USUARIO";
 export const DELETE_USUARIO = "DELETE_USUARIO";
+export const ERROR = "ERROR"; 
 
 export const setOrderByName = (orderType) => {
   return {
@@ -36,7 +38,37 @@ export const getPaquetes = () => {
         payload: response})
   }
 };
-
+export const getHabitaciones = () => {
+  return async function (dispatch) {
+    
+    try {
+      
+      
+        const storedData = window.sessionStorage.getItem("allHabitaciones");
+          if (storedData) {
+            const data=JSON.parse(storedData)
+        return dispatch({
+          type: GET_HABITACIONES,
+          payload: data,
+        }); 
+        }
+        
+        const {data} = await axios.get("http://localhost:3001/habitacion");
+        window.sessionStorage.setItem("allHabitaciones", JSON.stringify(data));
+        
+        return dispatch({
+          type: GET_HABITACIONES,
+          payload: data,
+        });
+       
+    } catch (error) {
+      return dispatch({
+        type: ERROR,
+        payload: error,
+      });
+    }
+  };
+};
 export const setUsuario = (correo) => {
   return {type:SET_USUARIO, payload: correo}  
 };

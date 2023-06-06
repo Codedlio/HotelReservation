@@ -72,9 +72,9 @@ function NavBar() {
         <Nav.Item className={style.icon} href="#" onClick={handleInstagramClick}><FontAwesomeIcon icon={faInstagram} /></Nav.Item>
         <Nav.Item className={style.icon} href="#" onClick={handleFacebookClick} ><FontAwesomeIcon icon={faFacebook} /></Nav.Item>
         <Nav.Item className={style.icon} href="#" onClick={handleTwitterClick}><FontAwesomeIcon icon={faTwitter} /></Nav.Item>
-        {usuario !== undefined && 
+       
           <Link className={style.button} to='/reserva'>RESERVAR AHORA</Link>
-        }
+        
       </Nav>
     </div>
   );
