@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import style from './Reserva.module.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useEffect} from 'react';
 import { useSelector,useDispatch } from 'react-redux';
 import { getHabitaciones } from '../redux/action';
 
 
 function Reserva() {
+  const navigate = useNavigate();
   const [adults, setAdults] = useState('');
   const [children, setChildren] = useState('');
   const [selectedRoom, setSelectedRoom] = useState('');
@@ -52,14 +53,21 @@ function Reserva() {
 
 const handleSubmit = (e) => {
   e.preventDefault();
+  
   const data = {
-    usuarioCorreo:usuario,
-    arrHabitacion:[],
+    usuario:usuario,
+    usuarioCorreo:getAllHabitaciones.correo,
+    arrHabitacion:[selectedRoom],
     fechaInicio: e.target['check-in'].value,
     fechaFin: e.target['check-out'].value
   };
-  console.log(data);
-
+  //console.log(data);
+    if (data.fechaInicio>data.fechaFin) {
+    alert('La fecha de salida debe ser posterior a la fecha de entrada');
+    data.fechaFin= ""
+  
+  }else{
+    if(usuario){
   fetch('http://localhost:3001/reservation', {
     method: 'POST',
     headers: {
@@ -76,6 +84,15 @@ const handleSubmit = (e) => {
   .catch(error => {
     // Manejar errores
   });
+}else {
+      window.sessionStorage.setItem("dataReservation", JSON.stringify(data));
+      alert('Ingrese a su cuenta para continuar...')
+      navigate("/contenedor");
+      }
+  }
+  
+
+  
 };
 
   const handleRoomChange = (e) => {
@@ -208,7 +225,7 @@ const handleSubmit = (e) => {
          {selectedRoom !== '' && (
   <Link className={style.linkkk} to={`/habitacion${selectedRoom}`}>
     <button className={style.hab}>Ver Habitación</button>
-    <p className={style.price}>Precio: {roomPrice}</p>
+    <h5 className={style.price}>Precio:${roomPrice}</h5>
   </Link>
 )}
 
