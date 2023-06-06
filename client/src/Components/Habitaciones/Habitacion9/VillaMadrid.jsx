@@ -12,9 +12,29 @@ import image5 from './imagenes/image5.jpg'
 import style from './VillaMadrid.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBed, faMoneyBill, faPersonBooth  } from '@fortawesome/free-solid-svg-icons';
+import { useDispatch, useSelector } from 'react-redux';
+import Paginado from '../../Paginate/Paginate';
+import { set_Currents_Page } from '../../redux/action';
+import { useEffect } from 'react';
 
 const Habitacion1 = () => {
   const [index, setIndex] = useState(0);
+  
+  const dispatch = useDispatch();
+  const habitaciones = useSelector((state) => state.set_Current_Page); // Cambiar "state.set_Current_Page" por el nombre correcto
+ 
+  const [currentPage, setCurrentPage] = useState(9);
+  const habsPerPage = 1;
+  const indexofLastRoom = currentPage * habsPerPage;
+  const indexofFirstRoom = indexofLastRoom - habsPerPage;
+  const visibleHabitaciones = habitaciones.slice(indexofFirstRoom, indexofLastRoom);
+
+ 
+
+  useEffect(() => {
+    dispatch(set_Currents_Page(currentPage));
+  }, [dispatch, currentPage]);
+
 
   const handleSelect = (selectedIndex, e) => {
     setIndex(selectedIndex);
@@ -180,7 +200,7 @@ const Habitacion1 = () => {
         
         </section>
         <div className={style.containerlink}><a className={style.linka} href="#">Ver disponibilidad</a></div>
-        
+        <Paginado gamesPerPage={habsPerPage} habitaciones={habitaciones.length} paginado={setCurrentPage} currentPage={currentPage} />
         <FooterBar className={style.footer} />
       
       
