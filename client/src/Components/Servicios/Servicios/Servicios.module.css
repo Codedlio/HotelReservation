@@ -1,12 +1,12 @@
 .titulo{
-   margin-right: 170px;
+   margin-right: 70px;
 }
 .container {
     display: flex;
     flex-direction: row;
     align-items: center;
     text-align: center;
-    margin-left: 150px;
+    margin-left: 75px;
     margin-bottom: 70px;
   }
   
