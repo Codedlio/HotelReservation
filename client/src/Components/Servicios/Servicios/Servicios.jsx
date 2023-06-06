@@ -4,6 +4,7 @@ import styles from "./Servicios.module.css";
 import image1 from './imagenes/image1.png'
 import image2 from './imagenes/image2.jpg'
 import image3 from  "./imagenes/image3.jpg"
+import image4 from  "./imagenes/image4.jpg"
 
 const Servicios = () => {
   return (
@@ -29,6 +30,14 @@ const Servicios = () => {
           <img src={image3} alt="Imagen 2" />
           <span className={styles.text}>Yoga en el <br></br>
           fondo de la naturaleza
+        </span>
+        </Link>
+      </div>
+      <div className={styles.buttonContainer2}>
+        <Link to="/natacion" className={styles.button}>
+          <img src={image4} alt="Imagen 2" />
+          <span className={styles.text}>Clases de<br></br>
+          natacion
         </span>
         </Link>
       </div>

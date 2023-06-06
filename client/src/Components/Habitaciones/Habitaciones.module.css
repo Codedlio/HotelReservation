@@ -8,17 +8,11 @@
   position: relative;
 bottom: 80px;
   padding-left: 40px;
+  margin-bottom: 80px;
  
 }
 
-.title {
-    font-family: "Roboto", sans-serif;
-    font-size: 25px;
-    margin-bottom: 50px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
+
 
 .content {
   display: flex;
@@ -28,12 +22,7 @@ bottom: 80px;
   
 }
 
-.links {
-  display: flex;
-  flex-direction: column;
-  
-  text-align: center;
-}
+
 .linksordenamiento{
   font-size: 11px;
   display: inline-block;
@@ -48,13 +37,62 @@ bottom: 80px;
   position: relative;
   left: 400px;
   top: 80px;
+  margin-left: 10px;
 }
 .linksordenamiento:hover{
   cursor: pointer;
 }
+.searchInput {
+  font-size: 11px;
+  display: inline-block;
+  padding: 10px 20px;
+  margin-bottom: 47px;
+  margin-left: 10px;
+  color: #000; /* Modificado: cambiar el color del texto a negro */
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+  position: relative;
+  left: 400px;
+  top: 80px;
+  text-align: center;
+}
+.title {
+
+  font-family: "Roboto", sans-serif;
+  font-size: 25px;
+
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+ 
+  
+  background-color: #cecaca; /* Agregado: agregar fondo para que el texto sea visible */
+  padding: 10px; /* Agregado: agregar un poco de espacio alrededor del texto */
+  z-index: 1;
+
+  
+  display: inline-block;
+  padding: 10px 20px;
+
+  
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+  position: relative;
+  
+ bottom: 650px;
+  right: 250px;
+  margin-left: 30px;
+  
+  
+}
 .link {
     font-size: 15px;
-  display: inline-block;
+ 
   padding: 10px 20px;
   margin-bottom: 47px; 
   background-color: #913b23;
@@ -63,6 +101,12 @@ bottom: 80px;
   font-weight: bold;
   border-radius: 4px;
   transition: background-color 0.3s;
+  display: flex;
+  flex-direction: column;
+  margin-left: 30px;
+  margin-top: 10px;
+  text-align: center;
+  width: 200px;
 }
 
 .link:hover {
@@ -79,6 +123,10 @@ bottom: 80px;
     right: 10px;
     
   max-width: 1700px;
-  margin-left: 30px; 
+   
+  margin-top: 450px;
+  margin-bottom: 450px;
+  margin-right: 60px;
+  width: 70%;
 }
 
