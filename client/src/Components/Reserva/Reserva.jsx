@@ -118,6 +118,26 @@ const handleSubmit = (e) => {
                 roomId = 9;
                 price = "$600";
                 break;
+                case 'Villa Lavanda (cama 2 Plazas + 3 camas de 1 plaza)':
+                roomId = 10;
+                price = "$640";
+                break;
+                case 'Villa Mosqueta (cama 2 Plazas + 3 camas de 1 plaza)':
+                roomId = 11;
+                price = "$640";
+                break;
+                case 'Villa Anacay (cama 2 Plazas + 3 camas de 1 plaza)':
+                roomId = 12;
+                price = "$640";
+                break;
+                case 'Villa Playa (cama 2 Plazas + 3 camas de 1 plaza)':
+                roomId = 13;
+                price = "$695";
+                break;
+                case 'Villa Troncos (cama 2 Plazas + 3 camas de 1 plaza)':
+                roomId = 14;
+                price = "$680";
+                break;
       default:
         roomId = '';
       price = '';
@@ -167,7 +187,16 @@ const handleSubmit = (e) => {
         "Villa Arce (cama super king + 2 camas de 1 plaza)",
         "Villa Tilo (cama 2 Plazas + 3 camas de 1 plaza)",
         "Villa Cedra (cama 2 Plazas + 3 camas de 1 plaza)",
-        "Suite Canell (1 cama super king)"
+        "Suite Canell (1 cama super king)",
+        'Villa Lavanda (cama 2 Plazas + 3 camas de 1 plaza)',
+        'Villa Mosqueta (cama 2 Plazas + 3 camas de 1 plaza)',
+        'Villa Anacay (cama 2 Plazas + 3 camas de 1 plaza)',
+        'Villa Playa (cama 2 Plazas + 3 camas de 1 plaza)',
+        'Villa Troncos (cama 2 Plazas + 3 camas de 1 plaza)',
+
+
+
+        
       ];
     } 
     else if (adults === 2 && children === 2 ) {
@@ -176,7 +205,12 @@ const handleSubmit = (e) => {
         "Villa Arce (cama super king + 2 camas de 1 plaza)",
         "Villa Tilo (cama 2 Plazas + 3 camas de 1 plaza)",
         "Villa Cedra (cama 2 Plazas + 3 camas de 1 plaza)",
-        "Suite Canell (1 cama super king)"
+        "Suite Canell (1 cama super king)",
+        'Villa Lavanda (cama 2 Plazas + 3 camas de 1 plaza)',
+        'Villa Mosqueta (cama 2 Plazas + 3 camas de 1 plaza)',
+        'Villa Anacay (cama 2 Plazas + 3 camas de 1 plaza)',
+        'Villa Playa (cama 2 Plazas + 3 camas de 1 plaza)',
+        'Villa Troncos (cama 2 Plazas + 3 camas de 1 plaza)',
       ];
     }else if (adults === 1 && children === 3 ) {
       return [
@@ -184,13 +218,23 @@ const handleSubmit = (e) => {
         "Villa Arce (cama super king + 2 camas de 1 plaza)",
         "Villa Tilo (cama 2 Plazas + 3 camas de 1 plaza)",
         "Villa Cedra (cama 2 Plazas + 3 camas de 1 plaza)",
-        "Suite Canell (1 cama super king)"
+        "Suite Canell (1 cama super king)",
+        'Villa Lavanda (cama 2 Plazas + 3 camas de 1 plaza)',
+        'Villa Mosqueta (cama 2 Plazas + 3 camas de 1 plaza)',
+        'Villa Anacay (cama 2 Plazas + 3 camas de 1 plaza)',
+        'Villa Playa (cama 2 Plazas + 3 camas de 1 plaza)',
+        'Villa Troncos (cama 2 Plazas + 3 camas de 1 plaza)',
       ];
     }else if (adults === 4 && children === 1) {
       return [
         "Villa Arce (cama super king + 2 camas de 1 plaza)",
         "Villa Tilo (cama 2 Plazas + 3 camas de 1 plaza)",
-        "Villa Cedra (cama 2 Plazas + 3 camas de 1 plaza)",
+        "Villa Cedra (cama 2 Plazas + 3 camas de 1 plaza)",,
+        'Villa Lavanda (cama 2 Plazas + 3 camas de 1 plaza)',
+        'Villa Mosqueta (cama 2 Plazas + 3 camas de 1 plaza)',
+        'Villa Anacay (cama 2 Plazas + 3 camas de 1 plaza)',
+        'Villa Playa (cama 2 Plazas + 3 camas de 1 plaza)',
+        'Villa Troncos (cama 2 Plazas + 3 camas de 1 plaza)'
       ];
     } else if (adults === 4 && children === 2) {
       return [
@@ -199,7 +243,8 @@ const handleSubmit = (e) => {
         "Villa Cedra (cama 2 Plazas + 3 camas de 1 plaza)",
          "Villa Bosque (cama super king + 2 camas de 1 plaza)",
         "Villa Rio (cama super king + 3 camas de 1 plaza)",
-        "Villa Madrid (cama 2 Plazas + 3 camas de 1 plaza)"
+        "Villa Madrid (cama 2 Plazas + 3 camas de 1 plaza)",
+        
       ];
     } else if (adults === 4 && children === 3) {
       return [
@@ -224,12 +269,23 @@ const handleSubmit = (e) => {
         "Villa Arce (cama super king + 2 camas de 1 plaza)",
         "Villa Tilo (cama 2 Plazas + 3 camas de 1 plaza)",
         "Villa Cedra (cama 2 Plazas + 3 camas de 1 plaza)",
+        'Villa Lavanda (cama 2 Plazas + 3 camas de 1 plaza)',
+        'Villa Mosqueta (cama 2 Plazas + 3 camas de 1 plaza)',
+        'Villa Anacay (cama 2 Plazas + 3 camas de 1 plaza)',
+        'Villa Playa (cama 2 Plazas + 3 camas de 1 plaza)',
+        'Villa Troncos (cama 2 Plazas + 3 camas de 1 plaza)'
+
       ];
     }  else if (adults === 2 && children === 3) {
       return [
         "Villa Arce (cama super king + 2 camas de 1 plaza)",
         "Villa Tilo (cama 2 Plazas + 3 camas de 1 plaza)",
         "Villa Cedra (cama 2 Plazas + 3 camas de 1 plaza)",
+        'Villa Lavanda (cama 2 Plazas + 3 camas de 1 plaza)',
+        'Villa Mosqueta (cama 2 Plazas + 3 camas de 1 plaza)',
+        'Villa Anacay (cama 2 Plazas + 3 camas de 1 plaza)',
+        'Villa Playa (cama 2 Plazas + 3 camas de 1 plaza)',
+        'Villa Troncos (cama 2 Plazas + 3 camas de 1 plaza)'
       ];
     }  else if (adults === 1 && children === 4) {
       return [
@@ -238,7 +294,12 @@ const handleSubmit = (e) => {
         "Villa Cedra (cama 2 Plazas + 3 camas de 1 plaza)",
          "Villa Bosque (cama super king + 2 camas de 1 plaza)",
         "Villa Rio (cama super king + 3 camas de 1 plaza)",
-        "Villa Madrid (cama 2 Plazas + 3 camas de 1 plaza)"
+        "Villa Madrid (cama 2 Plazas + 3 camas de 1 plaza)",
+        'Villa Lavanda (cama 2 Plazas + 3 camas de 1 plaza)',
+        'Villa Mosqueta (cama 2 Plazas + 3 camas de 1 plaza)',
+        'Villa Anacay (cama 2 Plazas + 3 camas de 1 plaza)',
+        'Villa Playa (cama 2 Plazas + 3 camas de 1 plaza)',
+        'Villa Troncos (cama 2 Plazas + 3 camas de 1 plaza)',
       ];
     } else if (adults === 5) {
       return [
@@ -247,7 +308,12 @@ const handleSubmit = (e) => {
         "Villa Cedra (cama 2 Plazas + 3 camas de 1 plaza)",
          "Villa Bosque (cama super king + 2 camas de 1 plaza)",
         "Villa Rio (cama super king + 3 camas de 1 plaza)",
-        "Villa Madrid (cama 2 Plazas + 3 camas de 1 plaza)"
+        "Villa Madrid (cama 2 Plazas + 3 camas de 1 plaza)",
+        'Villa Lavanda (cama 2 Plazas + 3 camas de 1 plaza)',
+        'Villa Mosqueta (cama 2 Plazas + 3 camas de 1 plaza)',
+        'Villa Anacay (cama 2 Plazas + 3 camas de 1 plaza)',
+        'Villa Playa (cama 2 Plazas + 3 camas de 1 plaza)',
+        'Villa Troncos (cama 2 Plazas + 3 camas de 1 plaza)'
       ];
     } else if (adults === 6) {
       return [
