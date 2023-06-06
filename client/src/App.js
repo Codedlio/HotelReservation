@@ -28,6 +28,7 @@ import Login2 from './Components/Login2/Login2'
 import Trekking from './Components/Servicios/Trekking/Trekking';
 import Piscinatermal from './Components/Servicios/Piscinatermal/Piscinatermal';
 import Yoga from './Components/Yoga/Yoga'
+import Natacion from './Components/Servicios/Natacion/Natacion'
 
 function App() {
   return (
@@ -61,6 +62,7 @@ function App() {
           <Route path="/filosofia" element={<Filosofia />} />
           <Route path="/bienestar" element={<Bienestar />} />
           <Route path="/yoga" element={<Yoga />} />
+          <Route path="/natacion" element={<Natacion />} />
           
 
           <Route path="/" element={<Home />} />
