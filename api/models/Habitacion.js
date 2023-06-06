@@ -12,7 +12,10 @@ const habitacionSchema = new mongoose.Schema({
   activo: { type: Boolean, default:true},
   image: { type: Array },
 
+
 });
+
+
 
 const Habitacion = mongoose.model('Habitacion', habitacionSchema);
 

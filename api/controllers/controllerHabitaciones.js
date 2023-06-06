@@ -7,10 +7,10 @@ const getHabitaciones = async (req,res) => {
     try {
         const habitaciones = await Habitacion.find({activo:true});
 
-        for (let habitacion of habitaciones) {
-            const {nombre} = await Tipo_habitacion.findOne({_id:habitacion.tipo});
-            habitacion.tipo = nombre;
-        }
+        // for (let habitacion of habitaciones) {
+        //     const {nombre} = await Tipo_habitacion.findOne({_id:habitacion.tipo});
+        //     habitacion.tipo = nombre;
+        // }
         return res.status(200).json(habitaciones);
     } 
     catch (error) {
