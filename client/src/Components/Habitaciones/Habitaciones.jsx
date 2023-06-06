@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import style from "./Habitaciones.module.css";
 import imagen from './habitacion.jpg';
+
 import { connect } from 'react-redux';
 import { setOrderByName, setOrderByCapacity } from '../redux/action';
 
@@ -59,14 +60,15 @@ class Habitaciones extends React.Component {
           <option value="desc">Mayor a Menor</option>
         </select>
 
-        <select className={style.linksordenamiento} value={this.props.orderByCapacity} onChange={(e) => this.props.setOrderByCapacity(e.target.value)}>
+        {/* <select className={style.linksordenamiento} value={this.props.orderByCapacity} onChange={(e) => this.props.setOrderByCapacity(e.target.value)}>
           <option value="">Ordenar por Precio</option>
           <option value="asc">Menor a Mayor</option>
           <option value="desc">Mayor a Menor</option>
-        </select>
+        </select> */}
 
         <div className={style.content}>
           <img src={imagen} alt="Habitación" className={style.image} />
+          
           <div className={style.links}>
             <h2 className={style.title}>Habitaciones</h2>
             {habitacionLinks}
