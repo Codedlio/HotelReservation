@@ -40,14 +40,17 @@ function Login2() {
         'Content-Type': 'application/json'
       }
     })
-      .then(response => {
-        // Manejar la respuesta del servidor
+    .then(response => {
+      // Manejar la respuesta del servidor
+      if (response.ok) {
         dispatch(setUsuario(form.correo));
         navigate("/");
-      })
-      .catch(error => {
-        // Manejar errores
-      });
+      }
+    })
+    .catch(error => {
+      // Manejar errores
+      alert("Se produjo un error: " + error.message);
+    });
   };
 
   return (

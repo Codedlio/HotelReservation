@@ -57,10 +57,12 @@ function Login() {
         // Manejar la respuesta del servidor
         if (response.ok) {
           setUsuarioCreado(true); // Actualizar el estado para indicar que el usuario se ha creado exitosamente
+          navigate("/ingresar");
         }
       })
       .catch(error => {
         // Manejar errores
+        alert("Se produjo un error: " + error.message);
       });
 
       if (usuarioCreado) {
@@ -71,7 +73,6 @@ function Login() {
           telefono: ""
         });
         setErrors({count: 1});
-        navigate("/ingresar");
       }
   };
 
