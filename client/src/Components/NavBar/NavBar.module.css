@@ -20,12 +20,14 @@
 
 .imagen {
   width: 100px;
+  display: flex;
+  justify-content: left;
+  align-items: start;
   position: relative;
   bottom: 5px;
-  align-items: center;
+  align-items: center; 
   right: 450px;
 }
-
 .icon {
   color: white;
   font-size: 30px;
