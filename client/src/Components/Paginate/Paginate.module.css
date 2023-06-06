@@ -6,7 +6,7 @@
    
 }
 .number{
-    font-size: 18px;
+    font-size: 15px;
     font-weight: 900;
     width: 30px;
     border: 1px solid black;
@@ -25,32 +25,46 @@
 .number:hover{
     
     background-color: #78210e;
+    border-radius: 6px;
 }
-.link{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+
 
 .link:hover{
     cursor: pointer;
+    background-color: #78210e;
+    color: wheat;
+    border-radius: 6px;
 }
 .flecha{
-    width: 15px; 
+    width: 10px; 
     height: 34px;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    font-size: 10px;
-    color: black;
+    font-size: 15px;
+    color: white; 
     
 }
 .flecha2{
-    width: 40px; 
+    width: 10px; 
     height: 34px;
     display: flex;
     align-items: center;
     transform: rotate(180deg);
+    font-size: 18px;
     
 }
+.link {
+    display: flex;
+    font-size: 18px;
+    align-items: center;
+    justify-content: center;
+    color: white; /* Agrega el color deseado para los números */
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+  }
+  
