@@ -18,12 +18,12 @@ export const setOrderByCapacity = (orderType) => {
     payload: orderType
   };
 };
-export const setOrderByPrice = (orderType) => {
-  return {
-    type: SET_ORDER_BY_PRICE,
-    payload: orderType
-  };
-};
+// export const setOrderByPrice = (orderType) => {
+//   return {
+//     type: SET_ORDER_BY_PRICE,
+//     payload: orderType
+//   };
+// };
 
 export const getPaquetes = () => {
   return async function (dispatch) {
