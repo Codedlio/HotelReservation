@@ -9,12 +9,30 @@ import image3 from './Suite Canelo/3.jpg'
 import image4 from './Suite Canelo/4.jpg'
 import image5 from './Suite Canelo/5.jpg'
 import image6 from './Suite Canelo/6.jpg'
+import { useDispatch, useSelector } from 'react-redux';
 import style from './Habitacion2.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBed, faMoneyBill, faPersonBooth  } from '@fortawesome/free-solid-svg-icons';
+import Paginado from '../../Paginate/Paginate';
+import { set_Currents_Page } from '../../redux/action';
+import { useEffect } from 'react';
 
-const Habitacion1 = () => {
+const Habitacion2 = () => {
   const [index, setIndex] = useState(0);
+  const dispatch = useDispatch();
+  const habitaciones = useSelector((state) => state.set_Current_Page); // Cambiar "state.set_Current_Page" por el nombre correcto
+ 
+  const [currentPage, setCurrentPage] = useState(2);
+  const habsPerPage = 1;
+  const indexofLastRoom = currentPage * habsPerPage;
+  const indexofFirstRoom = indexofLastRoom - habsPerPage;
+  const visibleHabitaciones = habitaciones.slice(indexofFirstRoom, indexofLastRoom);
+
+ 
+
+  useEffect(() => {
+    dispatch(set_Currents_Page(currentPage));
+  }, [dispatch, currentPage]);
 
   const handleSelect = (selectedIndex, e) => {
     setIndex(selectedIndex);
@@ -177,7 +195,10 @@ const Habitacion1 = () => {
         
         </section>
         <div className={style.containerlink}><a className={style.linka} href="#">Ver disponibilidad</a></div>
-        
+        <habitaciones habitaciones={visibleHabitaciones} />
+      
+        <Paginado gamesPerPage={habsPerPage} habitaciones={habitaciones.length} paginado={setCurrentPage} currentPage={currentPage} />
+
         <FooterBar className={style.footer} />
       
       
@@ -185,4 +206,4 @@ const Habitacion1 = () => {
   );
 };
 
-export default Habitacion1;
+export default Habitacion2;
