@@ -1,5 +1,5 @@
 // reducer.js
-import { SET_ORDER_BY_NAME, SET_ORDER_BY_CAPACITY, SET_ORDER_BY_PRICE } from "./action";
+import { SET_ORDER_BY_NAME, SET_ORDER_BY_CAPACITY, SET_ORDER_BY_PRICE, GET_PAQUETES, SET_USUARIO, DELETE_USUARIO} from "./action";
 
 const initialState = {
   orderByName: '',
@@ -14,7 +14,12 @@ const initialState = {
     { nombre: 'Villa Arce' },
     { nombre: 'Villa Tilo' },
     { nombre: 'Villa Cedra' },
-    { nombre: 'Villa Madrid' }
+    { nombre: 'Villa Madrid' },
+    { nombre: 'Villa Lavanda'},
+    { nombre: 'Villa Mosqueta'},
+    { nombre: 'Villa Anacay'},
+    { nombre: 'Villa Playa'},
+    { nombre: 'Villa Troncos'},
   ],
   habitacionesData: [
     { nombre: 'Suite Roca', capacidad: 2 },
@@ -25,19 +30,28 @@ const initialState = {
     { nombre: 'Villa Arce', capacidad: 6 },
     { nombre: 'Villa Tilo', capacidad: 6 },
     { nombre: 'Villa Cedra', capacidad: 6 },
-    { nombre: 'Villa Madrid', capacidad: 7 }
+    { nombre: 'Villa Madrid', capacidad: 7 },
+    { nombre: 'Villa Lavanda', capacidad: 5 },
+    { nombre: 'Villa Mosqueta', capacidad: 5 },
+    { nombre: 'Villa Anacay', capacidad: 5 },
+    { nombre: 'Villa Playa', capacidad: 5 },
+    { nombre: 'Villa Troncos', capacidad: 5 },
   ],
-  habitacionesPrecio: [
-    { nombre: 'Suite Roca', Precio: 290 },
-    { nombre: 'Suite Canelo', Precio: 350 },
-    { nombre: 'Suite Liucura', Precio: 290 },
-    { nombre: 'Villa Bosque', Precio: 700 },
-    { nombre: 'Villa Rio', Precio: 750 },
-    { nombre: 'Villa Arce', Precio: 500 },
-    { nombre: 'Villa Tilo', Precio: 550 },
-    { nombre: 'Villa Cedra', Precio: 550 },
-    { nombre: 'Villa Madrid', Precio: 600 },
-  ]
+  // habitacionesPrecio: [
+  //   { nombre: 'Suite Roca', Precio: 290 },
+  //   { nombre: 'Suite Canelo', Precio: 350 },
+  //   { nombre: 'Suite Liucura', Precio: 290 },
+  //   { nombre: 'Villa Bosque', Precio: 700 },
+  //   { nombre: 'Villa Rio', Precio: 750 },
+  //   { nombre: 'Villa Arce', Precio: 500 },
+  //   { nombre: 'Villa Tilo', Precio: 550 },
+  //   { nombre: 'Villa Cedra', Precio: 550 },
+  //   { nombre: 'Villa Madrid', Precio: 600 }
+  // ],
+  allpaquetes: [],
+  orderPaquetes: [],
+  filterPaquetes: [],
+  usuario: undefined
 };
 
 const reducer = (state = initialState, action) => {
@@ -79,25 +93,40 @@ const reducer = (state = initialState, action) => {
         orderByCapacity: action.payload,
         habitacionesData: sortedArrByCapacity
       };
-      case SET_ORDER_BY_PRICE:
-        let sortedArrByPrice;
-        if (action.payload === 'asc') {
-          sortedArrByPrice = state.habitacionesPrecio
-            .slice()
-            .sort((a, b) => a.Precio - b.Precio);
-        } else if (action.payload === 'desc') {
-          sortedArrByPrice = state.habitacionesPrecio
-            .slice()
-            .sort((a, b) => b.Precio - a.Precio);
-        } else {
-          sortedArrByPrice = state.habitacionesPrecio;
-        }
-        return {
-          ...state,
-          orderByPrice: action.payload,
-          habitacionesPrecio: sortedArrByPrice
-        };
+      // case SET_ORDER_BY_PRICE:
+      //   let sortedArrByPrice;
+      //   if (action.payload === 'asc') {
+      //     sortedArrByPrice = state.habitacionesPrecio
+      //       .slice()
+      //       .sort((a, b) => a.Precio - b.Precio);
+      //   } else if (action.payload === 'desc') {
+      //     sortedArrByPrice = state.habitacionesPrecio
+      //       .slice()
+      //       .sort((a, b) => b.Precio - a.Precio);
+      //   } else {
+      //     sortedArrByPrice = state.habitacionesPrecio;
+      //   }
+      //   return {
+      //     ...state,
+      //     orderByPrice: action.payload,
+      //     habitacionesPrecio: sortedArrByPrice
+      //   };
+      //   case GET_PAQUETES: return {
+      //     ...state,
+      //     allpaquetes: action.payload ,           
+      //     orderPaquetes: action.payload,//aca lleno 
+      //     filterPaquetes: action.payload
+      // } 
 
+      case SET_USUARIO: return {
+        ...state,
+        usuario: action.payload
+      }
+
+      case DELETE_USUARIO: return {
+        ...state,
+        usuario: undefined
+      }
     default:
       return state;
   }

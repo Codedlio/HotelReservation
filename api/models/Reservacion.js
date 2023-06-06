@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const reservacionSchema = new mongoose.Schema({
-  usuario: { type: mongoose.Schema.Types.ObjectId, ref: 'Usuario', required: true },
+  usuario: { type: String, ref: 'Usuario', required: true },
   habitaciones: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Habitacion'}],
   servicios: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Servicio'}],
   paquete: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Paquete'}],
