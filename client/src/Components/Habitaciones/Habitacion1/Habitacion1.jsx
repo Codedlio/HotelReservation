@@ -10,9 +10,10 @@ import image4 from './Suite Roca/image4.jpg';
 import image5 from './Suite Roca/image5.jpg';
 import image6 from './Suite Roca/image6.jpg';
 import style from './Habitacion1.module.css';
-import { useDispatch, useSelector } from 'react-redux';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBed, faMoneyBill, faPersonBooth } from '@fortawesome/free-solid-svg-icons';
+import { useDispatch, useSelector } from 'react-redux';
 import Paginado from '../../Paginate/Paginate';
 import { set_Currents_Page } from '../../redux/action';
 
