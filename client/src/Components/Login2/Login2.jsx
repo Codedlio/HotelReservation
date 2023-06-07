@@ -44,7 +44,8 @@ function Login2() {
       // Manejar la respuesta del servidor
       if (response.ok) {
         dispatch(setUsuario(form.correo));
-        navigate("/");
+        
+        navigate("/detalleReserva");
       }
     })
     .catch(error => {
