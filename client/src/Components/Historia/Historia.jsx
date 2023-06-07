@@ -3,6 +3,7 @@ import style from "./Historia.module.css";
 import Imagen from "./img/puesta-del-sol.jpg";
 import Imagen1 from "./img/día-soleado.jpg";
 import NavBar from '../NavBar/NavBar';
+import FooterBar from '../FooterBar/FooterBar'
 
 
 
@@ -26,6 +27,7 @@ function Historia() {
         Con el tiempo también nos gustaría implementar servicios adicionales como salas de meditación, yoga, masajes y caminatas por los alrededores de Eterno.  De esta manera, queremos ofrecer un lugar alejado, para quitarnos el estrés que nos puede generar la vida en la ciudad y conectarse con uno mismo en familia, amigos o en pareja.</p>
         <img src={Imagen1} className={style.Image}  alt="día_soleado" ></img> 
       </div>
+      <FooterBar/>
   </div>
     
   );
