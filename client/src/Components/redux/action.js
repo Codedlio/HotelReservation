@@ -40,6 +40,8 @@ export const getPaquetes = () => {
         payload: response})
   }
 };
+
+
 export const set_Currents_Page = (currentPage) => {
   return {
     type: SET_CURRENT_PAGE,
