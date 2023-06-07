@@ -59,8 +59,8 @@ const handleSubmit = (e) => {
     usuario:usuario,
     usuarioCorreo:getAllHabitaciones.correo,
     arrHabitacion:[selectedRoom],
-    fechaInicio: e.target['check-in'].value,
-    fechaFin: e.target['check-out'].value
+    fechaInicio: dates.checkIn,
+    fechaFin: dates.checkOut
   };
   //console.log(data);
     if (data.fechaInicio>data.fechaFin) {
@@ -176,13 +176,13 @@ const handleSubmit = (e) => {
             <label htmlFor="check-in" className={style.label}>
               Fecha de entrada:
             </label>
-            <input type="date"  name="check-in" value={dates.checkIn} onChange={handleDatesChange} className={style.input} required />
+            <input type="date" id="check-in" name="check-in" value={dates.checkIn} onChange={handleDatesChange} className={style.input} required />
           </div>
           <div className={style.formGroup}>
             <label htmlFor="check-out" className={style.label}>
               Fecha de salida:
             </label>
-            <input type="date" name="check-out" value={dates.checkOut} onChange={handleDatesChange} className={style.input} required />
+            <input type="date" id="check-out" name="check-out" value={dates.checkOut} onChange={handleDatesChange} className={style.input} required />
           </div>
           <div className={style.formGroup}>
             <label htmlFor="adults" className={style.label}>
