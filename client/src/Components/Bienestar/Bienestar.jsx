@@ -3,6 +3,7 @@ import style from "./Bienestar.module.css";
 import NavBar from '../NavBar/NavBar';
 import Imagen from "./img/yoga.jpg";
 import Imagen1 from "./img/natacion.jpg";
+import FooterBar from '../FooterBar/FooterBar'
 
 
 
@@ -29,6 +30,7 @@ function Bienestar() {
       Este es un deporte que también ofrecemos ya que contamos con una enorme piscina y con profesionales que se encuentran disponibles para impartir sus conocimientos con las personas que aún no saben nadar. Además la natación nos permite mejorar la capacidad cardiorrespiratoria, la fuerza, la resistencia y la elasticidad. </p>
       <img src={Imagen1} className={style.Image}  alt="natación" ></img> 
     </div>
+    <FooterBar/>
 </div>
   
     
