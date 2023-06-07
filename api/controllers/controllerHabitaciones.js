@@ -1,5 +1,6 @@
 const Habitacion = require('../models/Habitacion');
 const Tipo_habitacion = require('../models/Tipo_habitacion');
+const Reservacion = require('../models/Reservacion');
 const {uploadImage }= require ('../cloudinary/cloudinary.js')
 const fs = require ('fs-extra')
 
@@ -32,6 +33,38 @@ const getHabitacionById = async (req,res) => {
         return res.status(500).send("Internal server error");
     }
 };
+
+const getHabitacionesDisponibles = async (req, res) => {
+    const {fechaInicio,fechaFin} = req.query;
+    fechaInicio = new Date(fechaInicio);
+    fechaFin = new Date(fechaFin);
+  
+    try {
+        let reservaciones = await Reservacion.find({
+            $or: [
+            { fechaInicio: { $lte: fechaFin }, fechaFin: { $gte: fechaInicio }},
+            { fechaInicio: { $gte: fechaInicio, $lte: fechaFin }},
+            { fechaFin: { $gte: fechaInicio, $lte: fechaFin }}
+            ]
+        });
+    
+        let habitaciones = await Habitacion.find({activo:true});
+    
+        for (let reservacion of reservaciones) {
+            for (let habitacionReservada of reservacion.habitaciones) {
+                let habitacion = habitaciones.find(a => a._id === habitacionReservada);
+                if (habitacion) {
+                    habitacion.disponible = false;
+                }
+            }
+        };
+
+        return res.status(200).json(habitaciones);
+    } 
+    catch (error) {
+        res.status(500).send(error.message);
+    }
+  };
 
 const postHabitacion = async (req,res) => {
     let {nombre, numero, tipoId, descripcion, capacidad, precio, puntuacion} = req.body;
@@ -106,4 +139,4 @@ const deleteHabitacion = async (req,res) => {
     }
 };
 
-module.exports = {getHabitaciones,getHabitacionById,postHabitacion,putHabitacion,deleteHabitacion};
+module.exports = {getHabitaciones,getHabitacionById,getHabitacionesDisponibles,postHabitacion,putHabitacion,deleteHabitacion};
