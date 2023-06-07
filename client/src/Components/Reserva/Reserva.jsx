@@ -3,7 +3,7 @@ import style from './Reserva.module.css';
 import { Link } from 'react-router-dom';
 import { useEffect} from 'react';
 import { useSelector,useDispatch } from 'react-redux';
-import { getHabitaciones } from '../redux/action';
+import { getHabitaciones, getHabitacionesDisponibles } from '../redux/action';
 
 
 function Reserva() {
@@ -13,6 +13,7 @@ function Reserva() {
   const [selectedRoom1, setSelectedRoom1] = useState('');
   const [isOpen, setIsOpen] = useState(true);
   const [roomPrice, setRoomPrice] = useState('');
+  const [dates, setDates] = useState({checkIn:undefined, checkOut:undefined});
 
   const usuario = useSelector(state => state.usuario);
   const getAllHabitaciones = useSelector(state => state.gethabitaciones);
@@ -77,6 +78,16 @@ const handleSubmit = (e) => {
     // Manejar errores
   });
 };
+
+  const handleDatesChange = (e) => {
+    const property = e.target.name;
+    const value = e.target.value;
+    setDates({...dates, [property]:value});
+    
+    if (dates.checkIn && dates.checkOut) {
+      dispatch(getHabitacionesDisponibles(dates.checkIn,dates.checkOut));
+    };
+  }
 
   const handleRoomChange = (e) => {
     const roomName = e.target.value;
@@ -148,13 +159,13 @@ const handleSubmit = (e) => {
             <label htmlFor="check-in" className={style.label}>
               Fecha de entrada:
             </label>
-            <input type="date" id="check-in" className={style.input} required />
+            <input type="date"  name="check-in" value={dates.checkIn} onChange={handleDatesChange} className={style.input} required />
           </div>
           <div className={style.formGroup}>
             <label htmlFor="check-out" className={style.label}>
               Fecha de salida:
             </label>
-            <input type="date" id="check-out" className={style.input} required />
+            <input type="date" name="check-out" value={dates.checkOut} onChange={handleDatesChange} className={style.input} required />
           </div>
           <div className={style.formGroup}>
             <label htmlFor="adults" className={style.label}>

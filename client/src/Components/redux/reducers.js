@@ -1,5 +1,5 @@
 // reducer.js
-import { SET_ORDER_BY_NAME, SET_ORDER_BY_CAPACITY, SET_ORDER_BY_PRICE, GET_PAQUETES,SET_CURRENT_PAGE, SET_USUARIO, DELETE_USUARIO, GET_HABITACIONES} from "./action";
+import { SET_ORDER_BY_NAME, SET_ORDER_BY_CAPACITY, SET_ORDER_BY_PRICE, GET_PAQUETES,SET_CURRENT_PAGE, SET_USUARIO, DELETE_USUARIO, GET_HABITACIONES, GET_HABITACIONES_DISPONIBLES} from "./action";
 
 const initialState = {
   orderByName: '',
@@ -133,10 +133,14 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         gethabitaciones: action.payload
-      };
+      }
       case DELETE_USUARIO: return {
         ...state,
         usuario: undefined
+      }
+      case GET_HABITACIONES_DISPONIBLES: return {
+        ...state,
+        gethabitaciones: action.payload
       }
     default:
       return state;

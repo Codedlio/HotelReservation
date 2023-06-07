@@ -9,6 +9,7 @@ export const GET_HABITACIONES = "GET_HABITACIONES";
 export const SET_USUARIO = "SET_USUARIO";
 export const DELETE_USUARIO = "DELETE_USUARIO";
 export const ERROR = "ERROR"; 
+export const GET_HABITACIONES_DISPONIBLES = "GET_HABITACIONES_DISPONIBLES";
 
 export const setOrderByName = (orderType) => {
   return {
@@ -82,4 +83,13 @@ export const setUsuario = (correo) => {
 
 export const deleteUsuario = () => {
   return {type:DELETE_USUARIO}
+};
+
+export const getHabitacionesDisponibles = (fechaInicio,fechaFin) => {
+  return async function (dispatch) {
+    const {data} = await axios.get('http://localhost:3001/habitacion/disponible',
+      {params: {fechaInicio,fechaFin}}
+    );
+    return dispatch({type:GET_HABITACIONES_DISPONIBLES, payload:data});
+  };
 };
