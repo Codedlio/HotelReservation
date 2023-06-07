@@ -1,6 +1,5 @@
 const Reservacion = require('../models/Reservacion');
 const Habitacion = require('../models/Habitacion');
-const Usuario = require('../models/Usuario');
 const Servicio = require('../models/Servicio');
 
 const getReservaciones= async (req, res) => {
@@ -76,16 +75,15 @@ catch (error) {
 };
 
 const postReservacion = async (req,res) => {
-  const {usuarioCorreo,arrIdHabitaciones,arrIdServicios,arrIdPaquetes,fechaInicio,fechaFin} = req.body;
+  const {usuarioCorreo,arrHabitacion,arrServicio,arrPaquete,fechaInicio,fechaFin} = req.body;
 
   
   if (!usuarioCorreo || !fechaInicio || !fechaFin) {return res.status(400).send("Error. No se enviaron los datos necesarios para crear la reserva")};
   
   try {
-    const usuario = await Usuario.findOne({correo:usuarioCorreo,activo:true});
-    if (!usuario) {return res.status(400).send("No se encontró el usuario en la BDD")};
-
-    const data = new Reservacion ({usuario:usuarioCorreo,habitaciones:arrIdHabitaciones,servicios:arrIdServicios,paquetes:arrIdPaquetes,fechaInicio,fechaFin});
+    fechaInicio = new Date(fechaInicio);
+    fechaFin = new Date(fechaFin);
+    const data = new Reservacion ({usuario:usuarioCorreo,habitaciones:arrHabitacion,servicios:arrServicio,paquete:arrPaquete,fechaInicio,fechaFin});
     res.status(201).json(await data.save());
   }
   catch (error) {
@@ -101,18 +99,17 @@ const postReservacion = async (req,res) => {
 
 const putReservacion = async (req,res) => {
   const {id} = req.params;
-  const {usuarioCorreo,arrIdHabitaciones,arrIdServicios,arrIdPaquetes,fechaInicio,fechaFin} = req.body;
-
-  if (!usuarioCorreo || !arrIdHabitaciones || !arrIdServicios || !arrIdPaquetes || !fechaInicio || !fechaFin) {return res.status(400).send("Error. No se enviaron los datos necesarios para actualizar")};
+  const {usuarioCorreo,arrHabitacion,arrServicio,arrPaquete,fechaInicio,fechaFin} = req.body;
+  if (!usuarioCorreo || !fechaInicio || !fechaFin) {return res.status(400).send("Error. No se enviaron los datos necesarios para actualizar")};
   
   try {
     const reservacion = await Reservacion.findOne({_id:id,activo:true});
     if (!reservacion) {return res.status(400).send("No se encontró la reservación en la BDD")};
     
     reservacion.usuario = usuarioCorreo;
-    reservacion.habitaciones = arrIdHabitaciones;
-    reservacion.servicios = arrIdServicios;
-    reservacion.paquetes = arrIdPaquetes;
+    reservacion.habitaciones = arrHabitacion;
+    reservacion.servicios = arrServicio;
+    reservacion.paquetes = arrPaquete;
     reservacion.fechaFin = fechaFin;
     reservacion.fechaInicio = fechaInicio;
     
