@@ -14,7 +14,12 @@ function NavBar() {
   const dispatch = useDispatch();
   const usuario = useSelector(state => state.usuario);
   const [currentPage, setCurrentPage] = useState(1);
-  let i = 1;
+  let a = 1;
+  let b = 2;
+  let c = 3;
+  let d = 4;  
+  let e = 3;
+  let f = 4;
   const handleInstagramClick = () => {
     window.open('https://www.instagram.com/hoteleternotermal/', '_blank');
   }
@@ -28,7 +33,12 @@ function NavBar() {
     e.preventDefault();
     console.log(e);
     setCurrentPage(index);
-    i=index;
+    a=index;
+    b=index;
+    c=index;
+    d=index;    
+    e=index;
+    f=index;
   };
   const handleLogOut = () => {
     dispatch(deleteUsuario())
@@ -38,11 +48,11 @@ function NavBar() {
     <div className={style.contenedor}>
       <img className={style.imagen} src={imagen} alt="" />
       <Nav>
-        {location.pathname !== "/" &&
-          <Link className={style.link} to='/'>Inicio</Link>
+        {location.pathname !== "/" &&         
+          <Link className={style.link} to='/'>Inicio</Link>          
         }        
-        <div className={style.dropdown} >
-          <Link className={style.link} >El hotel</Link>
+        <div className={style.dropdown} >        
+          <Link className={style.link} >El hotel</Link>          
           <div className={style.dropdowncontent}>
             <Link className={style.link} to='/historia'>Historia</Link>
             <Link className={style.link} to='/filosofia'>Filosofía</Link>
@@ -53,12 +63,12 @@ function NavBar() {
         <div className={style.dropdown} >
 
           <Link className={style.link} to='/paquetes'>Paquetes</Link>
-          <div className={style.dropdowncontent}>
+          {/* <div className={style.dropdowncontent}>
             <a href="#">3 días y 2 noches</a>
             <a href="#">4 días y 3 noches</a>
             <a href="#">5 días y 4 noches</a>
             <a href="#">6 días y 5 noches</a>
-          </div>
+          </div> */}
         </div>
         {usuario === undefined &&
           <Link className={style.link} to='/contenedor'>Iniciar sesion</Link>
