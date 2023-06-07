@@ -53,7 +53,13 @@ const initialState = {
   filterPaquetes: [],
   set_Current_Page: [],
   usuario: undefined,
-  gethabitaciones: []
+  gethabitaciones: [],
+  PaquetesData: [
+    { id:1,nombre: '4 días y 3 noches', costo: 100 },
+    { id:2,nombre: '4 días y 3 noches', costo: 200 },
+    { id:3,nombre: '4 días y 3 noches', costo: 300 },
+    { id:4,nombre: '4 días y 3 noches', costo: 400 }
+  ] 
 };
 
 const reducer = (state = initialState, action) => {
@@ -118,12 +124,15 @@ const reducer = (state = initialState, action) => {
       //     orderByPrice: action.payload,
       //     habitacionesPrecio: sortedArrByPrice
       //   };
-      //   case GET_PAQUETES: return {
-      //     ...state,
-      //     allpaquetes: action.payload ,           
-      //     orderPaquetes: action.payload,//aca lleno 
-      //     filterPaquetes: action.payload
-      // } 
+        case GET_PAQUETES: return {
+          ...state,
+          // allpaquetes: action.payload ,           
+          // orderPaquetes: action.payload,//aca lleno 
+          // filterPaquetes: action.payload
+          allpaquetes: state.PaquetesData ,           
+          orderPaquetes: state.PaquetesData,
+          filterPaquetes: state.PaquetesData
+      } 
 
       case SET_USUARIO: return {
         ...state,
