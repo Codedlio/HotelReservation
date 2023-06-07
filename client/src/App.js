@@ -21,6 +21,7 @@ import Historia from './Components/Historia/Historia';
 import InfoHotel from './Components/InfoHotel/Infohotel';
 import Filosofia from './Components/Filosofia/Filosofia';
 import Bienestar from './Components/Bienestar/Bienestar';
+import DetailPaquete from './Components/DetailPaquete/DetailPaquete';
 import Contacto from './Components/Contacto/Contacto';
 import Login from './Components/Login/Login';
 import ContenedorLogin from './Components/ContenedorLogin/ContenedorLogin';
@@ -62,6 +63,7 @@ function App() {
           <Route path="/infoHotel" element={<InfoHotel />} />
           <Route path="/filosofia" element={<Filosofia />} />
           <Route path="/bienestar" element={<Bienestar />} />
+          <Route path="/detail/:id" element={<DetailPaquete />} />
           <Route path="/yoga" element={<Yoga />} />
           <Route path="/detalleReserva" element={<DetalleReserva />} />
           <Route path="/natacion" element={<Natacion />} />
