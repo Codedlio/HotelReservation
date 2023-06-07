@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { GoogleAuthProvider,signInWithPopup  } from "firebase/auth";
+import { auth } from "../Loging/firebase";
 import style from './Login2.module.css';
 import { Link } from 'react-router-dom';
 import validate from './validate';
@@ -26,6 +28,30 @@ function Login2() {
     setIsOpen(false);
   };
 
+  const handleLogin = async () => {
+    const provider = new GoogleAuthProvider();
+    try {
+      const credentials = await signInWithPopup(auth, provider)
+      //console.log(credentials);
+      dispatch(setUsuario(credentials.user.email));
+      
+      if(window.sessionStorage.getItem('dataReservation')){
+        navigate("/detalleReserva");
+      }else{
+        navigate("/")
+      }
+      
+      // Close the login modal
+      //const modalInstance = bootstrap.Modal.getInstance(googleButton.closest('.modal'));
+      //modalInstance.hide();
+      // show welcome message
+      //showMessage("Welcome " + credentials.user.displayName);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // Aquí puedes realizar acciones con los datos enviados, como enviarlos a un servidor
@@ -44,8 +70,12 @@ function Login2() {
       // Manejar la respuesta del servidor
       if (response.ok) {
         dispatch(setUsuario(form.correo));
+        if(window.sessionStorage.getItem('dataReservation')){
+          navigate("/detalleReserva");
+        }else{
+          navigate("/")
+        }
         
-        navigate("/detalleReserva");
       }
     })
     .catch(error => {
@@ -98,8 +128,11 @@ function Login2() {
 						<button type="submit" disabled className={style.button}>
 							Enviar
 						</button>
-					)}
+					)} 
         </form>
+        <button type="button" onClick={handleLogin} className={style.button}>
+          Google
+        </button>
       </div>
     </div>
   );
