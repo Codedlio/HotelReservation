@@ -35,13 +35,13 @@ const getHabitacionById = async (req,res) => {
 
 const postHabitacion = async (req,res) => {
     let {nombre, numero, tipoId, descripcion, capacidad, precio, puntuacion} = req.body;
-    //if (!nombre || !numero || !tipoId || !descripcion || !capacidad || !precio || !puntuacion) {return res.status(400).send("Error. No se enviaron los datos necesarios para crear la habitacion")};
+    if (!nombre || !numero || !tipoId || !descripcion || !capacidad || !precio || !puntuacion) {return res.status(400).send("Error. No se enviaron los datos necesarios para crear la habitacion")};
 
     try {
-        // numero = Number(numero);
-        // capacidad = Number(capacidad);
-        // precio = Number(precio);
-        // puntuacion = Number(puntuacion);
+        numero = Number(numero);
+        capacidad = Number(capacidad);
+        precio = Number(precio);
+        puntuacion = Number(puntuacion);
         const data = new Habitacion ({nombre,numero,tipo:tipoId,descripcion,capacidad,precio,puntuacion});
         if (req.files) {
             for (const key of Object.keys(req.files)) {
@@ -51,8 +51,8 @@ const postHabitacion = async (req,res) => {
               await fs.unlink(file.tempFilePath);
             }
           }
-          await data.save()
-        return res.status(201).send("hola");
+         
+        return res.status(201).send( await data.save());
     } 
     catch (error) {
         if (error.name === 'ValidationError') {
