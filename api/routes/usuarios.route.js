@@ -1,7 +1,7 @@
 
 const express = require('express');
 const router = express.Router();
-const {postLogin,postRegistro, putUsuario,getUsuario,deleteUsuario} = require('../controllers/controllerUsuarios');
+const {postLogin,postRegistro, putUsuario, postNotification,getUsuario,deleteUsuario} = require('../controllers/controllerUsuarios');
 
 // ...
 
@@ -13,5 +13,6 @@ router.post('/registro', postRegistro);
   router.put('/usuario/:id',putUsuario);
   router.get('/usuario/:id',getUsuario);
   router.delete('/usuario/:id',deleteUsuario);
+  router.post('/notification', postNotification )
   
   module.exports = router;
