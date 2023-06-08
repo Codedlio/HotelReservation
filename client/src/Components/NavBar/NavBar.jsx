@@ -126,9 +126,9 @@ function NavBar() {
     setMostrarCarrito(true);
   }
 }}>
-           {/* <Link className={style.carritolink} to="/detallereserva"> */}
+           <Link className={style.carritolink} to="/detallereserva">
     <FontAwesomeIcon icon={faCartPlus} />
-  {/* </Link> */}
+  </Link>
         </button>
 
         
