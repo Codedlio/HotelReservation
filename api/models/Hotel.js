@@ -1,29 +1,29 @@
-const mongoose = require('mongoose');
-
+const mongoose = require("mongoose");
+//TODO no se debe tener en cuenta, no esta creado en la base de datos
 
 const miSchema = new mongoose.Schema({
   location: {
     required: true,
-    type: String
+    type: String,
   },
   status: {
     type: Boolean,
-    default: true
+    default: true,
   },
-  room: { 
+  room: {
     required: true,
-    type: Number
+    type: Number,
   },
   reservation: {
     type: Date,
   },
-  image:{ 
+  image: {
     secure_url: String,
-    public_id: String
-  }
+    public_id: String,
+  },
 });
 
-const Hotel = mongoose.model('Hotel', miSchema);
+const Hotel = mongoose.model("Hotel", miSchema);
 // const newHotel= new Hotel({
 //     location: 'jupiter',
 //     status:false,
