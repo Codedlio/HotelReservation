@@ -17,7 +17,7 @@ const validate = (object) => {
             error.phone = "El número de teléfono no es válido"; }
         
     if(object.description.length < 15) {error.description = "Descripcion debe tener al menos 15 caracteres"};
-    if(!object.subject.length ) {error.subject = "Al menos debe tener !Asunto!"}
+    if(!object.subject) {error.subject = "Al menos debe tener !Asunto!"}
 
     return error;
 };
