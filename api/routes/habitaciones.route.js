@@ -6,11 +6,11 @@ const routerHabitaciones = express.Router();
 
 routerHabitaciones 
     .get('/', getHabitaciones)
-    .get('/:id', getHabitacionById)
     .get('/disponible', getHabitacionesDisponibles)
+    .get('/:id', getHabitacionById)
     .post('/',fileUpload({ useTempFiles: true,
         tempFileDir: "./uploads" }), postHabitacion)
     .put('/:id', putHabitacion)
-    .delete('/id', deleteHabitacion);
+    .delete('/:id', deleteHabitacion);
 
 module.exports = routerHabitaciones;

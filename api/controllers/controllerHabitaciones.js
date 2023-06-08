@@ -35,7 +35,9 @@ const getHabitacionById = async (req,res) => {
 };
 
 const getHabitacionesDisponibles = async (req, res) => {
-    const {fechaInicio,fechaFin} = req.query;
+    let fechaInicio = req.query.fechaInicio;
+    let fechaFin = req.query.fechaFin;
+    
     fechaInicio = new Date(fechaInicio);
     fechaFin = new Date(fechaFin);
   
@@ -47,9 +49,8 @@ const getHabitacionesDisponibles = async (req, res) => {
             { fechaFin: { $gte: fechaInicio, $lte: fechaFin }}
             ]
         });
-    
         let habitaciones = await Habitacion.find({activo:true});
-    
+        
         for (let reservacion of reservaciones) {
             for (let habitacionReservada of reservacion.habitaciones) {
                 let habitacion = habitaciones.find(a => a._id === habitacionReservada);
@@ -58,13 +59,13 @@ const getHabitacionesDisponibles = async (req, res) => {
                 }
             }
         };
-
+      
         return res.status(200).json(habitaciones);
     } 
     catch (error) {
         res.status(500).send(error.message);
     }
-  };
+};
 
 const postHabitacion = async (req,res) => {
     let {nombre, numero, tipoId, descripcion, capacidad, precio, puntuacion} = req.body;
@@ -84,8 +85,8 @@ const postHabitacion = async (req,res) => {
               await fs.unlink(file.tempFilePath);
             }
           }
-
-        return res.status(201).json(await data.save());
+        await data.save();
+        return res.status(201).json(data);
     } 
     catch (error) {
         if (error.name === 'ValidationError') {
@@ -131,7 +132,6 @@ const deleteHabitacion = async (req,res) => {
 
         habitacion.activo = false;
         await habitacion.save();
-
         return res.status(200).send("Habitación eliminada exitosamente");
     } 
     catch (error) {
