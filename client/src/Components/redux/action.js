@@ -9,7 +9,11 @@ export const GET_HABITACIONES = "GET_HABITACIONES";
 export const SET_USUARIO = "SET_USUARIO";
 export const DELETE_USUARIO = "DELETE_USUARIO";
 export const ERROR = "ERROR"; 
+<<<<<<< HEAD
 export const GET_HABITACIONES_DISPONIBLES = "GET_HABITACIONES_DISPONIBLES";
+=======
+export const SUGERENCIA_EMAIL = "SUGERENCIA_EMAIL"; 
+>>>>>>> 2fc30eb753729daeeee43217d4e935d4a8c65157
 
 export const setOrderByName = (orderType) => {
   return {
@@ -86,6 +90,7 @@ export const setUsuario = (correo) => {
 export const deleteUsuario = () => {
   return {type:DELETE_USUARIO}
 };
+<<<<<<< HEAD
 
 export const getHabitacionesDisponibles = (fechaInicio,fechaFin) => {
   return async function (dispatch) {
@@ -100,3 +105,15 @@ export const getHabitacionesDisponibles = (fechaInicio,fechaFin) => {
     };
   };
 };
+=======
+export const sugerenciaCliente= (userData) =>{
+  return async (dispatch) => {
+      try {
+          const newSugerencia = await axios.post("http://localhost:3001/auth/notification", userData);
+          console.log(userData)
+          return dispatch({ type:SUGERENCIA_EMAIL, payload: newSugerencia.data });
+          
+      } catch (error) { console.log(error.message) }
+  }
+}
+>>>>>>> 2fc30eb753729daeeee43217d4e935d4a8c65157

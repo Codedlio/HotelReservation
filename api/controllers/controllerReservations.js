@@ -1,6 +1,7 @@
 const Reservacion = require('../models/Reservacion');
 const Habitacion = require('../models/Habitacion');
 const Servicio = require('../models/Servicio');
+const { checkReservation } = require("../config/sendgridEmail.js");
 
 const getReservaciones= async (req, res) => {
   try {

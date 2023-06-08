@@ -2,6 +2,8 @@ const auth = require('../config/firebase');
 const Usuario= require('../models/Usuario');
 const bcrypt = require('bcrypt');
 const { ObjectId } = require('mongoose').Types;
+const { sendWelcomeEmail,sugerenciaCliente } = require("../config/sendgridEmail.js");
+
 const postRegistro =  async (req, res) => {
     try {
       const { correo, contraseña, telefono, nombre,activo } = req.body;
@@ -28,6 +30,7 @@ const postRegistro =  async (req, res) => {
          activo,
          contraseña: hash
        });
+      await sendWelcomeEmail(correo, nombre);
       await nuevoUsuario.save();
   
       res.status(200).json({ mensaje: 'Usuario registrado exitosamente' });
@@ -122,4 +125,18 @@ const  postLogin= async (req, res) => {
       res.status(500).json({ mensaje: 'Error al eliminar usuario' });
     }
   }
-  module.exports={postRegistro, postLogin, deleteUsuario,getUsuario,putUsuario};
+
+  const postNotification=async(req, res )=>{
+    const {name, email, phone, subject, description}=req.body;
+    try{
+
+      await sugerenciaCliente(name, email, phone, subject, description);
+      res.status(200).json({ mensaje:'Notificacion exitosa' });
+
+      } catch(error)  {
+      res.status(500).json({ mensaje:'Error no se realizo la Notificacion' });
+
+    }
+  }
+
+  module.exports={postRegistro, postLogin, deleteUsuario,getUsuario,putUsuario,postNotification};

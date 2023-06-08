@@ -1,5 +1,9 @@
 // reducer.js
+<<<<<<< HEAD
 import { SET_ORDER_BY_NAME, SET_ORDER_BY_CAPACITY, SET_ORDER_BY_PRICE, GET_PAQUETES,SET_CURRENT_PAGE, SET_USUARIO, DELETE_USUARIO, GET_HABITACIONES, GET_HABITACIONES_DISPONIBLES} from "./action";
+=======
+import { SET_ORDER_BY_NAME, SET_ORDER_BY_CAPACITY, SET_ORDER_BY_PRICE, GET_PAQUETES,SET_CURRENT_PAGE, SET_USUARIO, SUGERENCIA_EMAIL, DELETE_USUARIO, GET_HABITACIONES} from "./action";
+>>>>>>> 2fc30eb753729daeeee43217d4e935d4a8c65157
 
 const initialState = {
   orderByName: '',
@@ -148,10 +152,21 @@ const reducer = (state = initialState, action) => {
         ...state,
         usuario: undefined
       }
+<<<<<<< HEAD
       case GET_HABITACIONES_DISPONIBLES: return {
         ...state,
         habitaciones: action.payload
       }
+=======
+      case SUGERENCIA_EMAIL:
+        if(action.payload.status === 200) {
+          return { ...state, 
+                } 
+        } else {
+          return { ...state, 
+                }
+        }
+>>>>>>> 2fc30eb753729daeeee43217d4e935d4a8c65157
     default:
       return state;
   }
