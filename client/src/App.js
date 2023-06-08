@@ -31,6 +31,8 @@ import Yoga from './Components/Yoga/Yoga'
 import DetalleReserva from './Components/DetalleReserva/DetalleReserva'
 import Natacion from './Components/Servicios/Natacion/Natacion'
 
+
+
 function App() {
   return (
     <div className="App">
@@ -65,6 +67,7 @@ function App() {
           <Route path="/yoga" element={<Yoga />} />
           <Route path="/detalleReserva" element={<DetalleReserva />} />
           <Route path="/natacion" element={<Natacion />} />
+          
           
 
           <Route path="/" element={<Home />} />
