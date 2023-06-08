@@ -51,8 +51,8 @@ const postHabitacion = async (req,res) => {
               await fs.unlink(file.tempFilePath);
             }
           }
-
-        return res.status(201).json(await data.save());
+         
+        return res.status(201).send( await data.save());
     } 
     catch (error) {
         if (error.name === 'ValidationError') {
