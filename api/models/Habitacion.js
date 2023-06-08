@@ -10,7 +10,7 @@ const habitacionSchema = new mongoose.Schema({
   puntuacion: { type: Number, required: true},
   disponible: { type: Boolean, default: true },
   activo: { type: Boolean, default:true},
-  image: {type:array}
+  image: {type:Array}
   
 });
 
