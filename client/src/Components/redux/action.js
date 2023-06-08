@@ -9,6 +9,7 @@ export const GET_HABITACIONES = "GET_HABITACIONES";
 export const SET_USUARIO = "SET_USUARIO";
 export const DELETE_USUARIO = "DELETE_USUARIO";
 export const ERROR = "ERROR"; 
+export const SUGERENCIA_EMAIL = "SUGERENCIA_EMAIL"; 
 
 export const setOrderByName = (orderType) => {
   return {
@@ -85,3 +86,13 @@ export const setUsuario = (correo) => {
 export const deleteUsuario = () => {
   return {type:DELETE_USUARIO}
 };
+export const sugerenciaCliente= (userData) =>{
+  return async (dispatch) => {
+      try {
+          const newSugerencia = await axios.post("http://localhost:3001/auth/notification", userData);
+          console.log(userData)
+          return dispatch({ type:SUGERENCIA_EMAIL, payload: newSugerencia.data });
+          
+      } catch (error) { console.log(error.message) }
+  }
+}
