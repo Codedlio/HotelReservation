@@ -2,6 +2,7 @@ const Reservacion = require('../models/Reservacion');
 const Habitacion = require('../models/Habitacion');
 const Usuario = require('../models/Usuario');
 const Servicio = require('../models/Servicio');
+const { checkReservation } = require("../config/sendgridEmail.js");
 
 const getReservaciones= async (req, res) => {
   try {
@@ -84,6 +85,7 @@ const postReservacion = async (req,res) => {
   try {
     const usuario = await Usuario.findOne({correo:usuarioCorreo,activo:true});
     if (!usuario) {return res.status(400).send("No se encontró el usuario en la BDD")};
+    await checkReservation(usuarioCorreo,arrIdHabitaciones,arrIdServicios,arrIdPaquetes,fechaInicio,fechaFin);
 
     const data = new Reservacion ({usuario:usuarioCorreo,habitaciones:arrIdHabitaciones,servicios:arrIdServicios,paquetes:arrIdPaquetes,fechaInicio,fechaFin});
     res.status(201).json(await data.save());
