@@ -34,7 +34,9 @@ function CentroDeAyuda() {
         ...userData, [event.target.name]: event.target.value
     });
     setError(validate({...userData, [event.target.name]: event.target.value}));
- 
+    console.log(userData)
+    console.log(error)
+
 };
 const handleSubmit=async(e)=>{
   e.preventDefault();
@@ -52,6 +54,8 @@ try {
       description:'',    
     })
   }
+     
+
 } catch (error) {
   alert("Error cargue los datos Nuevo");
 }
@@ -113,7 +117,7 @@ try {
           {error.phone && <p>{error.phone}</p>}
 
           <div className={style.contactItem}>
-            <select id="message" name ='subject'className={style.contactSelect} required>
+            <select id="message" name ='subject'onChange={handlerInput} className={style.contactSelect} required>
               <option value="">Asunto</option>
               <option value="termas">Termas</option>
               <option value="alojamiento">Alojamiento</option>
@@ -121,7 +125,7 @@ try {
               <option value="actividades">Actividades</option>
             </select>
           </div>
-          {error.description && <p>{error.description}</p>}
+            {error.subject&& <p>{error.subject}</p>}
           {/* <div className={style.contactItem}>
                 <button type="submit" className={style.contactButtonenviar}>Enviar</button>
               </div>
@@ -139,6 +143,7 @@ try {
                 <textarea id="reclamo" value={userData.description} onChange={handlerInput} name={'description'} className={style.contactTextarea} placeholder="Escribe tu reclamo o sugerencia" required></textarea>
               </div>
               <div className={style.contactItem}>
+                {error.description && <p>{error.description}</p>}
                 <button type="submit" className={style.enviar}>Enviar</button>
               </div>
             </>
