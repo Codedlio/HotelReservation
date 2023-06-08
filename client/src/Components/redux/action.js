@@ -55,12 +55,12 @@ export const getHabitaciones = () => {
       
       
         const storedData = window.sessionStorage.getItem("allHabitaciones");
-          if (storedData) {
-            const data=JSON.parse(storedData)
-        return dispatch({
-          type: GET_HABITACIONES,
-          payload: data,
-        }); 
+        if (storedData) {
+          const data=JSON.parse(storedData)
+          return dispatch({
+            type: GET_HABITACIONES,
+            payload: data,
+          }); 
         }
         
         const {data} = await axios.get("http://localhost:3001/habitacion");
@@ -89,9 +89,14 @@ export const deleteUsuario = () => {
 
 export const getHabitacionesDisponibles = (fechaInicio,fechaFin) => {
   return async function (dispatch) {
-    const {data} = await axios.get('http://localhost:3001/habitacion/disponible',
-      {params: {fechaInicio,fechaFin}}
-    );
-    return dispatch({type:GET_HABITACIONES_DISPONIBLES, payload:data});
+    try {
+      console.log(fechaInicio);
+      console.log(fechaFin);
+      const {data} = await axios.get(`http://localhost:3001/habitacion/disponible?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`);
+      return dispatch({type:GET_HABITACIONES_DISPONIBLES, payload:data});
+    } 
+    catch (error) {
+      alert(error.message);  
+    };
   };
 };

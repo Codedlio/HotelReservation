@@ -1,125 +1,86 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import style from './Reserva.module.css';
 import { Link, useNavigate } from 'react-router-dom';
-import { useEffect} from 'react';
 import { useSelector,useDispatch } from 'react-redux';
-import { getHabitaciones, getHabitacionesDisponibles } from '../redux/action';
+import { getHabitacionesDisponibles } from '../redux/action';
 
 
 function Reserva() {
   const navigate = useNavigate();
-  const [adults, setAdults] = useState('');
-  const [children, setChildren] = useState('');
-  const [selectedRoom, setSelectedRoom] = useState('');
-  const [selectedRoom1, setSelectedRoom1] = useState('');
+  const dispatch = useDispatch();
+  const [adults, setAdults] = useState(0);
+  const [children, setChildren] = useState(0);
+  const [selectedRoom, setSelectedRoom] = useState({nombre:'Seleccione una habitación'});
   const [isOpen, setIsOpen] = useState(true);
-  const [roomPrice, setRoomPrice] = useState('');
-  const [dates, setDates] = useState({checkIn:undefined, checkOut:undefined});
+  const [dates, setDates] = useState({checkIn:'', checkOut:''});
 
   const usuario = useSelector(state => state.usuario);
-  const getAllHabitaciones = useSelector(state => state.gethabitaciones);
-  const dispatch=useDispatch()
- 
-  console.log(getAllHabitaciones);
-    // Almacenar el hotel seleccionado en el almacenamiento local al cambiarlo
-  useEffect(() => {
-    localStorage.setItem('selectedRoom', selectedRoom);
-  }, [selectedRoom]);
+  const rooms = useSelector(state => state.habitaciones);
 
-  // Obtener el hotel seleccionado del almacenamiento local al cargar el componente
-  useEffect(() => {
-    dispatch(getHabitaciones());
-    const storedSelectedRoom = localStorage.getItem('selectedRoom');
-    if (storedSelectedRoom) {
-      setSelectedRoom(storedSelectedRoom);
+  useEffect( () => {
+    if (dates.checkIn && dates.checkOut) {
+      if (dates.checkIn > dates.checkOut) {
+        alert('Error. La fecha de fin debe ser mayor a la de inicio');
+        setDates({...dates, checkOut:''});
+      }
+      else{
+        dispatch(getHabitacionesDisponibles(dates.checkIn,dates.checkOut))
+      }
     }
-  }, []);
-  useEffect(() => {
-    const storedSelectedRoom1 = localStorage.getItem('selectedRoom1');
-    if (storedSelectedRoom1) {
-      setSelectedRoom1(storedSelectedRoom1);
-    }
-  }, []);
-
-
+  }, [dates]);
 
   const handleAdultsChange = (e) => {
     setAdults(parseInt(e.target.value));
   };
 
-
   const handleChildrenChange = (e) => {
     setChildren(parseInt(e.target.value));
   };
 
-const handleSubmit = (e) => {
-  e.preventDefault();
-  
-  const data = {
-    usuario:usuario,
-    usuarioCorreo:getAllHabitaciones.correo,
-    arrHabitacion:[selectedRoom],
-    fechaInicio: dates.checkIn,
-    fechaFin: dates.checkOut
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    const data = {
+      usuarioCorreo:usuario,
+      arrHabitacion:[selectedRoom],
+      fechaInicio: dates.checkIn,
+      fechaFin: dates.checkOut
   };
-  //console.log(data);
-    if (data.fechaInicio>data.fechaFin) {
-    alert('La fecha de salida debe ser posterior a la fecha de entrada');
-    data.fechaFin= ""
   
-  }else{
     if(usuario){
-  fetch('http://localhost:3001/reservation', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  })
-  .then(response => {
-    // Manejar la respuesta del servidor
-    if (response.ok) {
-      console.log("quedo"); 
-    }
-  })
-  .catch(error => {
-    // Manejar errores
-  });
-}else {
+      fetch('http://localhost:3001/reservation', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+      .then(response => {
+      // Manejar la respuesta del servidor
+        if (response.ok) {
+          console.log("quedo"); 
+        }
+      })
+      .catch(error => {
+        // Manejar errores
+      });
+    }else {
       window.sessionStorage.setItem("dataReservation", JSON.stringify(data));
       alert('Ingrese a su cuenta para continuar...')
       navigate("/contenedor");
-      }
-  }
-  
-
-  
-};
+    }
+  };
 
   const handleDatesChange = (e) => {
     const property = e.target.name;
     const value = e.target.value;
     setDates({...dates, [property]:value});
-    
-    if (dates.checkIn && dates.checkOut) {
-      dispatch(getHabitacionesDisponibles(dates.checkIn,dates.checkOut));
-    };
   }
 
   const handleRoomChange = (e) => {
-    const roomName = e.target.value;
-    let roomId;
-    let price;
-    const habitacion = getAllHabitaciones.find(h => roomName.includes(h.nombre));
-   
-    if (habitacion) {
-      roomId = habitacion._id;
-      price = habitacion.precio;
-    }
-  
-    setSelectedRoom(roomId);
-    setSelectedRoom1(roomName); 
-    setRoomPrice(price);
+    const value = e.target.value;
+    let activeRoom = rooms.find(room => room._id === value)
+    setSelectedRoom(activeRoom);
   };
 
   const handleClose = () => {
@@ -129,34 +90,6 @@ const handleSubmit = (e) => {
   if (!isOpen) {
     return null; // Return null to hide the component when it's not open
   }
-
-  const getAvailableRooms = (adults, children) => {
-    const total = adults + children;
-  
-    const rooms = [
-      { name: "Suite Roma (2 camas super King)", capacidad: 2 },
-      { name: "Suite Liucura (1 cama super king)", capacidad: 2 },
-      { name: "Villa Arce (cama super king + 2 camas de 1 plaza)", capacidad: 4 },
-      { name: "Villa Tilo (cama 2 Plazas + 3 camas de 1 plaza)", capacidad: 5 },
-      { name: "Villa Cedra (cama 2 Plazas + 3 camas de 1 plaza)", capacidad: 5 },
-      { name: "Suite Canelo (1 cama super king)", capacidad: 3 },
-      { name: "Villa Lavanda (cama 2 Plazas + 3 camas de 1 plaza)", capacidad: 4},
-      { name: "Villa Mosqueta (cama 2 Plazas + 3 camas de 1 plaza)", capacidad: 5 },
-      { name: "Villa Anacay (cama 2 Plazas + 3 camas de 1 plaza)", capacidad: 5 },
-      { name: "Villa Playa (cama 2 Plazas + 3 camas de 1 plaza)", capacidad: 5 },
-      { name: "Villa Troncos (cama 2 Plazas + 3 camas de 1 plaza)", capacidad: 5 },
-      { name: "Villa Bosque (cama super king + 2 camas de 1 plaza)", capacidad: 6 },
-      { name: "Villa Rio (cama super king + 3 camas de 1 plaza)", capacidad: 7 },
-      { name: "Villa Madrid (cama 2 Plazas + 3 camas de 1 plaza)", capacidad: 7 }
-    ];
-  
- 
-    return rooms
-    .filter(room => room.capacidad >= total && room.capacidad <= total +1)
-    .map(room => room.name);
-};
-
-  const availableRooms = getAvailableRooms(adults, children);
 
   return (
     <div className={style.contenedor}>
@@ -169,21 +102,21 @@ const handleSubmit = (e) => {
 
         <h3 className={style.title}>Reserva tu estadía</h3>
         <form onSubmit={handleSubmit}>
-        <div className={style.formGroup}>
-</div>
 
           <div className={style.formGroup}>
             <label htmlFor="check-in" className={style.label}>
               Fecha de entrada:
             </label>
-            <input type="date" id="check-in" name="check-in" value={dates.checkIn} onChange={handleDatesChange} className={style.input} required />
+            <input type="date" id="check-in" name="checkIn" value={dates.checkIn} onChange={handleDatesChange} className={style.input} required />
           </div>
+
           <div className={style.formGroup}>
             <label htmlFor="check-out" className={style.label}>
               Fecha de salida:
             </label>
-            <input type="date" id="check-out" name="check-out" value={dates.checkOut} onChange={handleDatesChange} className={style.input} required />
+            <input type="date" id="check-out" name="checkOut" value={dates.checkOut} onChange={handleDatesChange} className={style.input} required />
           </div>
+
           <div className={style.formGroup}>
             <label htmlFor="adults" className={style.label}>
               Adultos:
@@ -198,6 +131,7 @@ const handleSubmit = (e) => {
               required
             />
           </div>
+
           <div className={style.formGroup}>
             <label htmlFor="children" className={style.label}>
               Niños:
@@ -212,7 +146,8 @@ const handleSubmit = (e) => {
               required
             />
           </div>
-          {adults !== '' && (
+
+          {adults !== 0 && rooms.length && (
             <div className={style.formGroup}>
               <label htmlFor="roomName" className={style.label}>
                 Seleccione una habitación:
@@ -220,25 +155,32 @@ const handleSubmit = (e) => {
               <select
                 id="roomName"
                 className={style.input}
-                value={selectedRoom1}
+                value={selectedRoom}
                 onChange={handleRoomChange}
                 required
               >
-                <option value="">Seleccione una habitación</option>
-                {availableRooms.map((room) => (
-                  <option key={room} value={room}>
-                    {room}
-                  </option>
+                <option value="">{selectedRoom.nombre}</option>
+                {rooms.map(room => (
+                  room.capacidad >= adults+children && room.capacidad <= adults+children+1 && room !== selectedRoom ? 
+                    (
+                      room.disponible === false ? 
+                        (<option key={room._id} value={room._id} disabled>No disponible: {room.nombre}</option>)
+                      : 
+                        (<option key={room._id} value={room._id} >{room.nombre}</option>)
+                    )
+                  : 
+                    null
                 ))}
               </select>
             </div>
           )}
-         {selectedRoom !== '' && (
-  <Link className={style.linkkk} to={`/habitacion${selectedRoom}`}>
-    <button className={style.hab}>Ver Habitación</button>
-    <h5 className={style.price}>Precio:${roomPrice}</h5>
-  </Link>
-)}
+
+          {selectedRoom.nombre !== 'Seleccione una habitación' && (
+            <Link className={style.linkkk} to={`/habitacion/${selectedRoom._id}`}>
+              <button className={style.hab}>Ver Habitación</button>
+              <h5 className={style.price}>Precio:${selectedRoom.precio}</h5>
+            </Link>
+          )}
 
           <button type='submit' className={style.button}>Reservar ahora</button>
         </form>

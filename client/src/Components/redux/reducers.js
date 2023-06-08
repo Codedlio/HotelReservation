@@ -5,22 +5,22 @@ const initialState = {
   orderByName: '',
   orderByCapacity: '',
   orderByPrice: '',
-  habitaciones: [
-    { nombre: 'Suite Roca'},
-    { nombre: 'Suite Canelo' },
-    { nombre: 'Suite Liucura'},
-    { nombre: 'Villa Bosque' },
-    { nombre: 'Villa Rio'},
-    { nombre: 'Villa Arce' },
-    { nombre: 'Villa Tilo' },
-    { nombre: 'Villa Cedra' },
-    { nombre: 'Villa Madrid' },
-    { nombre: 'Villa Lavanda'},
-    { nombre: 'Villa Mosqueta'},
-    { nombre: 'Villa Anacay'},
-    { nombre: 'Villa Playa'},
-    { nombre: 'Villa Troncos'},
-  ],
+  // habitaciones: [
+  //   { nombre: 'Suite Roca'},
+  //   { nombre: 'Suite Canelo' },
+  //   { nombre: 'Suite Liucura'},
+  //   { nombre: 'Villa Bosque' },
+  //   { nombre: 'Villa Rio'},
+  //   { nombre: 'Villa Arce' },
+  //   { nombre: 'Villa Tilo' },
+  //   { nombre: 'Villa Cedra' },
+  //   { nombre: 'Villa Madrid' },
+  //   { nombre: 'Villa Lavanda'},
+  //   { nombre: 'Villa Mosqueta'},
+  //   { nombre: 'Villa Anacay'},
+  //   { nombre: 'Villa Playa'},
+  //   { nombre: 'Villa Troncos'},
+  // ],
   habitacionesData: [
     { nombre: 'Suite Roca', capacidad: 2 },
     { nombre: 'Suite Canelo', capacidad: 4 },
@@ -54,6 +54,7 @@ const initialState = {
   set_Current_Page: [],
   usuario: undefined,
   gethabitaciones: [],
+  habitaciones: [],
   PaquetesData: [
     { id:1,nombre: '4 días y 3 noches', costo: 100 },
     { id:2,nombre: '4 días y 3 noches', costo: 200 },
@@ -149,7 +150,7 @@ const reducer = (state = initialState, action) => {
       }
       case GET_HABITACIONES_DISPONIBLES: return {
         ...state,
-        gethabitaciones: action.payload
+        habitaciones: action.payload
       }
     default:
       return state;
