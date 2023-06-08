@@ -18,20 +18,20 @@ function Caracteristicas() {
      
       
     </div>
-      <p>La mayoria de nuestras habitaciones poseen, una cama <br></br>súper King, TV cable y baño en  suite con ducha de agua<br></br> termal, 1 habitación con dos camas  de una plaza, dos uno<br></br>baños,  con bañera de agua termal y el segundo con ducha<br></br> de agua termal, living con cama Nido (para 2 personas),<br></br> futón para una persona, mesa de desayuno, TV cable,<br></br> caja de seguridad, minibar, jardín privado, batas, <br></br>desayuno buffet y vistas al bosque.</p>
+      <p>La mayoria de nuestras habitaciones poseen, una cama <br></br>súper King, TV cable y baño en  suite con ducha de agua<br></br> termal, 1 habitación con dos camas de una plaza, dos uno<br></br>baños,  con bañera de agua termal con ducha<br></br> de agua termal, living con posibilidad de cama Nido,<br></br> futón para una persona, mesa de desayuno, TV cable,<br></br> caja de seguridad, minibar, jardín privado, batas, <br></br>desayuno buffet y vistas al bosque.</p>
     </div>
   
   
     <div className={style.centerrigth}>
     <div className={style.image2}>< FontAwesomeIcon icon={faPersonBooth} /></div>
-      <p>Este tipo de habitación se encuentra disponible para un<br></br> máximo de 7 personas.</p>
+      <p>Nuestras habitaciones se encuentran disponibles para un<br></br> máximo de 7 personas.</p>
     </div>
   
   
     <div className={style.center}>
     <div className={style.image3}>< FontAwesomeIcon icon={faMoneyBill} /></div>
      
-      <p>Revisa el detalle de los valores de esta habitación en nuestra <br></br>política de precios y estadía en nuestro Centro de Ayuda.</p>
+      <p>Revisa el detalle de los valores de nuestras habitaciones en <br></br>política de precios y estadía en nuestro Centro de Ayuda.</p>
     </div>
  
 </div>
