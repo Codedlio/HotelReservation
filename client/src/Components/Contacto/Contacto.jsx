@@ -93,7 +93,7 @@ try {
         </div>
         <div className={style.contactItem}>
           <FontAwesomeIcon icon={faMapMarkerAlt} className={style.contactIcon} />
-          <span className={style.contactLabel}>Dirección:</span> Calle Principal 123, Termas Huife
+          <span className={style.contactLabel}>Dirección:</span> Calle Principal 123, Hotel Eterno
         </div>
       </div>
 
