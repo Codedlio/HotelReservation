@@ -10,9 +10,10 @@ function Reserva() {
   const dispatch = useDispatch();
   const [adults, setAdults] = useState(0);
   const [children, setChildren] = useState(0);
-  const [selectedRoom, setSelectedRoom] = useState({nombre:'Seleccione una habitación'});
+  const [selectedRoom, setSelectedRoom] = useState([]);
   const [isOpen, setIsOpen] = useState(true);
   const [dates, setDates] = useState({checkIn:'', checkOut:''});
+  const [precio, setPrecio] = useState(0);
 
   const usuario = useSelector(state => state.usuario);
   const rooms = useSelector(state => state.habitaciones);
@@ -80,7 +81,13 @@ function Reserva() {
   const handleRoomChange = (e) => {
     const value = e.target.value;
     let activeRoom = rooms.find(room => room._id === value)
-    setSelectedRoom(activeRoom);
+    if (e.target.checked) {
+      setSelectedRoom([...selectedRoom, activeRoom]);
+      setPrecio(precio + activeRoom.precio);
+    } else {
+      setSelectedRoom(selectedRoom.filter(room => room._id !== value));
+      setPrecio(precio - activeRoom.precio);
+    }   
   };
 
   const handleClose = () => {
@@ -147,41 +154,52 @@ function Reserva() {
             />
           </div>
 
+          {precio !== 0 && ( 
+          <div className={style.formGroup}>
+            <label htmlFor="precio" className={style.label}>
+              Precio: ${precio}
+            </label>
+          </div>
+          )}
+
           {adults !== 0 && rooms.length && (
             <div className={style.formGroup}>
               <label htmlFor="roomName" className={style.label}>
                 Seleccione una habitación:
               </label>
-              <select
-                id="roomName"
-                className={style.input}
-                value={selectedRoom}
-                onChange={handleRoomChange}
-                required
-              >
-                <option value="">{selectedRoom.nombre}</option>
-                {rooms.map(room => (
-                  room.capacidad >= adults+children && room.capacidad <= adults+children+1 && room !== selectedRoom ? 
-                    (
-                      room.disponible === false ? 
-                        (<option key={room._id} value={room._id} disabled>No disponible: {room.nombre}</option>)
-                      : 
-                        (<option key={room._id} value={room._id} >{room.nombre}</option>)
-                    )
-                  : 
-                    null
-                ))}
-              </select>
+              <ul>
+                {rooms.map((room) =>
+                  (
+                    <li key={room._id}>
+                      <label>
+                        <input
+                          type="checkbox"
+                          value={room._id}
+                          checked={selectedRoom.some(activeRoom => activeRoom._id === room._id)}
+                          onChange={handleRoomChange}
+                        />
+                        {room.disponible === false ? (
+                          <span>
+                            No disponible: {room.nombre}
+                            <Link className={style.linkkk} to={`/habitacion/${room._id}`}>
+                              <button className={style.hab}>Ver Habitación</button>
+                            </Link>
+                          </span>
+                        ) : (
+                          <span>
+                            {room.nombre} Capacidad: {room.capacidad} Precio: ${room.precio}
+                            <Link className={style.linkkk} to={`/habitacion/${room._id}`}>
+                              <button className={style.hab}>Ver Habitación</button>
+                            </Link>
+                          </span>
+                        )}
+                      </label>
+                    </li>
+                  )
+                )}
+              </ul>
             </div>
           )}
-
-          {selectedRoom.nombre !== 'Seleccione una habitación' && (
-            <Link className={style.linkkk} to={`/habitacion/${selectedRoom._id}`}>
-              <button className={style.hab}>Ver Habitación</button>
-              <h5 className={style.price}>Precio:${selectedRoom.precio}</h5>
-            </Link>
-          )}
-
           <button type='submit' className={style.button}>Reservar ahora</button>
         </form>
       </div>
