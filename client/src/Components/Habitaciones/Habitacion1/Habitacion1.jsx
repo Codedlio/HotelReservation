@@ -34,6 +34,9 @@ const Habitacion1 = () => {
     indexofLastRoom
   );
 
+
+  const imagenes = useSelector(state => state.gethabitaciones[0].image)
+
   const handleSelect = (selectedIndex, e) => {
     setIndex(selectedIndex);
   };
@@ -97,81 +100,24 @@ const Habitacion1 = () => {
       </section>
 
       <div className="container w-100">
-        <Carousel activeIndex={index} onSelect={handleSelect}>
-          <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src={image1}
-              alt="First slide"
-              width="100%"
-              height="750px"
-            />
-
-            <Carousel.Caption>
-              {/* <h3>First slide label</h3><p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> */}
-            </Carousel.Caption>
-          </Carousel.Item>
-          <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src={image2}
-              alt="Second slide"
-              width="100%"
-              height="750px"
-            />
-            <Carousel.Caption>
-              {/* <h3>Second slide label</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p> */}
-            </Carousel.Caption>
-          </Carousel.Item>
-          <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src={image3}
-              alt="Third slide"
-              width="100%"
-              height="750px"
-            />
-            <Carousel.Caption>
-              {/* <h3>Third slide label</h3><p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p> */}
-            </Carousel.Caption>
-          </Carousel.Item>
-          <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src={image4}
-              alt="Fourth slide"
-              width="100%"
-              height="750px"
-            />
-            <Carousel.Caption>
-              {/* <h3>Fourth slide label</h3><p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p> */}
-            </Carousel.Caption>
-          </Carousel.Item>
-          <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src={image5}
-              alt="Fifth slide"
-              width="100%"
-              height="750px"
-            />
-            <Carousel.Caption>
-              {/* <h3>Fifth slide label</h3><p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p> */}
-            </Carousel.Caption>
-          </Carousel.Item>
-          <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src={image6}
-              alt="Sixth slide"
-              width="100%"
-              height="750px"
-            />
-            <Carousel.Caption>
-              {/* <h3>Sixth slide label</h3><p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p> */}
-            </Carousel.Caption>
-          </Carousel.Item>
-        </Carousel>
+        {imagenes.length && <Carousel activeIndex={index} onSelect={handleSelect}>
+          {imagenes.map(imagen => {
+            return (
+            <Carousel.Item>
+              <img
+                className="d-block w-100"
+                src={imagen}
+                alt="Slide"
+                width="100%"
+                height="750px"
+              />
+              <Carousel.Caption>
+                {/* <h3>Second slide label</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p> */}
+              </Carousel.Caption> 
+            </Carousel.Item> 
+            )
+          })}
+        </Carousel>}
       </div>
 
       <div>

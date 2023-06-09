@@ -89,12 +89,12 @@ function NavBar() {
         {usuario === undefined &&
           <Link className={style.link} to='/contenedor'>Iniciar sesión</Link>
         }
-        {usuario === undefined &&
-          <Link className={style.link} to='/contacto'>Contacto</Link>
-        }
+        
         {usuario !== undefined &&
           <Link className={style.link} onClick={handleLogOut}>Cerrar sesión</Link>
         }
+        
+        <Link className={style.link} to='/contacto'>Contacto</Link>
         <Nav.Item className={style.icon} href="#" onClick={handleInstagramClick}><FontAwesomeIcon icon={faInstagram} /></Nav.Item>
         <Nav.Item className={style.icon} href="#" onClick={handleFacebookClick}><FontAwesomeIcon icon={faFacebook} /></Nav.Item>
         <Nav.Item className={style.icon} href="#" onClick={handleTwitterClick}><FontAwesomeIcon icon={faTwitter} /></Nav.Item>

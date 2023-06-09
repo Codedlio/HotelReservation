@@ -12,9 +12,20 @@ import FooterBar from "../FooterBar/FooterBar";
 import Caracteristicas from "../Caracteristicas/Caracteristicas";
 import Imagenes from "../Imagenes/Imagenes";
 import Servicios from "../Servicios/Servicios/Servicios";
+import { useDispatch, useSelector } from "react-redux";
+import { getHabitaciones } from "../redux/action";
 
 function Home() {
+  const dispatch = useDispatch();
   const [isVisible, setIsVisible] = useState(false);
+
+  const rooms = useSelector(state => state.gethabitaciones);
+
+  useEffect(() => {
+    if (!rooms.length) {
+      dispatch(getHabitaciones());
+    }
+  }, []);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
