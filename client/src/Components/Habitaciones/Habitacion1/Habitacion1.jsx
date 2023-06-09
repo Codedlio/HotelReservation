@@ -3,12 +3,6 @@ import NavBar from "../../NavBar/NavBar";
 import FooterBar from "../../FooterBar/FooterBar";
 import Carousel from "react-bootstrap/Carousel";
 import "bootstrap/dist/css/bootstrap.min.css";
-import image1 from "./Suite Roca/image1.jpg";
-import image2 from "./Suite Roca/image2.jpg";
-import image3 from "./Suite Roca/image3.jpg";
-import image4 from "./Suite Roca/image4.jpg";
-import image5 from "./Suite Roca/image5.jpg";
-import image6 from "./Suite Roca/image6.jpg";
 import style from "./Habitacion1.module.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -33,6 +27,9 @@ const Habitacion1 = () => {
     indexofFirstRoom,
     indexofLastRoom
   );
+
+
+  const imagenes = useSelector(state => state.gethabitaciones[0].image)
 
   const handleSelect = (selectedIndex, e) => {
     setIndex(selectedIndex);
@@ -97,81 +94,24 @@ const Habitacion1 = () => {
       </section>
 
       <div className="container w-100">
-        <Carousel activeIndex={index} onSelect={handleSelect}>
-          <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src={image1}
-              alt="First slide"
-              width="100%"
-              height="750px"
-            />
-
-            <Carousel.Caption>
-              {/* <h3>First slide label</h3><p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> */}
-            </Carousel.Caption>
-          </Carousel.Item>
-          <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src={image2}
-              alt="Second slide"
-              width="100%"
-              height="750px"
-            />
-            <Carousel.Caption>
-              {/* <h3>Second slide label</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p> */}
-            </Carousel.Caption>
-          </Carousel.Item>
-          <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src={image3}
-              alt="Third slide"
-              width="100%"
-              height="750px"
-            />
-            <Carousel.Caption>
-              {/* <h3>Third slide label</h3><p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p> */}
-            </Carousel.Caption>
-          </Carousel.Item>
-          <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src={image4}
-              alt="Fourth slide"
-              width="100%"
-              height="750px"
-            />
-            <Carousel.Caption>
-              {/* <h3>Fourth slide label</h3><p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p> */}
-            </Carousel.Caption>
-          </Carousel.Item>
-          <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src={image5}
-              alt="Fifth slide"
-              width="100%"
-              height="750px"
-            />
-            <Carousel.Caption>
-              {/* <h3>Fifth slide label</h3><p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p> */}
-            </Carousel.Caption>
-          </Carousel.Item>
-          <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src={image6}
-              alt="Sixth slide"
-              width="100%"
-              height="750px"
-            />
-            <Carousel.Caption>
-              {/* <h3>Sixth slide label</h3><p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p> */}
-            </Carousel.Caption>
-          </Carousel.Item>
-        </Carousel>
+        {imagenes.length && <Carousel activeIndex={index} onSelect={handleSelect}>
+          {imagenes.map(imagen => {
+            return (
+            <Carousel.Item>
+              <img
+                className="d-block w-100"
+                src={imagen}
+                alt="Slide"
+                width="100%"
+                height="750px"
+              />
+              <Carousel.Caption>
+                {/* <h3>Second slide label</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p> */}
+              </Carousel.Caption> 
+            </Carousel.Item> 
+            )
+          })}
+        </Carousel>}
       </div>
 
       <div>

@@ -3,6 +3,7 @@ import style from './Reserva.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector,useDispatch } from 'react-redux';
 import { getHabitacionesDisponibles } from '../redux/action';
+import axios from 'axios';
 
 
 function Reserva() {
@@ -11,6 +12,8 @@ function Reserva() {
   const [adults, setAdults] = useState(0);
   const [children, setChildren] = useState(0);
   const [selectedRoom, setSelectedRoom] = useState([]);
+  const [services, setServices] = useState([]);
+  const [selectedService, setSelectedService] = useState([]);
   const [isOpen, setIsOpen] = useState(true);
   const [dates, setDates] = useState({checkIn:'', checkOut:''});
   const [precio, setPrecio] = useState(0);
@@ -30,6 +33,10 @@ function Reserva() {
     }
   }, [dates]);
 
+  useEffect( () => {
+    let {data} = axios.get('http://localhost:3001/servicio');
+    setServices(data);
+  }, [])
   const handleAdultsChange = (e) => {
     setAdults(parseInt(e.target.value));
   };
@@ -88,6 +95,18 @@ function Reserva() {
       setSelectedRoom(selectedRoom.filter(room => room._id !== value));
       setPrecio(precio - activeRoom.precio);
     }   
+  };
+
+  const handleServiceChange = (e) => {
+    const value = e.target.value;
+    let activeService = services.find(service => service._id === value);
+    if (e.target.checked) {
+      setSelectedService([...selectedService, activeService]);
+      setPrecio(precio + activeService.precio);
+    } else {
+      setSelectedService(selectedService.filter(service => service._id !== value));
+      setPrecio(precio - activeService.precio);
+    }
   };
 
   const handleClose = () => {
@@ -165,7 +184,7 @@ function Reserva() {
           {adults !== 0 && rooms.length && (
             <div className={style.formGroup}>
               <label htmlFor="roomName" className={style.label}>
-                Seleccione una habitación:
+                Seleccione habitaciones:
               </label>
               <ul>
                 {rooms.map((room) =>
@@ -188,7 +207,7 @@ function Reserva() {
                         ) : (
                           <span>
                             {room.nombre} Capacidad: {room.capacidad} Precio: ${room.precio}
-                            <Link className={style.linkkk} to={`/habitacion/${room._id}`}>
+                            <Link className={style.linkkk} to={`/habitacion${room.numero}`}>
                               <button className={style.hab}>Ver Habitación</button>
                             </Link>
                           </span>
@@ -198,8 +217,35 @@ function Reserva() {
                   )
                 )}
               </ul>
-            </div>
+            </div> 
           )}
+
+          {/* {adults !== 0 && services.length && (
+            <div className={style.formGroup}>
+              <label htmlFor="serviceName" className={style.label}>
+                Seleccione servicios:
+              </label>
+              <ul>
+                {services.map((service) =>
+                  (
+                    <li key={service._id}>
+                      <label>
+                        <input
+                          type="checkbox"
+                          value={service._id}
+                          checked={selectedService.some(activeService => activeService._id === service._id)}
+                          onChange={handleServiceChange}
+                        />
+                          <span>
+                            {service.nombre}  Precio: ${service.precio}
+                          </span>
+                      </label>
+                    </li>
+                  )
+                )}
+              </ul>
+            </div>
+          )} */}
           <button type='submit' className={style.button}>Reservar ahora</button>
         </form>
       </div>

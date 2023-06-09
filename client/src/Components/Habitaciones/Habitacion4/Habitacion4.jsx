@@ -3,11 +3,6 @@ import NavBar from '../../NavBar/NavBar';
 import FooterBar from '../../FooterBar/FooterBar';
 import Carousel from 'react-bootstrap/Carousel';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import image1 from './Villa Bosque/1.jpg'
-import image2 from './Villa Bosque/2.jpg'
-import image3 from './Villa Bosque/3.jpg'
-import image4 from './Villa Bosque/4.jpg'
-import image5 from './Villa Bosque/5.jpg'
 
 import style from './Habitacion4.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -28,7 +23,7 @@ const Habitacion1 = () => {
   const indexofFirstRoom = indexofLastRoom - habsPerPage;
   const visibleHabitaciones = habitaciones.slice(indexofFirstRoom, indexofLastRoom);
 
- 
+  const imagenes = useSelector(state => state.gethabitaciones[3].image);
 
   useEffect(() => {
     dispatch(set_Currents_Page(currentPage));
@@ -98,75 +93,26 @@ const Habitacion1 = () => {
         </section>
       <div 
       className="container w-100">
+        {imagenes.length && 
         <Carousel activeIndex={index} onSelect={handleSelect}>
-          <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src={image1}
-              alt="First slide"
-              width={"100%"}
-              height={"750px"}
-            />
-            
-            <Carousel.Caption>
-              {/* <h3>First slide label</h3>
-              <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> */}
-            </Carousel.Caption>
-          </Carousel.Item>
-          <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src={image2}
-              alt="First slide"
-              width="100%"
-              height="750px"
-            />
-            <Carousel.Caption>
-              {/* <h3>First slide label</h3>
-              <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> */}
-            </Carousel.Caption>
-          </Carousel.Item>
-          <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src={image3}
-              alt="First slide"
-              width="100%"
-              height="750px"
-            />
-            <Carousel.Caption>
-              {/* <h3>First slide label</h3>
-              <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> */}
-            </Carousel.Caption>
-          </Carousel.Item>
-          <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src={image4}
-              alt="First slide"
-              width="100%"
-              height="750px"
-            />
-            <Carousel.Caption>
-              {/* <h3>First slide label</h3>
-              <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> */}
-            </Carousel.Caption>
-          </Carousel.Item>
-          <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src={image5}
-              alt="First slide"
-              width="100%"
-              height="750px"
-            />
-            <Carousel.Caption>
-              {/* <h3>First slide label</h3>
-              <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> */}
-            </Carousel.Caption>
-          </Carousel.Item>
-          
+          {imagenes.map(imagen => {
+            return (
+            <Carousel.Item>
+              <img
+                className="d-block w-100"
+                src={imagen}
+                alt="Slide"
+                width="100%"
+                height="750px"
+              />
+              <Carousel.Caption>
+                {/* <h3>Second slide label</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p> */}
+              </Carousel.Caption> 
+            </Carousel.Item> 
+            )
+          })}
         </Carousel>
+        }
       </div>
       
         <div >
