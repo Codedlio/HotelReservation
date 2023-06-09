@@ -2,14 +2,14 @@ import React from 'react';
 import style from './Video.module.css';
 import { Link } from 'react-router-dom';
 
-import video from './Hotel video.mp4';
+// import video from './Hotel video.mp4';
 
 
 const VideoPlayer = () => {
   return (
     <div className={style.container}>
         
-           <video className={style.player} src={video} alt='' autoPlay muted />
+            {/* (<video className={style.player} src={video} alt='' autoPlay muted />) */}
             
       
       <div className={style.overlay}>
