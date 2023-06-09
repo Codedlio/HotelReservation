@@ -48,12 +48,6 @@ function NavBar() {
     
   };
 
-  let a = 1;
-  let b = 2;
-  let c = 3;
-  let d = 4;  
-  let e = 3;
-  let f = 4;
   const handleInstagramClick = () => {
     window.open('https://www.instagram.com/hoteleternotermal/', '_blank');
   };
@@ -63,17 +57,7 @@ function NavBar() {
   const handleFacebookClick = () => {
     window.open('https://www.facebook.com/profile.php?id=100093402330219', '_blank');
   };
-  const handleClick = (e, index) => {
-    e.preventDefault();
-    console.log(e);
-    setCurrentPage(index);
-    a=index;
-    b=index;
-    c=index;
-    d=index;    
-    e=index;
-    f=index;
-  };
+
   const handleLogOut = () => {
     dispatch(deleteUsuario());
   };
