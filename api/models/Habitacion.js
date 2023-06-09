@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const habitacionSchema = new mongoose.Schema({
   nombre: { type: String, required: true },
@@ -14,16 +14,9 @@ const habitacionSchema = new mongoose.Schema({
   
 });
 
+const Habitacion = mongoose.model("Habitacion", habitacionSchema);
 
-
-const Habitacion = mongoose.model('Habitacion', habitacionSchema);
-
-
-module.exports =  Habitacion;
-
-
-
-
+module.exports = Habitacion;
 
 // db.Habitaciones.insertOne({
 //   numero: 101,
