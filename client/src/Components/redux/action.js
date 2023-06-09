@@ -11,6 +11,8 @@ export const DELETE_USUARIO = "DELETE_USUARIO";
 export const ERROR = "ERROR"; 
 export const GET_HABITACIONES_DISPONIBLES = "GET_HABITACIONES_DISPONIBLES";
 export const SUGERENCIA_EMAIL = "SUGERENCIA_EMAIL"; 
+export const ORDER_PAQUETES = "ORDER_PAQUETES";
+export const GET_PAQUETES_BY_ID = "GET_PAQUETES_BY_ID";
 
 export const setOrderByName = (orderType) => {
   return {
@@ -41,6 +43,17 @@ export const getPaquetes = () => {
         payload: response})
   }
 };
+
+export function getPaqueteById(id) {
+  return async function (dispatch) {
+    console.log("entro a paquetes");
+      const response = (await axios.get(`http://localhost:3001/paquete/`+id)).data
+      return dispatch({
+        type: GET_PAQUETES_BY_ID, 
+        payload: response})
+  }
+}
+export const orderxPaquetes = (order) => { return { type: ORDER_PAQUETES, payload: order } }
 
 
 export const set_Currents_Page = (currentPage) => {
