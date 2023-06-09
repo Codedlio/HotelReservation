@@ -3,12 +3,7 @@ import NavBar from '../../NavBar/NavBar';
 import FooterBar from '../../FooterBar/FooterBar';
 import Carousel from 'react-bootstrap/Carousel';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import image1 from './Suite Liucura/1.jpg'
-import image2 from './Suite Liucura/2.jpg'
-import image3 from './Suite Liucura/3.jpg'
-import image4 from './Suite Liucura/4.jpg'
-import image5 from './Suite Liucura/5.jpg'
-import image6 from './Suite Liucura/6.jpg'
+
 import style from './Habitacion3.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBed, faMoneyBill, faPersonBooth  } from '@fortawesome/free-solid-svg-icons';

@@ -3,12 +3,6 @@ import NavBar from '../../NavBar/NavBar';
 import FooterBar from '../../FooterBar/FooterBar';
 import Carousel from 'react-bootstrap/Carousel';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import image1 from './Suite Canelo/1.jpg'
-import image2 from './Suite Canelo/2.jpg'
-import image3 from './Suite Canelo/3.jpg'
-import image4 from './Suite Canelo/4.jpg'
-import image5 from './Suite Canelo/5.jpg'
-import image6 from './Suite Canelo/6.jpg'
 import { useDispatch, useSelector } from 'react-redux';
 import style from './Habitacion2.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

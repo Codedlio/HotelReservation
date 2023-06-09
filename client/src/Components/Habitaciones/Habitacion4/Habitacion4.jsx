@@ -3,11 +3,6 @@ import NavBar from '../../NavBar/NavBar';
 import FooterBar from '../../FooterBar/FooterBar';
 import Carousel from 'react-bootstrap/Carousel';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import image1 from './Villa Bosque/1.jpg'
-import image2 from './Villa Bosque/2.jpg'
-import image3 from './Villa Bosque/3.jpg'
-import image4 from './Villa Bosque/4.jpg'
-import image5 from './Villa Bosque/5.jpg'
 
 import style from './Habitacion4.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

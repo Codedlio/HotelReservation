@@ -3,13 +3,6 @@ import NavBar from '../../NavBar/NavBar';
 import FooterBar from '../../FooterBar/FooterBar';
 import Carousel from 'react-bootstrap/Carousel';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import image1 from './Villa Rio/1.jpg'
-import image2 from './Villa Rio/2.jpg'
-import image3 from './Villa Rio/3.jpg'
-import image4 from './Villa Rio/4.jpg'
-import image5 from './Villa Rio/5.jpg'
-import image6 from './Villa Rio/6.jpg'
-import image7 from './Villa Rio/7.jpg'
 import style from './Habitacion5.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBed, faMoneyBill, faPersonBooth  } from '@fortawesome/free-solid-svg-icons';

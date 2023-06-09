@@ -3,14 +3,6 @@ import NavBar from '../../NavBar/NavBar';
 import FooterBar from '../../FooterBar/FooterBar';
 import Carousel from 'react-bootstrap/Carousel';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import image1 from './imagenes/image1.jpg'
-import image2 from './imagenes/image2.jpg'
-import image3 from './imagenes/image3.jpg'
-import image4 from './imagenes/image4.jpg'
-import image5 from './imagenes/image5.jpg'
-import image6 from './imagenes/image6.jpg'
-import image7 from './imagenes/image7.jpg'
-import image8 from './imagenes/image8.jpg'
 
 import style from './Habitacion14.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
