@@ -6,6 +6,7 @@ const usuarioSchema = new mongoose.Schema({
   contraseña: { type: String, required: true },
   telefono: { type: String, required: true },
   activo: { type: Boolean, default: true},
+  stripeCustomerId:{type: String}
   // Otros campos según tus necesidades
 });
 
