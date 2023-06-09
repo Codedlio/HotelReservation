@@ -7,6 +7,7 @@ import validate from './validate';
 import {useNavigate} from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setUsuario } from '../redux/action';
+import foto from './logo gogle.png'
 
 function Login2() {
   const dispatch = useDispatch();
@@ -129,10 +130,15 @@ function Login2() {
 							Enviar
 						</button>
 					)} 
-        </form>
-        <button type="button" onClick={handleLogin} className={style.button}>
-          Google
+          <button type="button" onClick={handleLogin} className={style.buttongoogle}>
+        Ingresar con Google
+        <img src={foto} alt="Google logo" className={style.googleicon}/>
+        
         </button>
+        </form>
+        
+        
+        
       </div>
     </div>
   );

@@ -26,6 +26,37 @@
     padding: 20px;
     align-items: center;
     text-align: center;
+    justify-content: center;
+  }
+  .buttongoogle{
+    display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #414040;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  margin-left: 70px;
+  margin-right: 50px;
+  margin-top: 20px;
+  padding-left: 20px;
+  }
+  .buttongoogle:hover {
+    background-color: #c5c3c2;
+  }
+  
+  .googleicon {
+    margin-left: 10px;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    border-radius: 2px;
+    background-color: transparent;
   }
   .botoncerrar {
     position: relative;
