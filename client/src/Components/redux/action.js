@@ -9,6 +9,7 @@ export const GET_HABITACIONES = "GET_HABITACIONES";
 export const SET_USUARIO = "SET_USUARIO";
 export const DELETE_USUARIO = "DELETE_USUARIO";
 export const ERROR = "ERROR"; 
+export const GET_HABITACIONES_DISPONIBLES = "GET_HABITACIONES_DISPONIBLES";
 export const SUGERENCIA_EMAIL = "SUGERENCIA_EMAIL"; 
 
 export const setOrderByName = (orderType) => {
@@ -55,12 +56,12 @@ export const getHabitaciones = () => {
       
       
         const storedData = window.sessionStorage.getItem("allHabitaciones");
-          if (storedData) {
-            const data=JSON.parse(storedData)
-        return dispatch({
-          type: GET_HABITACIONES,
-          payload: data,
-        }); 
+        if (storedData) {
+          const data=JSON.parse(storedData)
+          return dispatch({
+            type: GET_HABITACIONES,
+            payload: data,
+          }); 
         }
         
         const {data} = await axios.get("http://localhost:3001/habitacion");
@@ -86,6 +87,19 @@ export const setUsuario = (correo) => {
 export const deleteUsuario = () => {
   return {type:DELETE_USUARIO}
 };
+
+export const getHabitacionesDisponibles = (fechaInicio,fechaFin) => {
+  return async function (dispatch) {
+    try {
+      const {data} = await axios.get(`http://localhost:3001/habitacion/disponible?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`);
+      return dispatch({type:GET_HABITACIONES_DISPONIBLES, payload:data});
+    } 
+    catch (error) {
+      alert(error.message);  
+    };
+  };
+};
+
 export const sugerenciaCliente= (userData) =>{
   return async (dispatch) => {
       try {
