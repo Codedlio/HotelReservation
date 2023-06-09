@@ -1,6 +1,6 @@
 // reducer.js
 
-import { SET_ORDER_BY_NAME, SET_ORDER_BY_CAPACITY, SET_ORDER_BY_PRICE, GET_PAQUETES,SET_CURRENT_PAGE, SET_USUARIO, SUGERENCIA_EMAIL, DELETE_USUARIO, GET_HABITACIONES, GET_HABITACIONES_DISPONIBLES} from "./action";
+import { SET_ORDER_BY_NAME, SET_ORDER_BY_CAPACITY, SET_ORDER_BY_PRICE, GET_PAQUETES,SET_CURRENT_PAGE, SET_USUARIO, SUGERENCIA_EMAIL, DELETE_USUARIO, GET_HABITACIONES, GET_HABITACIONES_DISPONIBLES,ORDER_PAQUETES,GET_PAQUETES_BY_ID} from "./action";
 
 const initialState = {
   orderByName: '',
@@ -56,12 +56,7 @@ const initialState = {
   usuario: undefined,
   gethabitaciones: [],
   habitaciones: [],
-  PaquetesData: [
-    { id:1,nombre: '4 días y 3 noches', costo: 100 },
-    { id:2,nombre: '4 días y 3 noches', costo: 200 },
-    { id:3,nombre: '4 días y 3 noches', costo: 300 },
-    { id:4,nombre: '4 días y 3 noches', costo: 400 }
-  ] 
+  paqueteXid: []
 };
 
 const reducer = (state = initialState, action) => {
@@ -126,15 +121,32 @@ const reducer = (state = initialState, action) => {
       //     orderByPrice: action.payload,
       //     habitacionesPrecio: sortedArrByPrice
       //   };
-        case GET_PAQUETES: return {
-          ...state,
-          // allpaquetes: action.payload ,           
-          // orderPaquetes: action.payload,//aca lleno 
-          // filterPaquetes: action.payload
-          allpaquetes: state.PaquetesData ,           
-          orderPaquetes: state.PaquetesData,
-          filterPaquetes: state.PaquetesData
-      } 
+      case GET_PAQUETES: return {
+        ...state,
+        allpaquetes: action.payload ,           
+        orderPaquetes: action.payload,//aca lleno 
+        filterPaquetes: action.payload
+    } 
+    case GET_PAQUETES_BY_ID: return {
+      ...state,
+      paqueteXid: action.payload 
+    } 
+    case ORDER_PAQUETES:     
+    console.log("ORDER_PAQUETES-action.payload") ; 
+    console.log(action.payload) ;  
+    const Paquetes = [...state.allpaquetes];    
+    const SortPaquetes = (action.payload === 'asc'? Paquetes.sort((a, b) => a.nombre.localeCompare(b.nombre))
+    : (action.payload === 'desc')? Paquetes.sort((a, b) => b.nombre.localeCompare(a.nombre))
+    : (action.payload === 'costoAsc')? Paquetes.sort((a, b) => a.costo-b.costo)
+    :(action.payload === 'costoDesc')? Paquetes.sort((c1,c2) => {    
+           if (c1.costo < c2.costo) return 1;
+           if (c1.costo > c2.costo) return -1;  
+           return 0;
+    }): Paquetes)            
+    return{
+    ...state,
+    orderPaquetes: SortPaquetes
+}
 
       case SET_USUARIO: return {
         ...state,

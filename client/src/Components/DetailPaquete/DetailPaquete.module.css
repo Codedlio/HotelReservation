@@ -98,8 +98,34 @@
    font-family: Arial, sans-serif;
   font-size: 16px;
   line-height: 1.5;
-  color: #333333;
-    
- 
+  color: #333333;  
   }
-  
+
+  .link {
+    margin-right: 30px; 
+    margin-left: 250px; 
+    margin-top: 600px;  
+    color: black;
+    font-weight: 700;
+    transition: 1s; 
+    padding-bottom: 5px;
+    padding-top: 5px;
+    text-decoration:none;
+    background-color:white ;
+    padding-left: 20px;
+    padding-right: 20px;
+  } 
+  .link:hover {
+    margin-right: 30px; 
+    margin-left: 250px; 
+    margin-top: 600px;  
+    color: white;
+    font-weight: 700;
+    transition: 1s; 
+    padding-bottom: 6px;
+    padding-top: 6px;
+    text-decoration:none;
+    background-color:rgb(123, 41, 41) ;
+    padding-left: 20px;
+    padding-right: 20px;
+  } 
