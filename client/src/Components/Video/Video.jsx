@@ -2,15 +2,14 @@ import React from 'react';
 import style from './Video.module.css';
 import { Link } from 'react-router-dom';
 
-import video from './Hotel video.mp4';
-
+const videoUrl = 'https://res.cloudinary.com/dmpbajdrk/video/upload/v1686278066/vhqhlp6bv7u1uvwerlkh.mp4';
 
 const VideoPlayer = () => {
   return (
     <div className={style.container}>
         
-           <video className={style.player} src={video} alt='' autoPlay muted />
-            
+       
+        <video className={style.player} src={videoUrl} alt='' autoPlay muted />
       
       <div className={style.overlay}>
         <div className={style.overlayContent}>
@@ -37,7 +36,7 @@ export default VideoPlayer;
 // const VideoPlayer = () => {
 //   return (
 //     <div className={style.container}>
-//       <video className={style.player} src={video} alt='' autoPlay muted />
+//       
 //       <div className={style.overlay}>
 //         <div className={style.overlayContent}>
 //           <h2>La experiencia de Eterno te revitaliza!</h2>
