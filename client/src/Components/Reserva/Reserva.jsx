@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import style from './Reserva.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector,useDispatch } from 'react-redux';
-import { getHabitacionesDisponibles } from '../redux/action';
+import { getHabitacionesDisponibles , getPaquetes,createReserva } from '../redux/action';
 import axios from 'axios';
 
 
@@ -17,9 +17,15 @@ function Reserva() {
   const [isOpen, setIsOpen] = useState(true);
   const [dates, setDates] = useState({checkIn:'', checkOut:''});
   const [precio, setPrecio] = useState(0);
+  const [selectedPaquete, setSelectedPaquete] = useState([]);
 
   const usuario = useSelector(state => state.usuario);
   const rooms = useSelector(state => state.habitaciones);
+  let paquetes = useSelector((state) => state.allpaquetes);
+
+  useEffect(() => {
+    dispatch(getPaquetes());
+  }, [dispatch])
 
   useEffect( () => {
     if (dates.checkIn && dates.checkOut) {
@@ -49,25 +55,34 @@ function Reserva() {
     e.preventDefault();
     
     const data = {
-      usuarioCorreo:usuario,
+      usuarioCorreo: usuario,      
       arrHabitacion:selectedRoom,
+      arrServicio:[],
+      arrPaquete:selectedPaquete,
       fechaInicio: dates.checkIn,
-      fechaFin: dates.checkOut
-  };
+      fechaFin: dates.checkOut,
+      costo:precio
+    };
+    
   
     if(usuario){
-      fetch('http://localhost:3001/reservation', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
-      .then(response => {
-      // Manejar la respuesta del servidor
-        if (response.ok) {
-          console.log("quedo"); 
-        }
+      // fetch('http://localhost:3001/reservation', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify(data),
+      // })
+      // .then(response => {
+      // // Manejar la respuesta del servidor
+      //   if (response.ok) {
+      //     console.log("quedo"); 
+      //   }
+
+      createReserva(data).then((response) => {    
+        console.log("response.data");                        
+        console.log(response.data);
+        alert(response.data);  
       })
       .catch(error => {
         // Manejar errores
@@ -89,10 +104,12 @@ function Reserva() {
     const value = e.target.value;
     let activeRoom = rooms.find(room => room._id === value)
     if (e.target.checked) {
-      setSelectedRoom([...selectedRoom, activeRoom]);
+      //setSelectedRoom([...selectedRoom, activeRoom]);
+      setSelectedRoom([...selectedRoom, value]);    
       setPrecio(precio + activeRoom.precio);
     } else {
-      setSelectedRoom(selectedRoom.filter(room => room._id !== value));
+      //setSelectedRoom(selectedRoom.filter(room => room._id !== value));
+      setSelectedRoom(selectedRoom.filter(room => room !== value));     
       setPrecio(precio - activeRoom.precio);
     }   
   };
@@ -106,6 +123,17 @@ function Reserva() {
     } else {
       setSelectedService(selectedService.filter(service => service._id !== value));
       setPrecio(precio - activeService.precio);
+    }
+  };
+  const handlePaqueteChange = (e) => {
+    const value = e.target.value;
+    let activeRoom = paquetes.find(room => room._id === value)
+    if (e.target.checked) {      
+      setSelectedPaquete([...selectedPaquete, value]);     
+      setPrecio(precio + activeRoom.costo);
+    } else {      
+      setSelectedPaquete(selectedPaquete.filter(room => room !== value));    
+      setPrecio(precio - activeRoom.costo);
     }
   };
 
@@ -127,25 +155,26 @@ function Reserva() {
         </Link>
 
         <h3 className={style.title}>Reserva tu estadía</h3>
-        <form onSubmit={handleSubmit}>
 
-          <div className={style.formGroup}>
+        {/* <form onSubmit={handleSubmit} className={style.formContainer} >  */}
+        <form onSubmit={handleSubmit}  >
+          <div className="d-flex align-items-start bg-light mb-3" style={{ height: "30px" }}>
             <label htmlFor="check-in" className={style.label}>
-              Fecha de entrada:
+              Fecha de entrada:&nbsp;&nbsp;&nbsp;
             </label>
-            <input type="date" id="check-in" name="checkIn" value={dates.checkIn} onChange={handleDatesChange} className={style.input} required />
-          </div>
-
-          <div className={style.formGroup}>
-            <label htmlFor="check-out" className={style.label}>
-              Fecha de salida:
+            <input type="date" id="check-in" name="checkIn" value={dates.checkIn} onChange={handleDatesChange} className={style.inputFecha} required />
+            <label htmlFor="check-in" className={style.label}>
+              &nbsp;&nbsp;&nbsp;
             </label>
-            <input type="date" id="check-out" name="checkOut" value={dates.checkOut} onChange={handleDatesChange} className={style.input} required />
-          </div>
-
-          <div className={style.formGroup}>
-            <label htmlFor="adults" className={style.label}>
-              Adultos:
+            <label htmlFor="check-in" className={style.label}>
+              Fecha de salida:&nbsp;&nbsp;&nbsp;
+            </label>
+            <input type="date" id="check-out" name="checkOut" value={dates.checkOut} onChange={handleDatesChange} className={style.inputFecha} required />
+            <label htmlFor="check-in" className={style.label}>
+              &nbsp;&nbsp;&nbsp;
+            </label>
+            <label htmlFor="check-in" className={style.label}>
+              Adultos:&nbsp;&nbsp;&nbsp;
             </label>
             <input
               type="number"
@@ -156,11 +185,12 @@ function Reserva() {
               onChange={handleAdultsChange}
               required
             />
-          </div>
 
-          <div className={style.formGroup}>
-            <label htmlFor="children" className={style.label}>
-              Niños:
+            <label htmlFor="check-in" className={style.label}>
+              &nbsp;&nbsp;&nbsp;
+            </label>
+            <label htmlFor="check-in" className={style.label}>
+              Niños:&nbsp;&nbsp;&nbsp;
             </label>
             <input
               type="number"
@@ -171,56 +201,112 @@ function Reserva() {
               onChange={handleChildrenChange}
               required
             />
+
           </div>
 
-          {precio !== 0 && ( 
-          <div className={style.formGroup}>
-            <label htmlFor="precio" className={style.label}>
-              Precio: ${precio}
-            </label>
-          </div>
+
+          {precio !== 0 && (
+            <div className={style.formGroup}>
+              <label htmlFor="precio" className={style.label}>
+                Precio: ${precio}
+              </label>
+            </div>
           )}
 
           {adults !== 0 && rooms.length && (
-            <div className={style.formGroup}>
+            // puse estilo
+            <div >
               <label htmlFor="roomName" className={style.label}>
-                Seleccione habitaciones:
+                Seleccione la habitación:
               </label>
-              <ul>
+              <div className={style.containercheckbox}>
+                {/* <ul> */}
                 {rooms.map((room) =>
-                  (
-                    <li key={room._id}>
-                      <label>
-                        <input
-                          type="checkbox"
-                          value={room._id}
-                          checked={selectedRoom.some(activeRoom => activeRoom._id === room._id)}
-                          onChange={handleRoomChange}
-                        />
-                        {room.disponible === false ? (
-                          <span>
-                            No disponible: {room.nombre}
-                            <Link className={style.linkkk} to={`/habitacion/${room._id}`}>
+                (
+                  // <li key={room._id}>
+                  <label>
+                    <input
+                      type="checkbox"
+                      value={room._id}
+                      // checked={selectedRoom.some(activeRoom => activeRoom._id === room._id)}
+                      onChange={handleRoomChange}
+                    />
+                    {room.disponible === false ? (
+                      <span>
+                        No disponible: {room.nombre}
+                        <Link className={style.linkkk} to={`/habitacion/${room._id}`}>
+                          <button className={style.hab}>Ver Habitación</button>
+                        </Link> 
+                       
+                      </span>
+                    ) : (
+                      <span>
+                        <br></br>
+                        {room.nombre} Capacidad: {room.capacidad}<br></br> Precio: ${room.precio}
+                        {/* <Link className={style.linkkk} to={`/habitacion/${room._id}`}>
+                          <button className={style.hab}>Ver Habitación</button>
+                        </Link> */}
+                        <Link className={style.linkkk} to={`/habitacion${room.numero}`}>
                               <button className={style.hab}>Ver Habitación</button>
-                            </Link>
-                          </span>
-                        ) : (
-                          <span>
-                            {room.nombre} Capacidad: {room.capacidad} Precio: ${room.precio}
-                            <Link className={style.linkkk} to={`/habitacion${room.numero}`}>
-                              <button className={style.hab}>Ver Habitación</button>
-                            </Link>
-                          </span>
-                        )}
-                      </label>
-                    </li>
-                  )
+                        </Link>
+                      </span>
+                    )}
+                  </label>
+                  // </li>
+                )
                 )}
-              </ul>
-            </div> 
+              </div>
+              {/* </ul> */}
+            </div>
+
           )}
 
-          {/* {adults !== 0 && services.length && (
+          <br></br>
+          {adults !== 0 && rooms.length && (
+            
+            <div >
+              <label htmlFor="roomName" className={style.label}>
+                Seleccione el paquete:
+              </label>
+              <div className={style.containercheckbox}>
+                {/* <ul> */}
+                {paquetes.map((room) =>
+                (
+                  // <li key={room._id}>
+                  <label>
+                    <input
+                      type="checkbox"
+                      value={room._id}
+                      // checked={selectedPaquete.some(activeRoom => activeRoom._id === room._id)}
+                      onChange={handlePaqueteChange}
+                    />
+                    {room.disponible === false ? (
+                      <span>
+                        No disponible: {room.nombre}
+                        <Link className={style.linkkk} to={`/detail/${room._id}`}>
+                          <button className={style.hab}>Ver Paquete</button>
+                        </Link>
+                      </span>
+                    ) : (
+                      <span>
+                        {room.nombre} Capacidad: {room.capacidad}
+                        <br></br>
+                        {room.nombre} Precio: ${room.costo}
+                        <Link className={style.linkkk} to={`/detail/${room._id}`}>
+                          <button className={style.hab}>Ver Paquete</button>
+                        </Link>
+                      </span>
+                    )}
+                  </label>
+                  // </li>
+                )
+                )}
+                {/* </ul> */}
+              </div>
+            </div>
+
+          )}
+           {/* {adults !== 0 && services.length && (
             <div className={style.formGroup}>
               <label htmlFor="serviceName" className={style.label}>
                 Seleccione servicios:
@@ -246,7 +332,7 @@ function Reserva() {
               </ul>
             </div>
           )} */}
-          <button type='submit' className={style.button}>Reservar ahora</button>
+          <button type='submit' className={style.button}>Reservar ahora</button>          
         </form>
       </div>
     </div>

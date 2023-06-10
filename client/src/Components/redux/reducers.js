@@ -1,6 +1,6 @@
 // reducer.js
 
-import { SET_ORDER_BY_NAME, SET_ORDER_BY_CAPACITY, SET_ORDER_BY_PRICE, GET_PAQUETES,SET_CURRENT_PAGE, SET_USUARIO, SUGERENCIA_EMAIL, DELETE_USUARIO, GET_HABITACIONES, GET_HABITACIONES_DISPONIBLES,ORDER_PAQUETES,GET_PAQUETES_BY_ID} from "./action";
+import { SET_ORDER_BY_NAME, SET_ORDER_BY_CAPACITY, SET_ORDER_BY_PRICE, GET_PAQUETES,SET_CURRENT_PAGE, SET_USUARIO, SUGERENCIA_EMAIL, DELETE_USUARIO, GET_HABITACIONES, GET_HABITACIONES_DISPONIBLES,ORDER_PAQUETES,GET_PAQUETES_BY_ID,GET_RESERVA_BY_USER} from "./action";
 
 const initialState = {
   orderByName: '',
@@ -29,7 +29,8 @@ const initialState = {
   usuario: undefined,
   gethabitaciones: [],
   habitaciones: [],
-  paqueteXid: []
+  paqueteXid: [],
+  reserva:[]
 };
 
 const reducer = (state = initialState, action) => {
@@ -119,7 +120,11 @@ const reducer = (state = initialState, action) => {
     return{
     ...state,
     orderPaquetes: SortPaquetes
-}
+    }
+    case GET_RESERVA_BY_USER: return {
+      ...state,
+      reserva: action.payload 
+    } 
 
       case SET_USUARIO: return {
         ...state,

@@ -9,6 +9,7 @@ const reservacionSchema = new mongoose.Schema({
   fechaFin: { type: Date, required: true },
   activo: { type: Boolean, default: true },
   image: { type: Array },
+  costo: { type: Number, required: true },
   //Mas campos
 });
 

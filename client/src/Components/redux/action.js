@@ -13,6 +13,9 @@ export const GET_HABITACIONES_DISPONIBLES = "GET_HABITACIONES_DISPONIBLES";
 export const SUGERENCIA_EMAIL = "SUGERENCIA_EMAIL"; 
 export const ORDER_PAQUETES = "ORDER_PAQUETES";
 export const GET_PAQUETES_BY_ID = "GET_PAQUETES_BY_ID";
+export const CREATE_RESERVA = "CREATE_RESERVA";
+export const GET_RESERVA_BY_USER ="GET_RESERVA_BY_USER";
+
 
 export const setOrderByName = (orderType) => {
   return {
@@ -55,6 +58,22 @@ export function getPaqueteById(id) {
 }
 export const orderxPaquetes = (order) => { return { type: ORDER_PAQUETES, payload: order } }
 
+export const createReserva = (reserva) =>{ 
+  let url = `http://localhost:3001/reservation`;
+  const response = axios.post(url,reserva);
+ 
+  return response;
+ }
+ 
+ export function getReservaByUsuario(usuario) {
+   return async function (dispatch) {    
+       const response = (await axios.get(`http://localhost:3001/reservation/`+usuario)).data
+       return dispatch({
+         type: GET_RESERVA_BY_USER, 
+         payload: response})
+   }
+ }
+ 
 
 export const set_Currents_Page = (currentPage) => {
   return {
