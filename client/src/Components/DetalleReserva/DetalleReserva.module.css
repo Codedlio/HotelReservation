@@ -14,11 +14,11 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
+  
 }
 .encierro{
   width: 450px;
   border-radius: 15px;
-  
   box-shadow: 0 0 15px 8px rgba(158, 137, 14, 0.3);
   background-color: #f2eeec;
   opacity: 85%;
@@ -28,7 +28,7 @@
   text-align: center;
 }
 .encierro p {
-  margin-bottom: 20px;
+  margin-bottom: 50px;
  
   
 }
