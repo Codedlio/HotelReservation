@@ -50,7 +50,7 @@ function Reserva() {
     
     const data = {
       usuarioCorreo:usuario,
-      arrHabitacion:[selectedRoom],
+      arrHabitacion:selectedRoom,
       fechaInicio: dates.checkIn,
       fechaFin: dates.checkOut
   };
