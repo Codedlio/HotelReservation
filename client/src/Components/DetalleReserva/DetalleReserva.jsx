@@ -26,23 +26,18 @@ function DetalleReserva() {
     if (Array.isArray(reserva)) {      
       return reserva.map((re) => {       
         return (         
-        <div className={style.container}> 
+        <div > 
           <div className={style.encierro}>
               <h1 className={style.tit}>SU RESERVA</h1>
-              <h2 className={style.tit} >{re.usuario}</h2>  
+              <h2 className={style.mail} >{re.usuario}</h2>  
               <p className={style.label}>Fecha de entrada:</p>
               <p className={style.label2}>{re.fechaInicio.substring(0,10)}</p>
               <p className={style.label}>Fecha de salida:</p>
               <p className={style.label2}>{re.fechaFin.substring(0,10)}</p>
-              {/* <p className={style.label}>Adultos:</p>
-              <p className={style.label2}>Ejemplo: 2</p>
-              <p className={style.label}>Niños:</p>
-              <p className={style.label2}>Ejemplo: 4</p>
-              <p className={style.label}>Habitación:</p>
-              <p className={style.label2}>Ejemplo: Suite Roma</p> */}
+              
               <p className={style.label}>Precio:</p>
               <p className={style.label2}>${re.costo}</p>    
-              <button >Realizar Pago</button>
+              <button className={style.buttonpago} >Realizar Pago</button>
           </div>
         </div>
         );
@@ -53,7 +48,7 @@ function DetalleReserva() {
 
   return (
     <div className={style.container}>
-      <div className={style.contenedor}>
+      <div >
         <Link className={style.linkContainer} to="/">
           <button className={style.botoncerrar} onClick={handleClose}>
             X

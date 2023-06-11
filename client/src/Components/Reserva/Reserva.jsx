@@ -207,7 +207,7 @@ function Reserva() {
 
           {precio !== 0 && (
             <div className={style.formGroup}>
-              <label htmlFor="precio" className={style.label}>
+              <label htmlFor="precio" className={style.precio}>
                 Precio: ${precio}
               </label>
             </div>
@@ -232,7 +232,7 @@ function Reserva() {
                       onChange={handleRoomChange}
                     />
                     {room.disponible === false ? (
-                      <span>
+                      <span className={style.span}>
                         No disponible: {room.nombre}
                         <Link className={style.linkkk} to={`/habitacion/${room._id}`}>
                           <button className={style.hab}>Ver Habitación</button>
@@ -332,8 +332,10 @@ function Reserva() {
               </ul>
             </div>
           )} */}
-          <button type='submit' className={style.button}>Reservar ahora</button>          
+          <button type='submit' className={style.button}>Reservar ahora</button> 
+                 
         </form>
+        {/* <div className={style.spinner}></div>   */}
       </div>
     </div>
   );
