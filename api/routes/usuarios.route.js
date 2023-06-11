@@ -11,7 +11,7 @@ router.post('/registro', postRegistro);
   // Ruta de cierre de sesión
   router.post('/login',postLogin);
   router.put('/usuario/:id',putUsuario);
-  router.get('/usuario/:id',getUsuario);
+  router.get('/usuario',getUsuario);
   router.delete('/usuario/:id',deleteUsuario);
   router.post('/notification', postNotification )
   

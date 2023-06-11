@@ -51,7 +51,8 @@ const  postLogin= async (req, res) => {
         if (!match) {
           return res.status(401).json({ mensaje: 'Contraseña incorrecta' });
     }    else {
-          return res.status(200).json({ mensaje: 'Inicio de sesión exitoso' });
+                 
+          return res.status(200).json({ mensaje: 'Inicio de sesión exitoso',usuario: usuario.nombre }); 
 }
 
       // const userRecord = await auth.signInWithEmailAndPassword(correo, contraseña);
@@ -93,12 +94,10 @@ const  postLogin= async (req, res) => {
   };
   const getUsuario=async (req, res) => {
     try {
-      const { id } = req.params;
-      if (!ObjectId.isValid(id)) {
-        return res.status(400).json({ mensaje: 'ID de usuario inválido' });
-      }
+      const { correo } = req.body;
+     
       // Obtener el documento de usuario en tu base de datos propia por su ID
-      const usuario = await Usuario.findById(id).select('-contraseña');
+      const usuario = await Usuario.findOne({ correo }).select('-contraseña');
   
       if (!usuario) {
         return res.status(404).json({ mensaje: 'Usuario no encontrado' });

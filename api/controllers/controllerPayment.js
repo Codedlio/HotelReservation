@@ -1,15 +1,17 @@
 const Pago= require('../models/Pago');
 const Habitacion= require('../models/Habitacion');
+const Paquete= require('../models/Paquete');
 require('dotenv').config()
 const keyStripe = process.env.STRIPE_PRIVATE_KEY
 const stripe = require('stripe')(keyStripe);
 
 
 const createSession = async (req, res) => {
-  const { arrIdHabitaciones, customerId } = req.body;
+  const { arrIdHabitaciones, customerId,arrIdPaquetes } = req.body;
   try {
     const lineItems = [];
-    for (const habitacionId of arrIdHabitaciones) {
+    if (arrIdHabitaciones){
+      for (const habitacionId of arrIdHabitaciones) {
       const habitacion = await Habitacion.findById(habitacionId);
       lineItems.push({
         price_data: {
@@ -23,6 +25,25 @@ const createSession = async (req, res) => {
         quantity: 1
       });
     }
+    }
+    if (arrIdPaquetes){
+      for (const IdPaquete of arrIdPaquetes) {
+      const paquete = await Paquete.findById(IdPaquete);
+      lineItems.push({
+        price_data: {
+          currency: 'usd',
+          product_data: {
+            name: paquete.nombre,
+            description: paquete.desc
+          },
+          unit_amount: paquete.costo * 100 // Asegúrate de convertir el precio a centavos si Stripe trabaja con la menor unidad monetaria
+        },
+        quantity: 1
+      });
+    }
+    }
+    
+    
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
@@ -33,8 +54,8 @@ const createSession = async (req, res) => {
       cancel_url: "http://localhost:3000/ingresar",
     });
 
-    console.log(session);
-    res.status(200).json({ sessionId: session.id });
+    //console.log(session);
+    res.status(200).json({ sessionId: session.id, payment:session.url});
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -43,7 +64,13 @@ const createCustumer= async (req, res) => {
   const { nombre, correo } = req.body;
   try {
       
-    
+    const usuario = await Pago.findOne({ correo });
+      if (usuario) {
+        //console.log(usuario);
+        return res.status(203).json({ custumer:usuario.stripeCustomerId });
+} else{
+
+
 
       const customer = await stripe.customers.create({ 
           name: nombre,
@@ -59,8 +86,8 @@ const createCustumer= async (req, res) => {
       console.log("Email",customer.email);
       await crearUsuario.save();
    
-      res.send({ message: `Cliente creado exitosamente: ${customer.id}` });
-  } catch (error) {
+      res.json({ message: "Cliente creado exitosamente",custumer:customer.id });
+  }} catch (error) {
       return res.status(500).json({ error: error.message });
   }
 };
