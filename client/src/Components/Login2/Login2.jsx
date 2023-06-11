@@ -1,22 +1,30 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { GoogleAuthProvider,signInWithPopup  } from "firebase/auth";
 import { auth } from "../Loging/firebase";
 import style from './Login2.module.css';
 import { Link } from 'react-router-dom';
 import validate from './validate';
 import {useNavigate} from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setUsuario } from '../redux/action';
 import foto from './logo gogle.png'
-
+import getCustumer from "../../services/getCustumer";
+import axios from "axios";
 function Login2() {
+
+  const usuario = useSelector(state => state.usuario);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(true);
   
   const [form, setForm] = useState({correo:"",contraseña:""});
   const [errors, setErrors] = useState({count: 1});
-
+   
+  // useEffect(() => { 
+  //   if (usuario)    
+  //       getCustumer(usuario)
+  //       .then((res) => console.log(res.data))
+  // }, [usuario])
   function changeHandler(e){  
     const property = e.target.name;
     const value = e.target.value;
@@ -34,9 +42,19 @@ function Login2() {
     try {
       const credentials = await signInWithPopup(auth, provider)
       //console.log(credentials);
-      dispatch(setUsuario(credentials.user.email));
+      const user={
+        correo:credentials.user.email,
+        nombre:credentials.user.displayName  
+      }
       
-      if(window.sessionStorage.getItem('dataReservation')){
+      dispatch(setUsuario(user.correo));
+      const {data}= await axios.post("http://localhost:3001/payment/custumer", {
+                correo:user.correo,
+                nombre:user.nombre
+        }); 
+        window.localStorage.setItem("client", JSON.stringify(data.custumer));
+        //console.log(data.custumer);
+      if(window.localStorage.getItem('dataReservation')){
         navigate("/detalleReserva");
       }else{
         navigate("/")
@@ -55,35 +73,60 @@ function Login2() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+
     // Aquí puedes realizar acciones con los datos enviados, como enviarlos a un servidor
     // Envío de datos al servidor
     fetch('http://localhost:3001/auth/login', {
-      method: 'POST',
-      body: JSON.stringify({
-        correo: form.correo,
-        contraseña: form.contraseña
-      }),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    .then(response => {
-      // Manejar la respuesta del servidor
-      if (response.ok) {
-        dispatch(setUsuario(form.correo));
-        if(window.sessionStorage.getItem('dataReservation')){
-          navigate("/detalleReserva");
-        }else{
-          navigate("/")
+  method: 'POST',
+  body: JSON.stringify({
+    correo: form.correo,
+    contraseña: form.contraseña
+  }),
+  headers: {
+    'Content-Type': 'application/json'
+  }
+})
+
+  .then(response => {
+    if (response.ok) {
+      
+      return response.json(); // Devolver la promesa
+    } else {
+      throw new Error('Error en la respuesta del servidor');
+    }
+  })
+  .then(data => {
+    const user = {
+      email: form.correo,
+      name: data.usuario
+    };
+    dispatch(setUsuario(form.correo));
+    fetch("http://localhost:3001/payment/custumer", {
+        method: 'POST',
+        body: JSON.stringify({correo:user.email,nombre:data.usuario}),
+        headers: {
+          'Content-Type': 'application/json'
         }
+      })
+      .then(response => {
+        return  response.json()
         
-      }
-    })
-    .catch(error => {
-      // Manejar errores
-      alert("Se produjo un error: " + error.message);
-    });
-  };
+      })
+      .then(data => {
+        console.log(data);
+        window.localStorage.setItem("client", JSON.stringify(data.custumer));
+      })
+    if (window.localStorage.getItem('dataReservation')) {
+      navigate("/detalleReserva");
+    } else {
+      navigate("/");
+    }
+  })
+  .catch(error => {
+    alert("Se produjo un error: " + error.message);
+  })
+};
 
   return (
     <div className={style.contenedor}>

@@ -88,7 +88,7 @@ function Reserva() {
         // Manejar errores
       });
     }else {
-      window.sessionStorage.setItem("dataReservation", JSON.stringify(data));
+      window.localStorage.setItem("dataReservation", JSON.stringify(data));
       alert('Ingrese a su cuenta para continuar...')
       navigate("/contenedor");
     }
