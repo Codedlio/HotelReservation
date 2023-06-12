@@ -193,7 +193,7 @@ function Reserva() {
 
           {precio !== 0 && (
             <div className={style.formGroup}>
-              <label htmlFor="precio" className={style.label}>
+              <label htmlFor="precio" className={style.precio}>
                 Precio: ${precio}
               </label>
               <br/>

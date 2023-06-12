@@ -6,15 +6,31 @@
   background-color: rgb(220, 193, 193);
 }
 .cardsContainer{
-  border: 2px solid #2a9d8f;
+  border: 2px solid #888683;
   border-radius: 10px;
+  background-color: rgb(211, 207, 207);
   /* transition: transform 0.3s, box-shadow 0.3s; */
+  /* display: flex; */
+
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ flex-direction: column;
 }
 .cardsContainer:hover{
   /* transform: translateY(-10px); */
   box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
   opacity: 5;
   z-index: 2;
+  cursor: pointer;
+  background-color: rgb(199, 196, 196);
+  /* display: flex;
+  justify-content: center;
+  align-items: center;
+} */
+}
+.lin{
+  text-decoration: none;
 }
 .cardsContainer:not(:hover) {
   opacity: .9;
@@ -23,11 +39,26 @@
     text-align: center;
     font-size: 18px;
     text-decoration: none;
-    color: #000000;
+    color: #3d3c3c;
     padding-top: 10px;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+   margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+  .cardName:hover{
+    color: #131212;
   }
   .cardName, .cardResume{
     padding-left: 10px;
+    margin-left: 10px;
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    text-decoration:none;
+    color: #131212;
   }
   
   /*---------------------------------------------*
@@ -46,8 +77,15 @@
   }
   .cardImage{
     border-radius: 10%;
-    padding: 10px 15px;
+    
     width: 90%;
+    height: 85%;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top:10px;
+    margin-bottom: 20px;
 
   }
   .pageNumber {
@@ -64,9 +102,9 @@
       align-items: center;
       width: 3rem;
       height: 3rem;
-      border-radius: 50%;
+      border-radius: 10px;
       background-color: #2d4059;
-      color: #fff;
+      color: #ada9a9;
       margin-right: 1rem;
     }
     
@@ -77,6 +115,8 @@
       justify-content: center;
       align-items: center;
       margin-top: 4rem;
+      color: rgb(210, 206, 206);
+      
     }
     .paginationCards button:hover {
       background-color:  rgb(80, 50, 50);
@@ -85,26 +125,34 @@
     }
     .buttonPagActive {
       background-color:  rgb(80, 50, 50);
-      color: white;
+      color: rgb(210, 206, 206);
       width: 30px;
       height: 40px;
-      border-radius: 10px;
-      border-color: #bfde44;
-      margin-top: 6px;
+      border-radius: 0.25rem;
+     
+      margin: 0 0.5rem;
       cursor: pointer;
     }
     .buttonDesactivo{
       padding: 0.5rem 1rem;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      display: flex;
       margin: 0 0.5rem;
+      width: 30px;
       border: none;
+      height: 40px;
       border-radius: 0.25rem;
-      background-color: white;
+      background-color: rgb(176, 174, 174);
       color: black;
       cursor: pointer;
   }
     .paginationCards button:disabled {
       opacity: 0.5;
       cursor: default;
+      border-radius: 0.25rem;
+      background-color: rgb(176, 174, 174);
     }
     .paginationCards button:hover {
       background-color: rgb(80, 50, 50);
@@ -112,25 +160,50 @@
 
     }
     .paginationCards li{
+      border-radius: 0.25rem;
       list-style: none;
+      
     }
     .paginationCards button.active {
       background-color: yellow;
+    }
+    
+    .flecha{
+      border-radius: 0.25rem;
+      border: 0;
+      background-color: rgb(176, 174, 174);
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 600;
+    }
+    
+    paginationCards button{
+      border-radius: 0.25rem;
+      border: 0;
+      background-color: rgb(176, 174, 174);
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 600;
     }
   
     /*---------------------------------------------*
     /* ORGANIZAR ASCENDENTE Y DESCENDENTE */
     .sortButtonsContainer{
-      flex-direction:column;
+      flex-direction:row;
+      display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: -60px;
-      margin-top: -90px;
-      margin-left: 300px;
+      margin-bottom: -40px;
+      margin-top: -60px;
+      
 
   }
   .sortAscButton, .sortDescButton{
-    background-color: #F2F2F2;
+    background-color: #686666;
     width: 150px;
     font-size: 20px;
     font-weight: bold;
@@ -141,13 +214,13 @@
     outline: none;
     box-shadow: 0 0 5px #ccc;  
     margin-left: 10px;
-    color: #000000;
+    color: #eeeaea;
     transition: all 0.3s ease-in-out;
     height: -5px;
   }
   .sortAscButton:hover, .sortDescButton:hover {
-    background-color: rgb(80, 50, 50);
-    color: #fff;
+    background-color: rgb(120, 70, 70);
+    color: #131212;
   }
   .sortAscButton:active, .sortDescButton:active {
     background-color: rgb(80, 50, 50);
@@ -155,7 +228,7 @@
   }
   .link{
     text-decoration: none;
-    color: rgb(29, 2, 78);
+    color: rgb(240, 240, 245);
   }
   
   .searchInput{     

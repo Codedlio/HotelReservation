@@ -16,6 +16,22 @@
   background-position: center center;
   
 }
+.contenedor{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  min-height: 100vh;
+  background-image: url('./fotor_2023-6-8_18_39_44.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
 .encierro{
   width: 450px;
   border-radius: 15px;
@@ -26,6 +42,7 @@
   padding: 20px;
   align-items: center;
   text-align: center;
+  height: fit-content;
 }
 .encierro p {
   margin-bottom: 50px;
@@ -36,6 +53,12 @@
   font-size: 26px;
   margin-bottom: 30px;
   text-shadow: 0px 2px 6px rgba(0, 0, 0, 0.5);
+}
+.mail{
+  font-style: italic;
+  font-weight: 600;
+  font-size: 18px;
+  margin-bottom: 20px;
 }
 .botoncerrar {
   position: relative;
@@ -87,4 +110,17 @@ text-decoration: none;
   font-style: italic;
   font-weight: 600;
   font-size: 18px;
+}
+.buttonpago{
+  background-color: #8b5541;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-top: 10px;
+    text-decoration: none;
+}
+.buttonpago:hover{
+  background-color: #78331a;
 }
