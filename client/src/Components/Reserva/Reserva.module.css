@@ -28,12 +28,14 @@
     padding: 20px;
     align-items: center;
     text-align: center;
+    margin-top: 30px;
+    margin-bottom: 10px;
   }
   
   .title {
     font-size: 22px;
     color: #333;
-    margin-bottom: 10px;
+    margin-bottom: 30px;
     
   }
   
@@ -45,6 +47,9 @@
     column-gap: 90px;
     justify-content: space-evenly;  
     margin-left: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     
   }
   .containercheckbox{
@@ -57,6 +62,7 @@
     justify-content: space-evenly;  
     margin-left:10px;
     border: 2px solid  rgba(216, 50, 50, 0.3);
+    color: black;
     border-radius: 10px;
   }
  
@@ -66,7 +72,18 @@
     color: #666;
     text-align: center;
     margin-left: 10px;
+    margin-bottom: 20px;
 
+  }
+  .precio{
+    font-weight:bold;
+    color: #666;
+    text-align: center;
+    margin-left: 10px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   
   .inputFecha {    
@@ -88,7 +105,8 @@
     border: none;
     border-radius: 3px;
     cursor: pointer;
-    margin-top: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
     text-decoration: none;
   }
   Link{
@@ -129,8 +147,8 @@
   
   .closeButton {
     position: relative;    
-    left: 345px;
-    bottom: 10px;
+    left: 950px;
+    bottom: 50px;
     background-color: #ccc;
     color: #fff;
     border: none;
@@ -151,5 +169,26 @@
   .formContainer label{
     text-align: left;
   }
- 
+ .span{
+  justify-content: center;
+  align-items: center;
+ }
+ .spinner {
   
+  border: 20px solid #8b5541; /* Color del borde */
+  border-top: 20px solid white; /* Color del borde superior */
+  border-radius: 50%;
+  width: 150px; /* Ancho del spinner */
+  height: 150px; /* Altura del spinner */
+  animation: spin 1s linear infinite; /* Animación */
+  margin: 0 auto; /* Centrar horizontalmente */
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg); /* Rotación inicial */
+  }
+  100% {
+    transform: rotate(360deg); /* Rotación completa */
+  }
+}

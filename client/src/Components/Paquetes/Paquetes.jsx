@@ -5,6 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getPaquetes,orderxPaquetes} from '../redux/action';
 import { Link } from "react-router-dom";
 import FooterBar from '../FooterBar/FooterBar'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowUp, faArrowDown, faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
+
 
 const PaginationPaquetes = () => {  
  //let [data, setData] = useState([]);
@@ -57,14 +60,14 @@ const PaginationPaquetes = () => {
         }       
         return (
           <div className={style.cardsContainer} key={card._id}>
-            <Link
+            <Link className={style.lin}
            to={`/detail/${card._id}`}>
           <h2 className={style.cardName}>{card.nombre}</h2>
           </Link>
            
             <img src={urlImage} alt={card.nombre} className={style.cardImage}/>  
           
-            <p className={style.cardResume}><b>Costo:</b> {card.costo}</p>   
+            <p className={style.cardResume}><b >Costo: ${ card.costo} </b> </p>   
                 
           </div>
         );
@@ -80,8 +83,8 @@ const PaginationPaquetes = () => {
     }
     for (let i = 1; i <= totalPages; i++) {
       pages.push(
-        <li key={i}>
-          <button
+        <li  key={i}>
+          <button 
             href="#"
             onClick={(e) => handleClick(e, i)}
             className={i === currentPage ? style.buttonPagActive : style.buttonDesactivo}
@@ -96,24 +99,25 @@ const PaginationPaquetes = () => {
     // Agregar flecha hacia la izquierda si no estamos en la primera página
     if (currentPage > 1) {
       pages.unshift(
-        <li key="back">
-          <button
-            href="#"
-            onClick={(e) => handleClick(e, currentPage - 1)}
-          >
-            &lt;
-          </button>
-        </li>
+        <li className={`${style.flecha} ${style.back}`} key="back">
+      <button
+        href="#"
+        onClick={(e) => handleClick(e, currentPage - 1)}
+      >
+        &lt;
+      </button>
+    </li>
       );
     }
 
     // Agregar flecha hacia la derecha si no estamos en la última página
     if (currentPage < totalPages) {
       pages.push(
-        <li key="next">
+        <li className={style.flecha} key="next">
           <button
             href="#"
             onClick={(e) => handleClick(e, currentPage + 1)}
+            className={style.flecha}
           >
             &gt;
           </button>
@@ -130,10 +134,10 @@ const PaginationPaquetes = () => {
        <NavBar></NavBar> 
     
         <div className={style.sortButtonsContainer}> 
-        <button className={style.sortAscButton} onClick={handleSortAsc}>➖ Días</button>
-        <button className={style.sortDescButton} onClick={handleSortDesc}>➕Días</button>
-        <button className={style.sortAscButton} onClick={handleCostoAsc}>Costo ⬆️ </button>
-        <button className={style.sortDescButton} onClick={handleCostoDesc}>Costo ⬇️ </button>
+        <button className={style.sortAscButton} onClick={handleSortAsc}><FontAwesomeIcon icon={faArrowDown} />  Días</button>
+        <button className={style.sortDescButton} onClick={handleSortDesc}> <FontAwesomeIcon icon={faArrowUp} /> Días</button>
+        <button className={style.sortAscButton} onClick={handleCostoAsc}>Costo <FontAwesomeIcon icon={faPlus} />  </button>
+        <button className={style.sortDescButton} onClick={handleCostoDesc}>Costo <FontAwesomeIcon icon={faMinus} /> </button>
        
       </div>
       <div className={style.cardsPerPage}>{renderPaquetes()}</div>
