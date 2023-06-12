@@ -1,7 +1,7 @@
 const Reservacion = require('../models/Reservacion');
 const Habitacion = require('../models/Habitacion');
-const Usuario = require('../models/Usuario');
 const Servicio = require('../models/Servicio');
+const { checkReservation } = require("../config/sendgridEmail.js");
 
 const getReservaciones= async (req, res) => {
   try {
@@ -75,20 +75,65 @@ catch (error) {
 }
 };
 
-const postReservacion = async (req,res) => {
-  const {usuarioCorreo,arrIdHabitaciones,arrIdServicios,arrIdPaquetes,fechaInicio,fechaFin} = req.body;
-
-  
-  if (!usuarioCorreo || !fechaInicio || !fechaFin) {return res.status(400).send("Error. No se enviaron los datos necesarios para crear la reserva")};
+const getReservacionByUsuario = async (req,res) => {
+  const {usuario} = req.params;
   
   try {
-    const usuario = await Usuario.findOne({correo:usuarioCorreo,activo:true});
-    if (!usuario) {return res.status(400).send("No se encontró el usuario en la BDD")};
+    let ReservacionDeUsuario=[];
+    let reservacion = await Reservacion.findOne({usuario:usuario,activo:true});
+    if (!reservacion) {return res.status(200).send(ReservacionDeUsuario)};
 
-    const data = new Reservacion ({usuario:usuarioCorreo,habitaciones:arrIdHabitaciones,servicios:arrIdServicios,paquetes:arrIdPaquetes,fechaInicio,fechaFin});
-    res.status(201).json(await data.save());
+    let nombresHabitaciones = [];
+    for (let habitacionId of reservacion.habitaciones) {
+        const {nombre} = await Habitacion.find({_id:habitacionId});
+        nombresHabitaciones.push(nombre);
+    }
+
+    let nombresServicios = [];
+    for (let servicioId of reservacion.servicios) {
+        const {nombre} = await Servicio.find({_id:servicioId});
+        nombresServicios.push(nombre);
+    }
+
+    reservacion.habitaciones = nombresHabitaciones;
+    reservacion.servicios = nombresServicios;
+    ReservacionDeUsuario.push(reservacion);
+    return res.status(200).json(ReservacionDeUsuario);
+} 
+catch (error) {
+    return res.status(500).send("Internal server error");
+}
+};
+
+
+const postReservacion = async (req,res) => {
+  const {usuarioCorreo,arrHabitacion,arrServicio,arrPaquete,fechaInicio,fechaFin,costo} = req.body;
+let fechaInicioParseado="";
+let fechaFinParseado="";
+let anio="";
+anio=fechaInicio.substring(0,4);
+let mes="";
+mes=fechaInicio.substring(5,7);
+let dia="";
+dia=fechaInicio.substring(8,10);
+fechaInicioParseado=mes +"/"+dia+"/"+anio;
+anio=fechaFin.substring(0,4);
+mes=fechaFin.substring(5,7);
+dia=fechaFin.substring(8,10);
+fechaFinParseado= mes +"/"+dia+"/"+anio;
+  if (!usuarioCorreo || !fechaInicio || !fechaFin||!costo) {return res.status(400).send("Error. No se enviaron los datos necesarios para crear la reserva")};
+  
+  try {
+    
+    //const data = new Reservacion ({usuario:usuarioCorreo,habitaciones:arrHabitacion,servicios:arrServicio,paquete:arrPaquete,fechaInicioParseado,fechaFinParseado,costo});
+    const data = new Reservacion ({usuario:usuarioCorreo,habitaciones:arrHabitacion,servicios:arrServicio,paquete:arrPaquete,fechaInicio:fechaInicioParseado,fechaFin:fechaFinParseado,costo:costo});
+    //res.status(201).json(await data.save());
+    await data.save();
+    res.status(201).json("Se registró con éxito su reserva, pero esta pendiente el pago");
   }
   catch (error) {
+    console.log("postReservacion-error");
+    console.log(error);
     if (error.name === 'ValidationError') {
       return res.status(400).send(error.message);
     }
@@ -101,18 +146,17 @@ const postReservacion = async (req,res) => {
 
 const putReservacion = async (req,res) => {
   const {id} = req.params;
-  const {usuarioCorreo,arrIdHabitaciones,arrIdServicios,arrIdPaquetes,fechaInicio,fechaFin} = req.body;
-
-  if (!usuarioCorreo || !arrIdHabitaciones || !arrIdServicios || !arrIdPaquetes || !fechaInicio || !fechaFin) {return res.status(400).send("Error. No se enviaron los datos necesarios para actualizar")};
+  const {usuarioCorreo,arrHabitacion,arrServicio,arrPaquete,fechaInicio,fechaFin} = req.body;
+  if (!usuarioCorreo || !fechaInicio || !fechaFin) {return res.status(400).send("Error. No se enviaron los datos necesarios para actualizar")};
   
   try {
     const reservacion = await Reservacion.findOne({_id:id,activo:true});
     if (!reservacion) {return res.status(400).send("No se encontró la reservación en la BDD")};
     
     reservacion.usuario = usuarioCorreo;
-    reservacion.habitaciones = arrIdHabitaciones;
-    reservacion.servicios = arrIdServicios;
-    reservacion.paquetes = arrIdPaquetes;
+    reservacion.habitaciones = arrHabitacion;
+    reservacion.servicios = arrServicio;
+    reservacion.paquetes = arrPaquete;
     reservacion.fechaFin = fechaFin;
     reservacion.fechaInicio = fechaInicio;
     
@@ -141,4 +185,4 @@ const deleteReservacion = async (req,res) => {
   }
 };
 
- module.exports={getReservaciones,getReservacionById,postReservacion,putReservacion,deleteReservacion};
+ module.exports={getReservaciones,getReservacionById,postReservacion,putReservacion,deleteReservacion,getReservacionByUsuario};

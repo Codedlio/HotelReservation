@@ -21,6 +21,7 @@ import Historia from './Components/Historia/Historia';
 import InfoHotel from './Components/InfoHotel/Infohotel';
 import Filosofia from './Components/Filosofia/Filosofia';
 import Bienestar from './Components/Bienestar/Bienestar';
+import DetailPaquete from './Components/DetailPaquete/DetailPaquete';
 import Contacto from './Components/Contacto/Contacto';
 import Login from './Components/Login/Login';
 import ContenedorLogin from './Components/ContenedorLogin/ContenedorLogin';
@@ -28,6 +29,10 @@ import Login2 from './Components/Login2/Login2'
 import Trekking from './Components/Servicios/Trekking/Trekking';
 import Piscinatermal from './Components/Servicios/Piscinatermal/Piscinatermal';
 import Yoga from './Components/Yoga/Yoga'
+import DetalleReserva from './Components/DetalleReserva/DetalleReserva'
+import Natacion from './Components/Servicios/Natacion/Natacion'
+
+
 
 function App() {
   return (
@@ -60,7 +65,11 @@ function App() {
           <Route path="/infoHotel" element={<InfoHotel />} />
           <Route path="/filosofia" element={<Filosofia />} />
           <Route path="/bienestar" element={<Bienestar />} />
+          <Route path="/detail/:id" element={<DetailPaquete />} />
           <Route path="/yoga" element={<Yoga />} />
+          <Route path="/detalleReserva" element={<DetalleReserva />} />
+          <Route path="/natacion" element={<Natacion />} />
+          
           
 
           <Route path="/" element={<Home />} />

@@ -5,25 +5,30 @@ const Servicio = require('../models/Servicio');
 const getPaquetes = async (req,res) => {
     try {
         const paquetes = await Paquete.find({activo:true});
-
+        let paquetesCompleto=[];
         for(let paquete of paquetes) {
+          
             let numerosHabitaciones = [];
-            for (let habitacionId of paquete.habitaciones) {
-                const {nombre} = await Habitacion.find({_id:habitacionId});
-                numerosHabitaciones.push(nombre);
+            let cantHabitacion=0;
+            for (let habitacionId of paquete.arrIdHabitaciones) {               
+                let HabitacionXpaquete = await Habitacion.findOne({ _id: habitacionId, activo: true });
+                if(HabitacionXpaquete)
+                    cantHabitacion+=HabitacionXpaquete.capacidad;                
+                //numerosHabitaciones.push(nombre);
             }
-
+            paquete.capacidad=cantHabitacion;
             let nombresServicios = [];
-            for (let servicioId of paquete.servicios) {
+            for (let servicioId of paquete.arrIdServicios) {
                 const {nombre} = await Servicio.find({_id:servicioId});
                 nombresServicios.push(nombre);
             }
-
             paquete.habitaciones = numerosHabitaciones;
             paquete.servicios = nombresServicios;
+            paquetesCompleto.push(paquete);
         }
 
-        return res.status(200).json(paquetes);
+        
+        return res.status(200).json(paquetesCompleto);
     } 
     catch (error) {
         return res.status(500).send(error.message);
@@ -34,6 +39,7 @@ const getPaqueteById = async (req,res) => {
     const {id} = req.params;
 
     try {
+        let paqueteXid=[];
         let paquete = await Paquete.findOne({_id:id,activo:true});
         if (!paquete) {return res.status(400).send("El paquete no existe")};
 
@@ -51,8 +57,9 @@ const getPaqueteById = async (req,res) => {
 
         paquete.habitaciones = numerosHabitaciones;
         paquete.servicios = nombresServicios;
-        
-        return res.status(200).json(paquete);
+        paqueteXid.push(paquete);
+        //return res.status(200).json(paquete);
+        return res.status(200).json(paqueteXid);
     } 
     catch (error) {
         return res.status(500).send("Internal server error");

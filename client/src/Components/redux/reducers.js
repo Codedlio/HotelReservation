@@ -1,26 +1,11 @@
 // reducer.js
-import { SET_ORDER_BY_NAME, SET_ORDER_BY_CAPACITY, SET_ORDER_BY_PRICE, GET_PAQUETES, SET_USUARIO, DELETE_USUARIO} from "./action";
+
+import { SET_ORDER_BY_NAME, SET_ORDER_BY_CAPACITY, SET_ORDER_BY_PRICE, GET_PAQUETES,SET_CURRENT_PAGE, SET_USUARIO, SUGERENCIA_EMAIL, DELETE_USUARIO, GET_HABITACIONES, GET_HABITACIONES_DISPONIBLES,ORDER_PAQUETES,GET_PAQUETES_BY_ID,GET_RESERVA_BY_USER} from "./action";
 
 const initialState = {
   orderByName: '',
   orderByCapacity: '',
   orderByPrice: '',
-  habitaciones: [
-    { nombre: 'Suite Roca'},
-    { nombre: 'Suite Canelo' },
-    { nombre: 'Suite Liucura'},
-    { nombre: 'Villa Bosque' },
-    { nombre: 'Villa Rio'},
-    { nombre: 'Villa Arce' },
-    { nombre: 'Villa Tilo' },
-    { nombre: 'Villa Cedra' },
-    { nombre: 'Villa Madrid' },
-    { nombre: 'Villa Lavanda'},
-    { nombre: 'Villa Mosqueta'},
-    { nombre: 'Villa Anacay'},
-    { nombre: 'Villa Playa'},
-    { nombre: 'Villa Troncos'},
-  ],
   habitacionesData: [
     { nombre: 'Suite Roca', capacidad: 2 },
     { nombre: 'Suite Canelo', capacidad: 4 },
@@ -37,21 +22,15 @@ const initialState = {
     { nombre: 'Villa Playa', capacidad: 5 },
     { nombre: 'Villa Troncos', capacidad: 5 },
   ],
-  // habitacionesPrecio: [
-  //   { nombre: 'Suite Roca', Precio: 290 },
-  //   { nombre: 'Suite Canelo', Precio: 350 },
-  //   { nombre: 'Suite Liucura', Precio: 290 },
-  //   { nombre: 'Villa Bosque', Precio: 700 },
-  //   { nombre: 'Villa Rio', Precio: 750 },
-  //   { nombre: 'Villa Arce', Precio: 500 },
-  //   { nombre: 'Villa Tilo', Precio: 550 },
-  //   { nombre: 'Villa Cedra', Precio: 550 },
-  //   { nombre: 'Villa Madrid', Precio: 600 }
-  // ],
   allpaquetes: [],
   orderPaquetes: [],
   filterPaquetes: [],
-  usuario: undefined
+  set_Current_Page: [],
+  usuario: undefined,
+  gethabitaciones: [],
+  habitaciones: [],
+  paqueteXid: [],
+  reserva:[]
 };
 
 const reducer = (state = initialState, action) => {
@@ -93,6 +72,11 @@ const reducer = (state = initialState, action) => {
         orderByCapacity: action.payload,
         habitacionesData: sortedArrByCapacity
       };
+      case SET_CURRENT_PAGE:
+  return {
+    ...state,
+    currentPage: action.payload
+  };
       // case SET_ORDER_BY_PRICE:
       //   let sortedArrByPrice;
       //   if (action.payload === 'asc') {
@@ -111,22 +95,62 @@ const reducer = (state = initialState, action) => {
       //     orderByPrice: action.payload,
       //     habitacionesPrecio: sortedArrByPrice
       //   };
-      //   case GET_PAQUETES: return {
-      //     ...state,
-      //     allpaquetes: action.payload ,           
-      //     orderPaquetes: action.payload,//aca lleno 
-      //     filterPaquetes: action.payload
-      // } 
+      case GET_PAQUETES: return {
+        ...state,
+        allpaquetes: action.payload ,           
+        orderPaquetes: action.payload,//aca lleno 
+        filterPaquetes: action.payload
+    } 
+    case GET_PAQUETES_BY_ID: return {
+      ...state,
+      paqueteXid: action.payload 
+    } 
+    case ORDER_PAQUETES:     
+    console.log("ORDER_PAQUETES-action.payload") ; 
+    console.log(action.payload) ;  
+    const Paquetes = [...state.allpaquetes];    
+    const SortPaquetes = (action.payload === 'asc'? Paquetes.sort((a, b) => a.nombre.localeCompare(b.nombre))
+    : (action.payload === 'desc')? Paquetes.sort((a, b) => b.nombre.localeCompare(a.nombre))
+    : (action.payload === 'costoAsc')? Paquetes.sort((a, b) => a.costo-b.costo)
+    :(action.payload === 'costoDesc')? Paquetes.sort((c1,c2) => {    
+           if (c1.costo < c2.costo) return 1;
+           if (c1.costo > c2.costo) return -1;  
+           return 0;
+    }): Paquetes)            
+    return{
+    ...state,
+    orderPaquetes: SortPaquetes
+    }
+    case GET_RESERVA_BY_USER: return {
+      ...state,
+      reserva: action.payload 
+    } 
 
       case SET_USUARIO: return {
         ...state,
         usuario: action.payload
       }
-
+      case GET_HABITACIONES:
+      return {
+        ...state,
+        gethabitaciones: action.payload
+      }
       case DELETE_USUARIO: return {
         ...state,
         usuario: undefined
       }
+      case GET_HABITACIONES_DISPONIBLES: return {
+        ...state,
+        habitaciones: action.payload
+      }
+      case SUGERENCIA_EMAIL:
+        if(action.payload.status === 200) {
+          return { ...state, 
+                } 
+        } else {
+          return { ...state, 
+                }
+        }
     default:
       return state;
   }

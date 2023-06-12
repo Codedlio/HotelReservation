@@ -1,149 +1,140 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import style from './Reserva.module.css';
-import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-  
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector,useDispatch } from 'react-redux';
+import { getHabitacionesDisponibles , getPaquetes,createReserva } from '../redux/action';
+import axios from 'axios';
+
 
 function Reserva() {
-  const [adults, setAdults] = useState('');
-  const [children, setChildren] = useState('');
-  const [selectedRoom, setSelectedRoom] = useState('');
-  const [selectedRoom1, setSelectedRoom1] = useState('');
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [adults, setAdults] = useState(0);
+  const [children, setChildren] = useState(0);
+  const [selectedRoom, setSelectedRoom] = useState([]);
+  const [services, setServices] = useState([]);
+  const [selectedService, setSelectedService] = useState([]);
   const [isOpen, setIsOpen] = useState(true);
-  const [roomPrice, setRoomPrice] = useState('');
+  const [dates, setDates] = useState({checkIn:'', checkOut:''});
+  const [precio, setPrecio] = useState(0);
+  const [selectedPaquete, setSelectedPaquete] = useState([]);
 
   const usuario = useSelector(state => state.usuario);
+  const rooms = useSelector(state => state.habitaciones);
+  let paquetes = useSelector((state) => state.allpaquetes);
 
-    // Almacenar el hotel seleccionado en el almacenamiento local al cambiarlo
   useEffect(() => {
-    localStorage.setItem('selectedRoom', selectedRoom);
-  }, [selectedRoom]);
+    dispatch(getPaquetes());
+  }, [dispatch])
 
-  // Obtener el hotel seleccionado del almacenamiento local al cargar el componente
-  useEffect(() => {
-    const storedSelectedRoom = localStorage.getItem('selectedRoom');
-    if (storedSelectedRoom) {
-      setSelectedRoom(storedSelectedRoom);
+  useEffect( () => {
+    if (dates.checkIn && dates.checkOut) {
+      if (dates.checkIn > dates.checkOut) {
+        alert('Error. La fecha de fin debe ser mayor a la de inicio');
+        setDates({...dates, checkOut:''});
+      }
+      else{
+        dispatch(getHabitacionesDisponibles(dates.checkIn,dates.checkOut))
+      }
     }
-  }, []);
-  useEffect(() => {
-    const storedSelectedRoom1 = localStorage.getItem('selectedRoom1');
-    if (storedSelectedRoom1) {
-      setSelectedRoom1(storedSelectedRoom1);
-    }
-  }, []);
+  }, [dates]);
 
+  useEffect( () => {
+    let {data} = axios.get('http://localhost:3001/servicio');
+    setServices(data);
+  }, [])
   const handleAdultsChange = (e) => {
     setAdults(parseInt(e.target.value));
   };
-
 
   const handleChildrenChange = (e) => {
     setChildren(parseInt(e.target.value));
   };
 
-const handleSubmit = (e) => {
-  e.preventDefault();
-  const data = {
-    adults,
-    children,
-    email:usuario,
-    selectedRoom1,
-    checkIn: e.target['check-in'].value,
-    checkOut: e.target['check-out'].value,
-  };
-  console.log(data);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    const data = {
+      usuarioCorreo: usuario,      
+      arrHabitacion:selectedRoom,
+      arrServicio:[],
+      arrPaquete:selectedPaquete,
+      fechaInicio: dates.checkIn,
+      fechaFin: dates.checkOut,
+      costo:precio
+    };
+    
+  
+    if(usuario){
+      // fetch('http://localhost:3001/reservation', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify(data),
+      // })
+      // .then(response => {
+      // // Manejar la respuesta del servidor
+      //   if (response.ok) {
+      //     console.log("quedo"); 
+      //   }
 
-  fetch('http://localhost:3001/reservation', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  })
-  .then(response => {
-    // Manejar la respuesta del servidor
-    if (response.ok) {
-      console.log("quedo"); 
+      createReserva(data).then((response) => {    
+        console.log("response.data");                        
+        console.log(response.data);
+        alert(response.data);  
+      })
+      .catch(error => {
+        // Manejar errores
+      });
+    }else {
+      window.localStorage.setItem("dataReservation", JSON.stringify(data));
+      alert('Ingrese a su cuenta para continuar...')
+      navigate("/contenedor");
     }
-  })
-  .catch(error => {
-    // Manejar errores
-  });
-};
+  };
+
+  const handleDatesChange = (e) => {
+    const property = e.target.name;
+    const value = e.target.value;
+    setDates({...dates, [property]:value});
+  }
 
   const handleRoomChange = (e) => {
-    const roomName = e.target.value;
-    let roomId;
-    let price;
+    const value = e.target.value;
+    let activeRoom = rooms.find(room => room._id === value)
+    if (e.target.checked) {
+      //setSelectedRoom([...selectedRoom, activeRoom]);
+      setSelectedRoom([...selectedRoom, value]);    
+      setPrecio(precio + activeRoom.precio);
+    } else {
+      //setSelectedRoom(selectedRoom.filter(room => room._id !== value));
+      setSelectedRoom(selectedRoom.filter(room => room !== value));     
+      setPrecio(precio - activeRoom.precio);
+    }   
+  };
 
-    switch (roomName) {
-      case 'Suite Roma (2 camas super King)':
-        roomId = 1;
-        price = "$290";
-        break;
-      case 'Suite Canell (1 cama super king)':
-        roomId = 2;
-        price = "$350";
-        break;
-      case 'Suite Licura (1 cama super king)':
-        roomId = 3;
-        price = "$290";
-        break;
-      case 'Villa Bosque (cama super king + 2 camas de 1 plaza)':
-        roomId = 4;
-        price = "$700";
-        break;
-      case 'Villa Rio (cama super king + 3 camas de 1 plaza)':
-        roomId = 5;
-        price = "$750";
-        break;
-        case 'Villa Arce (cama super king + 2 camas de 1 plaza)':
-          roomId = 6;
-          price = "$500";
-          break;
-          case 'Villa Tilo (cama 2 Plazas + 3 camas de 1 plaza)' :
-            roomId = 7;
-            price = "$550";
-            break;
-            case 'Villa Cedra (cama 2 Plazas + 3 camas de 1 plaza)':
-              roomId = 8;
-              price = "$550";
-              break;
-              case 'Villa Madrid (cama 2 Plazas + 3 camas de 1 plaza)':
-                roomId = 9;
-                price = "$600";
-                break;
-                case 'Villa Lavanda (cama 2 Plazas + 3 camas de 1 plaza)':
-                roomId = 10;
-                price = "$640";
-                break;
-                case 'Villa Mosqueta (cama 2 Plazas + 3 camas de 1 plaza)':
-                roomId = 11;
-                price = "$640";
-                break;
-                case 'Villa Anacay (cama 2 Plazas + 3 camas de 1 plaza)':
-                roomId = 12;
-                price = "$640";
-                break;
-                case 'Villa Playa (cama 2 Plazas + 3 camas de 1 plaza)':
-                roomId = 13;
-                price = "$695";
-                break;
-                case 'Villa Troncos (cama 2 Plazas + 3 camas de 1 plaza)':
-                roomId = 14;
-                price = "$680";
-                break;
-      default:
-        roomId = '';
-      price = '';
-      break;
+  const handleServiceChange = (e) => {
+    const value = e.target.value;
+    let activeService = services.find(service => service._id === value);
+    if (e.target.checked) {
+      setSelectedService([...selectedService, activeService]);
+      setPrecio(precio + activeService.precio);
+    } else {
+      setSelectedService(selectedService.filter(service => service._id !== value));
+      setPrecio(precio - activeService.precio);
     }
-
-    setSelectedRoom(roomId);
-    setSelectedRoom1(roomName); 
-    setRoomPrice(price);
+  };
+  const handlePaqueteChange = (e) => {
+    const value = e.target.value;
+    let activeRoom = paquetes.find(room => room._id === value)
+    if (e.target.checked) {      
+      setSelectedPaquete([...selectedPaquete, value]);     
+      setPrecio(precio + activeRoom.costo);
+    } else {      
+      setSelectedPaquete(selectedPaquete.filter(room => room !== value));    
+      setPrecio(precio - activeRoom.costo);
+    }
   };
 
   const handleClose = () => {
@@ -153,193 +144,6 @@ const handleSubmit = (e) => {
   if (!isOpen) {
     return null; // Return null to hide the component when it's not open
   }
-
-  const getAvailableRooms = (adults, children) => {
-    const total = adults + children;
-
-    if (adults === 1) {
-      return ["Suite Roma (2 camas super King)", "Suite Licura (1 cama super king)"];
-    } else if (adults === 2 ) {
-      return ["Suite Roma (2 camas super King)", "Suite Licura (1 cama super king)"];
-      
-    } else if (adults === 3 && children === 1 ) {
-      return [
-        
-        "Villa Arce (cama super king + 2 camas de 1 plaza)",
-        "Villa Tilo (cama 2 Plazas + 3 camas de 1 plaza)",
-        "Villa Cedra (cama 2 Plazas + 3 camas de 1 plaza)",
-        "Suite Canell (1 cama super king)"
-      ];
-    }else if (adults === 3  ) {
-      return [
-        
-        "Villa Arce (cama super king + 2 camas de 1 plaza)",
-        "Villa Tilo (cama 2 Plazas + 3 camas de 1 plaza)",
-        "Villa Cedra (cama 2 Plazas + 3 camas de 1 plaza)",
-        "Suite Canell (1 cama super king)"
-      ];
-    }else if (adults === 4 ) {
-      return [
-        
-        "Villa Arce (cama super king + 2 camas de 1 plaza)",
-        "Villa Tilo (cama 2 Plazas + 3 camas de 1 plaza)",
-        "Villa Cedra (cama 2 Plazas + 3 camas de 1 plaza)",
-        "Suite Canell (1 cama super king)",
-        'Villa Lavanda (cama 2 Plazas + 3 camas de 1 plaza)',
-        'Villa Mosqueta (cama 2 Plazas + 3 camas de 1 plaza)',
-        'Villa Anacay (cama 2 Plazas + 3 camas de 1 plaza)',
-        'Villa Playa (cama 2 Plazas + 3 camas de 1 plaza)',
-        'Villa Troncos (cama 2 Plazas + 3 camas de 1 plaza)',
-
-
-
-        
-      ];
-    } 
-    else if (adults === 2 && children === 2 ) {
-      return [
-        
-        "Villa Arce (cama super king + 2 camas de 1 plaza)",
-        "Villa Tilo (cama 2 Plazas + 3 camas de 1 plaza)",
-        "Villa Cedra (cama 2 Plazas + 3 camas de 1 plaza)",
-        "Suite Canell (1 cama super king)",
-        'Villa Lavanda (cama 2 Plazas + 3 camas de 1 plaza)',
-        'Villa Mosqueta (cama 2 Plazas + 3 camas de 1 plaza)',
-        'Villa Anacay (cama 2 Plazas + 3 camas de 1 plaza)',
-        'Villa Playa (cama 2 Plazas + 3 camas de 1 plaza)',
-        'Villa Troncos (cama 2 Plazas + 3 camas de 1 plaza)',
-      ];
-    }else if (adults === 1 && children === 3 ) {
-      return [
-        
-        "Villa Arce (cama super king + 2 camas de 1 plaza)",
-        "Villa Tilo (cama 2 Plazas + 3 camas de 1 plaza)",
-        "Villa Cedra (cama 2 Plazas + 3 camas de 1 plaza)",
-        "Suite Canell (1 cama super king)",
-        'Villa Lavanda (cama 2 Plazas + 3 camas de 1 plaza)',
-        'Villa Mosqueta (cama 2 Plazas + 3 camas de 1 plaza)',
-        'Villa Anacay (cama 2 Plazas + 3 camas de 1 plaza)',
-        'Villa Playa (cama 2 Plazas + 3 camas de 1 plaza)',
-        'Villa Troncos (cama 2 Plazas + 3 camas de 1 plaza)',
-      ];
-    }else if (adults === 4 && children === 1) {
-      return [
-        "Villa Arce (cama super king + 2 camas de 1 plaza)",
-        "Villa Tilo (cama 2 Plazas + 3 camas de 1 plaza)",
-        "Villa Cedra (cama 2 Plazas + 3 camas de 1 plaza)",,
-        'Villa Lavanda (cama 2 Plazas + 3 camas de 1 plaza)',
-        'Villa Mosqueta (cama 2 Plazas + 3 camas de 1 plaza)',
-        'Villa Anacay (cama 2 Plazas + 3 camas de 1 plaza)',
-        'Villa Playa (cama 2 Plazas + 3 camas de 1 plaza)',
-        'Villa Troncos (cama 2 Plazas + 3 camas de 1 plaza)'
-      ];
-    } else if (adults === 4 && children === 2) {
-      return [
-        "Villa Arce (cama super king + 2 camas de 1 plaza)",
-        "Villa Tilo (cama 2 Plazas + 3 camas de 1 plaza)",
-        "Villa Cedra (cama 2 Plazas + 3 camas de 1 plaza)",
-         "Villa Bosque (cama super king + 2 camas de 1 plaza)",
-        "Villa Rio (cama super king + 3 camas de 1 plaza)",
-        "Villa Madrid (cama 2 Plazas + 3 camas de 1 plaza)",
-        
-      ];
-    } else if (adults === 4 && children === 3) {
-      return [
-         "Villa Bosque (cama super king + 2 camas de 1 plaza)",
-        "Villa Rio (cama super king + 3 camas de 1 plaza)",
-        "Villa Madrid (cama 2 Plazas + 3 camas de 1 plaza)"
-      ];
-    }else if (adults === 5 && children === 2) {
-      return [
-         "Villa Bosque (cama super king + 2 camas de 1 plaza)",
-        "Villa Rio (cama super king + 3 camas de 1 plaza)",
-        "Villa Madrid (cama 2 Plazas + 3 camas de 1 plaza)"
-      ];
-    }else if (adults === 6 && children === 1) {
-      return [
-         "Villa Bosque (cama super king + 2 camas de 1 plaza)",
-        "Villa Rio (cama super king + 3 camas de 1 plaza)",
-        "Villa Madrid (cama 2 Plazas + 3 camas de 1 plaza)"
-      ];
-    }else if (adults === 3 && children === 2) {
-      return [
-        "Villa Arce (cama super king + 2 camas de 1 plaza)",
-        "Villa Tilo (cama 2 Plazas + 3 camas de 1 plaza)",
-        "Villa Cedra (cama 2 Plazas + 3 camas de 1 plaza)",
-        'Villa Lavanda (cama 2 Plazas + 3 camas de 1 plaza)',
-        'Villa Mosqueta (cama 2 Plazas + 3 camas de 1 plaza)',
-        'Villa Anacay (cama 2 Plazas + 3 camas de 1 plaza)',
-        'Villa Playa (cama 2 Plazas + 3 camas de 1 plaza)',
-        'Villa Troncos (cama 2 Plazas + 3 camas de 1 plaza)'
-
-      ];
-    }  else if (adults === 2 && children === 3) {
-      return [
-        "Villa Arce (cama super king + 2 camas de 1 plaza)",
-        "Villa Tilo (cama 2 Plazas + 3 camas de 1 plaza)",
-        "Villa Cedra (cama 2 Plazas + 3 camas de 1 plaza)",
-        'Villa Lavanda (cama 2 Plazas + 3 camas de 1 plaza)',
-        'Villa Mosqueta (cama 2 Plazas + 3 camas de 1 plaza)',
-        'Villa Anacay (cama 2 Plazas + 3 camas de 1 plaza)',
-        'Villa Playa (cama 2 Plazas + 3 camas de 1 plaza)',
-        'Villa Troncos (cama 2 Plazas + 3 camas de 1 plaza)'
-      ];
-    }  else if (adults === 1 && children === 4) {
-      return [
-        "Villa Arce (cama super king + 2 camas de 1 plaza)",
-        "Villa Tilo (cama 2 Plazas + 3 camas de 1 plaza)",
-        "Villa Cedra (cama 2 Plazas + 3 camas de 1 plaza)",
-         "Villa Bosque (cama super king + 2 camas de 1 plaza)",
-        "Villa Rio (cama super king + 3 camas de 1 plaza)",
-        "Villa Madrid (cama 2 Plazas + 3 camas de 1 plaza)",
-        'Villa Lavanda (cama 2 Plazas + 3 camas de 1 plaza)',
-        'Villa Mosqueta (cama 2 Plazas + 3 camas de 1 plaza)',
-        'Villa Anacay (cama 2 Plazas + 3 camas de 1 plaza)',
-        'Villa Playa (cama 2 Plazas + 3 camas de 1 plaza)',
-        'Villa Troncos (cama 2 Plazas + 3 camas de 1 plaza)',
-      ];
-    } else if (adults === 5) {
-      return [
-        "Villa Arce (cama super king + 2 camas de 1 plaza)",
-        "Villa Tilo (cama 2 Plazas + 3 camas de 1 plaza)",
-        "Villa Cedra (cama 2 Plazas + 3 camas de 1 plaza)",
-         "Villa Bosque (cama super king + 2 camas de 1 plaza)",
-        "Villa Rio (cama super king + 3 camas de 1 plaza)",
-        "Villa Madrid (cama 2 Plazas + 3 camas de 1 plaza)",
-        'Villa Lavanda (cama 2 Plazas + 3 camas de 1 plaza)',
-        'Villa Mosqueta (cama 2 Plazas + 3 camas de 1 plaza)',
-        'Villa Anacay (cama 2 Plazas + 3 camas de 1 plaza)',
-        'Villa Playa (cama 2 Plazas + 3 camas de 1 plaza)',
-        'Villa Troncos (cama 2 Plazas + 3 camas de 1 plaza)'
-      ];
-    } else if (adults === 6) {
-      return [
-        "Villa Arce (cama super king + 2 camas de 1 plaza)",
-        "Villa Tilo (cama 2 Plazas + 3 camas de 1 plaza)",
-        "Villa Cedra (cama 2 Plazas + 3 camas de 1 plaza)",
-         "Villa Bosque (cama super king + 2 camas de 1 plaza)",
-        "Villa Rio (cama super king + 3 camas de 1 plaza)",
-        "Villa Madrid (cama 2 Plazas + 3 camas de 1 plaza)"
-      ];
-    }else if (adults === 7) {
-      return [
-        "Villa Arce (cama super king + 2 camas de 1 plaza)",
-        "Villa Tilo (cama 2 Plazas + 3 camas de 1 plaza)",
-        "Villa Cedra (cama 2 Plazas + 3 camas de 1 plaza)",
-         "Villa Bosque (cama super king + 2 camas de 1 plaza)",
-        "Villa Rio (cama super king + 3 camas de 1 plaza)",
-        "Villa Madrid (cama 2 Plazas + 3 camas de 1 plaza)"
-      ];
-    } else if (total >7) {
-      return [
-        
-      ];
-    }else {
-      return [];
-    }
-  };
-
-  const availableRooms = getAvailableRooms(adults, children);
 
   return (
     <div className={style.contenedor}>
@@ -351,25 +155,26 @@ const handleSubmit = (e) => {
         </Link>
 
         <h3 className={style.title}>Reserva tu estadía</h3>
-        <form onSubmit={handleSubmit}>
-        <div className={style.formGroup}>
-</div>
 
-          <div className={style.formGroup}>
+        {/* <form onSubmit={handleSubmit} className={style.formContainer} >  */}
+        <form onSubmit={handleSubmit}  >
+          <div className="d-flex align-items-start bg-light mb-3" style={{ height: "30px" }}>
             <label htmlFor="check-in" className={style.label}>
-              Fecha de entrada:
+              Fecha de entrada:&nbsp;&nbsp;&nbsp;
             </label>
-            <input type="date" id="check-in" className={style.input} required />
-          </div>
-          <div className={style.formGroup}>
-            <label htmlFor="check-out" className={style.label}>
-              Fecha de salida:
+            <input type="date" id="check-in" name="checkIn" value={dates.checkIn} onChange={handleDatesChange} className={style.inputFecha} required />
+            <label htmlFor="check-in" className={style.label}>
+              &nbsp;&nbsp;&nbsp;
             </label>
-            <input type="date" id="check-out" className={style.input} required />
-          </div>
-          <div className={style.formGroup}>
-            <label htmlFor="adults" className={style.label}>
-              Adultos:
+            <label htmlFor="check-in" className={style.label}>
+              Fecha de salida:&nbsp;&nbsp;&nbsp;
+            </label>
+            <input type="date" id="check-out" name="checkOut" value={dates.checkOut} onChange={handleDatesChange} className={style.inputFecha} required />
+            <label htmlFor="check-in" className={style.label}>
+              &nbsp;&nbsp;&nbsp;
+            </label>
+            <label htmlFor="check-in" className={style.label}>
+              Adultos:&nbsp;&nbsp;&nbsp;
             </label>
             <input
               type="number"
@@ -380,10 +185,12 @@ const handleSubmit = (e) => {
               onChange={handleAdultsChange}
               required
             />
-          </div>
-          <div className={style.formGroup}>
-            <label htmlFor="children" className={style.label}>
-              Niños:
+
+            <label htmlFor="check-in" className={style.label}>
+              &nbsp;&nbsp;&nbsp;
+            </label>
+            <label htmlFor="check-in" className={style.label}>
+              Niños:&nbsp;&nbsp;&nbsp;
             </label>
             <input
               type="number"
@@ -394,36 +201,138 @@ const handleSubmit = (e) => {
               onChange={handleChildrenChange}
               required
             />
+
           </div>
-          {adults !== '' && (
+
+
+          {precio !== 0 && (
             <div className={style.formGroup}>
-              <label htmlFor="roomName" className={style.label}>
-                Seleccione una habitación:
+              <label htmlFor="precio" className={style.label}>
+                Precio: ${precio}
               </label>
-              <select
-                id="roomName"
-                className={style.input}
-                value={selectedRoom1}
-                onChange={handleRoomChange}
-                required
-              >
-                <option value="">Seleccione una habitación</option>
-                {availableRooms.map((room) => (
-                  <option key={room} value={room}>
-                    {room}
-                  </option>
-                ))}
-              </select>
             </div>
           )}
-         {selectedRoom !== '' && (
-  <Link className={style.linkkk} to={`/habitacion${selectedRoom}`}>
-    <button className={style.hab}>Ver Habitación</button>
-    <p className={style.price}>Precio: {roomPrice}</p>
-  </Link>
-)}
 
-          <button type='submit' className={style.button}>Reservar ahora</button>
+          {adults !== 0 && rooms.length && (
+            // puse estilo
+            <div >
+              <label htmlFor="roomName" className={style.label}>
+                Seleccione la habitación:
+              </label>
+              <div className={style.containercheckbox}>
+                {/* <ul> */}
+                {rooms.map((room) =>
+                (
+                  // <li key={room._id}>
+                  <label>
+                    <input
+                      type="checkbox"
+                      value={room._id}
+                      // checked={selectedRoom.some(activeRoom => activeRoom._id === room._id)}
+                      onChange={handleRoomChange}
+                    />
+                    {room.disponible === false ? (
+                      <span>
+                        No disponible: {room.nombre}
+                        <Link className={style.linkkk} to={`/habitacion/${room._id}`}>
+                          <button className={style.hab}>Ver Habitación</button>
+                        </Link> 
+                       
+                      </span>
+                    ) : (
+                      <span>
+                        <br></br>
+                        {room.nombre} Capacidad: {room.capacidad}<br></br> Precio: ${room.precio}
+                        {/* <Link className={style.linkkk} to={`/habitacion/${room._id}`}>
+                          <button className={style.hab}>Ver Habitación</button>
+                        </Link> */}
+                        <Link className={style.linkkk} to={`/habitacion${room.numero}`}>
+                              <button className={style.hab}>Ver Habitación</button>
+                        </Link>
+                      </span>
+                    )}
+                  </label>
+                  // </li>
+                )
+                )}
+              </div>
+              {/* </ul> */}
+            </div>
+
+          )}
+
+          <br></br>
+          {adults !== 0 && rooms.length && (
+            
+            <div >
+              <label htmlFor="roomName" className={style.label}>
+                Seleccione el paquete:
+              </label>
+              <div className={style.containercheckbox}>
+                {/* <ul> */}
+                {paquetes.map((room) =>
+                (
+                  // <li key={room._id}>
+                  <label>
+                    <input
+                      type="checkbox"
+                      value={room._id}
+                      // checked={selectedPaquete.some(activeRoom => activeRoom._id === room._id)}
+                      onChange={handlePaqueteChange}
+                    />
+                    {room.disponible === false ? (
+                      <span>
+                        No disponible: {room.nombre}
+                        <Link className={style.linkkk} to={`/detail/${room._id}`}>
+                          <button className={style.hab}>Ver Paquete</button>
+                        </Link>
+                      </span>
+                    ) : (
+                      <span>
+                        {room.nombre} Capacidad: {room.capacidad}
+                        <br></br>
+                        {room.nombre} Precio: ${room.costo}
+                        <Link className={style.linkkk} to={`/detail/${room._id}`}>
+                          <button className={style.hab}>Ver Paquete</button>
+                        </Link>
+                      </span>
+                    )}
+                  </label>
+                  // </li>
+                )
+                )}
+                {/* </ul> */}
+              </div>
+            </div>
+
+          )}
+           {/* {adults !== 0 && services.length && (
+            <div className={style.formGroup}>
+              <label htmlFor="serviceName" className={style.label}>
+                Seleccione servicios:
+              </label>
+              <ul>
+                {services.map((service) =>
+                  (
+                    <li key={service._id}>
+                      <label>
+                        <input
+                          type="checkbox"
+                          value={service._id}
+                          checked={selectedService.some(activeService => activeService._id === service._id)}
+                          onChange={handleServiceChange}
+                        />
+                          <span>
+                            {service.nombre}  Precio: ${service.precio}
+                          </span>
+                      </label>
+                    </li>
+                  )
+                )}
+              </ul>
+            </div>
+          )} */}
+          <button type='submit' className={style.button}>Reservar ahora</button>          
         </form>
       </div>
     </div>

@@ -2,6 +2,8 @@ const auth = require('../config/firebase');
 const Usuario= require('../models/Usuario');
 const bcrypt = require('bcrypt');
 const { ObjectId } = require('mongoose').Types;
+const { sendWelcomeEmail,sugerenciaCliente } = require("../config/sendgridEmail.js");
+
 const postRegistro =  async (req, res) => {
     try {
       const { correo, contraseña, telefono, nombre,activo } = req.body;
@@ -28,6 +30,7 @@ const postRegistro =  async (req, res) => {
          activo,
          contraseña: hash
        });
+      await sendWelcomeEmail(correo, nombre);
       await nuevoUsuario.save();
   
       res.status(200).json({ mensaje: 'Usuario registrado exitosamente' });
@@ -48,7 +51,8 @@ const  postLogin= async (req, res) => {
         if (!match) {
           return res.status(401).json({ mensaje: 'Contraseña incorrecta' });
     }    else {
-          return res.status(200).json({ mensaje: 'Inicio de sesión exitoso' });
+                 
+          return res.status(200).json({ mensaje: 'Inicio de sesión exitoso',usuario: usuario.nombre }); 
 }
 
       // const userRecord = await auth.signInWithEmailAndPassword(correo, contraseña);
@@ -90,12 +94,10 @@ const  postLogin= async (req, res) => {
   };
   const getUsuario=async (req, res) => {
     try {
-      const { id } = req.params;
-      if (!ObjectId.isValid(id)) {
-        return res.status(400).json({ mensaje: 'ID de usuario inválido' });
-      }
+      const { correo } = req.body;
+     
       // Obtener el documento de usuario en tu base de datos propia por su ID
-      const usuario = await Usuario.findById(id).select('-contraseña');
+      const usuario = await Usuario.findOne({ correo }).select('-contraseña');
   
       if (!usuario) {
         return res.status(404).json({ mensaje: 'Usuario no encontrado' });
@@ -122,4 +124,18 @@ const  postLogin= async (req, res) => {
       res.status(500).json({ mensaje: 'Error al eliminar usuario' });
     }
   }
-  module.exports={postRegistro, postLogin, deleteUsuario,getUsuario,putUsuario};
+
+  const postNotification=async(req, res )=>{
+    const {name, email, phone, subject, description}=req.body;
+    try{
+
+      await sugerenciaCliente(name, email, phone, subject, description);
+      res.status(200).json({ mensaje:'Notificacion exitosa' });
+
+      } catch(error)  {
+      res.status(500).json({ mensaje:'Error no se realizo la Notificacion' });
+
+    }
+  }
+
+  module.exports={postRegistro, postLogin, deleteUsuario,getUsuario,putUsuario,postNotification};

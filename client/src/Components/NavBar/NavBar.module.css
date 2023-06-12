@@ -9,7 +9,7 @@
   overflow: hidden;
   flex-direction: row;
   width: 100%;
-  height: 350px;
+  height: 335px;
   list-style-type: none;
   margin: 0;
   margin-top: -100px;
@@ -20,14 +20,13 @@
 
 .imagen {
   width: 100px;
-  display: flex;
-  justify-content: left;
-  align-items: start;
   position: relative;
   bottom: 5px;
-  align-items: center; 
+  align-items: center;
   right: 450px;
+  left:-250px;
 }
+
 .icon {
   color: white;
   font-size: 30px;
@@ -54,31 +53,37 @@
 
 .link:hover {
   cursor: pointer;
-  color: rgb(1, 1, 1);
-  text-shadow:  rgb(111, 111, 239);
-  box-shadow: inset 0 -3px 0  rgb(12, 12, 19);
-  transition: box-shadow 0.5s; 
- 
+  color: #0e0e0c;
+  /* text-shadow:  rgb(111, 111, 239); */
+  box-shadow: inset 0 -3px 0   #151512;
+  transition: box-shadow 0.5s;  
+  text-decoration:none;
 }
 .linkActive {
   /* background-color: yellow; */
-  background-color: #bfde44;
-  color: #2d4059;
-  width: 30px;
-  height: 40px;
-  border-radius: 10px;
-  border-color: #bfde44;
-  margin-top: 6px;
   cursor: pointer;
+  color: #12100b;
+  /* text-shadow:  rgb(111, 111, 239); */
+  /* box-shadow: inset 0 -3px 0  rgb(12, 12, 19); */
+  /* transition: box-shadow 0.5s;  */
+
+    margin-right: 30px;
+    box-shadow: inset 0 -3px 0 #FFCC29;
+    transition: box-shadow 0.5s; 
+    font-size: larger;    
+    font-weight: 700;
+    transition: 1s; 
+    padding-bottom: 8px;
+    text-decoration:none;
 }
 
 .linkDesactivo{
-  padding: 0.5rem 1rem;
-  margin: 0 0.5rem;
-  border: none;
-  border-radius: 0.25rem;
-  background-color: #2d4059;
-  color: #fff;
+  margin-right: 30px;
+  color: rgb(208, 202, 202);
+  font-weight: 700;
+  transition: 1s; 
+  padding-bottom: 8px;
+  text-decoration:none;
   cursor: pointer;
 }
 
@@ -124,15 +129,16 @@
 .dropdowncontent {
   display: none;
   position: absolute;
-  background-color:rgb(220, 193, 193);
+  background-color:rgb(123, 41, 41);
   min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  /* box-shadow: 0px 8px 16px 0px #FFCC29; */
+  /* box-shadow: inset 0 -3px 0 #FFCC29; */
   z-index: 1;
 }
 
 /* Links inside the dropdown */
 .dropdowncontent a {
-  color: black;
+  color: white;
   padding: 12px 16px;
   text-decoration: none;
   display:block;
@@ -142,9 +148,10 @@
 .dropdowncontent a:hover {
   background-color: rgb(123, 41, 41);
   cursor: pointer;
-  color: rgb(111, 111, 239);
+  color: #171511;
+  /* color: rgb(111, 111, 239);
   text-shadow:  rgb(111, 111, 239);
-  box-shadow: inset 0 -3px 0  rgb(111, 111, 239);
+  box-shadow: inset 0 -3px 0  rgb(111, 111, 239); */
   transition: box-shadow 0.5s; 
 }
 
@@ -155,8 +162,56 @@
 .dropdown:hover .dropbtn {
   background-color: rgb(123, 41, 41);
   cursor: pointer;
-  color: rgb(111, 111, 239);
+  /* color: rgb(111, 111, 239);
   text-shadow:  rgb(111, 111, 239);
-  box-shadow: inset 0 -3px 0  rgb(111, 111, 239);
+  box-shadow: inset 0 -3px 0  rgb(111, 111, 239); */
   transition: box-shadow 0.5s; 
+}
+.carrito{
+  background-color: transparent;
+  margin-right: 20px;
+  color:white;
+  border: 0px;
+  font-size: 25px;
+  padding-bottom: 8px;
+}
+.carritolink{
+ 
+  color:white;
+ 
+}
+.carritolink:hover{
+ 
+  color:rgb(10, 3, 3);
+ 
+}
+.carrito:hover{
+
+  color: rgb(1, 1, 1);
+  
+  box-shadow: inset 0 -3px 0  rgb(12, 12, 19);
+  transition: box-shadow 0.5s; 
+  
+}
+.mensajeee{
+  
+  /* box-shadow: 0 0 10px 2px rgba(218, 217, 212, 0.5); */
+  width: 200px;
+  font-weight: 700;
+  color: #FFFFFF;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  /* background-color: rgb(251, 245, 245); */
+  border-radius: 6px;
+  display: flex;
+  text-shadow: 0 0 30px rgba(0, 0, 0, 0.5), 0 0 30px rgba(83, 85, 88, 0.5);
+}
+.contenedormensaje{
+  
+  margin-right: 20px;
+  margin-top: 20px;
+  display: flex;
+  justify-content: end;
+  text-align: center;
 }

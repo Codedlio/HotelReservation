@@ -3,18 +3,30 @@ import NavBar from '../../NavBar/NavBar';
 import FooterBar from '../../FooterBar/FooterBar';
 import Carousel from 'react-bootstrap/Carousel';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import image1 from './Suite Canelo/1.jpg'
-import image2 from './Suite Canelo/2.jpg'
-import image3 from './Suite Canelo/3.jpg'
-import image4 from './Suite Canelo/4.jpg'
-import image5 from './Suite Canelo/5.jpg'
-import image6 from './Suite Canelo/6.jpg'
+import { useDispatch, useSelector } from 'react-redux';
 import style from './Habitacion2.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBed, faMoneyBill, faPersonBooth  } from '@fortawesome/free-solid-svg-icons';
+import Paginado from '../../Paginate/Paginate';
+import { set_Currents_Page } from '../../redux/action';
+import { useEffect } from 'react';
 
-const Habitacion1 = () => {
+const Habitacion2 = () => {
   const [index, setIndex] = useState(0);
+  const dispatch = useDispatch();
+  const habitaciones = useSelector((state) => state.set_Current_Page); // Cambiar "state.set_Current_Page" por el nombre correcto
+ 
+  const [currentPage, setCurrentPage] = useState(2);
+  const habsPerPage = 1;
+  const indexofLastRoom = currentPage * habsPerPage;
+  const indexofFirstRoom = indexofLastRoom - habsPerPage;
+  const visibleHabitaciones = habitaciones.slice(indexofFirstRoom, indexofLastRoom);
+
+  const imagenes = useSelector(state => state.gethabitaciones[1].image);
+
+  useEffect(() => {
+    dispatch(set_Currents_Page(currentPage));
+  }, [dispatch, currentPage]);
 
   const handleSelect = (selectedIndex, e) => {
     setIndex(selectedIndex);
@@ -66,87 +78,26 @@ const Habitacion1 = () => {
         </section>
       <div 
       className="container w-100">
+        {imagenes.length && 
         <Carousel activeIndex={index} onSelect={handleSelect}>
-          <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src={image1}
-              alt="First slide"
-              width={"100%"}
-              height={"750px"}
-            />
-            
-            <Carousel.Caption>
-              {/* <h3>First slide label</h3>
-              <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> */}
-            </Carousel.Caption>
-          </Carousel.Item>
-          <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src={image2}
-              alt="First slide"
-              width="100%"
-              height="750px"
-            />
-            <Carousel.Caption>
-              {/* <h3>First slide label</h3>
-              <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> */}
-            </Carousel.Caption>
-          </Carousel.Item>
-          <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src={image3}
-              alt="First slide"
-              width="100%"
-              height="750px"
-            />
-            <Carousel.Caption>
-              {/* <h3>First slide label</h3>
-              <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> */}
-            </Carousel.Caption>
-          </Carousel.Item>
-          <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src={image4}
-              alt="First slide"
-              width="100%"
-              height="750px"
-            />
-            <Carousel.Caption>
-              {/* <h3>First slide label</h3>
-              <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> */}
-            </Carousel.Caption>
-          </Carousel.Item>
-          <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src={image5}
-              alt="First slide"
-              width="100%"
-              height="750px"
-            />
-            <Carousel.Caption>
-              {/* <h3>First slide label</h3>
-              <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> */}
-            </Carousel.Caption>
-          </Carousel.Item>
-          <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src={image6}
-              alt="First slide"
-              width="100%"
-              height="750px"
-            />
-            <Carousel.Caption>
-              {/* <h3>First slide label</h3>
-              <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> */}
-            </Carousel.Caption>
-          </Carousel.Item>
+          {imagenes.map(imagen => {
+            return (
+            <Carousel.Item>
+              <img
+                className="d-block w-100"
+                src={imagen}
+                alt="Slide"
+                width="100%"
+                height="750px"
+              />
+              <Carousel.Caption>
+                {/* <h3>Second slide label</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p> */}
+              </Carousel.Caption> 
+            </Carousel.Item> 
+            )
+          })}
         </Carousel>
+        }
       </div>
       
         <div >
@@ -177,7 +128,10 @@ const Habitacion1 = () => {
         
         </section>
         <div className={style.containerlink}><a className={style.linka} href="#">Ver disponibilidad</a></div>
-        
+        <habitaciones habitaciones={visibleHabitaciones} />
+      
+        <Paginado gamesPerPage={habsPerPage} habitaciones={habitaciones.length} paginado={setCurrentPage} currentPage={currentPage} />
+
         <FooterBar className={style.footer} />
       
       
@@ -185,4 +139,4 @@ const Habitacion1 = () => {
   );
 };
 
-export default Habitacion1;
+export default Habitacion2;
