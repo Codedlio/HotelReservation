@@ -11,7 +11,7 @@ const getReservaciones= async (req, res) => {
       
       let nombresHabitaciones = [];
       for (let habitacionId of reservacion.habitaciones) {
-        let {nombre} = await Habitacion.find({_id:habitacionId});
+        let {nombre} = await Habitacion.findById(habitacionId);
         nombresHabitaciones.push(nombre);
       }
 
@@ -85,8 +85,8 @@ const getReservacionByUsuario = async (req,res) => {
 
     let nombresHabitaciones = [];
     for (let habitacionId of reservacion.habitaciones) {
-        const {nombre} = await Habitacion.find({_id:habitacionId});
-        nombresHabitaciones.push(nombre);
+        const Habitacion = await Habitacion.findById(habitacionId);
+        nombresHabitaciones.push(habitacion.nombre);
     }
 
     let nombresServicios = [];
@@ -107,26 +107,17 @@ catch (error) {
 
 
 const postReservacion = async (req,res) => {
-  const {usuarioCorreo,arrHabitacion,arrServicio,arrPaquete,fechaInicio,fechaFin,costo} = req.body;
-let fechaInicioParseado="";
-let fechaFinParseado="";
-let anio="";
-anio=fechaInicio.substring(0,4);
-let mes="";
-mes=fechaInicio.substring(5,7);
-let dia="";
-dia=fechaInicio.substring(8,10);
-fechaInicioParseado=mes +"/"+dia+"/"+anio;
-anio=fechaFin.substring(0,4);
-mes=fechaFin.substring(5,7);
-dia=fechaFin.substring(8,10);
-fechaFinParseado= mes +"/"+dia+"/"+anio;
+  let {usuarioCorreo,arrHabitacion,arrServicio,arrPaquete,fechaInicio,fechaFin,costo} = req.body;
+
   if (!usuarioCorreo || !fechaInicio || !fechaFin||!costo) {return res.status(400).send("Error. No se enviaron los datos necesarios para crear la reserva")};
   
+  fechaInicio = new Date(fechaInicio);
+  fechaFin = new Date(fechaFin);
+  console.log(arrHabitacion);
   try {
     
     //const data = new Reservacion ({usuario:usuarioCorreo,habitaciones:arrHabitacion,servicios:arrServicio,paquete:arrPaquete,fechaInicioParseado,fechaFinParseado,costo});
-    const data = new Reservacion ({usuario:usuarioCorreo,habitaciones:arrHabitacion,servicios:arrServicio,paquete:arrPaquete,fechaInicio:fechaInicioParseado,fechaFin:fechaFinParseado,costo:costo});
+    const data = new Reservacion ({usuario:usuarioCorreo,habitaciones:arrHabitacion,servicios:arrServicio,paquete:arrPaquete,fechaInicio:fechaInicio,fechaFin:fechaFin,costo:costo});
     //res.status(201).json(await data.save());
     await data.save();
     res.status(201).json("Se registró con éxito su reserva, pero esta pendiente el pago");
