@@ -2,12 +2,14 @@
 
 .section {
   background-color: #cecaca;
-  padding-top: 60px;
-  padding-bottom: 80px;
+  
   z-index: 0;
   position: relative;
 bottom: 80px;
-  padding-left: 40px;
+  padding-top: 40px;
+  padding-bottom: 80px;
+  padding-left: 60px;
+  padding-right: 60px;
   margin-bottom: 80px;
  
 }
@@ -16,7 +18,7 @@ bottom: 80px;
 
 .content {
   display: flex;
-  flex-direction: row-reverse; /* Coloca la imagen a la derecha */
+  flex-direction: row-reverse; 
   align-items: center;
   justify-content:space-around;
   
@@ -26,7 +28,11 @@ bottom: 80px;
 .linksordenamiento{
   font-size: 11px;
   display: inline-block;
-  padding: 10px 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 60px;
+  padding-right: 60px;
+  
   margin-bottom: 47px; 
   background-color: #913b23;
   color: #fff;
@@ -119,14 +125,11 @@ bottom: 80px;
 
 .image {
     position: relative;
-    top:22px;
-    right: 10px;
+    
     
   max-width: 1700px;
-   
-  margin-top: 450px;
-  margin-bottom: 450px;
-  margin-right: 60px;
+ 
+ 
   width: 70%;
 }
 

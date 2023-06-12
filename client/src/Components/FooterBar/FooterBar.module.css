@@ -1,20 +1,29 @@
 .footerBar {
     background-color: #363636;
     color: #ffffff;
-    padding: 20px;
+    padding-top: 15px;
+    padding-bottom: 15px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-left: 150px;
-    padding-right: 100px;
+    flex-direction: row;
+    justify-content:space-around;
+  align-items: center; 
+    
   position: relative;
   
-  z-index: 1;
   }
+
   
   .logo img {
     height: 90px;
-    padding-right: 250px;
+    margin-left: 10px;
+    
+  }
+  .footerText{
+    margin-right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
   }
   
   .linkawesome {
@@ -25,12 +34,14 @@
     font-size: 24px;
     text-decoration: none;
     transition: color 0.3s;
-    justify-content: center;
-    align-items: center;
+    margin-left: 240px;
+   
+  
   }
   .linkawesome a {
     color: rgb(215, 215, 222);
-    margin-left: 10px;
+    margin-left: 5px;
+    
   }
   
   .linkawesome a:hover {

@@ -64,6 +64,7 @@ function NavBar() {
 
   return (
     <div className={style.contenedor}>
+      
       <img className={style.imagen} src={imagen} alt="" />
       <Nav>
         {location.pathname !== "/" &&         
@@ -127,6 +128,7 @@ function NavBar() {
         ) : null}
       </Nav>
     </div>
+    
   );
 }
 
