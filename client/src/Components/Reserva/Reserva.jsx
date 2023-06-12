@@ -63,9 +63,10 @@ function Reserva() {
       fechaFin: dates.checkOut,
       costo:precio
     };
-    
+    window.localStorage.setItem("dataReservation", JSON.stringify(data));
   
     if(usuario){
+      
       // fetch('http://localhost:3001/reservation', {
       //   method: 'POST',
       //   headers: {
@@ -82,7 +83,7 @@ function Reserva() {
       createReserva(data).then((response) => {    
         console.log("response.data");                        
         console.log(response.data);
-        alert(response.data);  
+        window.localStorage.setItem("dataReservation", JSON.stringify(data));
       })
       .catch(error => {
         // Manejar errores

@@ -54,7 +54,7 @@ function Login2() {
         }); 
         window.localStorage.setItem("client", JSON.stringify(data.custumer));
         //console.log(data.custumer);
-      if(window.localStorage.getItem('dataReservation')){
+      if(window.localStorage.getItem("dataReservation")){
         navigate("/detalleReserva");
       }else{
         navigate("/")
