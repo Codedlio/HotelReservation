@@ -53,13 +53,12 @@ const getHabitacionesDisponibles = async (req, res) => {
         
         for (let reservacion of reservaciones) {
             for (let habitacionReservada of reservacion.habitaciones) {
-                let habitacion = habitaciones.find(a => a._id === habitacionReservada);
+                let habitacion = habitaciones.find(a => a._id.equals(habitacionReservada));
                 if (habitacion) {
-                    habitacion.disponible = false;
+                  habitacion.disponible = false;
                 }
             }
         };
-      
         return res.status(200).json(habitaciones);
     } 
     catch (error) {

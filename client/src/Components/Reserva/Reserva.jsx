@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import style from './Reserva.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector,useDispatch } from 'react-redux';
-import { getHabitacionesDisponibles , getPaquetes,createReserva } from '../redux/action';
+import { getHabitacionesDisponibles , getPaquetes,createReserva, getPaqueteById } from '../redux/action';
 import axios from 'axios';
 
 
@@ -21,10 +21,12 @@ function Reserva() {
 
   const usuario = useSelector(state => state.usuario);
   const rooms = useSelector(state => state.habitaciones);
-  let paquetes = useSelector((state) => state.allpaquetes);
+  const paquetes = useSelector((state) => state.allpaquetes);
 
   useEffect(() => {
     dispatch(getPaquetes());
+    console.log(paquetes);
+    console.log(rooms);
   }, [dispatch])
 
   useEffect( () => {
@@ -40,9 +42,11 @@ function Reserva() {
   }, [dates]);
 
   useEffect( () => {
-    let {data} = axios.get('http://localhost:3001/servicio');
-    setServices(data);
+    axios.get('http://localhost:3001/servicio')
+      .then((response) => {setServices(response.data)})
+      .catch((error) => {alert(error.message)});
   }, [])
+
   const handleAdultsChange = (e) => {
     setAdults(parseInt(e.target.value));
   };
@@ -66,26 +70,13 @@ function Reserva() {
     
   
     if(usuario){
-      // fetch('http://localhost:3001/reservation', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify(data),
-      // })
-      // .then(response => {
-      // // Manejar la respuesta del servidor
-      //   if (response.ok) {
-      //     console.log("quedo"); 
-      //   }
-
       createReserva(data).then((response) => {    
         console.log("response.data");                        
         console.log(response.data);
         alert(response.data);  
       })
       .catch(error => {
-        // Manejar errores
+        alert(error.message)
       });
     }else {
       window.localStorage.setItem("dataReservation", JSON.stringify(data));
@@ -104,11 +95,9 @@ function Reserva() {
     const value = e.target.value;
     let activeRoom = rooms.find(room => room._id === value)
     if (e.target.checked) {
-      //setSelectedRoom([...selectedRoom, activeRoom]);
       setSelectedRoom([...selectedRoom, value]);    
       setPrecio(precio + activeRoom.precio);
     } else {
-      //setSelectedRoom(selectedRoom.filter(room => room._id !== value));
       setSelectedRoom(selectedRoom.filter(room => room !== value));     
       setPrecio(precio - activeRoom.precio);
     }   
@@ -118,10 +107,10 @@ function Reserva() {
     const value = e.target.value;
     let activeService = services.find(service => service._id === value);
     if (e.target.checked) {
-      setSelectedService([...selectedService, activeService]);
+      setSelectedService([...selectedService, value]);
       setPrecio(precio + activeService.precio);
     } else {
-      setSelectedService(selectedService.filter(service => service._id !== value));
+      setSelectedService(selectedService.filter(service => service !== value));
       setPrecio(precio - activeService.precio);
     }
   };
@@ -156,7 +145,6 @@ function Reserva() {
 
         <h3 className={style.title}>Reserva tu estadía</h3>
 
-        {/* <form onSubmit={handleSubmit} className={style.formContainer} >  */}
         <form onSubmit={handleSubmit}  >
           <div className="d-flex align-items-start bg-light mb-3" style={{ height: "30px" }}>
             <label htmlFor="check-in" className={style.label}>
@@ -201,137 +189,172 @@ function Reserva() {
               onChange={handleChildrenChange}
               required
             />
-
           </div>
-
 
           {precio !== 0 && (
             <div className={style.formGroup}>
               <label htmlFor="precio" className={style.label}>
                 Precio: ${precio}
               </label>
+              <br/>
+              {selectedRoom.length > 0 && (
+                <><label className={style.label}>
+                  Habitacion/es seleccionada/s:&nbsp;
+                  {selectedRoom.map(roomId => {
+                    const habitacion = rooms.find(room => room._id === roomId);
+                    if (habitacion) {
+                      return habitacion.nombre;
+                    }
+                  }).join(', ')}
+                </label>
+                <br/></>
+              )} 
+              {selectedPaquete.length > 0 && (
+                <><label className={style.label}>
+                  Paquete/s seleccionado/s:&nbsp;
+                  {selectedPaquete.map(paqueteId => {
+                    const paq = paquetes.find(pa => pa._id === paqueteId);
+                    if (paq) {
+                      return paq.nombre;
+                    }
+                  }).join(', ')}
+                </label>
+                <br/></>
+              )}
+              {selectedService.length > 0 && (
+                <><label className={style.label}>
+                  Servicio/s seleccionado/s:&nbsp;
+                  {selectedService.map(servicioId => {
+                    const ser = services.find(se => se._id === servicioId);
+                    if (ser) {
+                      return ser.nombre;
+                    }
+                  }).join(', ')}
+                </label>
+                <br/></>
+              )}  
             </div>
           )}
-
+          <br></br>
           {adults !== 0 && rooms.length && (
-            // puse estilo
             <div >
               <label htmlFor="roomName" className={style.label}>
                 Seleccione la habitación:
               </label>
               <div className={style.containercheckbox}>
-                {/* <ul> */}
                 {rooms.map((room) =>
-                (
-                  // <li key={room._id}>
-                  <label>
-                    <input
-                      type="checkbox"
-                      value={room._id}
-                      // checked={selectedRoom.some(activeRoom => activeRoom._id === room._id)}
-                      onChange={handleRoomChange}
-                    />
-                    {room.disponible === false ? (
-                      <span>
-                        No disponible: {room.nombre}
-                        <Link className={style.linkkk} to={`/habitacion/${room._id}`}>
-                          <button className={style.hab}>Ver Habitación</button>
-                        </Link> 
-                       
-                      </span>
-                    ) : (
+                  <label key={room._id}>
+                  {room.disponible === false ? (
+                    <>
+                      <input
+                        type="checkbox"
+                        disabled
+                        value={room._id}
+                        onChange={handleRoomChange}
+                      />
+                        <span>
+                          No disponible: {room.nombre}
+                          <Link className={style.linkkk} to={`/habitacion/${room._id}`}>
+                            <button className={style.hab}>Ver Habitación</button>
+                          </Link> 
+                        </span>
+                    </>
+                  ) : (
+                    <>
+                      <input
+                        type="checkbox"
+                        value={room._id}
+                        onChange={handleRoomChange}
+                      />
                       <span>
                         <br></br>
                         {room.nombre} Capacidad: {room.capacidad}<br></br> Precio: ${room.precio}
-                        {/* <Link className={style.linkkk} to={`/habitacion/${room._id}`}>
-                          <button className={style.hab}>Ver Habitación</button>
-                        </Link> */}
                         <Link className={style.linkkk} to={`/habitacion${room.numero}`}>
                               <button className={style.hab}>Ver Habitación</button>
                         </Link>
                       </span>
-                    )}
+                    </>
+                  )} 
                   </label>
-                  // </li>
-                )
                 )}
               </div>
-              {/* </ul> */}
             </div>
-
           )}
 
           <br></br>
-          {adults !== 0 && rooms.length && (
-            
+
+          {adults !== 0 && paquetes.length && (  
             <div >
               <label htmlFor="roomName" className={style.label}>
                 Seleccione el paquete:
               </label>
               <div className={style.containercheckbox}>
-                {/* <ul> */}
-                {paquetes.map((room) =>
-                (
-                  // <li key={room._id}>
-                  <label>
-                    <input
-                      type="checkbox"
-                      value={room._id}
-                      // checked={selectedPaquete.some(activeRoom => activeRoom._id === room._id)}
-                      onChange={handlePaqueteChange}
-                    />
-                    {room.disponible === false ? (
+                {paquetes.map((paquete) =>
+                  <label key={paquete._id}>
+                    {paquete.disponible === false ? (
+                      <>
+                      <input
+                        disabled
+                        type="checkbox"
+                        value={paquete._id}
+                        onChange={handlePaqueteChange}
+                      />
                       <span>
-                        No disponible: {room.nombre}
-                        <Link className={style.linkkk} to={`/detail/${room._id}`}>
+                        No disponible: {paquete.nombre}
+                        <Link className={style.linkkk} to={`/detail/${paquete._id}`}>
                           <button className={style.hab}>Ver Paquete</button>
                         </Link>
                       </span>
+                      </>
                     ) : (
+                      <>
+                      <input
+                        type="checkbox"
+                        value={paquete._id}
+                        onChange={handlePaqueteChange}
+                      />
                       <span>
-                        {room.nombre} Capacidad: {room.capacidad}
+                        {paquete.nombre} Capacidad: {paquete.capacidad}
                         <br></br>
-                        {room.nombre} Precio: ${room.costo}
-                        <Link className={style.linkkk} to={`/detail/${room._id}`}>
+                        Precio: ${paquete.costo}
+                        <Link className={style.linkkk} to={`/detail/${paquete._id}`}>
                           <button className={style.hab}>Ver Paquete</button>
                         </Link>
                       </span>
+                      </>
                     )}
                   </label>
-                  // </li>
-                )
                 )}
-                {/* </ul> */}
               </div>
             </div>
-
           )}
-           {/* {adults !== 0 && services.length && (
-            <div className={style.formGroup}>
-              <label htmlFor="serviceName" className={style.label}>
-                Seleccione servicios:
+
+          <br></br>
+
+          {adults !== 0 && services.length && (  
+            <div >
+              <label htmlFor="roomName" className={style.label}>
+                Seleccione el servicio:
               </label>
-              <ul>
-                {services.map((service) =>
-                  (
-                    <li key={service._id}>
-                      <label>
-                        <input
-                          type="checkbox"
-                          value={service._id}
-                          checked={selectedService.some(activeService => activeService._id === service._id)}
-                          onChange={handleServiceChange}
-                        />
-                          <span>
-                            {service.nombre}  Precio: ${service.precio}
-                          </span>
-                      </label>
-                    </li>
-                  )
+              <div className={style.containercheckbox}>
+                {services.map((servicio) =>
+                  <label key={servicio._id}>
+                      <input
+                        type="checkbox"
+                        value={servicio._id}
+                        onChange={handleServiceChange}
+                      />
+                      <span>
+                        {servicio.nombre} 
+                        <br></br>
+                        Precio: ${servicio.precio}
+                      </span>
+                  </label>
                 )}
-              </ul>
+              </div>
             </div>
-          )} */}
+          )}
+          <br/>
           <button type='submit' className={style.button}>Reservar ahora</button>          
         </form>
       </div>
