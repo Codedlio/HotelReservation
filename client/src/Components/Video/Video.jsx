@@ -7,6 +7,7 @@ const videoUrl = 'https://res.cloudinary.com/dmpbajdrk/video/upload/v1686278066/
 const VideoPlayer = () => {
   return (
     <div className={style.container}>
+      
         
        
         <video className={style.player} src={videoUrl} alt='' autoPlay muted />
@@ -23,7 +24,8 @@ Imagina despertar cada mañana con vistas panorámicas de<br></br> majestuosas m
           
         </div>
       </div>
-    </div>
+      </div>
+    
   );
 };
 

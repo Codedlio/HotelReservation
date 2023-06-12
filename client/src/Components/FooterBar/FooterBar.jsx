@@ -16,6 +16,7 @@ function FooterBar() {
   }
   return (
     <div className={style.footerBar}>
+      
       <div className={style.logo}>
         <img src={imagen} alt="Logo" />
       </div>
@@ -25,6 +26,7 @@ function FooterBar() {
         <a href="#" onClick={handleTwitterClick}><FontAwesomeIcon icon={faTwitter} /></a>
       </div>
       <p className={style.footerText}>&copy; 2023 Eterno Hotel. Todos los derechos reservados.</p>
+    
     </div>
   );
 }
