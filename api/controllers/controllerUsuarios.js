@@ -3,7 +3,8 @@ const Usuario= require('../models/Usuario');
 const bcrypt = require('bcrypt');
 const { ObjectId } = require('mongoose').Types;
 const { sendWelcomeEmail,sugerenciaCliente } = require("../config/sendgridEmail.js");
-
+const jwt= require('jsonwebtoken');
+require('dotenv').config()
 const postRegistro =  async (req, res) => {
     try {
       const { correo, contraseña, telefono, nombre,activo } = req.body;
@@ -51,8 +52,11 @@ const  postLogin= async (req, res) => {
         if (!match) {
           return res.status(401).json({ mensaje: 'Contraseña incorrecta' });
     }    else {
+      const token = jwt.sign({ id: usuario._id }, process.env.SECRET_KEY, {
+              expiresIn: '8 days'
+            });
                  
-          return res.status(200).json({ mensaje: 'Inicio de sesión exitoso',usuario: usuario.nombre }); 
+          return res.status(200).json({ mensaje: 'Inicio de sesión exitoso',usuario: usuario.nombre,token }); 
 }
 
       // const userRecord = await auth.signInWithEmailAndPassword(correo, contraseña);

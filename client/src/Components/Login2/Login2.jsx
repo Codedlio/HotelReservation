@@ -8,10 +8,10 @@ import {useNavigate} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUsuario } from '../redux/action';
 import foto from './logo gogle.png'
-
+import Cookies from 'js-cookie';
 import axios from "axios";
 function Login2() {
-
+  const token = Cookies.get('token');
   const usuario = useSelector(state => state.usuario);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -93,8 +93,8 @@ function Login2() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-
+      
+    
     // Aquí puedes realizar acciones con los datos enviados, como enviarlos a un servidor
     // Envío de datos al servidor
     fetch('http://localhost:3001/auth/login', {
@@ -119,8 +119,18 @@ function Login2() {
   .then(data => {
     const user = {
       email: form.correo,
-      name: data.usuario
+      name: data.usuario,
+      token:data.token
     };
+
+      const COOKIE_NAME = 'token';
+      const COOKIE_EMAIL = 'emailToken';
+      Cookies.set(COOKIE_NAME, user.token, { expires: 8, secure: true });
+      Cookies.set(COOKIE_EMAIL, user.email, { expires: 8, secure: true });
+
+    
+      
+    
     dispatch(setUsuario(form.correo));
     fetch("http://localhost:3001/payment/custumer", {
         method: 'POST',
@@ -137,6 +147,7 @@ function Login2() {
         console.log(data);
         window.localStorage.setItem("client", JSON.stringify(data.custumer));
       })
+
     if (window.localStorage.getItem('dataReservation')) {
       navigate("/detalleReserva");
     } else {
@@ -146,7 +157,7 @@ function Login2() {
   .catch(error => {
     alert("Se produjo un error: " + error.message);
   })
-};
+}
 
   return (
     <div className={style.contenedor}>

@@ -74,6 +74,7 @@ function Reserva() {
         console.log("response.data");                        
         console.log(response.data);
         window.localStorage.setItem("dataReservation", JSON.stringify(data));
+        navigate("/detalleReserva")
       })
       .catch(error => {
         alert(error.message)
