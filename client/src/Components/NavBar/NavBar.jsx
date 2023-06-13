@@ -11,7 +11,9 @@ import { useState, useEffect } from "react";
 import { deleteUsuario } from "../redux/action";
 import { useDispatch, useSelector } from "react-redux";
 import Carrito from '../Carrito/Carrito';
-
+import {onAuthStateChanged  } from "firebase/auth";
+import { setUsuario } from '../redux/action';
+import { auth } from "../Loging/firebase";
 function NavBar() {
   const location = useLocation();
   const dispatch = useDispatch();
@@ -34,6 +36,16 @@ function NavBar() {
   
     return () => clearTimeout(timeout);
   }, [mostrarCarrito, reserva]);
+    
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      
+        dispatch(setUsuario(user.email))
+      // User is signed in, see docs for a list of available properties
+      //console.log(user.email);
+      // ...
+    }
+  });
 
   // Función para agregar la reserva al carrito
   const agregarAlCarrito = (nuevaReserva) => {
@@ -58,10 +70,16 @@ function NavBar() {
     window.open('https://www.facebook.com/profile.php?id=100093402330219', '_blank');
   };
 
-  const handleLogOut = () => {
+  const handleLogOut = async() => {
     dispatch(deleteUsuario());
+    
+    if (usuario){
+      await auth.signOut();
+    }
   };
-
+  
+  
+  
   return (
     <div className={style.contenedor}>
       

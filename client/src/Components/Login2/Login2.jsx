@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { GoogleAuthProvider,signInWithPopup  } from "firebase/auth";
+import { GoogleAuthProvider,signInWithPopup,sendEmailVerification  } from "firebase/auth";
 import { auth } from "../Loging/firebase";
 import style from './Login2.module.css';
 import { Link } from 'react-router-dom';
@@ -8,7 +8,7 @@ import {useNavigate} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUsuario } from '../redux/action';
 import foto from './logo gogle.png'
-import getCustumer from "../../services/getCustumer";
+
 import axios from "axios";
 function Login2() {
 
@@ -47,12 +47,32 @@ function Login2() {
         nombre:credentials.user.displayName  
       }
       
-      dispatch(setUsuario(user.correo));
-      const {data}= await axios.post("http://localhost:3001/payment/custumer", {
-                correo:user.correo,
-                nombre:user.nombre
-        }); 
-        window.localStorage.setItem("client", JSON.stringify(data.custumer));
+      const userCurrent = auth.currentUser;
+      if(!userCurrent.emailVerified){
+         sendEmailVerification(auth.currentUser)
+  .then(() => {
+    console.log("verification");
+    // Email verification sent!
+    // ...
+  });
+      }
+     
+  const {data}= await axios.post("http://localhost:3001/payment/custumer", {
+    correo:user.correo,
+    nombre:user.nombre
+}); 
+    window.localStorage.setItem("client", JSON.stringify(data.custumer));
+     
+    if (userCurrent && userCurrent.emailVerified) {
+        dispatch(setUsuario(user.correo));
+        console.log(userCurrent.emailVerified);
+    // El correo electrónico ha sido verificado
+  } else { 
+    navigate("/")
+    // El correo electrónico no ha sido verificado
+  }
+  
+     
         //console.log(data.custumer);
       if(window.localStorage.getItem("dataReservation")){
         navigate("/detalleReserva");
