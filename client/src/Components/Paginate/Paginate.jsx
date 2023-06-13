@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 function Paginado({ habsPerPage, habitaciones, paginado, currentPage }) {
   const pageNumbers = [];
-  for (let i = 1; i <= 14; i++) {
+  for (let i = 1; i <= habitaciones-1; i++) {
     pageNumbers.push(i);
   }
 
