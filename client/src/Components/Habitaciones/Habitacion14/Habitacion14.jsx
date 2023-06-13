@@ -9,22 +9,26 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBed, faMoneyBill, faPersonBooth  } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import Paginado from '../../Paginate/Paginate';
-import { set_Currents_Page } from '../../redux/action';
+import { getHabitaciones, set_Currents_Page } from '../../redux/action';
 import { useEffect } from 'react';
 
 const Habitacion14 = () => {
   const [index, setIndex] = useState(0);
 
   const dispatch = useDispatch();
-  const habitaciones = useSelector((state) => state.set_Current_Page); // Cambiar "state.set_Current_Page" por el nombre correcto
- 
+  const habitaciones = useSelector((state) => state.gethabitaciones);
   const [currentPage, setCurrentPage] = useState(14);
   const habsPerPage = 1;
   const indexofLastRoom = currentPage * habsPerPage;
   const indexofFirstRoom = indexofLastRoom - habsPerPage;
-  const visibleHabitaciones = habitaciones.slice(indexofFirstRoom, indexofLastRoom);
 
-  const imagenes = useSelector(state => state.gethabitaciones[13].image);
+  const imagenes = useSelector(state => state.gethabitaciones[13]);
+
+  useEffect(() => {
+    if (!imagenes) {
+      dispatch(getHabitaciones());
+    }
+  }, []);
 
   useEffect(() => {
     dispatch(set_Currents_Page(currentPage));
@@ -89,9 +93,9 @@ const Habitacion14 = () => {
         </section>
       <div 
       className="container w-100">
-        {imagenes.length && 
+        {imagenes && 
         <Carousel activeIndex={index} onSelect={handleSelect}>
-          {imagenes.map(imagen => {
+          {imagenes.image.map(imagen => {
             return (
             <Carousel.Item>
               <img
@@ -128,32 +132,11 @@ const Habitacion14 = () => {
             <li>Calefacción por radiadores</li>
             <li>Deck exterior de madera</li>
             <li>Parrilla</li>
-            
-          
-
-
-
-
-
-
-
-
-
           </ul>
         </section>
 
-
-        <div className={style.titulodisponibilidad}><h2>Disponibilidad</h2></div>
-        <section className={style.disponibilidad}>
-          
-          <p>Verifica la disponibilidad y realiza tu reserva en línea:</p>
-        
-        </section>
-        <div className={style.containerlink}><a className={style.linka} href="#">Ver disponibilidad</a></div>
         <Paginado gamesPerPage={habsPerPage} habitaciones={habitaciones.length} paginado={setCurrentPage} currentPage={currentPage} />
         <FooterBar className={style.footer} />
-      
-      
     </div>
   );
 };

@@ -13,23 +13,22 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import Paginado from "../../Paginate/Paginate";
-import { set_Currents_Page } from "../../redux/action";
+import { set_Currents_Page, getHabitaciones } from "../../redux/action";
 
 const Habitacion1 = () => {
   const dispatch = useDispatch();
-  const habitaciones = useSelector((state) => state.set_Current_Page); // Cambiar "state.set_Current_Page" por el nombre correcto
+  const habitaciones = useSelector((state) => state.gethabitaciones);
   const [index, setIndex] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const habsPerPage = 1;
-  const indexofLastRoom = currentPage * habsPerPage;
-  const indexofFirstRoom = indexofLastRoom - habsPerPage;
-  const visibleHabitaciones = habitaciones.slice(
-    indexofFirstRoom,
-    indexofLastRoom
-  );
 
-
-  const imagenes = useSelector(state => state.gethabitaciones[0].image)
+  let imagenes = useSelector(state => state.gethabitaciones[0]);
+  
+  useEffect(() => {
+    if (!imagenes) {
+      dispatch(getHabitaciones());
+    }
+  }, []);
 
   const handleSelect = (selectedIndex, e) => {
     setIndex(selectedIndex);
@@ -94,8 +93,8 @@ const Habitacion1 = () => {
       </section>
 
       <div className="container w-100">
-        {imagenes.length && <Carousel activeIndex={index} onSelect={handleSelect}>
-          {imagenes.map(imagen => {
+        {imagenes && <Carousel activeIndex={index} onSelect={handleSelect}>
+          {imagenes.image.map(imagen => {
             return (
             <Carousel.Item>
               <img
@@ -126,20 +125,6 @@ const Habitacion1 = () => {
           <li>TV de pantalla plana</li>
         </ul>
       </section>
-
-      <div className={style.titulodisponibilidad}>
-        <h2>Disponibilidad</h2>
-      </div>
-      <section className={style.disponibilidad}>
-        <p>Verifica la disponibilidad y realiza tu reserva en línea:</p>
-      </section>
-      <div className={style.containerlink}>
-        <a className={style.linka} href="#">
-          Ver disponibilidad
-        </a>
-      </div>
-
-      <habitaciones habitaciones={visibleHabitaciones} />
 
       <Paginado
         gamesPerPage={habsPerPage}
