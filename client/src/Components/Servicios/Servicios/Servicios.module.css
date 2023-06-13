@@ -7,6 +7,7 @@
     align-items: center;
     text-align: center;
     margin-left: 75px;
+    margin-right: 75px;
     margin-bottom: 70px;
   }
   
@@ -65,7 +66,5 @@
     height: auto;
   }
   
-  .button span {
-    /* Estilos para el texto */
-  }
+  
   

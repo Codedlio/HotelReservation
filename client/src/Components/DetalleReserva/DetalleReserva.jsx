@@ -26,20 +26,25 @@ function DetalleReserva() {
     let paquetesAgain=[]
     if (localData&&localReservation) {
       const data = JSON.parse(localData);
-      for (const paquete of reserva) {
-        paquetesAgain.push(paquete.paquete);
-      }
+      const datares = JSON.parse(localReservation);
+      console.log(datares.arrPaquete);
+      // if() 
+      //   for (const paquete of reserva) {
+      //   paquetesAgain.push(paquete.paquete);
+      // }
       
-      const dataRes = JSON.parse(localReservation);
-      console.log(paquetesAgain);
+      
+      
+      //const dataRes = JSON.parse(localReservation);
+      //console.log(paquetesAgain);
       //console.log(dataRes.a);
       //console.log(reserva);
       try {
 
         const response = await axios.post("http://localhost:3001/payment/checkout", {
           custumerId: data,
-          arrIdHabitaciones: dataRes.arrHabitacion,
-          arrIdPaquetes:paquetesAgain
+          arrIdHabitaciones: datares.arrHabitacion,
+          arrIdPaquetes:datares.arrPaquete
         });
         
         const { payment } = response.data;
@@ -47,7 +52,7 @@ function DetalleReserva() {
       } catch (error) {
         console.error(error);
       }
-    }
+     }
   };
   
   const renderDetalleReserva = () => {   
