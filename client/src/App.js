@@ -33,7 +33,6 @@ import DetalleReserva from './Components/DetalleReserva/DetalleReserva'
 import Natacion from './Components/Servicios/Natacion/Natacion'
 
 
-
 function App() {
   return (
     <div className="App">

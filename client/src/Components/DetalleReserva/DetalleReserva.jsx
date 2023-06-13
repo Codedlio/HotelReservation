@@ -56,7 +56,8 @@ function DetalleReserva() {
   };
   
   const renderDetalleReserva = () => {   
-    if (Array.isArray(reserva)) {      
+    if (Array.isArray(reserva)) {  
+          
       return reserva.map((re) => {       
         return (         
         <div > 
@@ -74,10 +75,15 @@ function DetalleReserva() {
           </div>
         </div>
         );
-      });
-    
-  }
+      }); 
+      
+      
+    }
   };
+
+
+
+
 
   return (
     <div className={style.container}>

@@ -15,6 +15,7 @@ export const ORDER_PAQUETES = "ORDER_PAQUETES";
 export const GET_PAQUETES_BY_ID = "GET_PAQUETES_BY_ID";
 export const CREATE_RESERVA = "CREATE_RESERVA";
 export const GET_RESERVA_BY_USER ="GET_RESERVA_BY_USER";
+export const FILTER_NAME_PAQUETE = "FILTER_NAME_PAQUETE";
 
 
 export const setOrderByName = (orderType) => {
@@ -57,6 +58,7 @@ export function getPaqueteById(id) {
   }
 }
 export const orderxPaquetes = (order) => { return { type: ORDER_PAQUETES, payload: order } }
+export const filterNamePaquete = (filter) => { return { type: FILTER_NAME_PAQUETE, payload: filter } }
 
 export const createReserva = (reserva) =>{ 
   let url = `http://localhost:3001/reservation`;
