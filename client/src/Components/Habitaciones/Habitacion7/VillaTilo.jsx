@@ -11,11 +11,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import Paginado from '../../Paginate/Paginate';
 import { getHabitaciones, set_Currents_Page } from '../../redux/action';
 import { useEffect } from 'react';
+import { Link, animateScroll as scroll } from "react-scroll";
+import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
 
 const Habitacion1 = () => {
   const [index, setIndex] = useState(0);
   
   const dispatch = useDispatch();
+  const [isVisible, setIsVisible] = useState(false);
   const habitaciones = useSelector((state) => state.gethabitaciones);
   const [currentPage, setCurrentPage] = useState(7);
   const habsPerPage = 1;
@@ -37,6 +40,27 @@ const Habitacion1 = () => {
 
   const handleSelect = (selectedIndex, e) => {
     setIndex(selectedIndex);
+  };
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const handleScroll = () => {
+    if (window.pageYOffset > 300) {
+      setIsVisible(true);
+    } else {
+      setIsVisible(false);
+    }
+  };
+
+  const scrollToTop = () => {
+    scroll.scrollToTop({
+      duration: 900, // Duración de la animación en milisegundos
+      smooth: true, // Desplazamiento suave habilitado
+    });
   };
 
   return (
@@ -138,6 +162,16 @@ const Habitacion1 = () => {
             <li>Bañeritas, sillitas altas y cuna para bebés</li>
           </ul>
         </section>
+        <Link
+        to="top"
+        spy={true}
+        smooth={true}
+        duration={500}
+        className={`${style.scroll} ${isVisible ? style.show : ""}`}
+        onClick={scrollToTop}
+      >
+        <FontAwesomeIcon icon={faArrowUp} />
+      </Link>
 
         <Paginado gamesPerPage={habsPerPage} habitaciones={habitaciones.length} paginado={setCurrentPage} currentPage={currentPage} />
         <FooterBar className={style.footer} />

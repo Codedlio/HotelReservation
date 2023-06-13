@@ -8,6 +8,7 @@ body{
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    z-index: 0;
 }
 .container {
     display: flex;
@@ -17,6 +18,35 @@ body{
     
     background-color: rgb(220, 193, 193);
    
+  }
+  .scroll {
+    position: fixed;
+    bottom: 90px;
+    right: 30px;
+    font-size: 20px;
+    background-color: #2a1f1f;
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    overflow: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+    z-index: 1;
+  }
+  .scroll.show {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  .scroll:hover {
+    background-color: #dadade;
+    cursor: pointer;
   }
   .titulo{
     

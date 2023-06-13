@@ -4,6 +4,8 @@ import FooterBar from "../../FooterBar/FooterBar";
 import Carousel from "react-bootstrap/Carousel";
 import "bootstrap/dist/css/bootstrap.min.css";
 import style from "./Habitacion1.module.css";
+import { Link, animateScroll as scroll } from "react-scroll";
+import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -20,6 +22,7 @@ const Habitacion1 = () => {
   const habitaciones = useSelector((state) => state.gethabitaciones);
   const [index, setIndex] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isVisible, setIsVisible] = useState(false);
   const habsPerPage = 1;
 
   let imagenes = useSelector(state => state.gethabitaciones[0]);
@@ -37,7 +40,27 @@ const Habitacion1 = () => {
   useEffect(() => {
     dispatch(set_Currents_Page(currentPage));
   }, [dispatch, currentPage]);
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
+  const handleScroll = () => {
+    if (window.pageYOffset > 300) {
+      setIsVisible(true);
+    } else {
+      setIsVisible(false);
+    }
+  };
+
+  const scrollToTop = () => {
+    scroll.scrollToTop({
+      duration: 900, // Duración de la animación en milisegundos
+      smooth: true, // Desplazamiento suave habilitado
+    });
+  };
   return (
     <div className={style.containertotal}>
       <NavBar></NavBar>
@@ -50,6 +73,7 @@ const Habitacion1 = () => {
             vistas panorámicas.
           </p>
         </div>
+        
 
         <div className={style.container}>
           <h2 className={style.title}>Características</h2>
@@ -125,6 +149,16 @@ const Habitacion1 = () => {
           <li>TV de pantalla plana</li>
         </ul>
       </section>
+      <Link
+        to="top"
+        spy={true}
+        smooth={true}
+        duration={500}
+        className={`${style.scroll} ${isVisible ? style.show : ""}`}
+        onClick={scrollToTop}
+      >
+        <FontAwesomeIcon icon={faArrowUp} />
+      </Link>
 
       <Paginado
         gamesPerPage={habsPerPage}
