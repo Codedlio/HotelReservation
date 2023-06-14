@@ -31,6 +31,7 @@ import Piscinatermal from './Components/Servicios/Piscinatermal/Piscinatermal';
 import Yoga from './Components/Yoga/Yoga'
 import DetalleReserva from './Components/DetalleReserva/DetalleReserva'
 import Natacion from './Components/Servicios/Natacion/Natacion'
+import Contenido2 from './Components/Contenido2/Contenido2'
 
 
 
@@ -69,6 +70,7 @@ function App() {
           <Route path="/yoga" element={<Yoga />} />
           <Route path="/detalleReserva" element={<DetalleReserva />} />
           <Route path="/natacion" element={<Natacion />} />
+          <Route path="/chat" element={<Contenido2 />} />
           
           
 

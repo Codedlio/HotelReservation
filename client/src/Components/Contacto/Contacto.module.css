@@ -38,6 +38,18 @@
   font-weight: bold;
   margin-right: 10px;
 }
+.contactLabellink{
+  text-decoration: none;
+  font-weight: bold;
+  margin-right: 10px;
+  color: black;
+
+}
+.contactLabellink:hover{
+ 
+  color: rgb(82, 27, 27)
+
+}
 
 .contactInput,
 .contactTextarea,
