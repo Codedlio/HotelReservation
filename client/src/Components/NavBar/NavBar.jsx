@@ -14,7 +14,11 @@ import Carrito from '../Carrito/Carrito';
 import {onAuthStateChanged  } from "firebase/auth";
 import { setUsuario } from '../redux/action';
 import { auth } from "../Loging/firebase";
+import Cookies from 'js-cookie';
+
 function NavBar() {
+  const token = Cookies.get('token');
+  const emailToken = Cookies.get('emailToken');
   const location = useLocation();
   const dispatch = useDispatch();
   const usuario = useSelector(state => state.usuario);
@@ -25,7 +29,9 @@ function NavBar() {
 
   useEffect(() => {
     let timeout;
-  
+    if(token){
+      dispatch(setUsuario(emailToken));
+    }
     if (mostrarCarrito && !reserva) {
       setMostrarMensaje(true);
   
@@ -33,10 +39,10 @@ function NavBar() {
         setMostrarMensaje(false);
       }, 2000);
     }
-  
+    
     return () => clearTimeout(timeout);
   }, [mostrarCarrito, reserva]);
-    
+  
   onAuthStateChanged(auth, (user) => {
     if (user) {
       
@@ -46,6 +52,7 @@ function NavBar() {
       // ...
     }
   });
+ 
 
   // Función para agregar la reserva al carrito
   const agregarAlCarrito = (nuevaReserva) => {
@@ -71,6 +78,9 @@ function NavBar() {
   };
 
   const handleLogOut = async() => {
+    
+    Cookies.remove('token');
+    Cookies.remove('emailToken');
     dispatch(deleteUsuario());
     
     if (usuario){

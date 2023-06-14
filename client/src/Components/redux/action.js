@@ -22,6 +22,8 @@ export const SET_SELECTEDSERVICE = "SET_SELECTEDSERVICE";
 export const SET_DATES = "SET_DATES";
 export const SET_PRECIO = "SET_PRECIO";
 export const SET_SELECTEDPAQUETE = "SET_SELECTEDPAQUETE";
+export const FILTER_NAME_PAQUETE = "FILTER_NAME_PAQUETE";
+
 
 export const setOrderByName = (orderType) => {
   return {
@@ -63,6 +65,7 @@ export function getPaqueteById(id) {
   }
 }
 export const orderxPaquetes = (order) => { return { type: ORDER_PAQUETES, payload: order } }
+export const filterNamePaquete = (filter) => { return { type: FILTER_NAME_PAQUETE, payload: filter } }
 
 export const createReserva = (reserva) =>{ 
   let url = `http://localhost:3001/reservation`;

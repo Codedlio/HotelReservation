@@ -79,32 +79,35 @@ const getReservacionByUsuario = async (req,res) => {
   const {usuario} = req.params;
   
   try {
-    let ReservacionDeUsuario=[];
-    let reservacion = await Reservacion.findOne({usuario:usuario,activo:true});
-    if (!reservacion) {return res.status(200).send(ReservacionDeUsuario)};
-
+        
+    let reservacion = await Reservacion.find({usuario:usuario,activo:true});  
+    let ReservacionDeUsuario=reservacion.slice(-1);
+    
+    if (!reservacion) {return res.status(200).send(reservacion)};
     let nombresHabitaciones = [];
-    for (let habitacionId of reservacion.habitaciones) {
-        const Habitacion = await Habitacion.findById(habitacionId);
-        nombresHabitaciones.push(habitacion.nombre);
+
+    for (let habitacionId of ReservacionDeUsuario) {
+        for (let habId of habitacionId.habitaciones) {
+          const {nombre} = await Habitacion.find({_id:habId});
+          nombresHabitaciones.push(nombre);
+        }
     }
 
     let nombresServicios = [];
-    for (let servicioId of reservacion.servicios) {
-        const {nombre} = await Servicio.find({_id:servicioId});
+    for (let servicioId of ReservacionDeUsuario) {
+        const {nombre} = await Servicio.find({_id:servicioId.servicios});
         nombresServicios.push(nombre);
     }
 
-    reservacion.habitaciones = nombresHabitaciones;
-    reservacion.servicios = nombresServicios;
-    ReservacionDeUsuario.push(reservacion);
+    ReservacionDeUsuario.habitaciones = nombresHabitaciones;
+    ReservacionDeUsuario.servicios = nombresServicios;
+
     return res.status(200).json(ReservacionDeUsuario);
 } 
 catch (error) {
     return res.status(500).send("Internal server error");
 }
 };
-
 
 const postReservacion = async (req,res) => {
   let {usuarioCorreo,arrHabitacion,arrServicio,arrPaquete,fechaInicio,fechaFin,costo} = req.body;

@@ -1,6 +1,6 @@
 // reducer.js
 
-import { SET_ORDER_BY_NAME, SET_ORDER_BY_CAPACITY, SET_ORDER_BY_PRICE, GET_PAQUETES,SET_CURRENT_PAGE, SET_USUARIO, SUGERENCIA_EMAIL, DELETE_USUARIO, GET_HABITACIONES, GET_HABITACIONES_DISPONIBLES,ORDER_PAQUETES,GET_PAQUETES_BY_ID,GET_RESERVA_BY_USER, SET_ADULTS, SET_CHILDREN, SET_DATES, SET_PRECIO, SET_SELECTEDROOM, SET_SELECTEDSERVICE, SET_SELECTEDPAQUETE} from "./action";
+import { SET_ORDER_BY_NAME, SET_ORDER_BY_CAPACITY, SET_ORDER_BY_PRICE, GET_PAQUETES,SET_CURRENT_PAGE, SET_USUARIO, SUGERENCIA_EMAIL, DELETE_USUARIO, GET_HABITACIONES, GET_HABITACIONES_DISPONIBLES,ORDER_PAQUETES,GET_PAQUETES_BY_ID,GET_RESERVA_BY_USER, SET_ADULTS, SET_CHILDREN, SET_DATES, SET_PRECIO, SET_SELECTEDROOM, SET_SELECTEDSERVICE, SET_SELECTEDPAQUETE,FILTER_NAME_PAQUETE} from "./action";
 
 const initialState = {
   orderByName: '',
@@ -122,6 +122,20 @@ const reducer = (state = initialState, action) => {
     ...state,
     orderPaquetes: SortPaquetes
     }
+    case FILTER_NAME_PAQUETE:
+      console.log("FILTER_NAME-action.payload");
+      console.log(action.payload);
+      const FilName = [...state.filterPaquetes];
+      const FilPaquet = (action.payload === '' ? FilName
+          : FilName.filter((paquete) => {
+              return paquete.nombre.toUpperCase().includes(action.payload.toUpperCase());
+          }))
+
+      return {
+          ...state,
+          //filterGames: Filter 
+          orderPaquetes: FilPaquet
+      }
     case GET_RESERVA_BY_USER: return {
       ...state,
       reserva: action.payload 
