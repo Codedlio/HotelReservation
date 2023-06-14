@@ -1,6 +1,6 @@
 // reducer.js
 
-import { SET_ORDER_BY_NAME, SET_ORDER_BY_CAPACITY, SET_ORDER_BY_PRICE, GET_PAQUETES,SET_CURRENT_PAGE, SET_USUARIO, SUGERENCIA_EMAIL, DELETE_USUARIO, GET_HABITACIONES, GET_HABITACIONES_DISPONIBLES,ORDER_PAQUETES,GET_PAQUETES_BY_ID,GET_RESERVA_BY_USER,FILTER_NAME_PAQUETE} from "./action";
+import { SET_ORDER_BY_NAME, SET_ORDER_BY_CAPACITY, SET_ORDER_BY_PRICE, GET_PAQUETES,SET_CURRENT_PAGE, SET_USUARIO, SUGERENCIA_EMAIL, DELETE_USUARIO, GET_HABITACIONES, GET_HABITACIONES_DISPONIBLES,ORDER_PAQUETES,GET_PAQUETES_BY_ID,GET_RESERVA_BY_USER, SET_ADULTS, SET_CHILDREN, SET_DATES, SET_PRECIO, SET_SELECTEDROOM, SET_SELECTEDSERVICE, SET_SELECTEDPAQUETE,FILTER_NAME_PAQUETE, GET_PAQUETES_DISPONIBLES} from "./action";
 
 const initialState = {
   orderByName: '',
@@ -30,7 +30,8 @@ const initialState = {
   gethabitaciones: [],
   habitaciones: [],
   paqueteXid: [],
-  reserva:[]
+  reserva:[],
+  formulario: {adults: 0, children: 0, selectedRoom: [], selectedService: [], dates: {checkIn:'', checkOut:''}, precio: 0, selectedPaquete: []}
 };
 
 const reducer = (state = initialState, action) => {
@@ -101,6 +102,10 @@ const reducer = (state = initialState, action) => {
         orderPaquetes: action.payload,//aca lleno 
         filterPaquetes: action.payload
     } 
+    case GET_PAQUETES_DISPONIBLES: return {
+      ...state,
+      allpaquetes: action.payload
+    }
     case GET_PAQUETES_BY_ID: return {
       ...state,
       paqueteXid: action.payload 
@@ -165,8 +170,30 @@ const reducer = (state = initialState, action) => {
           return { ...state, 
                 }
         }
-    default:
-      return state;
+      
+      case SET_ADULTS:
+        return {...state, formulario: {...state.formulario, adults:action.payload}};
+      
+      case SET_CHILDREN:
+        return {...state, formulario:{...state.formulario, children:action.payload}};
+      
+      case SET_SELECTEDROOM:
+        return {...state, formulario: {...state.formulario, selectedRoom:action.payload}};
+      
+      case SET_SELECTEDSERVICE:
+        return {...state, formulario: {...state.formulario, selectedService:action.payload}};
+
+      case SET_DATES:
+        return {...state, formulario: {...state.formulario, dates:action.payload}};
+      
+      case SET_PRECIO:
+        return {...state, formulario: {...state.formulario, precio:action.payload}};
+
+      case SET_SELECTEDPAQUETE:
+        return {...state, formulario: {...state.formulario, selectedPaquete:action.payload}};
+        
+      default:
+        return state;
   }
 };
 

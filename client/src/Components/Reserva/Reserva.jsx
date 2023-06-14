@@ -2,44 +2,33 @@ import React, { useEffect, useState } from 'react';
 import style from './Reserva.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector,useDispatch } from 'react-redux';
-import { getHabitacionesDisponibles , getPaquetes,createReserva, getPaqueteById } from '../redux/action';
+import { getHabitacionesDisponibles , getPaquetesDisponibles, createReserva, getPaqueteById, setSelectedPaqueteA, setPrecioA, setSelectedServiceA, setSelectedRoomA, setDatesA, setAdultsA, setChildrenA } from '../redux/action';
 import axios from 'axios';
 
 
 function Reserva() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [adults, setAdults] = useState(0);
-  const [children, setChildren] = useState(0);
-  const [selectedRoom, setSelectedRoom] = useState([]);
+  const loadedForm = useSelector(state => state.formulario);
   const [services, setServices] = useState([]);
-  const [selectedService, setSelectedService] = useState([]);
   const [isOpen, setIsOpen] = useState(true);
-  const [dates, setDates] = useState({checkIn:'', checkOut:''});
-  const [precio, setPrecio] = useState(0);
-  const [selectedPaquete, setSelectedPaquete] = useState([]);
 
   const usuario = useSelector(state => state.usuario);
   const rooms = useSelector(state => state.habitaciones);
   const paquetes = useSelector((state) => state.allpaquetes);
 
-  useEffect(() => {
-    dispatch(getPaquetes());
-    console.log(paquetes);
-    console.log(rooms);
-  }, [dispatch])
-
   useEffect( () => {
-    if (dates.checkIn && dates.checkOut) {
-      if (dates.checkIn > dates.checkOut) {
+    if (loadedForm.dates.checkIn && loadedForm.dates.checkOut) {
+      if (loadedForm.dates.checkIn > loadedForm.dates.checkOut) {
         alert('Error. La fecha de fin debe ser mayor a la de inicio');
-        setDates({...dates, checkOut:''});
+        dispatch(setDatesA({...loadedForm.dates, checkOut:''}));
       }
       else{
-        dispatch(getHabitacionesDisponibles(dates.checkIn,dates.checkOut))
+        dispatch(getHabitacionesDisponibles(loadedForm.dates.checkIn,loadedForm.dates.checkOut));
+        dispatch(getPaquetesDisponibles(loadedForm.dates.checkIn,loadedForm.dates.checkOut));
       }
     }
-  }, [dates]);
+  }, [loadedForm.dates]);
 
   useEffect( () => {
     axios.get('http://localhost:3001/servicio')
@@ -47,25 +36,19 @@ function Reserva() {
       .catch((error) => {alert(error.message)});
   }, [])
 
-  const handleAdultsChange = (e) => {
-    setAdults(parseInt(e.target.value));
-  };
-
-  const handleChildrenChange = (e) => {
-    setChildren(parseInt(e.target.value));
-  };
+ 
 
   const handleSubmit = (e) => {
     e.preventDefault();
     
     const data = {
       usuarioCorreo: usuario,      
-      arrHabitacion:selectedRoom,
-      arrServicio:[],
-      arrPaquete:selectedPaquete,
-      fechaInicio: dates.checkIn,
-      fechaFin: dates.checkOut,
-      costo:precio
+      arrHabitacion: loadedForm.selectedRoom,
+      arrServicio: loadedForm.selectedService,
+      arrPaquete:loadedForm.selectedPaquete,
+      fechaInicio: loadedForm.dates.checkIn,
+      fechaFin: loadedForm.dates.checkOut,
+      costo: loadedForm.precio
     };
     window.localStorage.setItem("dataReservation", JSON.stringify(data));
   
@@ -86,21 +69,29 @@ function Reserva() {
     }
   };
 
+  const handleAdultsChange = (e) => {
+    dispatch(setAdultsA(parseInt(e.target.value)));
+  };
+
+  const handleChildrenChange = (e) => {
+    dispatch(setChildrenA(parseInt(e.target.value)));
+  };
+
   const handleDatesChange = (e) => {
     const property = e.target.name;
     const value = e.target.value;
-    setDates({...dates, [property]:value});
+    dispatch(setDatesA({...loadedForm.dates, [property]:value}))
   }
 
   const handleRoomChange = (e) => {
     const value = e.target.value;
     let activeRoom = rooms.find(room => room._id === value)
     if (e.target.checked) {
-      setSelectedRoom([...selectedRoom, value]);    
-      setPrecio(precio + activeRoom.precio);
+      dispatch(setSelectedRoomA([...loadedForm.selectedRoom, value]));
+      dispatch(setPrecioA(loadedForm.precio + activeRoom.precio));
     } else {
-      setSelectedRoom(selectedRoom.filter(room => room !== value));     
-      setPrecio(precio - activeRoom.precio);
+      dispatch(setSelectedRoomA(loadedForm.selectedRoom.filter(room => room !== value)));
+      dispatch(setPrecioA(loadedForm.precio - activeRoom.precio));
     }   
   };
 
@@ -108,22 +99,23 @@ function Reserva() {
     const value = e.target.value;
     let activeService = services.find(service => service._id === value);
     if (e.target.checked) {
-      setSelectedService([...selectedService, value]);
-      setPrecio(precio + activeService.precio);
+      dispatch(setSelectedServiceA([...loadedForm.selectedService, value]));
+      dispatch(setPrecioA(loadedForm.precio + activeService.precio));
     } else {
-      setSelectedService(selectedService.filter(service => service !== value));
-      setPrecio(precio - activeService.precio);
+      dispatch(setSelectedServiceA(loadedForm.selectedService.filter(service => service !== value)));
+      dispatch(setPrecioA(loadedForm.precio - activeService.precio));
     }
   };
+
   const handlePaqueteChange = (e) => {
     const value = e.target.value;
     let activeRoom = paquetes.find(room => room._id === value)
     if (e.target.checked) {      
-      setSelectedPaquete([...selectedPaquete, value]);     
-      setPrecio(precio + activeRoom.costo);
+      dispatch(setSelectedPaqueteA([...loadedForm.selectedPaquete, value]));
+      dispatch(setPrecioA(loadedForm.precio + activeRoom.costo));
     } else {      
-      setSelectedPaquete(selectedPaquete.filter(room => room !== value));    
-      setPrecio(precio - activeRoom.costo);
+      dispatch(setSelectedPaqueteA(loadedForm.selectedPaquete.filter(room => room !== value))); 
+      dispatch(setPrecioA(loadedForm.precio - activeRoom.costo));
     }
   };
 
@@ -151,14 +143,14 @@ function Reserva() {
             <label htmlFor="check-in" className={style.label}>
               Fecha de entrada:&nbsp;&nbsp;&nbsp;
             </label>
-            <input type="date" id="check-in" name="checkIn" value={dates.checkIn} onChange={handleDatesChange} className={style.inputFecha} required />
+            <input type="date" id="check-in" name="checkIn" value={loadedForm.dates.checkIn} onChange={handleDatesChange} className={style.inputFecha} required />
             <label htmlFor="check-in" className={style.label}>
               &nbsp;&nbsp;&nbsp;
             </label>
             <label htmlFor="check-in" className={style.label}>
               Fecha de salida:&nbsp;&nbsp;&nbsp;
             </label>
-            <input type="date" id="check-out" name="checkOut" value={dates.checkOut} onChange={handleDatesChange} className={style.inputFecha} required />
+            <input type="date" id="check-out" name="checkOut" value={loadedForm.dates.checkOut} onChange={handleDatesChange} className={style.inputFecha} required />
             <label htmlFor="check-in" className={style.label}>
               &nbsp;&nbsp;&nbsp;
             </label>
@@ -170,7 +162,7 @@ function Reserva() {
               id="adults"
               className={style.input}
               min="1"
-              value={adults}
+              value={loadedForm.adults}
               onChange={handleAdultsChange}
               required
             />
@@ -186,22 +178,22 @@ function Reserva() {
               id="children"
               className={style.input}
               min="0"
-              value={children}
+              value={loadedForm.children}
               onChange={handleChildrenChange}
               required
             />
           </div>
 
-          {precio !== 0 && (
+          {loadedForm.precio !== 0 && (
             <div className={style.formGroup}>
               <label htmlFor="precio" className={style.precio}>
-                Precio: ${precio}
+                Precio: ${loadedForm.precio}
               </label>
               <br/>
-              {selectedRoom.length > 0 && (
+              {loadedForm.selectedRoom.length > 0 && (
                 <><label className={style.label}>
                   Habitacion/es seleccionada/s:&nbsp;
-                  {selectedRoom.map(roomId => {
+                  {loadedForm.selectedRoom.map(roomId => {
                     const habitacion = rooms.find(room => room._id === roomId);
                     if (habitacion) {
                       return habitacion.nombre;
@@ -210,10 +202,10 @@ function Reserva() {
                 </label>
                 <br/></>
               )} 
-              {selectedPaquete.length > 0 && (
+              {loadedForm.selectedPaquete.length > 0 && (
                 <><label className={style.label}>
                   Paquete/s seleccionado/s:&nbsp;
-                  {selectedPaquete.map(paqueteId => {
+                  {loadedForm.selectedPaquete.map(paqueteId => {
                     const paq = paquetes.find(pa => pa._id === paqueteId);
                     if (paq) {
                       return paq.nombre;
@@ -222,10 +214,10 @@ function Reserva() {
                 </label>
                 <br/></>
               )}
-              {selectedService.length > 0 && (
+              {loadedForm.selectedService.length > 0 && (
                 <><label className={style.label}>
                   Servicio/s seleccionado/s:&nbsp;
-                  {selectedService.map(servicioId => {
+                  {loadedForm.selectedService.map(servicioId => {
                     const ser = services.find(se => se._id === servicioId);
                     if (ser) {
                       return ser.nombre;
@@ -237,7 +229,7 @@ function Reserva() {
             </div>
           )}
           <br></br>
-          {adults !== 0 && rooms.length && (
+          {loadedForm.adults !== 0 && rooms.length && (
             <div >
               <label htmlFor="roomName" className={style.label}>
                 Seleccione la habitación:
@@ -266,6 +258,7 @@ function Reserva() {
                         type="checkbox"
                         value={room._id}
                         onChange={handleRoomChange}
+                        checked={loadedForm.selectedRoom.includes(room._id)}
                       />
                       <span>
                         <br></br>
@@ -284,7 +277,7 @@ function Reserva() {
 
           <br></br>
 
-          {adults !== 0 && paquetes.length && (  
+          {loadedForm.adults !== 0 && rooms.length && paquetes.length && (  
             <div >
               <label htmlFor="roomName" className={style.label}>
                 Seleccione el paquete:
@@ -313,12 +306,13 @@ function Reserva() {
                         type="checkbox"
                         value={paquete._id}
                         onChange={handlePaqueteChange}
+                        checked={loadedForm.selectedPaquete.includes(paquete._id)}
                       />
                       <span>
                         {paquete.nombre} Capacidad: {paquete.capacidad}
                         <br></br>
                         Precio: ${paquete.costo}
-                        <Link className={style.linkkk} to={`/detail/${paquete._id}`}>
+                        <Link className={style.linkkk} to={`/detail/${paquete.numero}`}>
                           <button className={style.hab}>Ver Paquete</button>
                         </Link>
                       </span>
@@ -332,7 +326,7 @@ function Reserva() {
 
           <br></br>
 
-          {adults !== 0 && services.length && (  
+          {loadedForm.adults !== 0 && rooms.length && services.length && (  
             <div >
               <label htmlFor="roomName" className={style.label}>
                 Seleccione el servicio:
@@ -344,6 +338,7 @@ function Reserva() {
                         type="checkbox"
                         value={servicio._id}
                         onChange={handleServiceChange}
+                        checked={loadedForm.selectedService.includes(servicio._id)}
                       />
                       <span>
                         {servicio.nombre} 

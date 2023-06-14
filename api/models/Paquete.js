@@ -17,7 +17,8 @@ const paqueteSchema = new mongoose.Schema({
   image: { type: Array },
   capacidad: { type: Number, required: true },
   arrIdHabitaciones: [],
-  arrIdServicios: []
+  arrIdServicios: [],
+  disponible: {type: Boolean, default: true}
   //Mas campos
 });
 

@@ -1,6 +1,7 @@
 const Paquete = require('../models/Paquete');
 const Habitacion = require('../models/Habitacion');
 const Servicio = require('../models/Servicio');
+const Reservacion = require('../models/Reservacion');
 
 const getPaquetes = async (req,res) => {
     try {
@@ -32,6 +33,44 @@ const getPaquetes = async (req,res) => {
     } 
     catch (error) {
         return res.status(500).send(error.message);
+    }
+};
+
+const getPaquetesDisponibles = async (req,res) => {
+    let fechaInicio = req.query.fechaInicio;
+    let fechaFin = req.query.fechaFin;
+    
+    fechaInicio = new Date(fechaInicio);
+    fechaFin = new Date(fechaFin);
+    try {
+        let reservaciones = await Reservacion.find({
+            $or: [
+            { fechaInicio: { $lte: fechaFin }, fechaFin: { $gte: fechaInicio }},
+            { fechaInicio: { $gte: fechaInicio, $lte: fechaFin }},
+            { fechaFin: { $gte: fechaInicio, $lte: fechaFin }}
+            ]
+        });
+        let paquetes = await Paquete.find({activo:true});
+
+        for (let paquete of paquetes) {
+            for (let reservacion of reservaciones) {
+                for (let habitacionReservada of reservacion.habitaciones) {
+                    let habitacion = paquete.arrIdHabitaciones.find(a => a === habitacionReservada.toString());
+        
+                    if (habitacion) {
+                        paquete.disponible = false;
+                        break;
+                    };
+                };
+                if (!paquete.disponible) {
+                    break;
+                };
+            };
+        };
+        return res.status(200).json(paquetes);
+    } 
+    catch (error) {
+        res.status(500).send(error.message);
     }
 };
 
@@ -124,4 +163,4 @@ const deletePaquete = async (req,res) => {
     }
 };
 
-module.exports = {getPaquetes, getPaqueteById, postPaquete, putPaquete, deletePaquete};
+module.exports = {getPaquetes, getPaquetesDisponibles, getPaqueteById, postPaquete, putPaquete, deletePaquete};
