@@ -50,20 +50,22 @@ const getPaquetesDisponibles = async (req,res) => {
             { fechaFin: { $gte: fechaInicio, $lte: fechaFin }}
             ]
         });
-        console.log(reservaciones);
         let paquetes = await Paquete.find({activo:true});
 
-        for (let reservacion of reservaciones) {
-            for (let habitacionReservada of reservacion.habitaciones) {
-                for (let paquete of paquetes) {
+        for (let paquete of paquetes) {
+            for (let reservacion of reservaciones) {
+                for (let habitacionReservada of reservacion.habitaciones) {
                     let habitacion = paquete.arrIdHabitaciones.find(a => a === habitacionReservada.toString());
-                    
+        
                     if (habitacion) {
-                      paquete.disponible = false;
-                      break;
-                    }
-                }
-            }
+                        paquete.disponible = false;
+                        break;
+                    };
+                };
+                if (!paquete.disponible) {
+                    break;
+                };
+            };
         };
         return res.status(200).json(paquetes);
     } 
