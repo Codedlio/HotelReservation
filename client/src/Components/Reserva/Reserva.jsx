@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import style from './Reserva.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector,useDispatch } from 'react-redux';
-import { getHabitacionesDisponibles , getPaquetes,createReserva, getPaqueteById, setSelectedPaqueteA, setPrecioA, setSelectedServiceA, setSelectedRoomA, setDatesA, setAdultsA, setChildrenA } from '../redux/action';
+import { getHabitacionesDisponibles , getPaquetesDisponibles, createReserva, getPaqueteById, setSelectedPaqueteA, setPrecioA, setSelectedServiceA, setSelectedRoomA, setDatesA, setAdultsA, setChildrenA } from '../redux/action';
 import axios from 'axios';
 
 
@@ -17,12 +17,6 @@ function Reserva() {
   const rooms = useSelector(state => state.habitaciones);
   const paquetes = useSelector((state) => state.allpaquetes);
 
-  useEffect(() => {
-    dispatch(getPaquetes());
-    console.log(paquetes);
-    console.log(rooms);
-  }, [dispatch])
-
   useEffect( () => {
     if (loadedForm.dates.checkIn && loadedForm.dates.checkOut) {
       if (loadedForm.dates.checkIn > loadedForm.dates.checkOut) {
@@ -30,7 +24,8 @@ function Reserva() {
         dispatch(setDatesA({...loadedForm.dates, checkOut:''}));
       }
       else{
-        dispatch(getHabitacionesDisponibles(loadedForm.dates.checkIn,loadedForm.dates.checkOut))
+        dispatch(getHabitacionesDisponibles(loadedForm.dates.checkIn,loadedForm.dates.checkOut));
+        dispatch(getPaquetesDisponibles(loadedForm.dates.checkIn,loadedForm.dates.checkOut));
       }
     }
   }, [loadedForm.dates]);
