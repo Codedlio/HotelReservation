@@ -15,7 +15,13 @@ export const ORDER_PAQUETES = "ORDER_PAQUETES";
 export const GET_PAQUETES_BY_ID = "GET_PAQUETES_BY_ID";
 export const CREATE_RESERVA = "CREATE_RESERVA";
 export const GET_RESERVA_BY_USER ="GET_RESERVA_BY_USER";
-
+export const SET_ADULTS = "SET_ADULTS";
+export const SET_CHILDREN = "SET_CHILDREN";
+export const SET_SELECTEDROOM = "SET_SELECTEDROOM";
+export const SET_SELECTEDSERVICE = "SET_SELECTEDSERVICE";
+export const SET_DATES = "SET_DATES";
+export const SET_PRECIO = "SET_PRECIO";
+export const SET_SELECTEDPAQUETE = "SET_SELECTEDPAQUETE";
 
 export const setOrderByName = (orderType) => {
   return {
@@ -142,3 +148,32 @@ export const sugerenciaCliente= (userData) =>{
       } catch (error) { console.log(error.message) }
   }
 }
+
+export const setAdultsA = (number) => {
+  return {type: SET_ADULTS, payload: number}
+}
+
+export const setChildrenA = (number) => {
+  return {type: SET_CHILDREN, payload: number}
+}
+
+export const setSelectedRoomA = (array) => {
+  return {type: SET_SELECTEDROOM, payload: array}
+}
+
+export const setSelectedServiceA = (array) => {
+  return {type: SET_SELECTEDSERVICE, payload: array}
+}
+
+export const setDatesA = (obj) => {
+  return {type: SET_DATES, payload: obj}
+}
+
+export const setPrecioA = (number) => {
+  return {type: SET_PRECIO, payload: number}
+}
+
+export const setSelectedPaqueteA = (array) => {
+  return {type: SET_SELECTEDPAQUETE, payload: array}
+}
+
