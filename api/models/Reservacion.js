@@ -10,6 +10,7 @@ const reservacionSchema = new mongoose.Schema({
   activo: { type: Boolean, default: true },
   image: { type: Array },
   costo: { type: Number, required: true },
+  estado: { type: String, required: true },
   //Mas campos
 });
 

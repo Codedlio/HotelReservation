@@ -45,8 +45,9 @@ function NavBar() {
   
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      
+        Cookies.set("emailToken", user.email, { expires: 8, secure: true });
         dispatch(setUsuario(user.email))
+
       // User is signed in, see docs for a list of available properties
       //console.log(user.email);
       // ...
@@ -85,6 +86,7 @@ function NavBar() {
     
     if (usuario){
       await auth.signOut();
+      Cookies.remove('emailToken');
     }
   };
   

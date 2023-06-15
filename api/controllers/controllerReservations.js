@@ -140,21 +140,14 @@ const postReservacion = async (req,res) => {
 
 const putReservacion = async (req,res) => {
   const {id} = req.params;
-  const {usuarioCorreo,arrHabitacion,arrServicio,arrPaquete,fechaInicio,fechaFin} = req.body;
-  if (!usuarioCorreo || !fechaInicio || !fechaFin) {return res.status(400).send("Error. No se enviaron los datos necesarios para actualizar")};
+  const {usuarioCorreo,arrHabitacion,arrServicio,arrPaquete,fechaInicio,fechaFin, estado} = req.body;
+  //if (!usuarioCorreo || !fechaInicio || !fechaFin) {return res.status(400).send("Error. No se enviaron los datos necesarios para actualizar")};
   
   try {
-    const reservacion = await Reservacion.findOne({_id:id,activo:true});
+     
+    const reservacion = await Reservacion.findByIdAndUpdate(id, { $set: { estado }});
     if (!reservacion) {return res.status(400).send("No se encontró la reservación en la BDD")};
-    
-    reservacion.usuario = usuarioCorreo;
-    reservacion.habitaciones = arrHabitacion;
-    reservacion.servicios = arrServicio;
-    reservacion.paquetes = arrPaquete;
-    reservacion.fechaFin = fechaFin;
-    reservacion.fechaInicio = fechaInicio;
-    
-    return res.status(200).json(await reservacion.save());
+    return res.status(200).json(reservacion);
   } 
   catch (error) {
     return res.status(500).send('Internal server error');

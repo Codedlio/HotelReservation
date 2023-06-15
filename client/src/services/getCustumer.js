@@ -1,12 +1,10 @@
 import axios from "axios";
-const getCustumer= async ({correo,nombre}) => {
-        const {data}= await axios.post("http://localhost:3001/payment/custumer", {
-            body:{
-                correo:correo,
-                nombre:nombre
-        }}); 
+const putReserva= async (id) => {
+        const {data}= await axios.put(`http://localhost:3001/reservation/${id}`,
+        {estado:"pagado"}
+        ); 
         console.log(data)
         return data
 
 }
-export default getCustumer;
+export default putReserva;

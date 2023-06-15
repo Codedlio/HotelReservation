@@ -50,8 +50,8 @@ const createSession = async (req, res) => {
       line_items: lineItems,
       customer: customerId,
       mode: 'payment',
-      success_url: "http://localhost:3000/contenedor",
-      cancel_url: "http://localhost:3000/ingresar",
+      success_url: "http://localhost:3000/exitoreserva",
+      cancel_url: "http://localhost:3000/detallereserva",
     });
 
     //console.log(session);
@@ -103,7 +103,7 @@ const paymentStatus =async (req, res) => {
       // Realizar cualquier acción adicional necesaria
       res.status(200).json({ message: 'Pago exitoso' });
     } else {
-      res.status(400).json({ message: 'El pago no fue exitoso' });
+      res.status(202).json({ message: 'El pago no fue exitoso' });
     }
   } catch (error) {
     console.error('Error al procesar el pago:', error);
