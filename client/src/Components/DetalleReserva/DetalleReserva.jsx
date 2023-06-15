@@ -12,7 +12,7 @@ function DetalleReserva() {
   //console.log(usuario);
   const dispatch = useDispatch();
   let reserva = useSelector((state) => state.reserva);
-  
+  console.log(reserva[0])
   useEffect(() => { 
     if (usuario||emailToken)    
         dispatch(getReservaByUsuario(usuario||emailToken));
@@ -31,16 +31,17 @@ function DetalleReserva() {
     const localData = window.localStorage.getItem("client");
     const localReservation = window.localStorage.getItem("dataReservation");
   
-    if (localData && localReservation) {
+    if (localData && localReservation && reserva) {
       const data = JSON.parse(localData);
       const datares = JSON.parse(localReservation);
-      console.log(datares.arrPaquete);
-  
+      console.log(reserva[0].paquete,reserva[0].habitaciones);
+      const habitaciones=reserva[0].habitaciones
+      const paquetes=reserva[0].paquete
       try {
         const response = await axios.post("http://localhost:3001/payment/checkout", {
           custumerId: data,
-          arrIdHabitaciones: datares.arrHabitacion,
-          arrIdPaquetes: datares.arrPaquete
+          arrIdHabitaciones: habitaciones,
+          arrIdPaquetes: paquetes
         });
   
         const { payment, sessionId } = response.data;
@@ -57,19 +58,20 @@ function DetalleReserva() {
       
       const paymentStatusResponse = await axios.post("http://localhost:3001/payment/status", { "sessionId":stripe });
         console.log(paymentStatusResponse.data);
-      if (paymentStatusResponse.status === 200) {
+      // if (paymentStatusResponse.status === 200) {
         
-        if (reserva && reserva.length > 0) {
-          const idReserva = reserva[0]._id;
-          // Utiliza el valor de la propiedad según sea necesario
-          console.log(idReserva);
-          const reservaPaid = await axios.put("http://localhost:3001/reservation/648a8076676a594553f1ee9f",{"estado":"pagado"});
-          console.log(reservaPaid.data);
-          Cookies.remove('stripePay');
-          Cookies.remove('stripe');
-        }
+      //   if (reserva && reserva.length > 0) {
+      //     const idReserva = reserva[0]._id;
+      //     // Utiliza el valor de la propiedad según sea necesario
+      //     console.log(idReserva);
+      //     const reservaPaid = await axios.put("http://localhost:3001/reservation/648a8076676a594553f1ee9f",{"estado":"pagado"});
+      //     console.log(reservaPaid.data);
+      //     Cookies.remove('stripePay');
+      //     Cookies.remove('stripe');
+      //   }
         
-      } if (paymentStatusResponse.status === 202){
+      // } 
+      if (paymentStatusResponse.status === 202){
         console.log("El pago no fue exitoso");
         window.location.href = stripePay;
       }
@@ -83,7 +85,7 @@ function DetalleReserva() {
     if (Array.isArray(reserva)) {      
       return reserva.map((re) => {       
         return (         
-        <div > 
+        <div key={re._id}> 
           <div className={style.encierro}>
               <h1 className={style.tit}>SU RESERVA</h1>
               <h2 className={style.mail} >{re.usuario}</h2>  
