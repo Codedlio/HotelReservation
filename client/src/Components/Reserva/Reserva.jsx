@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import style from './Reserva.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector,useDispatch } from 'react-redux';
-import { getHabitacionesDisponibles , getPaquetesDisponibles, createReserva, getPaqueteById, setSelectedPaqueteA, setPrecioA, setSelectedServiceA, setSelectedRoomA, setDatesA, setAdultsA, setChildrenA } from '../redux/action';
+import { getHabitacionesDisponibles , getPaquetesDisponibles, createReserva, getPaqueteById, setSelectedPaqueteA, setPrecioA, setSelectedServiceA, setSelectedRoomA, setDatesA, setAdultsA, setChildrenA, setFilteredHabitaciones } from '../redux/action';
 import axios from 'axios';
 
 
@@ -31,6 +31,7 @@ function Reserva() {
   }, [loadedForm.dates]);
 
   useEffect( () => {
+    dispatch(setFilteredHabitaciones([]));
     axios.get('http://localhost:3001/servicio')
       .then((response) => {setServices(response.data)})
       .catch((error) => {alert(error.message)});

@@ -5,13 +5,14 @@ import style from "./Habitaciones.module.css";
 import imagen from './habitacion.jpg';
 
 import { connect } from 'react-redux';
-import { setOrderByName, setOrderByCapacity, getHabitaciones } from '../redux/action';
+import { setOrderByName, setOrderByCapacity, getHabitaciones, setFilteredHabitaciones, setFilters } from '../redux/action';
 
 const mapStateToProps = (state) => {
   return {
     orderByName: state.orderByName,
     orderByCapacity: state.orderByCapacity,
-    habitaciones: state.gethabitaciones
+    habitaciones: state.gethabitaciones,
+    filters: state.filters
   };
 };
 
@@ -19,30 +20,19 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getHabitaciones: () => dispatch(getHabitaciones()),
     setOrderByName: (orderType) => dispatch(setOrderByName(orderType)),
-    setOrderByCapacity: (orderType) => dispatch(setOrderByCapacity(orderType))
+    setOrderByCapacity: (orderType) => dispatch(setOrderByCapacity(orderType)),
+    setFilteredHabitaciones: (array) => dispatch(setFilteredHabitaciones(array)),
+    setFilters: (key,value) => dispatch(setFilters(key,value))
   };
 };
 
 class Habitaciones extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      searchQuery: '',
-      minPrice: 0,
-      maxPrice: 0
-    };
   }
 
-  handleSearchChange = (event) => {
-    this.setState({ searchQuery: event.target.value });
-  };
-
-  handleMinPriceChange = (event) => {
-    this.setState({ minPrice: parseInt(event.target.value)});
-  };
-
-  handleMaxPriceChange = (event) => {
-    this.setState({ maxPrice: parseInt(event.target.value)});
+  handleFiltersChange = (event) => {
+    this.props.setFilters(event.target.name, event.target.value );
   };
 
   componentDidMount() {
@@ -51,7 +41,6 @@ class Habitaciones extends React.Component {
 
   render() {
     let habitacionesFiltradas = this.props.habitaciones.slice();
-    
     
     if (this.props.orderByName === 'asc') {
       habitacionesFiltradas.sort((a, b) => a.nombre.localeCompare(b.nombre));
@@ -65,29 +54,31 @@ class Habitaciones extends React.Component {
       habitacionesFiltradas.sort((a, b) => b.capacidad - a.capacidad);
     }
 
-    if (this.state.searchQuery) {
+    if (this.props.filters.searchQuery) {
       habitacionesFiltradas = habitacionesFiltradas.filter((habitacion) =>
-        habitacion.nombre.toLowerCase().includes(this.state.searchQuery.toLowerCase())
+        habitacion.nombre.toLowerCase().includes(this.props.filters.searchQuery.toLowerCase())
       );
     }
 
-    if (this.state.minPrice !== 0) {
+    if (this.props.filters.minPrice !== 0) {
       habitacionesFiltradas = habitacionesFiltradas.filter((habitacion) => 
-        habitacion.precio >= this.state.minPrice
+        habitacion.precio >= this.props.filters.minPrice
       )
     }
 
-    if (this.state.maxPrice !== 0) {
+    if (this.props.filters.maxPrice !== 0) {
       habitacionesFiltradas = habitacionesFiltradas.filter((habitacion) => 
-        habitacion.precio <= this.state.maxPrice
+        habitacion.precio <= this.props.filters.maxPrice
       )
     }    
 
     let habitacionLinks = habitacionesFiltradas.map((habitacion, index) => (
-      <Link to={`/habitacion${index + 1}`} className={style.link} key={index}>
+      <Link to={`/habitacion${habitacion.numero}`} className={style.link} key={index}>
         {habitacion.nombre}
       </Link>
     ));
+
+    this.props.setFilteredHabitaciones(habitacionesFiltradas);
 
     return (
       <div className={style.section}>
@@ -106,24 +97,27 @@ class Habitaciones extends React.Component {
         <input
           type="text"
           placeholder="Buscar habitaciones"
-          value={this.state.searchQuery}
-          onChange={this.handleSearchChange}
+          name="searchQuery"
+          value={this.props.filters.searchQuery}
+          onChange={this.handleFiltersChange}
           className={style.searchInput}
         />
 
         <input 
           type="number"
           placeholder="Precio mínimo"
-          value={this.state.minPrice}
-          onChange={this.handleMinPriceChange}
+          name="minPrice"
+          value={this.props.filters.minPrice}
+          onChange={this.handleFiltersChange}
           className={style.searchInput}        
         />
 
         <input 
           type="number"
           placeholder="Precio máximo"
-          value={this.state.maxPrice}
-          onChange={this.handleMaxPriceChange}
+          name="maxPrice"
+          value={this.props.filters.maxPrice}
+          onChange={this.handleFiltersChange}
           className={style.searchInput}
         />
         
