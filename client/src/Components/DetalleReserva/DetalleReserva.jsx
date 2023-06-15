@@ -58,19 +58,20 @@ function DetalleReserva() {
       const paymentStatusResponse = await axios.post("http://localhost:3001/payment/status", { "sessionId":stripe });
         console.log(paymentStatusResponse.data);
       if (paymentStatusResponse.status === 200) {
-        Cookies.remove('stripePay');
-        Cookies.remove('stripe');
+        
         if (reserva && reserva.length > 0) {
           const idReserva = reserva[0]._id;
           // Utiliza el valor de la propiedad según sea necesario
           console.log(idReserva);
-          const reservaPaid = await axios.put(`http://localhost:3001/reservation/${idReserva}`,{"estado":"pagado"});
-          console.log("Pago exitoso");
+          const reservaPaid = await axios.put("http://localhost:3001/reservation/648a8076676a594553f1ee9f",{"estado":"pagado"});
+          console.log(reservaPaid.data);
+          Cookies.remove('stripePay');
+          Cookies.remove('stripe');
         }
         
       } if (paymentStatusResponse.status === 202){
         console.log("El pago no fue exitoso");
-        //window.location.href = stripePay;
+        window.location.href = stripePay;
       }
     
   };

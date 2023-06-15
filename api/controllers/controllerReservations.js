@@ -80,7 +80,7 @@ const getReservacionByUsuario = async (req,res) => {
   
   try {
         
-    let reservacion = await Reservacion.find({usuario:usuario,activo:true});  
+    let reservacion = await Reservacion.find({usuario:usuario,activo:true,estado:undefined});  
     let ReservacionDeUsuario=reservacion.slice(-1);
     
     if (!reservacion) {return res.status(200).send(reservacion)};
