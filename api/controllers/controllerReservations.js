@@ -1,28 +1,36 @@
 const Reservacion = require('../models/Reservacion');
 const Habitacion = require('../models/Habitacion');
 const Servicio = require('../models/Servicio');
+const Paquete = require('../models/Paquete');
 const { checkReservation } = require("../config/sendgridEmail.js");
 
 const getReservaciones= async (req, res) => {
   try {
-    const reservaciones = await Reservacion.find({activo:true});
+    let reservaciones = await Reservacion.find({activo:true});
 
     for (let reservacion of reservaciones) {
-      
       let nombresHabitaciones = [];
-      for (let habitacionId of reservacion.habitaciones) {
-        let {nombre} = await Habitacion.findById(habitacionId);
-        nombresHabitaciones.push(nombre);
+      for (let habId of reservacion.habitaciones) {
+        const habitacion = await Habitacion.findById(habId);
+        nombresHabitaciones.push(habitacion.nombre);
+      }
+
+      let nombresPaquetes = [];
+      for (let paqueteId of reservacion.paquete) {
+        const paquete = await Paquete.findById(paqueteId);
+        nombresPaquetes.push(paquete.nombre);
       }
 
       let nombresServicios = [];
       for (let servicioId of reservacion.servicios) {
-        let {nombre} = await Servicio.findOne({_id:servicioId});
-        nombresServicios.push(nombre);
+        const servicio = await Servicio.findById(servicioId);
+        nombresServicios.push(servicio.nombre); 
       }
-      
-      reservacion.habitaciones = nombresHabitaciones;
-      reservacion.servicios = nombresServicios;
+
+      reservacion.nombres = {};
+      reservacion.nombres.habitaciones = nombresHabitaciones;
+      reservacion.nombres.paquetes = nombresPaquetes;
+      reservacion.nombres.servicios = nombresServicios;
     }
     return res.status(200).json(reservaciones);
   } 
@@ -69,44 +77,47 @@ const getReservacionById = async (req,res) => {
     reservacion.servicios = nombresServicios;
     
     return res.status(200).json(paquete);
-} 
-catch (error) {
-    return res.status(500).send("Internal server error");
-}
+  } 
+  catch (error) {
+      return res.status(500).send("Internal server error");
+  }
 };
 
 const getReservacionByUsuario = async (req,res) => {
   const {usuario} = req.params;
-  
   try {
         
-    let reservacion = await Reservacion.find({usuario:usuario,activo:true,estado:undefined});  
+    let reservacion = await Reservacion.find({usuario:usuario,activo:true});  
     let ReservacionDeUsuario=reservacion.slice(-1);
-    
-    if (!reservacion) {return res.status(200).send(reservacion)};
-    let nombresHabitaciones = [];
 
-    for (let habitacionId of ReservacionDeUsuario) {
-        for (let habId of habitacionId.habitaciones) {
-          const {nombre} = await Habitacion.find({_id:habId});
-          nombresHabitaciones.push(nombre);
-        }
+    let nombresHabitaciones = [];
+    for (let habId of ReservacionDeUsuario[0].habitaciones) {
+      const habitacion = await Habitacion.findById(habId);
+      nombresHabitaciones.push(habitacion.nombre);
+    }
+
+    let nombresPaquetes = [];
+    for (let paqueteId of ReservacionDeUsuario[0].paquete) {
+      const paquete = await Paquete.findById(paqueteId);
+      nombresPaquetes.push(paquete.nombre);
     }
 
     let nombresServicios = [];
-    for (let servicioId of ReservacionDeUsuario) {
-        const {nombre} = await Servicio.find({_id:servicioId.servicios});
-        nombresServicios.push(nombre);
+    for (let servicioId of ReservacionDeUsuario[0].servicios) {
+      const servicio = await Servicio.findById(servicioId);
+      nombresServicios.push(servicio.nombre); 
     }
 
-    ReservacionDeUsuario.habitaciones = nombresHabitaciones;
-    ReservacionDeUsuario.servicios = nombresServicios;
+    ReservacionDeUsuario[0].nombres = {};
+    ReservacionDeUsuario[0].nombres.habitaciones = nombresHabitaciones;
+    ReservacionDeUsuario[0].nombres.paquetes = nombresPaquetes;
+    ReservacionDeUsuario[0].nombres.servicios = nombresServicios;
 
-    return res.status(200).json(ReservacionDeUsuario);
-} 
-catch (error) {
-    return res.status(500).send("Internal server error");
-}
+    return res.status(200).json(ReservacionDeUsuario[0]);
+  } 
+  catch (error) {
+      return res.status(500).send("Internal server error");
+  }
 };
 
 const postReservacion = async (req,res) => {
@@ -120,7 +131,7 @@ const postReservacion = async (req,res) => {
   try {
     
     //const data = new Reservacion ({usuario:usuarioCorreo,habitaciones:arrHabitacion,servicios:arrServicio,paquete:arrPaquete,fechaInicioParseado,fechaFinParseado,costo});
-    const data = new Reservacion ({usuario:usuarioCorreo,habitaciones:arrHabitacion,servicios:arrServicio,paquete:arrPaquete,fechaInicio:fechaInicio,fechaFin:fechaFin,costo:costo});
+    const data = new Reservacion ({usuario:usuarioCorreo,habitaciones:arrHabitacion,servicios:arrServicio,paquetes:arrPaquete,fechaInicio:fechaInicio,fechaFin:fechaFin,costo:costo});
     //res.status(201).json(await data.save());
     await data.save();
     res.status(201).json("Se registró con éxito su reserva, pero esta pendiente el pago");
