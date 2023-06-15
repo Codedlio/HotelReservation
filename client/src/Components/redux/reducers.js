@@ -1,6 +1,6 @@
 // reducer.js
 
-import { SET_ORDER_BY_NAME, SET_ORDER_BY_CAPACITY, SET_ORDER_BY_PRICE, GET_PAQUETES,SET_CURRENT_PAGE, SET_USUARIO, SUGERENCIA_EMAIL, DELETE_USUARIO, GET_HABITACIONES, GET_HABITACIONES_DISPONIBLES,ORDER_PAQUETES,GET_PAQUETES_BY_ID,GET_RESERVA_BY_USER, SET_ADULTS, SET_CHILDREN, SET_DATES, SET_PRECIO, SET_SELECTEDROOM, SET_SELECTEDSERVICE, SET_SELECTEDPAQUETE,FILTER_NAME_PAQUETE, GET_PAQUETES_DISPONIBLES} from "./action";
+import { SET_ORDER_BY_NAME, SET_ORDER_BY_CAPACITY, SET_ORDER_BY_PRICE, GET_PAQUETES,SET_CURRENT_PAGE, SET_USUARIO, SUGERENCIA_EMAIL, DELETE_USUARIO, GET_HABITACIONES, SET_FILTERED_HABITACIONES, GET_HABITACIONES_DISPONIBLES,ORDER_PAQUETES,GET_PAQUETES_BY_ID,GET_RESERVA_BY_USER, SET_ADULTS, SET_CHILDREN, SET_DATES, SET_PRECIO, SET_SELECTEDROOM, SET_SELECTEDSERVICE, SET_SELECTEDPAQUETE,FILTER_NAME_PAQUETE, GET_PAQUETES_DISPONIBLES, SET_FILTERS} from "./action";
 
 const initialState = {
   orderByName: '',
@@ -13,6 +13,8 @@ const initialState = {
   usuario: undefined,
   gethabitaciones: [],
   habitaciones: [],
+  filteredhabitaciones: [],
+  filters: {searchQuery:'', minPrice:0, maxPrice:0},
   paqueteXid: [],
   reserva:[],
   formulario: {adults: 0, children: 0, selectedRoom: [], selectedService: [], dates: {checkIn:'', checkOut:''}, precio: 0, selectedPaquete: []}
@@ -137,6 +139,19 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         gethabitaciones: action.payload
+      }
+      case SET_FILTERED_HABITACIONES: 
+      return {
+        ...state,
+        filteredhabitaciones: action.payload
+      }
+      case SET_FILTERS:
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          [action.payload[0]]: action.payload[1]
+        }
       }
       case DELETE_USUARIO: return {
         ...state,

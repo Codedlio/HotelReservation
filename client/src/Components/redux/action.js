@@ -7,10 +7,12 @@ export const GET_PAQUETES = "GET_PAQUETES";
 export const GET_PAQUETES_DISPONIBLES = "GET_PAQUETES_DISPONIBLES";
 export const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 export const GET_HABITACIONES = "GET_HABITACIONES";
+export const SET_FILTERED_HABITACIONES = "SET_FILTERED_HABITACIONES";
 export const SET_USUARIO = "SET_USUARIO";
 export const DELETE_USUARIO = "DELETE_USUARIO";
 export const ERROR = "ERROR"; 
 export const GET_HABITACIONES_DISPONIBLES = "GET_HABITACIONES_DISPONIBLES";
+export const SET_FILTERS = "SET_FILTERS";
 export const SUGERENCIA_EMAIL = "SUGERENCIA_EMAIL"; 
 export const ORDER_PAQUETES = "ORDER_PAQUETES";
 export const GET_PAQUETES_BY_ID = "GET_PAQUETES_BY_ID";
@@ -138,6 +140,21 @@ export const getHabitaciones = () => {
     }
   };
 };
+
+export const setFilteredHabitaciones = (array) => {
+  return {
+    type: SET_FILTERED_HABITACIONES,
+    payload: array
+  }
+};
+
+export const setFilters = (key, value) => {
+  return {
+    type: SET_FILTERS,
+    payload: [key,value]
+  }
+};
+
 export const setUsuario = (correo) => {
   return {type:SET_USUARIO, payload: correo}  
 };
