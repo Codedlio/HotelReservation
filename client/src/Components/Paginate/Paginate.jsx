@@ -18,7 +18,7 @@ function Paginado({ habsPerPage, habitaciones, paginado, currentPage }) {
       <div className={style.paginado}>
         {currentPage !== 1 && (
           <div className={style.number}>
-            <a className={style.link} href={`/habitacion${currentPage - 1}`} onClick={(e) => (e.prevemtDefault(), navigate(`/habitacion${currentPage - 1}`))}>
+            <a className={style.link} href={`/habitacion${currentPage - 1}`} onClick={(e) => (e.preventDefault(), navigate(`/habitacion${currentPage - 1}`))}>
               <FontAwesomeIcon  className={style.flecha} icon={faChevronLeft} />
             </a>
           </div>

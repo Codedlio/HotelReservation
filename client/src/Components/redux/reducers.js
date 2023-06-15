@@ -6,22 +6,6 @@ const initialState = {
   orderByName: '',
   orderByCapacity: '',
   orderByPrice: '',
-  habitacionesData: [
-    { nombre: 'Suite Roca', capacidad: 2 },
-    { nombre: 'Suite Canelo', capacidad: 4 },
-    { nombre: 'Suite Liucura', capacidad: 2 },
-    { nombre: 'Villa Bosque', capacidad: 7 },
-    { nombre: 'Villa Rio', capacidad: 7 },
-    { nombre: 'Villa Arce', capacidad: 6 },
-    { nombre: 'Villa Tilo', capacidad: 6 },
-    { nombre: 'Villa Cedra', capacidad: 6 },
-    { nombre: 'Villa Madrid', capacidad: 7 },
-    { nombre: 'Villa Lavanda', capacidad: 5 },
-    { nombre: 'Villa Mosqueta', capacidad: 5 },
-    { nombre: 'Villa Anacay', capacidad: 5 },
-    { nombre: 'Villa Playa', capacidad: 5 },
-    { nombre: 'Villa Troncos', capacidad: 5 },
-  ],
   allpaquetes: [],
   orderPaquetes: [],
   filterPaquetes: [],
@@ -58,20 +42,20 @@ const reducer = (state = initialState, action) => {
     case SET_ORDER_BY_CAPACITY:
       let sortedArrByCapacity;
       if (action.payload === 'asc') {
-        sortedArrByCapacity = state.habitacionesData
+        sortedArrByCapacity = state.habitaciones
           .slice()
           .sort((a, b) => a.capacidad - b.capacidad);
       } else if (action.payload === 'desc') {
-        sortedArrByCapacity = state.habitacionesData
+        sortedArrByCapacity = state.habitaciones
           .slice()
           .sort((a, b) => b.capacidad - a.capacidad);
       } else {
-        sortedArrByCapacity = state.habitacionesData;
+        sortedArrByCapacity = state.habitaciones;
       }
       return {
         ...state,
         orderByCapacity: action.payload,
-        habitacionesData: sortedArrByCapacity
+        habitaciones: sortedArrByCapacity
       };
       case SET_CURRENT_PAGE:
   return {
