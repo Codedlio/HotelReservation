@@ -50,7 +50,7 @@ const createSession = async (req, res) => {
       line_items: lineItems,
       customer: customerId,
       mode: 'payment',
-      success_url: "http://localhost:3000/detallereserva",
+      success_url: "http://localhost:3000/exitoreserva",
       cancel_url: "http://localhost:3000/detallereserva",
     });
 
