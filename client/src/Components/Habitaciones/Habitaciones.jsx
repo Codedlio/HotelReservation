@@ -1,8 +1,8 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import style from "./Habitaciones.module.css";
 import imagen from './habitacion.jpg';
+
 
 import { connect } from 'react-redux';
 import { setOrderByName, setOrderByCapacity, getHabitaciones, setFilteredHabitaciones, setFilters } from '../redux/action';
@@ -73,7 +73,7 @@ class Habitaciones extends React.Component {
     }    
 
     let habitacionLinks = habitacionesFiltradas.map((habitacion, index) => (
-      <Link to={`/habitacion${habitacion.numero}`} className={style.link} key={index}>
+      <Link to={`/habitacion${habitacion.numero}`} className={`${style.link} + btn btn`} key={index}>
         {habitacion.nombre}
       </Link>
     ));
@@ -81,26 +81,36 @@ class Habitaciones extends React.Component {
     this.props.setFilteredHabitaciones(habitacionesFiltradas);
 
     return (
-      <div className={style.section}>
-        <select className={style.linksordenamiento} value={this.props.orderByName} onChange={(e) => this.props.setOrderByName(e.target.value)}>
+      <div className={`container  ${style.section}`}>
+        <div className="row">
+      <div className="col-md-4">
+        <div className="row">
+          <div className="col-md-6">
+        <select className={`form-select mb-3  ${style.linksordenamiento}`} value={this.props.orderByName} onChange={(e) => this.props.setOrderByName(e.target.value)}>
+          
           <option value="">Ordenar por Nombre</option>
           <option value="asc">A-Z</option>
           <option value="desc">Z-A</option>
         </select>
-
-        <select className={style.linksordenamiento} value={this.props.orderByCapacity} onChange={(e) => this.props.setOrderByCapacity(e.target.value)}>
+        </div>
+          <div className="col-md-6">
+        <select className={`form-select mb-3  ${style.linksordenamiento}`} value={this.props.orderByCapacity} onChange={(e) => this.props.setOrderByCapacity(e.target.value)}>
           <option value="">Ordenar por Capacidad</option>
           <option value="asc">Menor a Mayor</option>
           <option value="desc">Mayor a Menor</option>
         </select>
-
+        </div>
+        </div>
+      </div>
+      <div className="col-md-4">
+        <div className="form-inline">
         <input
           type="text"
           placeholder="Buscar habitaciones"
           name="searchQuery"
           value={this.props.filters.searchQuery}
           onChange={this.handleFiltersChange}
-          className={style.searchInput}
+          className={`form-control + ${style.searchInput}`}
         />
 
         <input 
@@ -109,8 +119,9 @@ class Habitaciones extends React.Component {
           name="minPrice"
           value={this.props.filters.minPrice}
           onChange={this.handleFiltersChange}
-          className={style.searchInput}        
+          className={`form-control + ${style.searchInput}`}        
         />
+        
 
         <input 
           type="number"
@@ -118,23 +129,31 @@ class Habitaciones extends React.Component {
           name="maxPrice"
           value={this.props.filters.maxPrice}
           onChange={this.handleFiltersChange}
-          className={style.searchInput}
+          className={`form-control + ${style.searchInput}`}
         />
+         </div>
+      </div>
+    </div>
+    <div className="row">
         
-        <div className={style.content}>
-          <img src={imagen} alt="Habitación" className={style.image} />
-          
-
+        <div className="col-md-6">
           <h2 className={style.title}>Habitaciones</h2>
           
           <div className={style.links}>
             
             {habitacionLinks}
-          </div>
+          
         </div>
+        </div>
+          <div className="col-md-6 d-flex align-items-center justify-content-center">
+  <img src={imagen} alt="Habitación" className={`img-fluid mx-auto d-block mr-5  ${style.image}`} />
+  </div>
       </div>
+      </div>
+      
+
     );
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Habitaciones);
+export default connect(mapStateToProps, mapDispatchToProps)(Habitaciones)
