@@ -192,7 +192,7 @@ const reducer = (state = initialState, action) => {
         return {...state, formulario: {...state.formulario, selectedPaquete:action.payload}};
       
       case SET_NOMBRESFORM:
-        return {...state, nombre: {...state.formulario.nombres, [action.payload.key]: action.payload.array}};
+        return {...state, formulario: {...state.formulario, nombres: {...state.formulario.nombres, [action.payload.key]: action.payload.array}}};
       default:  
         return state;
   }
