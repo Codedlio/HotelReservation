@@ -119,4 +119,17 @@
     background-color: #78331a;
     color: #fff;
   }
+  @media (max-width: 576px) {
+    
+     .tamano{
+      width: 300px;
+     }
   
+  }
+  @media (max-width: 490px) {
+    
+     .tamano{
+      width: 200px;
+     }
+  
+  }

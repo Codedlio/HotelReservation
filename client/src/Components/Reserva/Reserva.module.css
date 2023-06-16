@@ -7,6 +7,9 @@
   align-items: center;
   justify-content: center;
   text-align: center;
+  max-width: 100vw;
+  min-width: min-content;
+ 
   width: 100%;
   min-height:  100vh; /* Establece la altura al 100% del viewport */
   background-image: url('./difumado.jpg');
@@ -30,6 +33,7 @@
     text-align: center;
     margin-top: 30px;
     margin-bottom: 10px;
+    flex-wrap: wrap;
   }
   
   .title {
@@ -81,7 +85,7 @@
     text-align: center;
     margin-left: 10px;
     margin-bottom: 20px;
-    display: flex;
+   
     align-items: center;
     justify-content: center;
   }
@@ -125,7 +129,7 @@
     border-radius: 3px;
     cursor: pointer;
     margin-top: 30px;
-    display: flex;
+
     text-decoration: none;
     
   }
@@ -191,4 +195,89 @@
   100% {
     transform: rotate(360deg); /* Rotación completa */
   }
+}
+@media (max-width: 1024px) {
+  .tamano{
+    width: fit-content;
+    font-size: 20px;
+    padding: 0;
+    margin-left: 5px;
+    margin-right: 15px;
+  }
+  .contenedor {
+    
+    min-width: 100vw;
+    min-height:  100vh; /* Establece la altura al 100% del viewport */
+
+
+}
+}
+@media (max-width: 962px) {
+  .tamano{
+    width: fit-content;
+    font-size: 16px;
+    padding: 0;
+    margin-left: 5px;
+    margin-right: 15px;
+  }
+  .contenedor {
+    
+    min-width: 100vw;
+    min-height:  100vh; /* Establece la altura al 100% del viewport */
+
+
+}
+}
+@media (max-width: 768px) {
+  .tamano{
+    width: fit-content;
+    font-size: 10px;
+    padding: 0;
+    margin-left: 5px;
+    margin-right: 15px;
+  }
+  .contenedor {
+    
+    min-width: 100vw;
+    min-height:  100vh; /* Establece la altura al 100% del viewport */
+
+
+}
+}
+@media (max-width: 576px) {
+    
+  .tamano{
+    width: fit-content;
+    font-size: 10px;
+    padding: 0;
+    margin-left: 5px;
+    margin-right: 15px;
+  }
+  .contenedor {
+    
+    min-width: 100vw;
+    min-height:  100vh; /* Establece la altura al 100% del viewport */
+
+
+}
+}
+@media (max-width: 490px) {
+ 
+  .tamano{
+    width: fit-content;
+    font-size: 8px;
+    padding: 0;
+    margin-left: 5px;
+    margin-right: 5px;
+    justify-content: center;
+    align-items: center;
+  }
+  .contenedor {
+    
+    min-width: 100vw;
+    /* Establece la altura al 100% del viewport */
+
+
+}
+
 }
