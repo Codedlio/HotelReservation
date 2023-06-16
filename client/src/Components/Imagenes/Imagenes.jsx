@@ -1,4 +1,3 @@
-
 import React from "react";
 import image from "./imagenes/termas-de-huife-32-scaled.jpg";
 import image1 from "./imagenes/habitaciones-y-banxxos16.jpg";
@@ -25,10 +24,9 @@ function ControlledCarousel() {
     <Carousel activeIndex={index} onSelect={handleSelect}>
       <Carousel.Item>
         <img
-          className="d-block w-100"
+          className="d-block w-100 img-fluid"
           src={image}
           alt="First slide"
-          width='100%' height='750px'
         />
         <Carousel.Caption>
           {/* <h3>First slide label</h3>
@@ -37,10 +35,9 @@ function ControlledCarousel() {
       </Carousel.Item>
       <Carousel.Item>
         <img
-          className="d-block w-100"
+          className="d-block w-100 img-fluid"
           src={image1}
           alt="First slide"
-          width='100%' height='750px'
         />
         <Carousel.Caption>
           {/* <h3>First slide label</h3>
@@ -49,10 +46,9 @@ function ControlledCarousel() {
       </Carousel.Item>
       <Carousel.Item>
         <img
-          className="d-block w-100"
+          className="d-block w-100 img-fluid"
           src={image2}
           alt="First slide"
-          width='100%' height='750px'
         />
         <Carousel.Caption>
           {/* <h3>First slide label</h3>
@@ -61,10 +57,9 @@ function ControlledCarousel() {
       </Carousel.Item>
       <Carousel.Item>
         <img
-          className="d-block w-100"
+          className="d-block w-100 img-fluid"
           src={image3}
           alt="Second slide"
-          width='100%' height='750px'
         />
 
         <Carousel.Caption>
@@ -74,10 +69,9 @@ function ControlledCarousel() {
       </Carousel.Item>
       <Carousel.Item>
         <img
-          className="d-block w-100"
+          className="d-block w-100 img-fluid"
           src={image4}
           alt="Third slide"
-          width='100%' height='750px'
         />
 
         <Carousel.Caption>
@@ -92,4 +86,4 @@ function ControlledCarousel() {
   );
 }
 
-export default ControlledCarousel;
+export default ControlledCarousel

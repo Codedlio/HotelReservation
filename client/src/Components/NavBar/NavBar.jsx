@@ -1,6 +1,8 @@
 
 import React from "react";
-import { Nav } from 'rsuite';
+import { Container, Nav, Navbar } from "react-bootstrap";
+
+
 import style from './NavBar.module.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInstagram, faFacebook, faTwitter, } from "@fortawesome/free-brands-svg-icons";
@@ -15,6 +17,7 @@ import {onAuthStateChanged  } from "firebase/auth";
 import { setUsuario } from '../redux/action';
 import { auth } from "../Loging/firebase";
 import Cookies from 'js-cookie';
+
 
 function NavBar() {
   const token = Cookies.get('token');
@@ -93,46 +96,42 @@ function NavBar() {
   
   
   return (
-    <div className={style.contenedor}>
-      
+
+    <>
+    <Navbar collapseOnSelect expand="lg" className={style.contenedor} variant="dark">
+      <Container>
+      <Navbar.Brand className="logo" href="#home">
       <img className={style.imagen} src={imagen} alt="" />
-      <Nav>
+        </Navbar.Brand>
+        <Navbar.Toggle className={style.navHotel} aria-controls="navbarScroll" />
+        <Navbar.Collapse id="navbarScroll">
+
+      <Nav className={style.navHotel}>
         {location.pathname !== "/" &&         
           <Link className={style.link} to='/'>Inicio</Link>          
         }        
         <div className={style.dropdown} >        
-          <Link className={style.link} >El hotel</Link>          
+          <Link className={style.linkHotel} >El hotel</Link>          
           <div className={style.dropdowncontent}>
             <Link className={style.link} to='/historia'>Historia</Link>
             <Link className={style.link} to='/filosofia'>Filosofía</Link>
             <Link className={style.link} to='/bienestar'>Bienestar</Link>
           </div>
         </div>
-        <div className={style.dropdown}>
-          <Link className={style.link} to='/paquetes'>Paquetes</Link>
-          {/* <div className={style.dropdowncontent}>
-            <a href="#">3 días y 2 noches</a>
-            <a href="#">4 días y 3 noches</a>
-            <a href="#">5 días y 4 noches</a>
-            <a href="#">6 días y 5 noches</a>
-          </div> */}
-        </div>
-        {usuario === undefined &&
+          <Link className={style.link} to="/paquetes" >Paquetes</Link>
+          {usuario === undefined &&
           <Link className={style.link} to='/contenedor'>Iniciar sesión</Link>
         }
         
         {usuario !== undefined &&
           <Link className={style.link} onClick={handleLogOut}>Cerrar sesión</Link>
         }
+        <Link  to='/contacto' className={style.link} >Contacto</Link>
+        <Nav.Item  href="#" onClick={handleInstagramClick} className={style.icon}><FontAwesomeIcon icon={faInstagram} /></Nav.Item>
+        <Nav.Item  href="#" onClick={handleFacebookClick} className={style.icon}><FontAwesomeIcon icon={faFacebook} /></Nav.Item>
+        <Nav.Item  href="#" onClick={handleTwitterClick} className={style.icon}><FontAwesomeIcon icon={faTwitter} /></Nav.Item>
+        <Link  to='/reserva' className={style.button}>RESERVAR AHORA</Link>
         
-        <Link className={style.link} to='/contacto'>Contacto</Link>
-        <Nav.Item className={style.icon} href="#" onClick={handleInstagramClick}><FontAwesomeIcon icon={faInstagram} /></Nav.Item>
-        <Nav.Item className={style.icon} href="#" onClick={handleFacebookClick}><FontAwesomeIcon icon={faFacebook} /></Nav.Item>
-        <Nav.Item className={style.icon} href="#" onClick={handleTwitterClick}><FontAwesomeIcon icon={faTwitter} /></Nav.Item>
-       
-        <Link className={style.button} to='/reserva'>RESERVAR AHORA</Link>
-        
-        {/* Agrega el botón para mostrar el carrito */}
         <button className={style.carrito} onClick={() => {
   if (mostrarCarrito) {
     setMostrarCarrito(false);
@@ -140,14 +139,11 @@ function NavBar() {
   } else {
     setMostrarCarrito(true);
   }
-}}>
-           <Link className={style.carritolink} to="/detallereserva">
-    <FontAwesomeIcon icon={faCartPlus} />
-  </Link>
-        </button>
-
-        
-        {mostrarCarrito ? (
+}}>        <Link className={style.carritolink} to="/detallereserva">
+<FontAwesomeIcon icon={faCartPlus} />
+</Link>
+</button>
+{mostrarCarrito ? (
           reserva ? (
             <Carrito reserva={reserva} />
           ) : (
@@ -156,11 +152,13 @@ function NavBar() {
             </div>
           )
         ) : null}
-      </Nav>
-    </div>
-    
+        </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
+    </>
   );
-}
+};
 
 export default NavBar;
 
