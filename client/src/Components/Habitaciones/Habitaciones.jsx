@@ -86,14 +86,14 @@ class Habitaciones extends React.Component {
       <div className="col-md-4">
         <div className="row">
           <div className="col-md-6">
-        <select className={style.linksordenamiento} value={this.props.orderByName} onChange={(e) => this.props.setOrderByName(e.target.value)}>
+        <select className={`form-select mb-3  ${style.linksordenamiento}`} value={this.props.orderByName} onChange={(e) => this.props.setOrderByName(e.target.value)}>
           
           <option value="">Ordenar por Nombre</option>
           <option value="asc">A-Z</option>
           <option value="desc">Z-A</option>
         </select>
         </div>
-          <div className="col-md-6"></div>
+          <div className="col-md-6">
         <select className={`form-select mb-3  ${style.linksordenamiento}`} value={this.props.orderByCapacity} onChange={(e) => this.props.setOrderByCapacity(e.target.value)}>
           <option value="">Ordenar por Capacidad</option>
           <option value="asc">Menor a Mayor</option>
@@ -103,14 +103,14 @@ class Habitaciones extends React.Component {
         </div>
       </div>
       <div className="col-md-4">
-        <div className="form-inline"></div>
+        <div className="form-inline">
         <input
           type="text"
           placeholder="Buscar habitaciones"
           name="searchQuery"
           value={this.props.filters.searchQuery}
           onChange={this.handleFiltersChange}
-          className={style.searchInput}
+          className={`form-control + ${style.searchInput}`}
         />
 
         <input 
@@ -129,24 +129,29 @@ class Habitaciones extends React.Component {
           name="maxPrice"
           value={this.props.filters.maxPrice}
           onChange={this.handleFiltersChange}
-          className={`form-control + ${style.searchInput}`}   
+          className={`form-control + ${style.searchInput}`}
         />
-        </div>
+         </div>
       </div>
     </div>
-        <div className="row">
+    <div className="row">
         
-          <div className="col-md-6">
-            <h2 className={style.title}>Habitaciones</h2>
-            <div className={style.links}>
-              {habitacionLinks}
-            </div>
-          </div>
+        <div className="col-md-6">
+          <h2 className={style.title}>Habitaciones</h2>
+          
+          <div className={style.links}>
+            
+            {habitacionLinks}
+          
+        </div>
+        </div>
           <div className="col-md-6 d-flex align-items-center justify-content-center">
   <img src={imagen} alt="Habitación" className={`img-fluid mx-auto d-block mr-5  ${style.image}`} />
-</div>
+  </div>
       </div>
       </div>
+      
+
     );
   }
 }
