@@ -1,7 +1,5 @@
 // reducer.js
 
-import { SET_ORDER_BY_NAME, SET_ORDER_BY_CAPACITY, SET_ORDER_BY_PRICE, GET_PAQUETES,SET_CURRENT_PAGE, SET_USUARIO, POST_RESENA,USUARIO_RESERVACION,
-  DATA_USUARIO,RESENA_USUARIO, SUGERENCIA_EMAIL,HABITACION_USUARIO, DELETE_USUARIO, DELETE_RESENA, GET_HABITACIONES, GET_HABITACIONES_DISPONIBLES,ALL_RESENA, ORDER_PAQUETES,GET_PAQUETES_BY_ID,GET_RESERVA_BY_USER} from "./action";
 
 const initialState = {
   orderByName: '',
@@ -156,19 +154,7 @@ const reducer = (state = initialState, action) => {
           return { ...state, 
                 }
         }
-        case ALL_RESENA:
-        return{ ...state, allResena:action.payload}
-        case DATA_USUARIO:
-        return{ ...state, usuarioArray:action.payload}
-        case RESENA_USUARIO:
-          return{ ...state, resenaByUsuario:action.payload }
-        case POST_RESENA:
-          return{ ...state,}
-        case DELETE_RESENA:
-          return{ ...state,}
-        case USUARIO_RESERVACION:
-          const dataReservacion= Array.isArray(action.paylaod)?action.paylaod:[action.paylaod]
-          return{...state, reservaUsuario:dataReservacion}
+        
         
     default:
       return state;

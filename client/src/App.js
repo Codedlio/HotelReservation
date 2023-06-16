@@ -31,8 +31,6 @@ import Piscinatermal from './Components/Servicios/Piscinatermal/Piscinatermal';
 import Yoga from './Components/Yoga/Yoga'
 import DetalleReserva from './Components/DetalleReserva/DetalleReserva'
 import Natacion from './Components/Servicios/Natacion/Natacion'
-import PerfilUsuario from './Components/PerfilUsuario/PerfilUsuario.jsx'
-import axios from 'axios'
 
 axios.defaults.baseURL =  "http://localhost:3001" || "http://back-hoteleternopf-production.up.railway.app" ;
 
@@ -71,7 +69,6 @@ function App() {
           <Route path="/yoga" element={<Yoga />} />
           <Route path="/detalleReserva" element={<DetalleReserva />} />
           <Route path="/natacion" element={<Natacion />} />
-          <Route path="/perfilUsuario" element={<PerfilUsuario />} />
           
 
           <Route path="/" element={<Home />} />

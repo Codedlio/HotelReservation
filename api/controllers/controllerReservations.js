@@ -76,40 +76,7 @@ catch (error) {
 };
 
 // 
-const getReservacionByUsuario = async (req, res) => {
-  const { usuario } = req.params;
 
-  try {
-    let ReservacionDeUsuario = [];
-    let reservaciones = await Reservacion.find({ usuario: usuario, activo: true });
-    
-    if (reservaciones.length === 0) {
-      return res.status(200).json(ReservacionDeUsuario);
-    }
-
-    for (let reservacion of reservaciones) {
-      let nombresHabitaciones = [];
-      for (let habitacionId of reservacion.habitaciones) {
-        const habitacion = await Habitacion.findById(habitacionId);
-        nombresHabitaciones.push(habitacion.nombre);
-      }
-
-      let nombresServicios = [];
-      for (let servicioId of reservacion.servicios) {
-        const servicio = await Servicio.findById(servicioId);
-        nombresServicios.push(servicio.nombre);
-      }
-
-      reservacion.habitaciones = nombresHabitaciones;
-      reservacion.servicios = nombresServicios;
-      ReservacionDeUsuario.push(reservacion);
-    }
-
-    return res.status(200).json(ReservacionDeUsuario);
-  } catch (error) {
-    return res.status(500).send("Internal server error");
-  }
-};
 
 
 
@@ -125,7 +92,6 @@ const postReservacion = async (req,res) => {
     
     const data = new Reservacion ({usuario:usuarioCorreo,habitaciones:arrHabitacion,servicios:arrServicio,paquete:arrPaquete,fechaInicio:fechaInicio,fechaFin:fechaFin,costo:costo});
     
-    await checkReservation({usuarioCorreo,arrHabitacion,arrServicio,arrPaquete,fechaInicio,fechaFin,costo})
     await data.save();
     res.status(201).json("Se registró con éxito su reserva, pero esta pendiente el pago");
   }
