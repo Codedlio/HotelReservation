@@ -20,4 +20,5 @@ router.use('/payment', paymentRoute)
 router.use('/resena', resenaRoute)
 router.use('/infoUsuario', infoUsuarioRoute)
 
+
 module.exports=router;

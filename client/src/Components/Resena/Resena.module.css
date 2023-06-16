@@ -1,0 +1,25 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    
+  }
+  
+  .row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border: 1px solid gray;
+    border-radius: 1em;
+    margin: 1.2em;
+  }
+  .row h4 {
+    font-family: 'Arial Narrow', Arial, sans-serif;
+    font-size: 2.7ch;
+    padding: 0em;
+    bottom: 0.5em;
+    margin-bottom: 0em;
+  }

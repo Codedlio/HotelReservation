@@ -34,8 +34,6 @@ function CentroDeAyuda() {
         ...userData, [event.target.name]: event.target.value
     });
     setError(validate({...userData, [event.target.name]: event.target.value}));
-    console.log(userData)
-    console.log(error)
 
 };
 const handleSubmit=async(e)=>{
@@ -65,8 +63,6 @@ try {
   const handleReclamosClick = (event) => {
     setShowTextArea(true);
     setShowButton(false);
-   
-    
 
   };
 

@@ -215,3 +215,17 @@
   justify-content: end;
   text-align: center;
 }
+.container {
+  display: flex;
+  align-items: center;
+}
+
+.container h4 {
+  margin-right: 10px;
+}
+
+.container img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}

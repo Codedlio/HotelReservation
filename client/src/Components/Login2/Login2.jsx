@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import validate from './validate';
 import {useNavigate} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { setUsuario } from '../redux/action';
+import {setUsuario, getUsuariobyEmail,getResenaUsuario} from '../redux/action';
 import foto from './logo gogle.png'
 import getCustumer from "../../services/getCustumer";
 import axios from "axios";
@@ -25,6 +25,12 @@ function Login2() {
   //       getCustumer(usuario)
   //       .then((res) => console.log(res.data))
   // }, [usuario])
+  useEffect(()=>{
+    if(usuario) dispatch(getUsuariobyEmail(usuario))
+    dispatch(getResenaUsuario(usuario))
+    
+
+  },[dispatch, usuario]);
   function changeHandler(e){  
     const property = e.target.name;
     const value = e.target.value;

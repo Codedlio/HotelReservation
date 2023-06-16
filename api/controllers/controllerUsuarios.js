@@ -3,6 +3,8 @@ const Usuario= require('../models/Usuario');
 const bcrypt = require('bcrypt');
 const { ObjectId } = require('mongoose').Types;
 const { sendWelcomeEmail,sugerenciaCliente } = require("../config/sendgridEmail.js");
+const { usuarioImage } = require("../cloudinary/cloudinary.js");
+const fs = require("fs-extra");
 
 const postRegistro =  async (req, res) => {
     try {
@@ -71,17 +73,27 @@ const  postLogin= async (req, res) => {
       }
       const { correo, contraseña, telefono, nombre, activo } = req.body;
   
-      if (!correo || !contraseña || !telefono || !nombre) {
-        return res.status(400).json({ mensaje: 'Faltan campos obligatorios' });
-      }
+      // if (!correo || !contraseña || !telefono || !nombre) {
+      //   return res.status(400).json({ mensaje: 'Faltan campos obligatorios' });
+      // }
   
       const usuarioActualizado = {
         nombre,
         correo,
         telefono,
         activo,
+        image:[]
       };
-  
+
+      if (req.files) {
+        for (const key of Object.keys(req.files)) {
+          const file = req.files[key];
+          const result = await usuarioImage(file.tempFilePath);
+          usuarioActualizado.image.push(result.secure_url);
+          await fs.unlink(file.tempFilePath);
+        }
+      }
+       
       // Actualizar el documento de usuario en tu base de datos propia
      try { 
       await Usuario.findByIdAndUpdate(id, usuarioActualizado);

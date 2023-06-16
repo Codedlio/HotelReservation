@@ -14,6 +14,7 @@ import Imagenes from "../Imagenes/Imagenes";
 import Servicios from "../Servicios/Servicios/Servicios";
 import { useDispatch, useSelector } from "react-redux";
 import { getHabitaciones } from "../redux/action";
+import Resena from '../Resena/Resena'
 
 function Home() {
   const dispatch = useDispatch();
@@ -59,7 +60,7 @@ function Home() {
       <Caracteristicas />
       <Imagenes />
       <Habitaciones />  
-
+      <Resena />
       <Link
         to="top"
         spy={true}

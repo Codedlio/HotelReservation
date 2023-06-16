@@ -15,6 +15,7 @@ import Carrito from '../Carrito/Carrito';
 function NavBar() {
   const location = useLocation();
   const dispatch = useDispatch();
+  const usuarioArray = useSelector(state => state.usuarioArray);
   const usuario = useSelector(state => state.usuario);
   const [currentPage, setCurrentPage] = useState(1);
   const [mostrarCarrito, setMostrarCarrito] = useState(false);
@@ -114,7 +115,16 @@ function NavBar() {
     <FontAwesomeIcon icon={faCartPlus} />
   </Link>
         </button>
-
+        {usuario && (
+      <Link to="/perfilUsuario" className={style.container}>
+        <h4>{usuarioArray.nombre}</h4>
+        {usuarioArray.image && usuarioArray.image.length > 0  ? (
+    <img src={usuarioArray.image} alt="" />
+  ) : (
+    <img src={"https://cdn-icons-png.flaticon.com/128/1077/1077063.png"} alt="" />
+  )}
+      </Link>
+    )}
         
         {mostrarCarrito ? (
           reserva ? (

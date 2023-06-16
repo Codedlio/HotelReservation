@@ -75,50 +75,57 @@ catch (error) {
 }
 };
 
-const getReservacionByUsuario = async (req,res) => {
-  const {usuario} = req.params;
-  
+// 
+const getReservacionByUsuario = async (req, res) => {
+  const { usuario } = req.params;
+
   try {
-    let ReservacionDeUsuario=[];
-    let reservacion = await Reservacion.findOne({usuario:usuario,activo:true});
-    if (!reservacion) {return res.status(200).send(ReservacionDeUsuario)};
+    let ReservacionDeUsuario = [];
+    let reservaciones = await Reservacion.find({ usuario: usuario, activo: true });
+    
+    if (reservaciones.length === 0) {
+      return res.status(200).json(ReservacionDeUsuario);
+    }
 
-    let nombresHabitaciones = [];
-    for (let habitacionId of reservacion.habitaciones) {
-        const Habitacion = await Habitacion.findById(habitacionId);
+    for (let reservacion of reservaciones) {
+      let nombresHabitaciones = [];
+      for (let habitacionId of reservacion.habitaciones) {
+        const habitacion = await Habitacion.findById(habitacionId);
         nombresHabitaciones.push(habitacion.nombre);
+      }
+
+      let nombresServicios = [];
+      for (let servicioId of reservacion.servicios) {
+        const servicio = await Servicio.findById(servicioId);
+        nombresServicios.push(servicio.nombre);
+      }
+
+      reservacion.habitaciones = nombresHabitaciones;
+      reservacion.servicios = nombresServicios;
+      ReservacionDeUsuario.push(reservacion);
     }
 
-    let nombresServicios = [];
-    for (let servicioId of reservacion.servicios) {
-        const {nombre} = await Servicio.find({_id:servicioId});
-        nombresServicios.push(nombre);
-    }
-
-    reservacion.habitaciones = nombresHabitaciones;
-    reservacion.servicios = nombresServicios;
-    ReservacionDeUsuario.push(reservacion);
     return res.status(200).json(ReservacionDeUsuario);
-} 
-catch (error) {
+  } catch (error) {
     return res.status(500).send("Internal server error");
-}
+  }
 };
+
 
 
 const postReservacion = async (req,res) => {
   let {usuarioCorreo,arrHabitacion,arrServicio,arrPaquete,fechaInicio,fechaFin,costo} = req.body;
 
-  if (!usuarioCorreo || !fechaInicio || !fechaFin||!costo) {return res.status(400).send("Error. No se enviaron los datos necesarios para crear la reserva")};
+  //if (!usuarioCorreo || !fechaInicio || !fechaFin||!costo) {return res.status(400).send("Error. No se enviaron los datos necesarios para crear la reserva")};
   
   fechaInicio = new Date(fechaInicio);
   fechaFin = new Date(fechaFin);
   console.log(arrHabitacion);
   try {
     
-    //const data = new Reservacion ({usuario:usuarioCorreo,habitaciones:arrHabitacion,servicios:arrServicio,paquete:arrPaquete,fechaInicioParseado,fechaFinParseado,costo});
     const data = new Reservacion ({usuario:usuarioCorreo,habitaciones:arrHabitacion,servicios:arrServicio,paquete:arrPaquete,fechaInicio:fechaInicio,fechaFin:fechaFin,costo:costo});
-    //res.status(201).json(await data.save());
+    
+    await checkReservation({usuarioCorreo,arrHabitacion,arrServicio,arrPaquete,fechaInicio,fechaFin,costo})
     await data.save();
     res.status(201).json("Se registró con éxito su reserva, pero esta pendiente el pago");
   }

@@ -15,8 +15,12 @@ export const ORDER_PAQUETES = "ORDER_PAQUETES";
 export const GET_PAQUETES_BY_ID = "GET_PAQUETES_BY_ID";
 export const CREATE_RESERVA = "CREATE_RESERVA";
 export const GET_RESERVA_BY_USER ="GET_RESERVA_BY_USER";
-
-
+export const ALL_RESENA ='ALL_RESENA';
+export const DATA_USUARIO ='DATA_USUARIO';
+export const RESENA_USUARIO='RESENA_USUARIO';
+export const POST_RESENA='POST_RESENA';
+export const DELETE_RESENA='DELETE_RESENA';
+export const USUARIO_RESERVACION='USUARIO_RESERVACION';
 export const setOrderByName = (orderType) => {
   return {
     type: SET_ORDER_BY_NAME,
@@ -40,7 +44,7 @@ export const setOrderByCapacity = (orderType) => {
 export const getPaquetes = () => {
   return async function (dispatch) {
     console.log("entro a paquetes");
-      const response = (await axios.get(`http://localhost:3001/paquete`)).data
+      const response = (await axios.get(`/paquete`)).data
       return dispatch({
         type: GET_PAQUETES, 
         payload: response})
@@ -50,7 +54,7 @@ export const getPaquetes = () => {
 export function getPaqueteById(id) {
   return async function (dispatch) {
     console.log("entro a paquetes");
-      const response = (await axios.get(`http://localhost:3001/paquete/`+id)).data
+      const response = (await axios.get(`/paquete/`+id)).data
       return dispatch({
         type: GET_PAQUETES_BY_ID, 
         payload: response})
@@ -59,7 +63,7 @@ export function getPaqueteById(id) {
 export const orderxPaquetes = (order) => { return { type: ORDER_PAQUETES, payload: order } }
 
 export const createReserva = (reserva) =>{ 
-  let url = `http://localhost:3001/reservation`;
+  let url = `/reservation`;
   const response = axios.post(url,reserva);
  
   return response;
@@ -67,7 +71,7 @@ export const createReserva = (reserva) =>{
  
  export function getReservaByUsuario(usuario) {
    return async function (dispatch) {    
-       const response = (await axios.get(`http://localhost:3001/reservation/`+usuario)).data
+       const response = (await axios.get(`/reservation/`+usuario)).data
        return dispatch({
          type: GET_RESERVA_BY_USER, 
          payload: response})
@@ -96,7 +100,7 @@ export const getHabitaciones = () => {
           }); 
         }
         
-        const {data} = await axios.get("http://localhost:3001/habitacion");
+        const {data} = await axios.get("/habitacion");
         window.sessionStorage.setItem("allHabitaciones", JSON.stringify(data));
         
         return dispatch({
@@ -123,7 +127,7 @@ export const deleteUsuario = () => {
 export const getHabitacionesDisponibles = (fechaInicio,fechaFin) => {
   return async function (dispatch) {
     try {
-      const {data} = await axios.get(`http://localhost:3001/habitacion/disponible?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`);
+      const {data} = await axios.get(`/habitacion/disponible?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`);
       return dispatch({type:GET_HABITACIONES_DISPONIBLES, payload:data});
     } 
     catch (error) {
@@ -135,10 +139,70 @@ export const getHabitacionesDisponibles = (fechaInicio,fechaFin) => {
 export const sugerenciaCliente= (userData) =>{
   return async (dispatch) => {
       try {
-          const newSugerencia = await axios.post("http://localhost:3001/auth/notification", userData);
+          const newSugerencia = await axios.post("/auth/notification", userData);
           console.log(userData)
           return dispatch({ type:SUGERENCIA_EMAIL, payload: newSugerencia.data });
           
       } catch (error) { console.log(error.message) }
+  }
+}
+export const getAllResena=()=>{
+  return async (dispatch) => {
+      try {
+          const getAll = await axios.get("/resena");
+         
+          return dispatch({ type:ALL_RESENA, payload: getAll.data });
+          
+      } catch (error) { console.log(error.message) }
+  }
+}
+export const getUsuariobyEmail=(email)=>{
+  return async (dispatch) => {
+      try {
+          const getUsuario = await axios.get(`/infoUsuario/${email}`);
+         
+          return dispatch({ type:DATA_USUARIO, payload: getUsuario.data });
+          
+      } catch (error) { console.log(error.message) }
+  }
+}
+export const getResenaUsuario=(email)=>{
+  return async (dispatch) => {
+      try {
+          const getUsuario = await axios.get(`/resena/${email}`);
+         
+          return dispatch({ type:RESENA_USUARIO, payload: getUsuario.data });
+          
+      } catch (error) { console.log(error.message) }
+  }
+}
+export const postResena =(resena)=>{
+  return async (dispatch) => {
+    try {
+      const dataResena = await axios.post(`/resena`, resena);
+     
+      return dispatch({ type:POST_RESENA, payload: dataResena.data });
+      
+  } catch (error) { console.log(error.message) }
+  }
+}
+export const deleteResena=(id)=>{
+  return async (dispatch) => {
+    try {
+      const dataDelete = await axios.delete(`/resena/${id}`);
+     
+      return dispatch({ type:DELETE_RESENA, payload: dataDelete.data });
+      
+  } catch (error) { console.log(error.message) }
+  }
+}
+export const getReservationUsuario=(usuario)=>{
+  return async (dispatch) => {
+    try {
+      const dataReservation = await axios.get(`/reservation/${usuario}`);
+     
+      return dispatch({ type:USUARIO_RESERVACION, payload: dataReservation.data });
+      
+  } catch (error) { console.log(error.message) }
   }
 }

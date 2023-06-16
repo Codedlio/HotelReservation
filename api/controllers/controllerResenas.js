@@ -54,7 +54,7 @@ const deleteResena = async (req, res) => {
     const { email } = req.params;
     try {
  
-      const resenas = await Resena.findOne({correo: email});
+      const resenas = await Resena.find({correo: email});
     
       res.status(200).json(resenas);
     } catch (error) {
