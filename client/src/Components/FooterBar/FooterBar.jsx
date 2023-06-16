@@ -15,20 +15,29 @@ function FooterBar() {
     window.open('https://www.facebook.com/profile.php?id=100093402330219', '_blank');
   }
   return (
-    <div className={style.footerBar}>
-      
-      <div className={style.logo}>
-        <img src={imagen} alt="Logo" />
+  
+      <div className={style.footerBar}>
+        <div className="container">
+          <div className="row">
+            <div className="col-md-4">
+              <div className={style.logo}>
+                <img src={imagen} alt="Logo" />
+              </div>
+            </div>
+            <div className="col-md-4">
+              <div className={style.linkawesome}>
+                <a href="#" onClick={handleFacebookClick}><FontAwesomeIcon icon={faFacebookF} /></a>
+                <a href="#" onClick={handleInstagramClick}><FontAwesomeIcon icon={faInstagram} /></a>
+                <a href="#" onClick={handleTwitterClick}><FontAwesomeIcon icon={faTwitter} /></a>
+              </div>
+            </div>
+            <div className="col-md-4">
+              <p className={style.footerText}>&copy; 2023 Eterno Hotel. Todos los derechos reservados.</p>
+            </div>
+          </div>
+        </div>
       </div>
-      <div className={style.linkawesome}>
-        <a href="#" onClick={handleFacebookClick}><FontAwesomeIcon icon={faFacebookF} /></a>
-        <a href="#" onClick={handleInstagramClick}><FontAwesomeIcon icon={faInstagram} /></a>
-        <a href="#" onClick={handleTwitterClick}><FontAwesomeIcon icon={faTwitter} /></a>
-      </div>
-      <p className={style.footerText}>&copy; 2023 Eterno Hotel. Todos los derechos reservados.</p>
-    
-    </div>
-  );
-}
-
-export default FooterBar;
+    );
+  }
+  
+  export default FooterBar;
