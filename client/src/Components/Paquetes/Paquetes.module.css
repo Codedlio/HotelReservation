@@ -4,8 +4,12 @@
 /* CARDS CONTAINER */
 .body{
   background-color: rgb(220, 193, 193);
+  
+ z-index: 2;
+  
 }
 .cardsContainer{
+  
   border: 2px solid #888683;
   border-radius: 10px;
   background-color: rgb(211, 207, 207);
@@ -16,6 +20,7 @@
  justify-content: center;
  align-items: center;
  flex-direction: column;
+ z-index: 2;
 }
 .cardsContainer:hover{
   /* transform: translateY(-10px); */
@@ -196,7 +201,9 @@
       align-items: center;
       justify-content: center;
       margin-bottom: -40px;
-      margin-top: -60px;
+      margin-top: 60px;
+      margin-right: 8px;
+      margin-left: 8px;
       
 
   }
