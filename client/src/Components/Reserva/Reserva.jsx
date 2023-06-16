@@ -49,7 +49,8 @@ function Reserva() {
       arrPaquete:loadedForm.selectedPaquete,
       fechaInicio: loadedForm.dates.checkIn,
       fechaFin: loadedForm.dates.checkOut,
-      costo: loadedForm.precio
+      costo: loadedForm.precio,
+      nroPerson:(loadedForm.adults+loadedForm.children)
     };
     window.localStorage.setItem("dataReservation", JSON.stringify(data));
   

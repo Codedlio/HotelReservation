@@ -1,6 +1,6 @@
 // reducer.js
 
-import { SET_ORDER_BY_NAME, SET_ORDER_BY_CAPACITY, SET_ORDER_BY_PRICE, GET_PAQUETES,SET_CURRENT_PAGE, SET_USUARIO, SUGERENCIA_EMAIL, DELETE_USUARIO, GET_HABITACIONES, SET_FILTERED_HABITACIONES, GET_HABITACIONES_DISPONIBLES,ORDER_PAQUETES,GET_PAQUETES_BY_ID,GET_RESERVA_BY_USER, SET_ADULTS, SET_CHILDREN, SET_DATES, SET_PRECIO, SET_SELECTEDROOM, SET_SELECTEDSERVICE, SET_SELECTEDPAQUETE,FILTER_NAME_PAQUETE, GET_PAQUETES_DISPONIBLES, SET_FILTERS} from "./action";
+import { SET_ORDER_BY_NAME, SET_ORDER_BY_CAPACITY, SET_ORDER_BY_PRICE, GET_PAQUETES,SET_CURRENT_PAGE, SET_USUARIO, SUGERENCIA_EMAIL, DELETE_USUARIO, GET_HABITACIONES, SET_FILTERED_HABITACIONES, GET_HABITACIONES_DISPONIBLES,ORDER_PAQUETES,GET_PAQUETES_BY_ID,GET_RESERVA_BY_USER, SET_ADULTS, SET_CHILDREN, SET_DATES, SET_PRECIO, SET_SELECTEDROOM, SET_SELECTEDSERVICE, SET_SELECTEDPAQUETE,FILTER_NAME_PAQUETE, GET_PAQUETES_DISPONIBLES, SET_FILTERS,GET_USUARIO_BY_CORREO,DELETE_DETAIL_CAR,CLEAR_ALL_CAR} from "./action";
 
 const initialState = {
   orderByName: '',
@@ -17,6 +17,7 @@ const initialState = {
   filters: {searchQuery:'', minPrice:0, maxPrice:0},
   paqueteXid: [],
   reserva:[],
+  usuarioXid:[],
   formulario: {adults: 0, children: 0, selectedRoom: [], selectedService: [], dates: {checkIn:'', checkOut:''}, precio: 0, selectedPaquete: []}
 };
 
@@ -125,6 +126,22 @@ const reducer = (state = initialState, action) => {
           ...state,
           //filterGames: Filter 
           orderPaquetes: FilPaquet
+      }
+
+    case DELETE_DETAIL_CAR:
+        return {
+            ...state,            
+            reserva: []
+        }
+
+    case CLEAR_ALL_CAR:     
+      return {
+          ...state,          
+          reserva: []
+      }
+    case GET_USUARIO_BY_CORREO: return {
+      ...state,
+      usuarioXid: action.payload 
       }
     case GET_RESERVA_BY_USER: return {
       ...state,

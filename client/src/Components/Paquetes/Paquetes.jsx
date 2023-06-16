@@ -42,13 +42,14 @@ const PaginationPaquetes = () => {
   };
   const handleChange = (event) => {
     setName(event.target.value);
-    console.log("handleChange-name-set");
-    console.log(nombre);
+  }
+  const handleKeyDown = (event) => {
+    if (event.key === "Backspace") {
+      dispatch(getPaquetes());
+    }
   }
   const handleFilterNames = (event) => {
     event.preventDefault();
-    console.log("handleFilterNames-name");
-    console.log(nombre);
     dispatch(filterNamePaquete(nombre));
   }
   let ArrayImagen = [];
@@ -141,11 +142,11 @@ const PaginationPaquetes = () => {
         <div className={style.sortButtonsContainer}>
           <button className={style.sortAscButton} onClick={handleSortAsc}><FontAwesomeIcon icon={faArrowDown} />  Días</button>
           <button className={style.sortDescButton} onClick={handleSortDesc}> <FontAwesomeIcon icon={faArrowUp} /> Días</button>
-          <button className={style.sortAscButton} onClick={handleCostoAsc}>Costo <FontAwesomeIcon icon={faPlus} />  </button>
-          <button className={style.sortDescButton} onClick={handleCostoDesc}>Costo <FontAwesomeIcon icon={faMinus} /> </button>
+          <button className={style.sortAscButton} onClick={handleCostoAsc}>Costo <FontAwesomeIcon icon={faMinus} />  </button>
+          <button className={style.sortDescButton} onClick={handleCostoDesc}>Costo <FontAwesomeIcon icon={faPlus} /> </button>
 
           <div className={style.ContainerSearch}>
-            <input placeholder="Buscar Paquete" className={style.searchInput} onChange={handleChange} type="search" nombre="search" value={nombre} />
+            <input placeholder="Buscar Paquetes" value={nombre} onChange={handleChange} className={style.searchInput} nombre="search" onKeyDown={handleKeyDown} />
             <button className={style.searchButton} onClick={handleFilterNames}>Search 🔎</button>
           </div>
 

@@ -13,13 +13,23 @@ import Caracteristicas from "../Caracteristicas/Caracteristicas";
 import Imagenes from "../Imagenes/Imagenes";
 import Servicios from "../Servicios/Servicios/Servicios";
 import { useDispatch, useSelector } from "react-redux";
-import { getHabitaciones } from "../redux/action";
+import { getHabitaciones,getUsuarioByCorreo } from "../redux/action";
+import Cookies from 'js-cookie';
 
 function Home() {
   const dispatch = useDispatch();
   const [isVisible, setIsVisible] = useState(false);
 
   const rooms = useSelector(state => state.gethabitaciones);
+
+  const emailToken = Cookies.get('emailToken');
+  let usuarioReg = useSelector((state) => state.usuarioXid);
+  
+  useEffect(() => {
+    if(emailToken!=undefined)
+      dispatch(getUsuarioByCorreo(emailToken));
+  }, [dispatch])
+ 
 
   useEffect(() => {
     if (!rooms.length) {
@@ -58,9 +68,15 @@ function Home() {
       
       <VideoPlayer  />
       
-      <Caracteristicas />
-      <Imagenes />
-      <Habitaciones />  
+      {usuarioReg.admin !== true &&                         
+          <Caracteristicas />
+      } 
+      {usuarioReg.admin !== true &&                         
+          <Imagenes />
+      } 
+      {usuarioReg.admin !== true &&                         
+          <Habitaciones />  
+      }   
 
       <Link
         to="top"
@@ -72,7 +88,10 @@ function Home() {
       >
         <FontAwesomeIcon icon={faArrowUp} />
       </Link>
-      <Servicios />
+      
+      {usuarioReg.admin !== true &&                         
+          <Servicios />  
+      }  
       <FooterBar />
     </div>
   );

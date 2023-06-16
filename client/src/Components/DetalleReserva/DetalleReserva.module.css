@@ -124,3 +124,114 @@ text-decoration: none;
 .buttonpago:hover{
   background-color: #78331a;
 }
+
+.ContainerButton {
+  padding: 0.4rem;
+  margin: 0.5rem;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  display:relative;
+  margin-left: 880px;
+}
+.cartfaTrash{
+  border-radius: 7%;
+  border: 1px solid  #78331a;
+  background-color:  #78331a;
+  color: white;
+  font-family: 'Balsamiq Sans', cursive;
+  padding: 0px;
+  margin:0px;
+  padding-left: -20px;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  margin-left: 20px;
+}
+.cartButton {
+  border-radius: 7%;
+  border: 1px solid  #78331a;
+  background-color:  #78331a;
+  color: white;
+  font-family: 'Balsamiq Sans', cursive;
+  padding: 0.4rem;
+  margin: 0.5rem;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  margin-left: 20px;
+}
+.cartButton:hover {
+  border: 1px solid   #78331a;
+  color:  white;
+  background-color:  #78331a;
+  text-align: center;
+}
+
+.titleCartContainer {
+  display: grid;
+  grid-template-columns: repeat(1, auto);
+  margin: 1rem;
+  font-family: 'Balsamiq Sans', cursive;
+  text-align: center;
+}
+
+.CartContainer {
+  display: grid;
+  grid-template-columns: repeat(1, auto);
+}
+
+.CartContainerVacio {
+  display: grid;
+  grid-template-columns: repeat(1, auto);
+  width: 300px;
+  height: 650px;
+  background-color: rgb(220, 193, 193);
+}
+
+.Body{
+  background-color: rgb(220, 193, 193);
+}
+
+.titleCartContainerVacio {
+  background-color: rgb(220, 193, 193);
+  display: grid;
+  grid-template-columns: repeat(1, auto);
+  margin: 1rem;
+  font-family: 'Balsamiq Sans', cursive;
+  text-align: center;
+  margin-left: 300px;  
+}
+
+.wholeCart {
+  height: 100px;
+  width: 2000px;
+}
+
+.emptyCart {
+  padding: 0.5rem;
+  margin: 1rem;
+  font-family: 'Balsamiq Sans', cursive;
+  text-align: center;
+}
+
+.cartText {
+  padding: 0.4rem;
+  font-size: 1rem;
+  text-align: center;
+}
+.dataContainer {
+  display: grid;
+  grid-template-columns: repeat(6, auto);
+  text-align: center;
+  margin: 2rem;
+  font-family: 'Balsamiq Sans', cursive;
+}
+.Image{
+  /* border-radius: 10%; */
+  padding: 10px 15px;
+  width: 320px;
+  height: 120px;
+  align-items: center;
+  border-radius: 5%;
+}
