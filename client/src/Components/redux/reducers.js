@@ -1,6 +1,6 @@
 // reducer.js
 
-import { SET_ORDER_BY_NAME, SET_ORDER_BY_CAPACITY, SET_ORDER_BY_PRICE, GET_PAQUETES,SET_CURRENT_PAGE, SET_USUARIO, SUGERENCIA_EMAIL, DELETE_USUARIO, GET_HABITACIONES, SET_FILTERED_HABITACIONES, GET_HABITACIONES_DISPONIBLES,ORDER_PAQUETES,GET_PAQUETES_BY_ID,GET_RESERVA_BY_USER, SET_ADULTS, SET_CHILDREN, SET_DATES, SET_PRECIO, SET_SELECTEDROOM, SET_SELECTEDSERVICE, SET_SELECTEDPAQUETE,FILTER_NAME_PAQUETE, GET_PAQUETES_DISPONIBLES, SET_FILTERS,GET_USUARIO_BY_CORREO,DELETE_DETAIL_CAR,CLEAR_ALL_CAR} from "./action";
+import { SET_ORDER_BY_NAME, SET_ORDER_BY_CAPACITY, SET_ORDER_BY_PRICE, GET_PAQUETES,SET_CURRENT_PAGE, SET_USUARIO, SUGERENCIA_EMAIL, DELETE_USUARIO, GET_HABITACIONES, SET_FILTERED_HABITACIONES, GET_HABITACIONES_DISPONIBLES,ORDER_PAQUETES,GET_PAQUETES_BY_ID,GET_RESERVA_BY_USER, SET_ADULTS, SET_CHILDREN, SET_DATES, SET_PRECIO, SET_SELECTEDROOM, SET_SELECTEDSERVICE, SET_SELECTEDPAQUETE,FILTER_NAME_PAQUETE, GET_PAQUETES_DISPONIBLES, SET_FILTERS,GET_USUARIO_BY_CORREO,DELETE_DETAIL_CAR,CLEAR_ALL_CAR,FILTER_MIN_PRECIO_PAQUETE, FILTER_MAX_PRECIO_PAQUETE} from "./action";
 
 const initialState = {
   orderByName: '',
@@ -8,13 +8,13 @@ const initialState = {
   orderByPrice: '',
   allpaquetes: [],
   orderPaquetes: [],
-  filterPaquetes: [],
+  filtersPaquetes: {searchQuery:'', minPrice:'', maxPrice:''},
   set_Current_Page: [],
   usuario: undefined,
   gethabitaciones: [],
   habitaciones: [],
   filteredhabitaciones: [],
-  filters: {searchQuery:'', minPrice:0, maxPrice:0},
+  filters: {searchQuery:'', minPrice:'', maxPrice:''},
   paqueteXid: [],
   reserva:[],
   usuarioXid:[],
@@ -113,20 +113,13 @@ const reducer = (state = initialState, action) => {
     ...state,
     orderPaquetes: SortPaquetes
     }
+    
     case FILTER_NAME_PAQUETE:
-      console.log("FILTER_NAME-action.payload");
-      console.log(action.payload);
-      const FilName = [...state.filterPaquetes];
-      const FilPaquet = (action.payload === '' ? FilName
-          : FilName.filter((paquete) => {
-              return paquete.nombre.toUpperCase().includes(action.payload.toUpperCase());
-          }))
-
-      return {
-          ...state,
-          //filterGames: Filter 
-          orderPaquetes: FilPaquet
-      }
+      return {...state, filtersPaquetes: {...state.filtersPaquetes, searchQuery:action.payload}}
+    case FILTER_MIN_PRECIO_PAQUETE:
+      return {...state, filtersPaquetes: {...state.filtersPaquetes, minPrice:action.payload}}
+    case FILTER_MAX_PRECIO_PAQUETE:
+      return {...state, filtersPaquetes: {...state.filtersPaquetes, maxPrice:action.payload}}
 
     case DELETE_DETAIL_CAR:
         return {

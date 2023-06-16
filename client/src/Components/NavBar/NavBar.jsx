@@ -19,23 +19,6 @@ import { auth } from "../Loging/firebase";
 import Cookies from 'js-cookie';
 
 
-import React from "react";
-import { Nav } from 'rsuite';
-import style from './NavBar.module.css';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faInstagram, faFacebook, faTwitter, } from "@fortawesome/free-brands-svg-icons";
-import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
-import imagen from './logo hotel.png';
-import { Link, useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { deleteUsuario,getUsuarioByCorreo } from "../redux/action";
-import { useDispatch, useSelector } from "react-redux";
-import Carrito from '../Carrito/Carrito';
-import {onAuthStateChanged  } from "firebase/auth";
-import { setUsuario } from '../redux/action';
-import { auth } from "../Loging/firebase";
-import Cookies from 'js-cookie';
-
 function NavBar() {
   const token = Cookies.get('token');
   const emailToken = Cookies.get('emailToken');
