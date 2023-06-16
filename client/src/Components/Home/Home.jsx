@@ -13,7 +13,8 @@ import Caracteristicas from "../Caracteristicas/Caracteristicas";
 import Imagenes from "../Imagenes/Imagenes";
 import Servicios from "../Servicios/Servicios/Servicios";
 import { useDispatch, useSelector } from "react-redux";
-import { getHabitaciones } from "../redux/action";
+import { getHabitaciones,getUsuarioByCorreo } from "../redux/action";
+import Cookies from 'js-cookie';
 import Resena from '../Resena/Resena'
 
 function Home() {
@@ -21,6 +22,15 @@ function Home() {
   const [isVisible, setIsVisible] = useState(false);
 
   const rooms = useSelector(state => state.gethabitaciones);
+
+  const emailToken = Cookies.get('emailToken');
+  let usuarioReg = useSelector((state) => state.usuarioXid);
+  
+  useEffect(() => {
+    if(emailToken!=undefined)
+      dispatch(getUsuarioByCorreo(emailToken));
+  }, [dispatch])
+ 
 
   useEffect(() => {
     if (!rooms.length) {
@@ -51,7 +61,7 @@ function Home() {
   };
 
   return (
-    <div className={style.container}>
+    <div  >
       <a href="https://api.whatsapp.com/send?phone=NUMERO_TELEFONO&text=Hola,%20me%20gustaría%20hacer%20una%20consulta" target="_blank" rel="noopener noreferrer" className={style.whatsapp}>
         <FontAwesomeIcon icon={faWhatsapp} />
       </a>
@@ -60,7 +70,7 @@ function Home() {
       <Caracteristicas />
       <Imagenes />
       <Habitaciones />  
-      <Resena />
+
       <Link
         to="top"
         spy={true}
@@ -71,7 +81,10 @@ function Home() {
       >
         <FontAwesomeIcon icon={faArrowUp} />
       </Link>
-      <Servicios />
+      
+      {usuarioReg.admin !== true &&                         
+          <Servicios />  
+      }  
       <FooterBar />
     </div>
   );

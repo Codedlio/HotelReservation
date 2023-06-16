@@ -1,26 +1,11 @@
 // reducer.js
 
+import { SET_ORDER_BY_NAME, SET_ORDER_BY_CAPACITY, SET_ORDER_BY_PRICE, GET_PAQUETES,SET_CURRENT_PAGE, SET_USUARIO, SUGERENCIA_EMAIL, DELETE_USUARIO, GET_HABITACIONES, SET_FILTERED_HABITACIONES, GET_HABITACIONES_DISPONIBLES,ORDER_PAQUETES,GET_PAQUETES_BY_ID,GET_RESERVA_BY_USER, SET_ADULTS, SET_CHILDREN, SET_DATES, SET_PRECIO, SET_SELECTEDROOM, SET_SELECTEDSERVICE, SET_SELECTEDPAQUETE,FILTER_NAME_PAQUETE, GET_PAQUETES_DISPONIBLES, SET_FILTERS,GET_USUARIO_BY_CORREO,DELETE_DETAIL_CAR,CLEAR_ALL_CAR} from "./action";
 
 const initialState = {
   orderByName: '',
   orderByCapacity: '',
   orderByPrice: '',
-  habitacionesData: [
-    { nombre: 'Suite Roca', capacidad: 2 },
-    { nombre: 'Suite Canelo', capacidad: 4 },
-    { nombre: 'Suite Liucura', capacidad: 2 },
-    { nombre: 'Villa Bosque', capacidad: 7 },
-    { nombre: 'Villa Rio', capacidad: 7 },
-    { nombre: 'Villa Arce', capacidad: 6 },
-    { nombre: 'Villa Tilo', capacidad: 6 },
-    { nombre: 'Villa Cedra', capacidad: 6 },
-    { nombre: 'Villa Madrid', capacidad: 7 },
-    { nombre: 'Villa Lavanda', capacidad: 5 },
-    { nombre: 'Villa Mosqueta', capacidad: 5 },
-    { nombre: 'Villa Anacay', capacidad: 5 },
-    { nombre: 'Villa Playa', capacidad: 5 },
-    { nombre: 'Villa Troncos', capacidad: 5 },
-  ],
   allpaquetes: [],
   orderPaquetes: [],
   filterPaquetes: [],
@@ -32,8 +17,12 @@ const initialState = {
   reservaUsuario:[],
   gethabitaciones: [],
   habitaciones: [],
+  filteredhabitaciones: [],
+  filters: {searchQuery:'', minPrice:0, maxPrice:0},
   paqueteXid: [],
-  reserva:[]
+  reserva:[],
+  usuarioXid:[],
+  formulario: {adults: 0, children: 0, selectedRoom: [], selectedService: [], dates: {checkIn:'', checkOut:''}, precio: 0, selectedPaquete: []}
 };
 
 const reducer = (state = initialState, action) => {
@@ -60,20 +49,20 @@ const reducer = (state = initialState, action) => {
     case SET_ORDER_BY_CAPACITY:
       let sortedArrByCapacity;
       if (action.payload === 'asc') {
-        sortedArrByCapacity = state.habitacionesData
+        sortedArrByCapacity = state.habitaciones
           .slice()
           .sort((a, b) => a.capacidad - b.capacidad);
       } else if (action.payload === 'desc') {
-        sortedArrByCapacity = state.habitacionesData
+        sortedArrByCapacity = state.habitaciones
           .slice()
           .sort((a, b) => b.capacidad - a.capacidad);
       } else {
-        sortedArrByCapacity = state.habitacionesData;
+        sortedArrByCapacity = state.habitaciones;
       }
       return {
         ...state,
         orderByCapacity: action.payload,
-        habitacionesData: sortedArrByCapacity
+        habitaciones: sortedArrByCapacity
       };
       case SET_CURRENT_PAGE:
   return {
@@ -104,6 +93,10 @@ const reducer = (state = initialState, action) => {
         orderPaquetes: action.payload,//aca lleno 
         filterPaquetes: action.payload
     } 
+    case GET_PAQUETES_DISPONIBLES: return {
+      ...state,
+      allpaquetes: action.payload
+    }
     case GET_PAQUETES_BY_ID: return {
       ...state,
       paqueteXid: action.payload 
@@ -124,6 +117,36 @@ const reducer = (state = initialState, action) => {
     ...state,
     orderPaquetes: SortPaquetes
     }
+    case FILTER_NAME_PAQUETE:
+      console.log("FILTER_NAME-action.payload");
+      console.log(action.payload);
+      const FilName = [...state.filterPaquetes];
+      const FilPaquet = (action.payload === '' ? FilName
+          : FilName.filter((paquete) => {
+              return paquete.nombre.toUpperCase().includes(action.payload.toUpperCase());
+          }))
+
+      return {
+          ...state,
+          //filterGames: Filter 
+          orderPaquetes: FilPaquet
+      }
+
+    case DELETE_DETAIL_CAR:
+        return {
+            ...state,            
+            reserva: []
+        }
+
+    case CLEAR_ALL_CAR:     
+      return {
+          ...state,          
+          reserva: []
+      }
+    case GET_USUARIO_BY_CORREO: return {
+      ...state,
+      usuarioXid: action.payload 
+      }
     case GET_RESERVA_BY_USER: return {
       ...state,
       reserva: action.payload 
@@ -137,6 +160,19 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         gethabitaciones: action.payload
+      }
+      case SET_FILTERED_HABITACIONES: 
+      return {
+        ...state,
+        filteredhabitaciones: action.payload
+      }
+      case SET_FILTERS:
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          [action.payload[0]]: action.payload[1]
+        }
       }
       case DELETE_USUARIO: return {
         ...state,
@@ -154,8 +190,6 @@ const reducer = (state = initialState, action) => {
           return { ...state, 
                 }
         }
-        
-        
     default:
       return state;
   }

@@ -3,7 +3,8 @@ const Usuario= require('../models/Usuario');
 const bcrypt = require('bcrypt');
 const { ObjectId } = require('mongoose').Types;
 const { sendWelcomeEmail,sugerenciaCliente } = require("../config/sendgridEmail.js");
-
+const jwt= require('jsonwebtoken');
+require('dotenv').config();
 
 const postRegistro =  async (req, res) => {
     try {
@@ -52,8 +53,11 @@ const  postLogin= async (req, res) => {
         if (!match) {
           return res.status(401).json({ mensaje: 'Contraseña incorrecta' });
     }    else {
+      const token = jwt.sign({ id: usuario._id }, process.env.SECRET_KEY, {
+              expiresIn: '8 days'
+            });
                  
-          return res.status(200).json({ mensaje: 'Inicio de sesión exitoso',usuario: usuario.nombre }); 
+          return res.status(200).json({ mensaje: 'Inicio de sesión exitoso',usuario: usuario.nombre,token }); 
 }
 
       // const userRecord = await auth.signInWithEmailAndPassword(correo, contraseña);
@@ -149,4 +153,18 @@ const  postLogin= async (req, res) => {
     }
   }
 
-  module.exports={postRegistro, postLogin, deleteUsuario,getUsuario,putUsuario,postNotification};
+  const getUsuarioByCorreo = async (req,res) => {
+    const {correo} = req.params;
+    
+    try {
+      let usuario = await Usuario.findOne({correo:correo,activo:true});
+      if (!usuario) {return res.status(400).send("El usuario no existe")};
+            
+      return res.status(200).json(usuario);
+  } 
+  catch (error) {
+      return res.status(500).send("Internal server error");
+  }
+  };
+
+  module.exports={postRegistro, postLogin, deleteUsuario,getUsuario,putUsuario,postNotification,getUsuarioByCorreo};

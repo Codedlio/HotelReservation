@@ -4,8 +4,12 @@
 /* CARDS CONTAINER */
 .body{
   background-color: rgb(220, 193, 193);
+  
+ z-index: 2;
+  
 }
 .cardsContainer{
+  
   border: 2px solid #888683;
   border-radius: 10px;
   background-color: rgb(211, 207, 207);
@@ -16,6 +20,7 @@
  justify-content: center;
  align-items: center;
  flex-direction: column;
+ z-index: 2;
 }
 .cardsContainer:hover{
   /* transform: translateY(-10px); */
@@ -76,11 +81,9 @@
       
   }
   .cardImage{
-    border-radius: 10%;
-    
+    border-radius: 10%;    
     width: 90%;
-    height: 85%;
-    
+    height: 85%;    
     display: flex;
     align-items: center;
     justify-content: center;
@@ -198,7 +201,9 @@
       align-items: center;
       justify-content: center;
       margin-bottom: -40px;
-      margin-top: -60px;
+      margin-top: 60px;
+      margin-right: 8px;
+      margin-left: 8px;
       
 
   }
@@ -216,7 +221,7 @@
     margin-left: 10px;
     color: #eeeaea;
     transition: all 0.3s ease-in-out;
-    height: -5px;
+    height: -5px
   }
   .sortAscButton:hover, .sortDescButton:hover {
     background-color: rgb(120, 70, 70);
@@ -235,9 +240,71 @@
     border: 0px;
     border-radius: 15px 0px 0px 15px;
     background-color: #e0e0e0;
-    margin-left: 19%;	
-    margin-top: -50px;
-    height: 2.9em;
-    width: 454px;      
+    margin-left: 27%;	
+    margin-top: -85px;
+    height: 2.9em; 
+    width: 400px;   
+    text-align: center;
 
+}
+
+/* .searchButton{
+  border: 0px;
+  border-radius:0px 15px 15px 0px;
+  height: 2.3em; 
+  margin-top: -80px;
+  left: 50%;
+  margin-left: 206%;
+  width: 100px;
+  right: 200px;	
+  background-color: #F2F2F2;
+  width: 120px;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+  outline: none;
+  box-shadow: 0 0 5px #ccc;  
+  margin-left: 695px;
+  color: #000000;
+  transition: all 0.3s ease-in-out;
+} */
+.searchButton{
+  border: 0px;
+  border-radius:0px 15px 15px 0px;
+  height: 2.5em;
+  margin-top: -46px;
+  left: 50%;
+  margin-left: 206%;
+  width: 100px;
+  right: 200px;	
+  background-color: rgb(120, 70, 70);
+  width: 120px;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  padding: 1px;
+  cursor: pointer;
+  outline: none;
+  box-shadow: 0 0 5px #ccc;  
+  margin-left: 589px;
+  color:white;
+  transition: all 0.3s ease-in-out;
+}
+
+
+.searchButton:hover{
+  background-color: rgb(120, 70, 70);
+  color: #fff;
+}
+
+.ContainerSearch{
+  margin-top: 80px;
+  margin-bottom: -40px;
+  margin-left: 200px;
+  object-fit: cover;
+  object-position: center right;
+  display:flex;
+  flex-direction:column;
 }

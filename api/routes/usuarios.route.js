@@ -1,7 +1,7 @@
 
 const express = require('express');
 const router = express.Router();
-const {postLogin,postRegistro, putUsuario, postNotification,getUsuario,deleteUsuario} = require('../controllers/controllerUsuarios');
+const {postLogin,postRegistro, putUsuario, postNotification,getUsuario,deleteUsuario,getUsuarioByCorreo} = require('../controllers/controllerUsuarios');
 const fileUpload =require ("express-fileupload");
 
 // ...
@@ -15,6 +15,7 @@ router.post('/registro', postRegistro);
     tempFileDir: "./uploads" }), putUsuario);
   router.get('/usuario',getUsuario);
   router.delete('/usuario/:id',deleteUsuario);
-  router.post('/notification', postNotification )
+  router.post('/notification', postNotification );
+  router.get('/correo/:correo', getUsuarioByCorreo)
   
   module.exports = router;

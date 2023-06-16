@@ -7,6 +7,7 @@ const usuarioSchema = new mongoose.Schema({
   telefono: { type: String, required: true },
   activo: { type: Boolean, default: true },
   image: { type: Array },
+  admin: { type: Boolean, default: true },
   // Otros campos según tus necesidades
 });
 

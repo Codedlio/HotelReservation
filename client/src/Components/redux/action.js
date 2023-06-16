@@ -4,17 +4,32 @@ export const SET_ORDER_BY_NAME = "SET_ORDER_BY_NAME";
 export const SET_ORDER_BY_CAPACITY = "SET_ORDER_BY_CAPACITY";
 export const SET_ORDER_BY_PRICE = "SET_ORDER_BY_PRICE";
 export const GET_PAQUETES = "GET_PAQUETES";
+export const GET_PAQUETES_DISPONIBLES = "GET_PAQUETES_DISPONIBLES";
 export const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 export const GET_HABITACIONES = "GET_HABITACIONES";
+export const SET_FILTERED_HABITACIONES = "SET_FILTERED_HABITACIONES";
 export const SET_USUARIO = "SET_USUARIO";
 export const DELETE_USUARIO = "DELETE_USUARIO";
 export const ERROR = "ERROR"; 
 export const GET_HABITACIONES_DISPONIBLES = "GET_HABITACIONES_DISPONIBLES";
+export const SET_FILTERS = "SET_FILTERS";
 export const SUGERENCIA_EMAIL = "SUGERENCIA_EMAIL"; 
 export const ORDER_PAQUETES = "ORDER_PAQUETES";
 export const GET_PAQUETES_BY_ID = "GET_PAQUETES_BY_ID";
 export const CREATE_RESERVA = "CREATE_RESERVA";
 export const GET_RESERVA_BY_USER ="GET_RESERVA_BY_USER";
+export const SET_ADULTS = "SET_ADULTS";
+export const SET_CHILDREN = "SET_CHILDREN";
+export const SET_SELECTEDROOM = "SET_SELECTEDROOM";
+export const SET_SELECTEDSERVICE = "SET_SELECTEDSERVICE";
+export const SET_DATES = "SET_DATES";
+export const SET_PRECIO = "SET_PRECIO";
+export const SET_SELECTEDPAQUETE = "SET_SELECTEDPAQUETE";
+export const FILTER_NAME_PAQUETE = "FILTER_NAME_PAQUETE";
+export const GET_USUARIO_BY_CORREO = "GET_USUARIO_BY_CORREO";
+export const DELETE_DETAIL_CAR = "DELETE_DETAIL_CAR";
+export const CLEAR_ALL_CAR = "CLEAR_ALL_CAR";
+
 
 export const setOrderByName = (orderType) => {
   return {
@@ -46,6 +61,22 @@ export const getPaquetes = () => {
   }
 };
 
+export function getPaquetesDisponibles (fechaInicio,fechaFin) {
+  return async function (dispatch) {
+    try {
+      const response = (await axios.get(`http://localhost:3001/paquete/disponible?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`)).data;
+      console.log(response);
+      return dispatch ({
+        type: GET_PAQUETES_DISPONIBLES,
+        payload: response
+      })
+    }
+    catch (error) {
+      alert(error.message);  
+    };
+  }
+};
+
 export function getPaqueteById(id) {
   return async function (dispatch) {
     console.log("entro a paquetes");
@@ -56,6 +87,7 @@ export function getPaqueteById(id) {
   }
 }
 export const orderxPaquetes = (order) => { return { type: ORDER_PAQUETES, payload: order } }
+export const filterNamePaquete = (filter) => { return { type: FILTER_NAME_PAQUETE, payload: filter } }
 
 export const createReserva = (reserva) =>{ 
   let url = `/reservation`;
@@ -72,6 +104,20 @@ export const createReserva = (reserva) =>{
          payload: response})
    }
  }
+
+ export function getUsuarioByCorreo(correo) {
+  return async function (dispatch) {    
+      const response = (await axios.get(`http://localhost:3001/auth/correo/`+correo)).data
+      return dispatch({
+        type: GET_USUARIO_BY_CORREO, 
+        payload: response})
+  }
+}
+ 
+export const BorrarDetailCarrito = (idDetail) => { return { type: DELETE_DETAIL_CAR, payload: idDetail } }
+
+export const ClearAllCarrito = (carrito) => { return { type: CLEAR_ALL_CAR, payload: carrito } }
+
  
 
 export const set_Currents_Page = (currentPage) => {
@@ -111,6 +157,21 @@ export const getHabitaciones = () => {
     }
   };
 };
+
+export const setFilteredHabitaciones = (array) => {
+  return {
+    type: SET_FILTERED_HABITACIONES,
+    payload: array
+  }
+};
+
+export const setFilters = (key, value) => {
+  return {
+    type: SET_FILTERS,
+    payload: [key,value]
+  }
+};
+
 export const setUsuario = (correo) => {
   return {type:SET_USUARIO, payload: correo}  
 };
@@ -141,3 +202,32 @@ export const sugerenciaCliente= (userData) =>{
       } catch (error) { console.log(error.message) }
   }
 }
+
+export const setAdultsA = (number) => {
+  return {type: SET_ADULTS, payload: number}
+}
+
+export const setChildrenA = (number) => {
+  return {type: SET_CHILDREN, payload: number}
+}
+
+export const setSelectedRoomA = (array) => {
+  return {type: SET_SELECTEDROOM, payload: array}
+}
+
+export const setSelectedServiceA = (array) => {
+  return {type: SET_SELECTEDSERVICE, payload: array}
+}
+
+export const setDatesA = (obj) => {
+  return {type: SET_DATES, payload: obj}
+}
+
+export const setPrecioA = (number) => {
+  return {type: SET_PRECIO, payload: number}
+}
+
+export const setSelectedPaqueteA = (array) => {
+  return {type: SET_SELECTEDPAQUETE, payload: array}
+}
+

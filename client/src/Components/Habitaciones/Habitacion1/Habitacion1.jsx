@@ -4,6 +4,8 @@ import FooterBar from "../../FooterBar/FooterBar";
 import Carousel from "react-bootstrap/Carousel";
 import "bootstrap/dist/css/bootstrap.min.css";
 import style from "./Habitacion1.module.css";
+import { Link, animateScroll as scroll } from "react-scroll";
+import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -13,23 +15,23 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import Paginado from "../../Paginate/Paginate";
-import { set_Currents_Page } from "../../redux/action";
+import { set_Currents_Page, getHabitaciones } from "../../redux/action";
 
 const Habitacion1 = () => {
   const dispatch = useDispatch();
-  const habitaciones = useSelector((state) => state.set_Current_Page); // Cambiar "state.set_Current_Page" por el nombre correcto
+  const habitaciones = useSelector((state) => state.gethabitaciones);
   const [index, setIndex] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isVisible, setIsVisible] = useState(false);
   const habsPerPage = 1;
-  const indexofLastRoom = currentPage * habsPerPage;
-  const indexofFirstRoom = indexofLastRoom - habsPerPage;
-  const visibleHabitaciones = habitaciones.slice(
-    indexofFirstRoom,
-    indexofLastRoom
-  );
 
-
-  const imagenes = useSelector(state => state.gethabitaciones[0].image)
+  let imagenes = useSelector(state => state.gethabitaciones[0]);
+  
+  useEffect(() => {
+    if (!imagenes) {
+      dispatch(getHabitaciones());
+    }
+  }, []);
 
   const handleSelect = (selectedIndex, e) => {
     setIndex(selectedIndex);
@@ -38,7 +40,27 @@ const Habitacion1 = () => {
   useEffect(() => {
     dispatch(set_Currents_Page(currentPage));
   }, [dispatch, currentPage]);
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
+  const handleScroll = () => {
+    if (window.pageYOffset > 300) {
+      setIsVisible(true);
+    } else {
+      setIsVisible(false);
+    }
+  };
+
+  const scrollToTop = () => {
+    scroll.scrollToTop({
+      duration: 900, // Duración de la animación en milisegundos
+      smooth: true, // Desplazamiento suave habilitado
+    });
+  };
   return (
     <div className={style.containertotal}>
       <NavBar></NavBar>
@@ -51,6 +73,7 @@ const Habitacion1 = () => {
             vistas panorámicas.
           </p>
         </div>
+        
 
         <div className={style.container}>
           <h2 className={style.title}>Características</h2>
@@ -94,8 +117,8 @@ const Habitacion1 = () => {
       </section>
 
       <div className="container w-100">
-        {imagenes.length && <Carousel activeIndex={index} onSelect={handleSelect}>
-          {imagenes.map(imagen => {
+        {imagenes && <Carousel activeIndex={index} onSelect={handleSelect}>
+          {imagenes.image.map(imagen => {
             return (
             <Carousel.Item>
               <img
@@ -103,7 +126,7 @@ const Habitacion1 = () => {
                 src={imagen}
                 alt="Slide"
                 width="100%"
-                height="750px"
+                height="650px"
               />
               <Carousel.Caption>
                 {/* <h3>Second slide label</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p> */}
@@ -126,20 +149,16 @@ const Habitacion1 = () => {
           <li>TV de pantalla plana</li>
         </ul>
       </section>
-
-      <div className={style.titulodisponibilidad}>
-        <h2>Disponibilidad</h2>
-      </div>
-      <section className={style.disponibilidad}>
-        <p>Verifica la disponibilidad y realiza tu reserva en línea:</p>
-      </section>
-      <div className={style.containerlink}>
-        <a className={style.linka} href="#">
-          Ver disponibilidad
-        </a>
-      </div>
-
-      <habitaciones habitaciones={visibleHabitaciones} />
+      <Link
+        to="top"
+        spy={true}
+        smooth={true}
+        duration={500}
+        className={`${style.scroll} ${isVisible ? style.show : ""}`}
+        onClick={scrollToTop}
+      >
+        <FontAwesomeIcon icon={faArrowUp} />
+      </Link>
 
       <Paginado
         gamesPerPage={habsPerPage}
