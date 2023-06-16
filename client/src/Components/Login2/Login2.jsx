@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import validate from './validate';
 import {useNavigate} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { setUsuario } from '../redux/action';
+import { setUsuario,getUsuarioByCorreo } from '../redux/action';
 import foto from './logo gogle.png'
 import Cookies from 'js-cookie';
 import axios from "axios";
@@ -16,15 +16,22 @@ function Login2() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(true);
-  
+   
   const [form, setForm] = useState({correo:"",contraseña:""});
   const [errors, setErrors] = useState({count: 1});
-   
+  let usuarioReg = useSelector((state) => state.usuarioXid);
+
   // useEffect(() => { 
   //   if (usuario)    
   //       getCustumer(usuario)
   //       .then((res) => console.log(res.data))
   // }, [usuario])
+
+  useEffect(() => {
+    if(usuario!=undefined)
+      dispatch(getUsuarioByCorreo(usuario));
+  }, [dispatch])
+
   function changeHandler(e){  
     const property = e.target.name;
     const value = e.target.value;
@@ -74,8 +81,12 @@ function Login2() {
   
      
         //console.log(data.custumer);
-      if(window.localStorage.getItem("dataReservation")){
-        navigate("/detalleReserva");
+      if(window.localStorage.getItem("dataReservation")){       
+        if(usuarioReg.admin !== true ){
+          navigate("/detalleReserva");
+        }else{
+          navigate("/")
+        } 
       }else{
         navigate("/")
       }
@@ -149,7 +160,11 @@ function Login2() {
       })
 
     if (window.localStorage.getItem('dataReservation')) {
-      navigate("/detalleReserva");
+      if(usuarioReg.admin !== true ){
+        navigate("/detalleReserva");
+      }else{
+        navigate("/")
+      }
     } else {
       navigate("/");
     }

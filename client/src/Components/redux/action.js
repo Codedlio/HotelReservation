@@ -26,6 +26,10 @@ export const SET_DATES = "SET_DATES";
 export const SET_PRECIO = "SET_PRECIO";
 export const SET_SELECTEDPAQUETE = "SET_SELECTEDPAQUETE";
 export const FILTER_NAME_PAQUETE = "FILTER_NAME_PAQUETE";
+export const GET_USUARIO_BY_CORREO = "GET_USUARIO_BY_CORREO";
+export const DELETE_DETAIL_CAR = "DELETE_DETAIL_CAR";
+export const CLEAR_ALL_CAR = "CLEAR_ALL_CAR";
+
 
 
 export const setOrderByName = (orderType) => {
@@ -101,6 +105,20 @@ export const createReserva = (reserva) =>{
          payload: response})
    }
  }
+
+ export function getUsuarioByCorreo(correo) {
+  return async function (dispatch) {    
+      const response = (await axios.get(`http://localhost:3001/auth/correo/`+correo)).data
+      return dispatch({
+        type: GET_USUARIO_BY_CORREO, 
+        payload: response})
+  }
+}
+ 
+export const BorrarDetailCarrito = (idDetail) => { return { type: DELETE_DETAIL_CAR, payload: idDetail } }
+
+export const ClearAllCarrito = (carrito) => { return { type: CLEAR_ALL_CAR, payload: carrito } }
+
  
 
 export const set_Currents_Page = (currentPage) => {

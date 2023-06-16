@@ -33,6 +33,12 @@ import DetalleReserva from './Components/DetalleReserva/DetalleReserva'
 import Natacion from './Components/Servicios/Natacion/Natacion'
 import Contenido2 from './Components/Contenido2/Contenido2'
 import ExitoReserva from './Components/ExitoReserva/ExitoReserva'
+import AdminHabitaciones from './Components/AdminHabitaciones/AdminHabitaciones';
+import AdminPaquetes from './Components/AdminPaquetes/AdminPaquetes';
+import AdminServicios from './Components/AdminServicios/AdminServicios';
+import IndicadorReservas from './Components/IndicadorReservas/IndicadorReservas';
+import IndicadorReclamos from './Components/IndicadorReclamos/IndicadorReclamos';
+import IndicadorUsuarios from './Components/IndicadorUsuarios/IndicadorUsuarios';
 
 
 
@@ -73,6 +79,12 @@ function App() {
           <Route path="/natacion" element={<Natacion />} />
           <Route path="/chat" element={<Contenido2 />} />
           <Route path="/exitoreserva" element={<ExitoReserva />} />
+          <Route path="/adminHabitaciones" element={<AdminHabitaciones />} />
+          <Route path="/adminPaquetes" element={<AdminPaquetes />} />
+          <Route path="/adminServicios" element={<AdminServicios />} />
+          <Route path="/indicadorReservas" element={<IndicadorReservas />} />
+          <Route path="/indicadorReclamos" element={<IndicadorReclamos />} />
+          <Route path="/indicadorUsuarios" element={<IndicadorUsuarios />} />        
           
           
 

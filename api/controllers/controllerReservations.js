@@ -87,51 +87,125 @@ const getReservacionByUsuario = async (req,res) => {
   const {usuario} = req.params;
   try {
         
-    let reservacion = await Reservacion.find({usuario:usuario,activo:true});  
-    let ReservacionDeUsuario=reservacion.slice(-1);
+    let ReservaUsu = [];
+    let reservacion = await Reservacion.find({usuario:usuario,activo:true,estado:'I'});       
+    if (reservacion.length==0) {    
+      return res.status(200).send(ReservaUsu)
+    };
+    let ReservacionDeUsuario=reservacion.slice(-1);        
+    for (let habitacionId of ReservacionDeUsuario) {
+        
+        let hab=[];     
+        let habFin=[];     
+        for (let habId of habitacionId.habitaciones) { 
+          let habitacionXReserva = await Habitacion.findOne({_id:habId});
+          hab.push(habitacionXReserva);        
+          
+          for (let h of hab) {           
+            var obj={
+              _id:habId,
+              nombre:h.nombre,
+              capacidad: h.capacidad,
+              precio: h.precio,
+              image: h.image
+            };        
+          }
+          habFin.push(obj);        
+                  
+        }
+        let serv=[];     
+        let servFin=[]; 
+        for (let servId of habitacionId.servicios) {         
+          
+          let servXReserva = await Servicio.findOne({_id:servId});
+          serv.push(servXReserva);    
+          for (let s of serv) {           
+            var obj={
+              _id:servId,
+              nombre:s.nombre,
+              descripcion: s.descripcion,
+              precio: s.precio
+            };        
+          }
+          servFin.push(obj);        
+                  
+        }
+        let paq=[];     
+        let paqFin=[]; 
+        for (let paqId of habitacionId.paquetes) { 
+          let paqXReserva = await Paquete.findOne({_id:paqId});
+          paq.push(paqXReserva);        
+          console.log("paq");
+          console.log(paq);
+          for (let p of paq) {           
+            var obj={
+              _id:paqId,
+              nombre:p.nombre,
+              // capacidad: p.capacidad,
+              precio: p.costo,
+              image: p.image
+            };        
+          }
+          paqFin.push(obj);        
+                  
+        }
 
-    let nombresHabitaciones = [];
-    for (let habId of ReservacionDeUsuario[0].habitaciones) {
-      const habitacion = await Habitacion.findById(habId);
-      nombresHabitaciones.push(habitacion.nombre);
+        var objh={
+          _id:habitacionId._id,
+          usuario: habitacionId.usuario,
+          fechaInicio: habitacionId.fechaInicio,
+          fechaFin:habitacionId.fechaFin,
+          image:habitacionId.image,
+          costo:habitacionId.costo,
+          Arrayhabitaciones:habFin,
+          Arraypaquete:paqFin,
+          ArrayServicio:servFin,
+          fechaReserva:habitacionId.fechaReserva,
+          nroPerson:habitacionId.nroPerson
+        };  
     }
-
-    let nombresPaquetes = [];
-    for (let paqueteId of ReservacionDeUsuario[0].paquete) {
-      const paquete = await Paquete.findById(paqueteId);
-      nombresPaquetes.push(paquete.nombre);
-    }
-
-    let nombresServicios = [];
-    for (let servicioId of ReservacionDeUsuario[0].servicios) {
-      const servicio = await Servicio.findById(servicioId);
-      nombresServicios.push(servicio.nombre); 
-    }
-
-    ReservacionDeUsuario[0].nombres = {};
-    ReservacionDeUsuario[0].nombres.habitaciones = nombresHabitaciones;
-    ReservacionDeUsuario[0].nombres.paquetes = nombresPaquetes;
-    ReservacionDeUsuario[0].nombres.servicios = nombresServicios;
-
-    return res.status(200).json(ReservacionDeUsuario[0]);
-  } 
-  catch (error) {
-      return res.status(500).send("Internal server error");
-  }
+    ReservaUsu.push(objh);
+    return res.status(200).json(ReservaUsu);
+} 
+catch (error) {
+    return res.status(500).send("Internal server error");
+}
 };
 
 const postReservacion = async (req,res) => {
-  let {usuarioCorreo,arrHabitacion,arrServicio,arrPaquete,fechaInicio,fechaFin,costo} = req.body;
+  //let {usuarioCorreo,arrHabitacion,arrServicio,arrPaquete,fechaInicio,fechaFin,costo} = req.body;
+  let {usuarioCorreo,arrHabitacion,arrServicio,arrPaquete,fechaInicio,fechaFin,costo,nroPerson} = req.body;
 
   if (!usuarioCorreo || !fechaInicio || !fechaFin||!costo) {return res.status(400).send("Error. No se enviaron los datos necesarios para crear la reserva")};
   
-  fechaInicio = new Date(fechaInicio);
-  fechaFin = new Date(fechaFin);
-  console.log(arrHabitacion);
+  //fechaInicio = new Date(fechaInicio);
+  //fechaFin = new Date(fechaFin);
+  let fechaInicioParseado="";
+  let fechaFinParseado="";
+  let anio="";
+  let mes="";
+  let dia="";
+  anio=fechaInicio.substring(0,4);  
+  mes=fechaInicio.substring(5,7);  
+  dia=fechaInicio.substring(8,10);
+  fechaInicioParseado=mes +"/"+dia+"/"+anio;
+  anio=fechaFin.substring(0,4);
+  mes=fechaFin.substring(5,7);
+  dia=fechaFin.substring(8,10);
+  fechaFinParseado= mes +"/"+dia+"/"+anio;
+ 
+  fechaInicio = new Date(fechaInicioParseado);
+  fechaFin = new Date(fechaFinParseado);
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = today.getFullYear();
+
+  today = mm + '/' + dd + '/' + yyyy;
   try {
     
     //const data = new Reservacion ({usuario:usuarioCorreo,habitaciones:arrHabitacion,servicios:arrServicio,paquete:arrPaquete,fechaInicioParseado,fechaFinParseado,costo});
-    const data = new Reservacion ({usuario:usuarioCorreo,habitaciones:arrHabitacion,servicios:arrServicio,paquetes:arrPaquete,fechaInicio:fechaInicio,fechaFin:fechaFin,costo:costo});
+    const data = new Reservacion ({usuario:usuarioCorreo,habitaciones:arrHabitacion,servicios:arrServicio,paquetes:arrPaquete,fechaInicio:fechaInicio,fechaFin:fechaFin,costo:costo,estado:'I',fechaReserva:today,nroPerson:nroPerson});
     //res.status(201).json(await data.save());
     await data.save();
     res.status(201).json("Se registró con éxito su reserva, pero esta pendiente el pago");

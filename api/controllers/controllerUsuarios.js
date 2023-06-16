@@ -142,4 +142,18 @@ const  postLogin= async (req, res) => {
     }
   }
 
-  module.exports={postRegistro, postLogin, deleteUsuario,getUsuario,putUsuario,postNotification};
+  const getUsuarioByCorreo = async (req,res) => {
+    const {correo} = req.params;
+    
+    try {
+      let usuario = await Usuario.findOne({correo:correo,activo:true});
+      if (!usuario) {return res.status(400).send("El usuario no existe")};
+            
+      return res.status(200).json(usuario);
+  } 
+  catch (error) {
+      return res.status(500).send("Internal server error");
+  }
+  };
+
+  module.exports={postRegistro, postLogin, deleteUsuario,getUsuario,putUsuario,postNotification,getUsuarioByCorreo};
