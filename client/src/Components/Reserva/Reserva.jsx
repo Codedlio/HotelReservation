@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import style from './Reserva.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector,useDispatch } from 'react-redux';
-import { getHabitacionesDisponibles , getPaquetesDisponibles, createReserva, getPaqueteById, setSelectedPaqueteA, setPrecioA, setSelectedServiceA, setSelectedRoomA, setDatesA, setAdultsA, setChildrenA, setFilteredHabitaciones } from '../redux/action';
+import { getHabitacionesDisponibles , getPaquetesDisponibles, createReserva, getPaqueteById, setSelectedPaqueteA, setPrecioA, setSelectedServiceA, setSelectedRoomA, setDatesA, setAdultsA, setChildrenA, setFilteredHabitaciones, setNombresA } from '../redux/action';
 import axios from 'axios';
 
 
@@ -49,7 +49,8 @@ function Reserva() {
       arrPaquete:loadedForm.selectedPaquete,
       fechaInicio: loadedForm.dates.checkIn,
       fechaFin: loadedForm.dates.checkOut,
-      costo: loadedForm.precio
+      costo: loadedForm.precio,
+      nombres: loadedForm.nombres
     };
     window.localStorage.setItem("dataReservation", JSON.stringify(data));
   
@@ -90,9 +91,11 @@ function Reserva() {
     if (e.target.checked) {
       dispatch(setSelectedRoomA([...loadedForm.selectedRoom, value]));
       dispatch(setPrecioA(loadedForm.precio + activeRoom.precio));
+      dispatch(setNombresA("habitaciones", [...loadedForm.nombres.habitaciones, activeRoom.nombre]))
     } else {
       dispatch(setSelectedRoomA(loadedForm.selectedRoom.filter(room => room !== value)));
       dispatch(setPrecioA(loadedForm.precio - activeRoom.precio));
+      dispatch(setNombresA("habitaciones", loadedForm.nombres.habitaciones.filter(room => room !== activeRoom.nombre)));
     }   
   };
 
@@ -102,21 +105,25 @@ function Reserva() {
     if (e.target.checked) {
       dispatch(setSelectedServiceA([...loadedForm.selectedService, value]));
       dispatch(setPrecioA(loadedForm.precio + activeService.precio));
+      dispatch(setNombresA("servicios", [...loadedForm.nombres.servicios, activeService.nombre]));
     } else {
       dispatch(setSelectedServiceA(loadedForm.selectedService.filter(service => service !== value)));
       dispatch(setPrecioA(loadedForm.precio - activeService.precio));
+      dispatch(setNombresA("servicios", loadedForm.nombres.servicios.filter(service => service !== activeService.nombre)));
     }
   };
 
   const handlePaqueteChange = (e) => {
     const value = e.target.value;
-    let activeRoom = paquetes.find(room => room._id === value)
+    let activePaquete = paquetes.find(room => room._id === value)
     if (e.target.checked) {      
       dispatch(setSelectedPaqueteA([...loadedForm.selectedPaquete, value]));
-      dispatch(setPrecioA(loadedForm.precio + activeRoom.costo));
+      dispatch(setPrecioA(loadedForm.precio + activePaquete.costo));
+      dispatch(setNombresA("paquete", [...loadedForm.nombres.paquete, activePaquete.nombre]))
     } else {      
-      dispatch(setSelectedPaqueteA(loadedForm.selectedPaquete.filter(room => room !== value))); 
-      dispatch(setPrecioA(loadedForm.precio - activeRoom.costo));
+      dispatch(setSelectedPaqueteA(loadedForm.selectedPaquete.filter(paquete => paquete !== value))); 
+      dispatch(setPrecioA(loadedForm.precio - activePaquete.costo));
+      dispatch(setNombresA("paquete", loadedForm.nombres.paquete.filter(paquete => paquete !== activePaquete.nombre)));
     }
   };
 

@@ -26,6 +26,7 @@ export const SET_DATES = "SET_DATES";
 export const SET_PRECIO = "SET_PRECIO";
 export const SET_SELECTEDPAQUETE = "SET_SELECTEDPAQUETE";
 export const FILTER_NAME_PAQUETE = "FILTER_NAME_PAQUETE";
+export const SET_NOMBRESFORM = "SET_NOMBRESFORM";
 
 
 export const setOrderByName = (orderType) => {
@@ -214,3 +215,6 @@ export const setSelectedPaqueteA = (array) => {
   return {type: SET_SELECTEDPAQUETE, payload: array}
 }
 
+export const setNombresA = (key, array) => {
+  return {type:SET_NOMBRESFORM, payload: {key,array}}
+}
