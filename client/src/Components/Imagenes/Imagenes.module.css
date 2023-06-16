@@ -1,4 +1,5 @@
 .container{
-  position: relative;
-  bottom: 80px;
+ margin-top: 70px;
+ max-width: 100vw;
+ min-width: 100vw;
 }

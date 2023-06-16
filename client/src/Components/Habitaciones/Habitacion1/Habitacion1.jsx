@@ -126,7 +126,7 @@ const Habitacion1 = () => {
                 src={imagen}
                 alt="Slide"
                 width="100%"
-                height="750px"
+                height="650px"
               />
               <Carousel.Caption>
                 {/* <h3>Second slide label</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p> */}
