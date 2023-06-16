@@ -29,7 +29,12 @@ export const FILTER_NAME_PAQUETE = "FILTER_NAME_PAQUETE";
 export const GET_USUARIO_BY_CORREO = "GET_USUARIO_BY_CORREO";
 export const DELETE_DETAIL_CAR = "DELETE_DETAIL_CAR";
 export const CLEAR_ALL_CAR = "CLEAR_ALL_CAR";
-
+export const ALL_RESENA ='ALL_RESENA';
+export const DATA_USUARIO ='DATA_USUARIO';
+export const RESENA_USUARIO='RESENA_USUARIO';
+export const POST_RESENA='POST_RESENA';
+export const DELETE_RESENA='DELETE_RESENA';
+export const USUARIO_RESERVACION='USUARIO_RESERVACION';
 
 export const setOrderByName = (orderType) => {
   return {
@@ -230,4 +235,63 @@ export const setPrecioA = (number) => {
 export const setSelectedPaqueteA = (array) => {
   return {type: SET_SELECTEDPAQUETE, payload: array}
 }
-
+export const getAllResena=()=>{
+  return async (dispatch) => {
+      try {
+          const getAll = await axios.get("/resena");
+         
+          return dispatch({ type:ALL_RESENA, payload: getAll.data });
+          
+      } catch (error) { console.log(error.message) }
+  }
+}
+export const getUsuariobyEmail=(email)=>{
+  return async (dispatch) => {
+      try {
+          const getUsuario = await axios.get(`/infoUsuario/${email}`);
+         
+          return dispatch({ type:DATA_USUARIO, payload: getUsuario.data });
+          
+      } catch (error) { console.log(error.message) }
+  }
+}
+export const getResenaUsuario=(email)=>{
+  return async (dispatch) => {
+      try {
+          const getUsuario = await axios.get(`/resena/${email}`);
+         
+          return dispatch({ type:RESENA_USUARIO, payload: getUsuario.data });
+          
+      } catch (error) { console.log(error.message) }
+  }
+}
+export const postResena =(resena)=>{
+  return async (dispatch) => {
+    try {
+      const dataResena = await axios.post(`/resena`, resena);
+     
+      return dispatch({ type:POST_RESENA, payload: dataResena.data });
+      
+  } catch (error) { console.log(error.message) }
+  }
+}
+export const deleteResena=(id)=>{
+  return async (dispatch) => {
+    try {
+      const dataDelete = await axios.delete(`/resena/${id}`);
+     
+      return dispatch({ type:DELETE_RESENA, payload: dataDelete.data });
+      
+  } catch (error) { console.log(error.message) }
+  }
+}
+export const getReservationUsuario=(usuario)=>{
+  return async (dispatch) => {
+    try {
+      const dataReservation = await axios.get(`/reservation/${usuario}`);
+     
+      return dispatch({ type:USUARIO_RESERVACION, payload: dataReservation.data });
+      
+  } catch (error) { console.log(error.message) }
+  }
+}

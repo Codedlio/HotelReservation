@@ -176,7 +176,7 @@ const postReservacion = async (req,res) => {
   //let {usuarioCorreo,arrHabitacion,arrServicio,arrPaquete,fechaInicio,fechaFin,costo} = req.body;
   let {usuarioCorreo,arrHabitacion,arrServicio,arrPaquete,fechaInicio,fechaFin,costo,nroPerson} = req.body;
 
-  //if (!usuarioCorreo || !fechaInicio || !fechaFin||!costo) {return res.status(400).send("Error. No se enviaron los datos necesarios para crear la reserva")};
+  if (!usuarioCorreo || !fechaInicio || !fechaFin||!costo) {return res.status(400).send("Error. No se enviaron los datos necesarios para crear la reserva")};
   
   //fechaInicio = new Date(fechaInicio);
   //fechaFin = new Date(fechaFin);
@@ -207,6 +207,7 @@ const postReservacion = async (req,res) => {
     //const data = new Reservacion ({usuario:usuarioCorreo,habitaciones:arrHabitacion,servicios:arrServicio,paquete:arrPaquete,fechaInicioParseado,fechaFinParseado,costo});
     const data = new Reservacion ({usuario:usuarioCorreo,habitaciones:arrHabitacion,servicios:arrServicio,paquete:arrPaquete,fechaInicio:fechaInicio,fechaFin:fechaFin,costo:costo});
     //res.status(201).json(await data.save());
+    await checkReservation({usuarioCorreo,arrHabitacion,arrServicio,arrPaquete,fechaInicio,fechaFin,costo})
     await data.save();
     res.status(201).json("Se registró con éxito su reserva, pero esta pendiente el pago");
   }

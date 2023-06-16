@@ -39,7 +39,8 @@ import AdminServicios from './Components/AdminServicios/AdminServicios';
 import IndicadorReservas from './Components/IndicadorReservas/IndicadorReservas';
 import IndicadorReclamos from './Components/IndicadorReclamos/IndicadorReclamos';
 import IndicadorUsuarios from './Components/IndicadorUsuarios/IndicadorUsuarios';
-
+import PerfilUsuario from './Components/PerfilUsuario/PerfilUsuario.jsx'
+import axios from 'axios'
 axios.defaults.baseURL =  "http://localhost:3001" || "http://back-hoteleternopf-production.up.railway.app" ;
 
 function App() {
@@ -85,6 +86,7 @@ function App() {
           <Route path="/indicadorReservas" element={<IndicadorReservas />} />
           <Route path="/indicadorReclamos" element={<IndicadorReclamos />} />
           <Route path="/indicadorUsuarios" element={<IndicadorUsuarios />} />        
+          <Route path="/perfilUsuario" element={<PerfilUsuario />} />
           
 
           <Route path="/" element={<Home />} />

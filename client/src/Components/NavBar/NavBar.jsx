@@ -18,8 +18,6 @@ import { setUsuario } from '../redux/action';
 import { auth } from "../Loging/firebase";
 import Cookies from 'js-cookie';
 
-
-import React from "react";
 import { Nav } from 'rsuite';
 import style from './NavBar.module.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -191,13 +189,25 @@ function NavBar() {
     setMostrarCarrito(true);
   }
 }}>
-          {usuarioReg.admin !== true &&
+      {usuario && (
+        <Link to="/perfilUsuario" className={style.container}>
+          <h4>{usuarioArray.nombre}</h4>
+            {usuarioArray.image && usuarioArray.image.length > 0  ? (
+          <img src={usuarioArray.image} alt="" />
+          ) : (
+          <img src={"https://cdn-icons-png.flaticon.com/128/1077/1077063.png"} alt="" />
+           )}
+        </Link> )}
+
+        {usuarioReg.admin !== true &&
           <Link className={style.carritolink} to="/detallereserva">
           <FontAwesomeIcon icon={faCartPlus} />
         </Link>}
         </button>
 
         
+        {mostrarCarrito ? (
+          reserva ? (
             <Carrito reserva={reserva} />
           ) : (
             
@@ -212,7 +222,3 @@ function NavBar() {
 }
 
 export default NavBar;
-
-
-
-

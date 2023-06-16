@@ -3,6 +3,8 @@ const Usuario= require('../models/Usuario');
 const bcrypt = require('bcrypt');
 const { ObjectId } = require('mongoose').Types;
 const { sendWelcomeEmail,sugerenciaCliente } = require("../config/sendgridEmail.js");
+const { usuarioImage } = require("../cloudinary/cloudinary.js");
+const fs = require("fs-extra");
 const jwt= require('jsonwebtoken');
 require('dotenv').config();
 
