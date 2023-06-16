@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import style from './Paquetes.module.css';
 import NavBar from '../NavBar/NavBar';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPaquetes, orderxPaquetes, filterNamePaquete } from '../redux/action';
+import { getPaquetes, orderxPaquetes, filterNamePaquete, filterMinPrecioPaquete, filterMaxPrecioPaquete } from '../redux/action';
 import { Link } from "react-router-dom";
 import FooterBar from '../FooterBar/FooterBar'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,14 +10,26 @@ import { faArrowUp, faArrowDown, faMinus, faPlus } from "@fortawesome/free-solid
 
 
 const PaginationPaquetes = () => {
+  const dispatch = useDispatch();
+
   let [nombre, setName] = useState("");
   let data = useSelector((state) => state.allpaquetes);
-  data = useSelector((state) => state.orderPaquetes);
-  const dispatch = useDispatch();
+  let filtersPaquetes = useSelector((state) => state.filtersPaquetes);
+
+  if (filtersPaquetes.searchQuery !== '') {
+    data = data.filter(paquete => paquete.nombre.toLowerCase().includes(filtersPaquetes.searchQuery.toLowerCase()));
+  };
+  if (filtersPaquetes.minPrice !== '') {
+    data = data.filter(paquete => paquete.costo >= filtersPaquetes.minPrice);
+  };
+  if (filtersPaquetes.maxPrice !== '') {
+    data = data.filter(paquete => paquete.costo <= filtersPaquetes.maxPrice);
+  };
 
   useEffect(() => {
     dispatch(getPaquetes());
-  }, [dispatch])
+  }, [dispatch]);
+
   const itemsPerPage = 3;
   const [currentPage, setCurrentPage] = useState(1);
   let totalPages = Math.ceil(data.length / itemsPerPage);
@@ -42,15 +54,18 @@ const PaginationPaquetes = () => {
   };
   const handleChange = (event) => {
     setName(event.target.value);
-    console.log("handleChange-name-set");
-    console.log(nombre);
-  }
+  };
   const handleFilterNames = (event) => {
     event.preventDefault();
-    console.log("handleFilterNames-name");
-    console.log(nombre);
     dispatch(filterNamePaquete(nombre));
-  }
+  };
+  const handleFilterMinPrecio = (event) => {
+    dispatch(filterMinPrecioPaquete(event.target.value));
+  };
+  const handleFilterMaxPrecio = (event) => {
+    dispatch(filterMaxPrecioPaquete(event.target.value));
+  };
+
   let ArrayImagen = [];
   let urlImage = "";
 
@@ -148,7 +163,23 @@ const PaginationPaquetes = () => {
             <input placeholder="Buscar Paquete" className={style.searchInput} onChange={handleChange} type="search" nombre="search" value={nombre} />
             <button className={style.searchButton} onClick={handleFilterNames}>Search 🔎</button>
           </div>
-
+          <input 
+            type="number"
+            placeholder="Precio mínimo"
+            name="minPrecio"
+            value={filtersPaquetes.minPrice}
+            onChange={handleFilterMinPrecio}
+            className={style.searchInput}   
+          />
+          
+          <input 
+            type="number"
+            placeholder="Precio máximo"
+            name="maxPrecio"
+            value={filtersPaquetes.maxPrice}
+            onChange={handleFilterMaxPrecio}
+            className={style.searchInput}
+          />
         </div>
         <div className={style.cardsPerPage}>{renderPaquetes()}</div>
         <ul className={style.paginationCards}>{renderPagination()}</ul>

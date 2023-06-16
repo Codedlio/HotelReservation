@@ -26,6 +26,8 @@ export const SET_DATES = "SET_DATES";
 export const SET_PRECIO = "SET_PRECIO";
 export const SET_SELECTEDPAQUETE = "SET_SELECTEDPAQUETE";
 export const FILTER_NAME_PAQUETE = "FILTER_NAME_PAQUETE";
+export const FILTER_MIN_PRECIO_PAQUETE = "FILTER_MIN_PRECIO_PAQUETE";
+export const FILTER_MAX_PRECIO_PAQUETE = "FILTER_MAX_PRECIO_PAQUETE";
 export const SET_NOMBRESFORM = "SET_NOMBRESFORM";
 
 
@@ -84,8 +86,11 @@ export function getPaqueteById(id) {
         payload: response})
   }
 }
+
 export const orderxPaquetes = (order) => { return { type: ORDER_PAQUETES, payload: order } }
 export const filterNamePaquete = (filter) => { return { type: FILTER_NAME_PAQUETE, payload: filter } }
+export const filterMinPrecioPaquete = (precio) => { return { type: FILTER_MIN_PRECIO_PAQUETE, payload: precio}}
+export const filterMaxPrecioPaquete = (precio) => { return { type: FILTER_MAX_PRECIO_PAQUETE, payload: precio}}
 
 export const createReserva = (reserva) =>{ 
   let url = `http://localhost:3001/reservation`;
