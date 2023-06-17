@@ -2,7 +2,6 @@
 import React from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
 
-
 import style from './NavBar.module.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInstagram, faFacebook, faTwitter, } from "@fortawesome/free-brands-svg-icons";
@@ -18,10 +17,6 @@ import { setUsuario } from '../redux/action';
 import { Nav as nav } from 'rsuite';
 import { auth } from "../Loging/firebase";
 import Cookies from 'js-cookie';
-
-
-
-//import Carrito from '../Carrito/Carrito';
 
 function NavBar() {
   const token = Cookies.get('token');
