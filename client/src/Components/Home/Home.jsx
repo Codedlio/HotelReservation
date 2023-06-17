@@ -15,6 +15,7 @@ import Servicios from "../Servicios/Servicios/Servicios";
 import { useDispatch, useSelector } from "react-redux";
 import { getHabitaciones,getUsuarioByCorreo } from "../redux/action";
 import Cookies from 'js-cookie';
+import Resena from '../Resena/Resena'
 
 function Home() {
   const dispatch = useDispatch();
@@ -65,9 +66,8 @@ function Home() {
         <FontAwesomeIcon icon={faWhatsapp} />
       </a>
       <NavBar />
-      
       <VideoPlayer  />
-      
+
       {usuarioReg.admin !== true &&                         
           <Caracteristicas />
       } 
@@ -76,7 +76,7 @@ function Home() {
       } 
       {usuarioReg.admin !== true &&                         
           <Habitaciones />  
-      }   
+      }     
 
       <Link
         to="top"
@@ -88,7 +88,7 @@ function Home() {
       >
         <FontAwesomeIcon icon={faArrowUp} />
       </Link>
-      
+      <Resena />
       {usuarioReg.admin !== true &&                         
           <Servicios />  
       }  

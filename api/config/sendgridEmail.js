@@ -11,7 +11,7 @@ async function sendWelcomeEmail(correo,nombre) {
 
   const msg = {
     to: correo,
-    from: 'corolimajose@gmail.com',
+    from: 'hoteleterno5@gmail.com',
     subject:`Welcome ${nombre}`,
     html: `<html>
     <head>
@@ -69,10 +69,13 @@ try {
    
   };
 
-    async function checkReservation (usuarioCorreo,arrIdHabitaciones,arrIdServicios,arrIdPaquetes,fechaInicio,fechaFin){
-    const msg = {
+    async function checkReservation({ usuarioCorreo, arrHabitacion, arrServicio, arrPaquete, fechaInicio, fechaFin, costo }) {
+      
+      
+      
+      const msg = {
       to:usuarioCorreo,
-      from: 'corolimajose@gmail.com',
+      from: 'hoteleterno5@gmail.com',
       subject:`Reserva, Hotel Eterno`,
       html: `<html>
       <head>
@@ -107,15 +110,19 @@ try {
           <p><strong>Fecha de Salida:</strong> ${fechaFin}</p>
           <p><strong>Habitaciones:</strong></p>
           <ul>
-            ${arrIdServicios}
+           ${arrHabitacion}
           </ul>
           <p><strong>Servicios Adicionales:</strong></p>
           <ul>
-            ${arrIdHabitaciones}
+            ${arrServicio}
           </ul>
           <p><strong>Paquetes Especiales:</strong></p>
           <ul>
-            ${arrIdPaquetes}
+            ${arrPaquete}
+          </ul>
+          <p><strong>Costo:</strong></p>
+          <ul>
+            USD ${costo}
           </ul>
           <p>Si tiene alguna pregunta o requiere asistencia adicional, no dude en contactarnos. ¡Estamos aquí para ayudarlo!</p>
           <p>Esperamos que disfrute de su estadía en el Hotel Eterno y que tenga una experiencia inolvidable.</p>
@@ -137,7 +144,7 @@ try {
   async function sugerenciaCliente(name, email,phone,subject,description ) {
 
     const msg = {
-      to: 'corolimajose@gmail.com',
+      to: 'hoteleterno5@gmail.com',
       from: 'corolimajose@proton.me',
       subject:subject,
       html:`

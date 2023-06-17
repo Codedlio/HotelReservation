@@ -14,15 +14,16 @@ import { useDispatch, useSelector } from "react-redux";
 import Carrito from '../Carrito/Carrito';
 import {onAuthStateChanged  } from "firebase/auth";
 import { setUsuario } from '../redux/action';
+import { Nav as nav } from 'rsuite';
 import { auth } from "../Loging/firebase";
 import Cookies from 'js-cookie';
-
 
 function NavBar() {
   const token = Cookies.get('token');
   const emailToken = Cookies.get('emailToken');
   const location = useLocation();
   const dispatch = useDispatch();
+  const usuarioArray = useSelector(state => state.usuarioArray);
   const usuario = useSelector(state => state.usuario);
   const [currentPage, setCurrentPage] = useState(1);
   const [mostrarCarrito, setMostrarCarrito] = useState(false);
@@ -172,7 +173,18 @@ function NavBar() {
     setMostrarCarrito(true);
   }
 }}>
-          {usuarioReg.admin !== true &&
+      {usuario && (
+        <Link to="/perfilUsuario" className={style.container}>
+          <h4>{usuarioArray.nombre}</h4>
+            {usuarioArray.image && usuarioArray.image.length > 0  ? (
+          <img style={{ borderRadius: '1vh', width: '6vh', }} src={usuarioArray.image} alt="" />
+          ) : (
+          <img style={{ borderRadius: '1vh', width: '6vh', }} 
+          src={"https://cdn-icons-png.flaticon.com/128/1077/1077063.png"} alt="" />
+           )}
+        </Link> )}
+
+        {usuarioReg.admin !== true &&
           <Link className={style.carritolink} to="/detallereserva">
           <FontAwesomeIcon icon={faCartPlus} />
         </Link>}
@@ -195,7 +207,3 @@ function NavBar() {
 }
 
 export default NavBar;
-
-
-
-

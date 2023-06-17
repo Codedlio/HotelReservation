@@ -1,6 +1,6 @@
 // reducer.js
 
-import { SET_ORDER_BY_NAME, SET_ORDER_BY_CAPACITY, SET_ORDER_BY_PRICE, GET_PAQUETES,SET_CURRENT_PAGE, SET_USUARIO, SUGERENCIA_EMAIL, DELETE_USUARIO, GET_HABITACIONES, SET_FILTERED_HABITACIONES, GET_HABITACIONES_DISPONIBLES,ORDER_PAQUETES,GET_PAQUETES_BY_ID,GET_RESERVA_BY_USER, SET_ADULTS, SET_CHILDREN, SET_DATES, SET_PRECIO, SET_SELECTEDROOM, SET_SELECTEDSERVICE, SET_SELECTEDPAQUETE,FILTER_NAME_PAQUETE, GET_PAQUETES_DISPONIBLES, SET_FILTERS,GET_USUARIO_BY_CORREO,DELETE_DETAIL_CAR,CLEAR_ALL_CAR,FILTER_MIN_PRECIO_PAQUETE, FILTER_MAX_PRECIO_PAQUETE} from "./action";
+import { SET_ORDER_BY_NAME, SET_ORDER_BY_CAPACITY, SET_ORDER_BY_PRICE, GET_PAQUETES,SET_CURRENT_PAGE, SET_USUARIO, SUGERENCIA_EMAIL, DELETE_USUARIO, GET_HABITACIONES, SET_FILTERED_HABITACIONES, GET_HABITACIONES_DISPONIBLES,ORDER_PAQUETES,GET_PAQUETES_BY_ID,GET_RESERVA_BY_USER, SET_ADULTS, SET_CHILDREN, SET_DATES, SET_PRECIO, SET_SELECTEDROOM, SET_SELECTEDSERVICE, SET_SELECTEDPAQUETE,FILTER_NAME_PAQUETE, GET_PAQUETES_DISPONIBLES, SET_FILTERS,GET_USUARIO_BY_CORREO,DELETE_DETAIL_CAR,CLEAR_ALL_CAR,FILTER_MIN_PRECIO_PAQUETE, FILTER_MAX_PRECIO_PAQUETE,ALL_RESENA, DATA_USUARIO, RESENA_USUARIO, POST_RESENA, DELETE_RESENA,USUARIO_RESERVACION} from "./action";
 
 const initialState = {
   orderByName: '',
@@ -10,7 +10,11 @@ const initialState = {
   orderPaquetes: [],
   filtersPaquetes: {searchQuery:'', minPrice:'', maxPrice:''},
   set_Current_Page: [],
+  allResena:[],
+  resenaByUsuario:[],
   usuario: undefined,
+  usuarioArray:[],
+  reservaUsuario:[],
   gethabitaciones: [],
   habitaciones: [],
   filteredhabitaciones: [],
@@ -179,30 +183,41 @@ const reducer = (state = initialState, action) => {
           return { ...state, 
                 }
         }
-      
       case SET_ADULTS:
         return {...state, formulario: {...state.formulario, adults:action.payload}};
-      
+
       case SET_CHILDREN:
         return {...state, formulario:{...state.formulario, children:action.payload}};
-      
+
       case SET_SELECTEDROOM:
         return {...state, formulario: {...state.formulario, selectedRoom:action.payload}};
-      
+
       case SET_SELECTEDSERVICE:
         return {...state, formulario: {...state.formulario, selectedService:action.payload}};
 
       case SET_DATES:
         return {...state, formulario: {...state.formulario, dates:action.payload}};
-      
+
       case SET_PRECIO:
         return {...state, formulario: {...state.formulario, precio:action.payload}};
 
       case SET_SELECTEDPAQUETE:
         return {...state, formulario: {...state.formulario, selectedPaquete:action.payload}};
-        
-      default:
-        return state;
+      case ALL_RESENA:
+          return{ ...state, allResena:action.payload}
+      case DATA_USUARIO:
+          return{ ...state, usuarioArray:action.payload}
+      case RESENA_USUARIO:
+            return{ ...state, resenaByUsuario:action.payload }
+      case POST_RESENA:
+            return{ ...state,}
+      case DELETE_RESENA:
+            return{ ...state,}
+      case USUARIO_RESERVACION:
+            const dataReservacion= Array.isArray(action.paylaod)?action.paylaod:[action.paylaod]
+            return{...state, reservaUsuario:dataReservacion}
+    default:
+      return state;
   }
 };
 
