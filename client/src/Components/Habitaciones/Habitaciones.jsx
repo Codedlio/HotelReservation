@@ -60,13 +60,13 @@ class Habitaciones extends React.Component {
       );
     }
 
-    if (this.props.filters.minPrice !== 0) {
+    if (this.props.filters.minPrice !== '') {
       habitacionesFiltradas = habitacionesFiltradas.filter((habitacion) => 
         habitacion.precio >= this.props.filters.minPrice
       )
     }
 
-    if (this.props.filters.maxPrice !== 0) {
+    if (this.props.filters.maxPrice !== '') {
       habitacionesFiltradas = habitacionesFiltradas.filter((habitacion) => 
         habitacion.precio <= this.props.filters.maxPrice
       )

@@ -1,6 +1,7 @@
 
 import React from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
+
 import style from './NavBar.module.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInstagram, faFacebook, faTwitter, } from "@fortawesome/free-brands-svg-icons";
@@ -15,6 +16,7 @@ import {onAuthStateChanged  } from "firebase/auth";
 import { setUsuario } from '../redux/action';
 import { auth } from "../Loging/firebase";
 import Cookies from 'js-cookie';
+
 
 function NavBar() {
   const token = Cookies.get('token');
