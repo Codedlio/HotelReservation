@@ -66,10 +66,17 @@ function Home() {
         <FontAwesomeIcon icon={faWhatsapp} />
       </a>
       <NavBar />
-      <VideoPlayer />
-      <Caracteristicas />
-      <Imagenes />
-      <Habitaciones />  
+      <VideoPlayer  />
+
+      {usuarioReg.admin !== true &&                         
+          <Caracteristicas />
+      } 
+      {usuarioReg.admin !== true &&                         
+          <Imagenes />
+      } 
+      {usuarioReg.admin !== true &&                         
+          <Habitaciones />  
+      }     
 
       <Link
         to="top"
@@ -81,7 +88,7 @@ function Home() {
       >
         <FontAwesomeIcon icon={faArrowUp} />
       </Link>
-      
+      <Resena />
       {usuarioReg.admin !== true &&                         
           <Servicios />  
       }  

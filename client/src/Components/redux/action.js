@@ -69,7 +69,7 @@ export const getPaquetes = () => {
 export function getPaquetesDisponibles (fechaInicio,fechaFin) {
   return async function (dispatch) {
     try {
-      const response = (await axios.get(`http://localhost:3001/paquete/disponible?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`)).data;
+      const response = (await axios.get(`/paquete/disponible?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`)).data;
       console.log(response);
       return dispatch ({
         type: GET_PAQUETES_DISPONIBLES,
@@ -112,7 +112,7 @@ export const createReserva = (reserva) =>{
 
  export function getUsuarioByCorreo(correo) {
   return async function (dispatch) {    
-      const response = (await axios.get(`http://localhost:3001/auth/correo/`+correo)).data
+      const response = (await axios.get(`/auth/correo/`+correo)).data
       return dispatch({
         type: GET_USUARIO_BY_CORREO, 
         payload: response})

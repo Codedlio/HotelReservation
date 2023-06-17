@@ -191,17 +191,37 @@ const reducer = (state = initialState, action) => {
           return { ...state, 
                 }
         }
-        case ALL_RESENA:
+      case SET_ADULTS:
+        return {...state, formulario: {...state.formulario, adults:action.payload}};
+
+      case SET_CHILDREN:
+        return {...state, formulario:{...state.formulario, children:action.payload}};
+
+      case SET_SELECTEDROOM:
+        return {...state, formulario: {...state.formulario, selectedRoom:action.payload}};
+
+      case SET_SELECTEDSERVICE:
+        return {...state, formulario: {...state.formulario, selectedService:action.payload}};
+
+      case SET_DATES:
+        return {...state, formulario: {...state.formulario, dates:action.payload}};
+
+      case SET_PRECIO:
+        return {...state, formulario: {...state.formulario, precio:action.payload}};
+
+      case SET_SELECTEDPAQUETE:
+        return {...state, formulario: {...state.formulario, selectedPaquete:action.payload}};
+      case ALL_RESENA:
           return{ ...state, allResena:action.payload}
-          case DATA_USUARIO:
+      case DATA_USUARIO:
           return{ ...state, usuarioArray:action.payload}
-          case RESENA_USUARIO:
+      case RESENA_USUARIO:
             return{ ...state, resenaByUsuario:action.payload }
-          case POST_RESENA:
+      case POST_RESENA:
             return{ ...state,}
-          case DELETE_RESENA:
+      case DELETE_RESENA:
             return{ ...state,}
-          case USUARIO_RESERVACION:
+      case USUARIO_RESERVACION:
             const dataReservacion= Array.isArray(action.paylaod)?action.paylaod:[action.paylaod]
             return{...state, reservaUsuario:dataReservacion}
     default:

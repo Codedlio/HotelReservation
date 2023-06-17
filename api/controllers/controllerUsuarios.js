@@ -78,7 +78,7 @@ const  postLogin= async (req, res) => {
       }
       const { correo, contraseña, telefono, nombre, activo } = req.body;
   
-      // if (!correo || !contraseña || !telefono || !nombre) {
+      // if (!correo || !telefono || !nombre) {
       //   return res.status(400).json({ mensaje: 'Faltan campos obligatorios' });
       // }
   

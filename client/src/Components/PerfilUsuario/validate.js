@@ -1,3 +1,5 @@
+const regexTelefono = /^\+\d{1,3}\s?\d{4,}$/;
+
 const validate = (object) => {
     let error = {};
     if(object.descripcion.length < 15) {error.descripcion = "Descripcion debe tener al menos 15 caracteres"};
@@ -6,4 +8,6 @@ const validate = (object) => {
 
 return error;
 };
+
+
 export default validate;

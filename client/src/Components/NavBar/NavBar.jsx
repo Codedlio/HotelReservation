@@ -15,24 +15,13 @@ import { useDispatch, useSelector } from "react-redux";
 import Carrito from '../Carrito/Carrito';
 import {onAuthStateChanged  } from "firebase/auth";
 import { setUsuario } from '../redux/action';
+import { Nav as nav } from 'rsuite';
 import { auth } from "../Loging/firebase";
 import Cookies from 'js-cookie';
 
-import { Nav } from 'rsuite';
-import style from './NavBar.module.css';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faInstagram, faFacebook, faTwitter, } from "@fortawesome/free-brands-svg-icons";
-import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
-import imagen from './logo hotel.png';
-import { Link, useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { deleteUsuario,getUsuarioByCorreo } from "../redux/action";
-import { useDispatch, useSelector } from "react-redux";
-import Carrito from '../Carrito/Carrito';
-import {onAuthStateChanged  } from "firebase/auth";
-import { setUsuario } from '../redux/action';
-import { auth } from "../Loging/firebase";
-import Cookies from 'js-cookie';
+
+
+//import Carrito from '../Carrito/Carrito';
 
 function NavBar() {
   const token = Cookies.get('token');
@@ -193,9 +182,10 @@ function NavBar() {
         <Link to="/perfilUsuario" className={style.container}>
           <h4>{usuarioArray.nombre}</h4>
             {usuarioArray.image && usuarioArray.image.length > 0  ? (
-          <img src={usuarioArray.image} alt="" />
+          <img style={{ borderRadius: '1vh', width: '6vh', }} src={usuarioArray.image} alt="" />
           ) : (
-          <img src={"https://cdn-icons-png.flaticon.com/128/1077/1077063.png"} alt="" />
+          <img style={{ borderRadius: '1vh', width: '6vh', }} 
+          src={"https://cdn-icons-png.flaticon.com/128/1077/1077063.png"} alt="" />
            )}
         </Link> )}
 

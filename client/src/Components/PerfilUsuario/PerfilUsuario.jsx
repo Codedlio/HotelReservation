@@ -24,7 +24,6 @@ const PerfilUsuario=()=>{
       puntuacion: 0,
       descripcion: "",
     })
-  
 
     const [nombre, setNombre] = useState('');
     const [phone, setPhone] = useState('');
@@ -32,12 +31,12 @@ const PerfilUsuario=()=>{
     const [editing, setEditing] = useState(false);
 
     const handleNombreChange = (event) => {
-    setNombre(event.target.value);
+      setNombre(event.target.value); 
     };
 
     const handlePhoneChange = (event) => {
-    setPhone(event.target.value);
-    };
+      setPhone(event.target.value);
+  };
 
     const handleImagenChange = (event) => {
     setImagen(event.target.files[0]);
@@ -58,12 +57,9 @@ const PerfilUsuario=()=>{
         }
       })
       .then(response => {
-        
-        console.log(response.data);
         dispatch(getUsuariobyEmail(data.correo))
       })
-      .catch(error => {
-        
+      .catch(error => { 
         console.error(error);
       });
     }
@@ -96,8 +92,8 @@ const PerfilUsuario=()=>{
     
     const handleSubmit = (event) => {
       event.preventDefault();
-    
-      if(validateResena(dataReservacion)){
+      
+      if(validateResena(dataReservacion)&& Object.values(error).length === 0){
         dispatch(postResena(resena));
         setResena({
           nombre: "",
@@ -124,9 +120,6 @@ const PerfilUsuario=()=>{
     }else{setEditing(false)};
   };
 
-    console.log(resenaArray);
-    console.log(data);
-    console.log(dataReservacion);
   return (
     <div className={style.container}>
       <div className={style.usuario}>
@@ -160,15 +153,15 @@ const PerfilUsuario=()=>{
             <div> <button onClick={handleEditarClick}>x</button></div>
             <div>
               <label htmlFor="nombre">Nombre:</label>
-              <input type="text" id="nombre" value={nombre} onChange={handleNombreChange} />
+              <input type="text" name="nombre" value={nombre} onChange={handleNombreChange} />
             </div>
             <div>
-              <label htmlFor="correo">Telefono:</label>
-              <input type="correo" id="correo" value={data.correo}  />
+              <label htmlFor="correo">Correo:</label>
+              <input type="correo" name="correo" value={data.correo}  />
             </div>
             <div>
               <label htmlFor="phone">Telefono:</label>
-              <input type="phone" value={phone} onChange={handlePhoneChange} />
+              <input type="phone" name='phone' value={phone} onChange={handlePhoneChange} />
             </div>
             <div>
               <label htmlFor="imagen">Imagen:</label>
