@@ -19,7 +19,7 @@ function DetalleReserva() {
     if (emailToken)    
         dispatch(getReservaByUsuario(emailToken));
   }, [dispatch])
-  
+  console.log(reserva[0]);
   const handleSelect = (selectedIndex, e) => {
     setIndex(selectedIndex);
   };
@@ -44,9 +44,9 @@ function DetalleReserva() {
     if (localData && localReservation && reserva) {
       const data = JSON.parse(localData);
       const datares = JSON.parse(localReservation);
-      console.log(reserva[0].paquete,reserva[0].habitaciones);
-      const habitaciones=reserva[0].habitaciones
-      const paquetes=reserva[0].paquete
+      console.log(reserva);
+      const habitaciones=reserva[0].Arrayhabitaciones
+      const paquetes=reserva[0].Arraypaquete
       try {
         const response = await axios.post("http://localhost:3001/payment/checkout", {
           custumerId: data,
