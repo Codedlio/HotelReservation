@@ -128,6 +128,7 @@ const NavBar = () => {
             <Link className={style.link} to='/adminHabitaciones'>Habitaciones</Link>
             <Link className={style.link} to='/adminPaquetes'>Paquetes</Link>
             <Link className={style.link} to='/adminServicios'>Servicios</Link>
+            <Link className={style.link} to='/adminUsuarios'>Usuarios</Link>
           </div>
         </div>   
         <div className={style.dropdown} > 
