@@ -37,6 +37,8 @@ import {
   DELETE_RESENA,
   USUARIO_RESERVACION,
   GET_SERVICIOS,
+  GET_TIPOS,
+  GET_HABITACIONES_ADMIN,
 } from "./action";
 
 const initialState = {
@@ -69,6 +71,7 @@ const initialState = {
     precio: 0,
     selectedPaquete: [],
   },
+  tipos: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -229,6 +232,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         gethabitaciones: action.payload,
       };
+    case GET_HABITACIONES_ADMIN:
+      return {
+        ...state,
+        gethabitaciones: action.payload
+      };
     case SET_FILTERED_HABITACIONES:
       return {
         ...state,
@@ -299,6 +307,13 @@ const reducer = (state = initialState, action) => {
         ...state,
         formulario: { ...state.formulario, selectedPaquete: action.payload },
       };
+
+    case GET_TIPOS:
+      return {
+        ...state,
+        tipos: action.payload
+      };
+
     case ALL_RESENA:
       return { ...state, allResena: action.payload };
     case DATA_USUARIO:

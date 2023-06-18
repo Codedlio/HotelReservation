@@ -16,7 +16,7 @@ const getReservaciones= async (req, res) => {
       }
 
       let nombresPaquetes = [];
-      for (let paqueteId of reservacion.paquete) {
+      for (let paqueteId of reservacion.paquetes) {
         const paquete = await Paquete.findById(paqueteId);
         nombresPaquetes.push(paquete.nombre);
       }
@@ -58,23 +58,31 @@ const getReservacionById = async (req,res) => {
   const {id} = req.params;
 
   try {
-    let reservacion = await Reservacion.findOne({_id:id,activo:true});
-    if (!reservacion) {return res.status(400).send("La reservación no existe")};
+    let reservacion = await Reservacion.findById(id);
+    if (!reservacion || reservacion.activo === false) {return res.status(400).send("La reservación no existe")};
 
     let nombresHabitaciones = [];
     for (let habitacionId of reservacion.habitaciones) {
-        const {nombre} = await Habitacion.find({_id:habitacionId});
+        const {nombre} = await Habitacion.findById(habitacionId);
         nombresHabitaciones.push(nombre);
     }
 
+    let nombresPaquetes = [];
+    for (let paqueteId of reservacion.paquete) {
+      const {nombre} = await Paquete.findById(paqueteId);
+      nombresPaquetes.push(nombre)
+    };
+
     let nombresServicios = [];
     for (let servicioId of reservacion.servicios) {
-        const {nombre} = await Servicio.find({_id:servicioId});
+        const {nombre} = await Servicio.findById(servicioId);
         nombresServicios.push(nombre);
     }
 
-    reservacion.habitaciones = nombresHabitaciones;
-    reservacion.servicios = nombresServicios;
+    reservacion.nombres = {};
+    reservacion.nombres.habitaciones = nombresHabitaciones;
+    reservacion.nombres.paquete = nombresHabitaciones;
+    reservacion.nombres.servicios = nombresServicios;
     
     return res.status(200).json(paquete);
   } 
@@ -173,13 +181,10 @@ catch (error) {
 };
 
 const postReservacion = async (req,res) => {
-  //let {usuarioCorreo,arrHabitacion,arrServicio,arrPaquete,fechaInicio,fechaFin,costo} = req.body;
   let {usuarioCorreo,arrHabitacion,arrServicio,arrPaquete,fechaInicio,fechaFin,costo,nroPerson} = req.body;
 
   if (!usuarioCorreo || !fechaInicio || !fechaFin||!costo) {return res.status(400).send("Error. No se enviaron los datos necesarios para crear la reserva")};
-  
-  //fechaInicio = new Date(fechaInicio);
-  //fechaFin = new Date(fechaFin);
+
   let fechaInicioParseado="";
   let fechaFinParseado="";
   let anio="";
@@ -203,10 +208,7 @@ const postReservacion = async (req,res) => {
 
   today = mm + '/' + dd + '/' + yyyy;
   try {
-    
-    //const data = new Reservacion ({usuario:usuarioCorreo,habitaciones:arrHabitacion,servicios:arrServicio,paquete:arrPaquete,fechaInicioParseado,fechaFinParseado,costo});
     const data = new Reservacion ({usuario:usuarioCorreo,habitaciones:arrHabitacion,servicios:arrServicio,paquetes:arrPaquete,fechaInicio:fechaInicio,fechaFin:fechaFin,costo:costo,estado:'I',fechaReserva:today,nroPerson:nroPerson});  
-    //res.status(201).json(await data.save());
     await checkReservation({usuarioCorreo,arrHabitacion,arrServicio,arrPaquete,fechaInicio,fechaFin,costo})
     await data.save();
     res.status(201).json("Se registró con éxito su reserva, pero esta pendiente el pago");
@@ -227,10 +229,8 @@ const postReservacion = async (req,res) => {
 const putReservacion = async (req,res) => {
   const {id} = req.params;
   const {usuarioCorreo,arrHabitacion,arrServicio,arrPaquete,fechaInicio,fechaFin, estado} = req.body;
-  //if (!usuarioCorreo || !fechaInicio || !fechaFin) {return res.status(400).send("Error. No se enviaron los datos necesarios para actualizar")};
   
   try {
-     
     const reservacion = await Reservacion.findByIdAndUpdate(id, { $set: { estado }});
     if (!reservacion) {return res.status(400).send("No se encontró la reservación en la BDD")};
     return res.status(200).json(reservacion);

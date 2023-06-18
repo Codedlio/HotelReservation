@@ -7,6 +7,7 @@ export const GET_PAQUETES = "GET_PAQUETES";
 export const GET_PAQUETES_DISPONIBLES = "GET_PAQUETES_DISPONIBLES";
 export const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 export const GET_HABITACIONES = "GET_HABITACIONES";
+export const GET_HABITACIONES_ADMIN = "GET_HABITACIONES_ADMIN";
 export const SET_FILTERED_HABITACIONES = "SET_FILTERED_HABITACIONES";
 export const SET_USUARIO = "SET_USUARIO";
 export const DELETE_USUARIO = "DELETE_USUARIO";
@@ -38,6 +39,8 @@ export const POST_RESENA = "POST_RESENA";
 export const DELETE_RESENA = "DELETE_RESENA";
 export const USUARIO_RESERVACION = "USUARIO_RESERVACION";
 export const GET_SERVICIOS = "GET_SERVICIOS";
+export const GET_TIPOS = "GET_TIPOS";
+
 export const setOrderByName = (orderType) => {
   return {
     type: SET_ORDER_BY_NAME,
@@ -166,18 +169,8 @@ export const set_Currents_Page = (currentPage) => {
 export const getHabitaciones = () => {
   return async function(dispatch) {
     try {
-      const storedData = window.sessionStorage.getItem("allHabitaciones");
-      if (storedData) {
-        const data = JSON.parse(storedData);
-        return dispatch({
-          type: GET_HABITACIONES,
-          payload: data,
-        });
-      }
-
-      const { data } = await axios.get("/habitacion");
-      window.sessionStorage.setItem("allHabitaciones", JSON.stringify(data));
-
+      let { data } = await axios.get("http://localhost:3001/habitacion");
+      data = data.filter(habitacion => habitacion.activo);
       return dispatch({
         type: GET_HABITACIONES,
         payload: data,
@@ -190,6 +183,23 @@ export const getHabitaciones = () => {
     }
   };
 };
+
+export const getHabitacionesAdmin = () => {
+  return async function (dispatch) {
+    try {
+      const { data } = await axios.get("http://localhost:3001/habitacion");
+      return dispatch({
+        type: GET_HABITACIONES_ADMIN,
+        payload: data,
+      });
+    } catch (error) {
+      return dispatch({
+        type: ERROR,
+        payload: error,
+      });
+    }
+  }
+}
 
 export const setFilteredHabitaciones = (array) => {
   return {
@@ -333,4 +343,19 @@ export const getReservationUsuario = (usuario) => {
       console.log(error.message);
     }
   };
+};
+
+export const getTipos = () => {
+  return async (dispatch) => {
+    try {
+      const {data} = await axios.get('/tipo');
+
+      return dispatch({
+        type: GET_TIPOS,
+        payload: data
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
 };
