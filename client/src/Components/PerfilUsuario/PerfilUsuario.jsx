@@ -179,21 +179,50 @@ const PerfilUsuario=()=>{
           ) : (
             dataReservacion.map((reserva) => (
               <div key={reserva._id}>
+        {reserva.Arrayhabitaciones && (
+        <div>
+          <h4>Habitaciones:</h4>
+          {reserva.Arrayhabitaciones.map((habitacion) => (
+            <div key={habitacion._id}>
+              <p>Nombre: {habitacion.nombre}</p>
+              <p>Capacidad: {habitacion.capacidad}</p>
+              <p>Precio: {habitacion.precio}</p>
+            </div>
+          ))}
+        </div>
+      )}
+        {reserva.Arraypaquete && reserva.Arraypaquete.length > 0 ? (
+        <div>
+          <h4>Paquetes:</h4>
+          {reserva.Arraypaquete.map((paquete) => (
+            <div key={paquete._id}>
+              <p>Nombre: {paquete.nombre}</p>
+              <p>Precio: {paquete.precio}</p>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p>Paquetes: No hay paquetes.</p>
+      )}
+      {reserva.ArrayServicio && reserva.ArrayServicio.length > 0 ? (
+        <div>
+          <h4>Servicios:</h4>
+          {reserva.ArrayServicio.map((servicio) => (
+            <div key={servicio._id}>
+              <p>Nombre: {servicio.nombre}</p>
+              <p>Descripción: {servicio.descripcion}</p>
+              <p>Precio: {servicio.precio}</p>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p>Servicios: No hay servicios.</p>
+      )}
+          <h4>Estado: {reserva.estado}</h4>
         
-        {reserva.habitaciones && (
-          <h4>Habitaciones: {reserva.habitaciones.join(", ")}</h4>
-        )}
-        { reserva.paquete === true && (
-          <h4>Paquete: {reserva.paquete.join(", ")}</h4>
-        )}
-        { reserva.servicios === true && (
-          <h4>Servicio:{reserva.servicios}</h4>
-        )}
         {reserva.costo && (
-          <h4>Costo: USD {reserva.costo}</h4>
+          <h4>Costo:USD {reserva.costo}</h4>
         )}
-          <h4>Estado: USD {reserva.estado}</h4>
-        
         {reserva && reserva.fechaInicio && (
           <h4>Fecha de inicio: {reserva.fechaInicio.substring(0, 10)}</h4>
         )}

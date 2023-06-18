@@ -35,6 +35,7 @@ export const RESENA_USUARIO='RESENA_USUARIO';
 export const POST_RESENA='POST_RESENA';
 export const DELETE_RESENA='DELETE_RESENA';
 export const USUARIO_RESERVACION='USUARIO_RESERVACION';
+export const DELETE_STATE_PERFIL='DELETE_STATE_PERFIL';
 
 export const setOrderByName = (orderType) => {
   return {
@@ -269,6 +270,7 @@ export const postResena =(resena)=>{
   return async (dispatch) => {
     try {
       const dataResena = await axios.post(`/resena`, resena);
+      //const dataResena = await axios.post(`http://localhost:3000/resena`, resena);
      
       return dispatch({ type:POST_RESENA, payload: dataResena.data });
       
@@ -294,4 +296,7 @@ export const getReservationUsuario=(usuario)=>{
       
   } catch (error) { console.log(error.message) }
   }
+}
+export const deleteStateResenaAndUserArr=()=>{
+  return {type:DELETE_STATE_PERFIL}
 }

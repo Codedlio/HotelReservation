@@ -41,9 +41,9 @@ async function sendWelcomeEmail(correo,nombre) {
         <h1 style="font-size: 36px;">Bienvenido al Hotel Eterno</h1>
         <img src="https://i.pinimg.com/564x/04/19/60/0419601405d7508a8a92c042675bee2d.jpg" alt="Logo del Hotel Eterno" style="max-width: 200px;">
         <p>¡Nos complace darle la bienvenida, al Hotel Eterno ! Estamos encantados de que sea parte de la comunidad y esperamos que pronto pueda visitar las instalaciones.</p>
+        <p>Algunas de las comodidades que disfrutara son amenas habitaciones, deliciosas opciones gastronómicas, instalaciones de lujo y servicios exclusivos durante su estadía en el Hotel Eterno.</p>
         <p>Desde nuestro equipo, nos esforzaremos al máximo para brindarle una experiencia inolvidable y asegurarnos de que todas sus necesidades sean atendidas.</p>
         <p>Si tiene alguna pregunta o solicitud especial, no dude en ponerse en contacto con nuestro amable personal de recepción. Estamos aquí para ayudarlo en todo momento.</p>
-        <p>Disfrute de nuestras cómodas habitaciones, deliciosas opciones gastronómicas, instalaciones de lujo y servicios exclusivos durante su estadía en el Hotel Eterno.</p>
         <p>¡Esperamos que tenga una estancia inolvidable!</p>
         <p>Atentamente,</p>
         <p>Llovera Franco Gerente General.</p>
@@ -51,7 +51,7 @@ async function sendWelcomeEmail(correo,nombre) {
           <hr> 
           <span>Tucuman, Termas Huife,Calle Principal 123</span>
           <br>
-          <span>Email:hoteltermaleterno@gmail.com</span>
+          <span>Email:hoteleterno5@gmail.com</span>
           <br>
           <span>Teléfono: (+123) 456-7890</span>
           <hr>

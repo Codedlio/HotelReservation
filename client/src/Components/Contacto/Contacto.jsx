@@ -43,7 +43,7 @@ const handleSubmit=async(e)=>{
   e.preventDefault();
 try {
   if(Object.values(error).length >0) {
-    return alert("Please verify that all fields are filled in correctly");
+    return alert('Verifique si los campos fueron llenados adecuadamente');
   } else {
     dispatch(sugerenciaCliente(userData));
     alert("Envio exitoso");
@@ -128,6 +128,7 @@ try {
               <option value="alojamiento">Alojamiento</option>
               <option value="restaurant">Restaurant</option>
               <option value="actividades">Actividades</option>
+              <option value="otros">Otros</option>
             </select>
           </div>
             {error.subject&& <p>{error.subject}</p>}

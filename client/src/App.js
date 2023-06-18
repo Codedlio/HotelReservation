@@ -40,6 +40,7 @@ import IndicadorReservas from './Components/IndicadorReservas/IndicadorReservas'
 import IndicadorReclamos from './Components/IndicadorReclamos/IndicadorReclamos';
 import IndicadorUsuarios from './Components/IndicadorUsuarios/IndicadorUsuarios';
 import PerfilUsuario from './Components/PerfilUsuario/PerfilUsuario.jsx'
+import Error from './Components/Error/Error.jsx'
 import axios from 'axios'
 axios.defaults.baseURL =  "http://localhost:3001" || "http://back-hoteleternopf-production.up.railway.app" ;
 
@@ -87,7 +88,7 @@ function App() {
           <Route path="/indicadorReclamos" element={<IndicadorReclamos />} />
           <Route path="/indicadorUsuarios" element={<IndicadorUsuarios />} />        
           <Route path="/perfilUsuario" element={<PerfilUsuario />} />
-          
+          <Route path='*' element={<Error />} />
 
           <Route path="/" element={<Home />} />
         </Routes>

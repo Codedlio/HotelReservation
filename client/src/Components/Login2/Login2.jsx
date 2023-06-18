@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import validate from './validate';
 import {useNavigate} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import {setUsuario,getUsuarioByCorreo, getReservationUsuario, getUsuariobyEmail, getResenaUsuario} from '../redux/action';
+import {setUsuario,getUsuarioByCorreo,getReservaByUsuario , getUsuariobyEmail, getResenaUsuario} from '../redux/action';
 import foto from './logo gogle.png'
 import Cookies from 'js-cookie';
 import axios from "axios";
@@ -25,7 +25,8 @@ function Login2() {
     if (usuario)    
         dispatch(getResenaUsuario(form.correo))
         dispatch(getUsuariobyEmail(form.correo))
-        dispatch(getReservationUsuario(form.correo))
+        
+    if(usuario)dispatch(getReservaByUsuario(form.correo))
   }, [dispatch, usuario])
   function changeHandler(e){  
     const property = e.target.name;

@@ -4,6 +4,7 @@ const Servicio = require('../models/Servicio');
 const Paquete = require('../models/Paquete');
 const { checkReservation } = require("../config/sendgridEmail.js");
 
+
 const getReservaciones= async (req, res) => {
   try {
     let reservaciones = await Reservacion.find({activo:true});
@@ -16,7 +17,7 @@ const getReservaciones= async (req, res) => {
       }
 
       let nombresPaquetes = [];
-      for (let paqueteId of reservacion.paquete) {
+      for (let paqueteId of reservacion.paquetes) {
         const paquete = await Paquete.findById(paqueteId);
         nombresPaquetes.push(paquete.nombre);
       }
@@ -37,7 +38,7 @@ const getReservaciones= async (req, res) => {
   catch (error) {
     res.status(500).send(error.message);
   }
-//  }
+ }
 //  const getReservations= async (req, res) => {
 //   try {
 //     const { page = 1, limit = 10 } = req.query;
@@ -52,7 +53,7 @@ const getReservaciones= async (req, res) => {
 //   } catch (error) {
 //     res.status(500).json({ error: error.message });
 //   }
-}
+//}
 
 const getReservacionById = async (req,res) => {
   const {id} = req.params;
@@ -76,7 +77,7 @@ const getReservacionById = async (req,res) => {
     reservacion.habitaciones = nombresHabitaciones;
     reservacion.servicios = nombresServicios;
     
-    return res.status(200).json(paquete);
+    return res.status(200).json(reservacion);
   } 
   catch (error) {
       return res.status(500).send("Internal server error");
