@@ -93,9 +93,9 @@ function DetalleReserva() {
         return (
           <div className={style.dataContainer} key={h._id}>
            
-            {h && h.label && <p className={style.label}>Id de tu producto: {h.label}</p>}
+            {/* {h && h.label && <p className={style.label}>Id de tu producto: {h.label}</p>} */}
 
-            <p className={style.label2}>${h._id}</p>
+            {/* <p className={style.label2}>${h._id}</p> */}
             <p className={style.label}>Habitación: {h.nombre}</p>
             <p className={style.label2}>${h.capacidad}</p>
             <p className={style.label}>Precio de la Habitación: ${h.precio}</p>
@@ -111,8 +111,8 @@ function DetalleReserva() {
           return (
             <div className={style.encierro} key={h._id}>
               
-              <p className={style.label}>Id de tu producto:  </p>
-              <p className={style.label2}>${h._id}</p>  
+              {/* <p className={style.label}>Id de tu producto:  </p>
+              <p className={style.label2}>${h._id}</p>   */}
               <p className={style.label}>Paquete:  </p>
               <p className={style.label2}>${h.nombre}</p>    
               <p className={style.encierro}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
@@ -134,8 +134,8 @@ function DetalleReserva() {
           return (
             <div className={style.encierro} key={h._id}>
            
-             <p className={style.label}>Id de tu producto:</p>
-              <p className={style.label2}>${h._id}</p>   
+             {/* <p className={style.label}>Id de tu producto:</p> */}
+              {/* <p className={style.label2}>${h._id}</p>    */}
               <p className={style.label}>Servicio:</p>
               <p className={style.label2}>${h.nombre}</p>   
               <p className={style.label}>Precio del Servicio:</p>
@@ -168,7 +168,8 @@ function DetalleReserva() {
 
                 {re.Arrayhabitaciones && <div>{renderDetailServReserva(re.ArrayServicio)}</div>}
                 <div className="totals">
-                  <p className={style.style.label}>Total Compra:</p>
+                  {/* <p className={style.style.label}>Total Compra:</p> */}
+                  <p className={style.label}>Total Compra:</p>
                   <p className={style.label2}>${re.costo}</p>
                 </div>
               </div>

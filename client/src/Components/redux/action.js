@@ -40,6 +40,9 @@ export const DELETE_RESENA = "DELETE_RESENA";
 export const USUARIO_RESERVACION = "USUARIO_RESERVACION";
 export const GET_SERVICIOS = "GET_SERVICIOS";
 export const GET_TIPOS = "GET_TIPOS";
+export const GET_PAQUETES_ADMIN = "GET_PAQUETES_ADMIN";
+export const ACTI_DESACTI_PAQUETE = "ACTI_DESACTI_PAQUETE";
+export const FILTER_PAQUETES_ADMIN="FILTER_PAQUETES_ADMIN";
 
 export const GET_USUARIOS = "GET_USUARIOS";
 
@@ -371,4 +374,41 @@ export const getTipos = () => {
       console.log(error.message);
     }
   }
+};
+export const getPaquetesAdmin = () => {
+  return async function(dispatch) {    
+    const response = (await axios.get(`/paquete/admin`)).data;
+    return dispatch({
+      type: GET_PAQUETES_ADMIN,
+      payload: response,
+    });
+  };
+};
+
+export const actiDesactiPaquete = (paquete) => {
+  let url = `http://localhost:3001/paquete/admin`;
+ const response = axios.post(url,paquete);
+ return response;
+};
+
+export const crearPaquete = (paquete) => {
+  let url = `http://localhost:3001/paquete/admin/paquete`;
+ const response = axios.post(url,paquete);
+ return response;
+};
+
+export const deletePaquete = (id) => {
+  let url = `http://localhost:3001/paquete/${id}`;
+  const response = axios.delete(url);
+ return response;
+};
+
+export const ActualizaPaquete = (paqueteMod) => {
+  let url = `http://localhost:3001/paquete/${paqueteMod._id}`;
+  const response = axios.put(url,paqueteMod);
+ return response;
+};
+
+export const filterPaquetesAdmin = (filter) => {
+  return { type: FILTER_PAQUETES_ADMIN, payload: filter };
 };
