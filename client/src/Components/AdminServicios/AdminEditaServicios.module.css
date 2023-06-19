@@ -2,10 +2,6 @@
   width: 100%;
 }
 
-.btn_crearservicio {
-  display: flex;
-  justify-content: end;
-}
 .table {
   display: block;
   overflow: hidden;
@@ -41,6 +37,15 @@
   background-color: #eee;
 }
 
+#contenedor {
+  min-width: 100px;
+  min-width: 100px;
+  text-align: center;
+  width: 100%;
+}
+textarea {
+  text-align: left;
+}
 .expand {
   width: 100%;
 }
@@ -85,7 +90,8 @@
   border: none;
   border-radius: 3px;
   cursor: pointer;
-  display: flex;
+
+  display: inline-block;
   text-decoration: none;
 }
 .boton:hover {
