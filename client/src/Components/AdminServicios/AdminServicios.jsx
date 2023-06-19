@@ -4,16 +4,17 @@ import NavBar from "../NavBar/NavBar";
 import FooterBar from "../FooterBar/FooterBar";
 import Table from "react-bootstrap/Table";
 import axios from "axios";
-import { getServicios } from "../redux/action";
+import { setFilters, getServiciosAdmin } from "../redux/action";
 import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
+import { faTrash, faUndo, faEdit } from "@fortawesome/free-solid-svg-icons";
 import AdminEditaServicio from "./AdminEditaServicio";
 import AdminCreaServicio from "./AdminCreaServicio";
 import Swal from "sweetalert2";
 
 function AdminServicios() {
   let data = useSelector((state) => state.allservicios);
+  let filters = useSelector((state) => state.filters);
   const dispatch = useDispatch();
   const [modoEdicion, setModoEdicion] = useState(false);
   const [modoCreacion, setModoCreacion] = useState(false);
@@ -24,8 +25,23 @@ function AdminServicios() {
   });
 
   useEffect(() => {
-    dispatch(getServicios());
+    dispatch(getServiciosAdmin());
   }, [dispatch]);
+
+  if (filters.searchQuery !== "") {
+    data = data.filter((servicio) =>
+      servicio.nombre.toLowerCase().includes(filters.searchQuery.toLowerCase())
+    );
+  }
+  if (filters.minPrice !== "") {
+    data = data.filter((servicio) => servicio.precio >= filters.minPrice);
+  }
+  if (filters.maxPrice !== "") {
+    data = data.filter((servicio) => servicio.precio <= filters.maxPrice);
+  }
+  const handleFiltersChange = (event) => {
+    dispatch(setFilters(event.target.name, event.target.value));
+  };
 
   const handleSaveEdit = async (servicioEditado) => {
     try {
@@ -33,7 +49,7 @@ function AdminServicios() {
         `http://localhost:3001/servicio/${servicioEditado._id}`,
         servicioEditado
       );
-      dispatch(getServicios());
+      dispatch(getServiciosAdmin());
       console.log("Servicio actualizado exitosamente");
       setModoEdicion(false);
     } catch (error) {
@@ -46,15 +62,25 @@ function AdminServicios() {
     const servicio = data.find((servicio) => servicio._id === servicioId);
     setServicioEditado(servicio);
   };
-
+  const handleActivate = async (id) => {
+    try {
+      await axios.put(`http://localhost:3001/servicio/activar/${id}`);
+      dispatch(getServiciosAdmin());
+      Swal.fire({
+        icon: "success",
+        title: "Servicio activado con éxito",
+        text: "El servicio ha sido activado exitosamente.",
+      });
+    } catch (error) {
+      console.error("Error al realizar la activación", error);
+    }
+  };
   const handleDelete = async (id) => {
-    console.log("Este es el id" + id);
-    console.log("Estoy en el boton delete");
     try {
       await axios.delete(`http://localhost:3001/servicio/${id}`, {
         activo: false,
       });
-      dispatch(getServicios());
+      dispatch(getServiciosAdmin());
       console.log("Borrado lógico exitoso");
       Swal.fire({
         icon: "success",
@@ -73,29 +99,20 @@ function AdminServicios() {
         <h2>Lista de Servicios</h2>{" "}
       </center>
       <br />
-      <div
-        className="d-flex align-items-start bg-light mb-12"
-        style={{ height: "30px" }}
-      >
-        <div className="col-1">
-          <label>Nombre:</label>
-        </div>
-        <div className="col-2">
-          <input type="text" />
-        </div>
-
-        <div className="col-1">
-          <label>Precio:</label>
-        </div>
-        <div className="col-1">
-          <input type="text" />
-        </div>
-        <div className="col-2"></div>
-        <div className="col-1">
-          <button className={style.boton}>Buscar</button>
+      <div className="col-md-4">
+        <div className="form-inline">
+          <input
+            type="text"
+            placeholder="Buscar servicios"
+            name="searchQuery"
+            value={filters.searchQuery}
+            onChange={handleFiltersChange}
+            className={`form-control + ${style.searchInput}`}
+          />
         </div>
       </div>
       <br />
+
       <Table striped bordered hover responsive>
         <thead>
           <tr>
@@ -115,15 +132,22 @@ function AdminServicios() {
                 <td>{atributo.nombre}</td>
                 <td className="expand">{atributo.descripcion}</td>
                 <td>{atributo.precio + "USD"}</td>
-                <td>{atributo.activo === true ? "Activo" : "Desactivo"}</td>
+                <td>{atributo.activo === true ? "Activo" : "Inactivo"}</td>
                 <td className={style.fit}>
                   <span className={style.actions}>
-                    <FontAwesomeIcon
-                      className={style.delete_btn}
-                      onClick={() => handleDelete(atributo._id)}
-                      icon={faTrash}
-                    />
-
+                    {atributo.activo === true ? (
+                      <FontAwesomeIcon
+                        className={style.delete_btn}
+                        onClick={() => handleDelete(atributo._id)}
+                        icon={faTrash}
+                      />
+                    ) : (
+                      <FontAwesomeIcon
+                        className={style.delete_btn}
+                        onClick={() => handleActivate(atributo._id)}
+                        icon={faUndo}
+                      />
+                    )}
                     <FontAwesomeIcon
                       className={style.edit_btn}
                       onClick={() => handleEdit(atributo._id)}

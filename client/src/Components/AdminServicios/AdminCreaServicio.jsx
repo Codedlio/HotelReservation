@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import axios from "axios";
-import { getServicios } from "../redux/action";
+import { getServiciosAdmin } from "../redux/action";
 import style from "./AdminEditaServicios.module.css";
 import Swal from "sweetalert2";
 
@@ -16,7 +16,7 @@ const AdminCreaServicio = ({ handleCancelEdit }) => {
   const handleSave = async () => {
     try {
       await axios.post("http://localhost:3001/servicio", servicioEditado);
-      dispatch(getServicios());
+      dispatch(getServiciosAdmin());
       Swal.fire({
         icon: "success",
         title: "Servicio creado exitosamente",
