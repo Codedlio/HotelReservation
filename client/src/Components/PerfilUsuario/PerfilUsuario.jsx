@@ -3,7 +3,7 @@ import style from './PerfilUsuario.module.css';
 import {postResena, deleteResena, getUsuariobyEmail} from '../redux/action.js'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import validate from './validate';
+import {validate,validate2}from './validate';
 import {getResenaUsuario,getReservationUsuario } from '../redux/action';
 import axios from 'axios';
 
@@ -24,7 +24,10 @@ const PerfilUsuario=()=>{
       puntuacion: 0,
       descripcion: "",
     })
-
+    const [error2,setError2]=useState({
+      nombre: "",
+      phone:'',
+    })
     const [nombre, setNombre] = useState('');
     const [phone, setPhone] = useState('');
     const [imagen, setImagen] = useState(null);
@@ -32,10 +35,13 @@ const PerfilUsuario=()=>{
 
     const handleNombreChange = (event) => {
       setNombre(event.target.value); 
+      setError2(validate2( {nombre:event.target.value}));
+
     };
 
     const handlePhoneChange = (event) => {
       setPhone(event.target.value);
+      setError2(validate2( {phone:event.target.value}));
   };
 
     const handleImagenChange = (event) => {
@@ -134,7 +140,7 @@ const PerfilUsuario=()=>{
         {!editing && (
           <div>
             {data.image && !data.image.length ? (
-            <img src={"https://cdn-icons-png.flaticon.com/128/1077/1077063.png"} />
+            <img src={"https://res.cloudinary.com/djm04ajb0/image/upload/v1687125700/usuarioImage/czdnwyiy4ngf9frawohq.png"} />
             ) : (
             <img src={data.image} alt={"imagen"} />
             )}
@@ -153,16 +159,18 @@ const PerfilUsuario=()=>{
             <div> <button onClick={handleEditarClick}>x</button></div>
             <div>
               <label htmlFor="nombre">Nombre:</label>
-              <input type="text" name="nombre" value={nombre} onChange={handleNombreChange} />
+              <input type="text" name="nombre" value={nombre} onChange={handleNombreChange} placeholder="..."/>
             </div>
+            {error2.nombre&& <p>{error2.nombre}</p>}
             <div>
               <label htmlFor="correo">Correo:</label>
               <input type="correo" name="correo" value={data.correo}  />
             </div>
             <div>
               <label htmlFor="phone">Telefono:</label>
-              <input type="phone" name='phone' value={phone} onChange={handlePhoneChange} />
+              <input type="phone" name='phone' value={phone} onChange={handlePhoneChange} placeholder="+1223242"/>
             </div>
+            {error2.phone&& <p>{error2.phone}</p>}
             <div>
               <label htmlFor="imagen">Imagen:</label>
               <input type="file" id="imagen" accept="image/jpeg, image/jpg, image/png, image/gif" onChange={handleImagenChange} />
@@ -179,21 +187,50 @@ const PerfilUsuario=()=>{
           ) : (
             dataReservacion.map((reserva) => (
               <div key={reserva._id}>
+        {reserva.Arrayhabitaciones && (
+        <div>
+          <h4>Habitaciones:</h4>
+          {reserva.Arrayhabitaciones.map((habitacion) => (
+            <div key={habitacion._id}>
+              <p>Nombre: {habitacion.nombre}</p>
+              <p>Capacidad: {habitacion.capacidad}</p>
+              <p>Precio: {habitacion.precio}</p>
+            </div>
+          ))}
+        </div>
+      )}
+        {reserva.Arraypaquete && reserva.Arraypaquete.length > 0 ? (
+        <div>
+          <h4>Paquetes:</h4>
+          {reserva.Arraypaquete.map((paquete) => (
+            <div key={paquete._id}>
+              <p>Nombre: {paquete.nombre}</p>
+              <p>Precio: {paquete.precio}</p>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p>Paquetes: No hay paquetes.</p>
+      )}
+      {reserva.ArrayServicio && reserva.ArrayServicio.length > 0 ? (
+        <div>
+          <h4>Servicios:</h4>
+          {reserva.ArrayServicio.map((servicio) => (
+            <div key={servicio._id}>
+              <p>Nombre: {servicio.nombre}</p>
+              <p>Descripción: {servicio.descripcion}</p>
+              <p>Precio: {servicio.precio}</p>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p>Servicios: No hay servicios.</p>
+      )}
+          <h4>Estado: {reserva.estado}</h4>
         
-        {reserva.habitaciones && (
-          <h4>Habitaciones: {reserva.habitaciones.join(", ")}</h4>
-        )}
-        { reserva.paquete === true && (
-          <h4>Paquete: {reserva.paquete.join(", ")}</h4>
-        )}
-        { reserva.servicios === true && (
-          <h4>Servicio:{reserva.servicios}</h4>
-        )}
         {reserva.costo && (
-          <h4>Costo: USD {reserva.costo}</h4>
+          <h4>Costo:USD {reserva.costo}</h4>
         )}
-          <h4>Estado: USD {reserva.estado}</h4>
-        
         {reserva && reserva.fechaInicio && (
           <h4>Fecha de inicio: {reserva.fechaInicio.substring(0, 10)}</h4>
         )}

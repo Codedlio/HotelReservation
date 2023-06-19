@@ -4,6 +4,7 @@ const Servicio = require('../models/Servicio');
 const Paquete = require('../models/Paquete');
 const { checkReservation } = require("../config/sendgridEmail.js");
 
+
 const getReservaciones= async (req, res) => {
   try {
     let reservaciones = await Reservacion.find({activo:true});
@@ -37,7 +38,7 @@ const getReservaciones= async (req, res) => {
   catch (error) {
     res.status(500).send(error.message);
   }
-//  }
+ }
 //  const getReservations= async (req, res) => {
 //   try {
 //     const { page = 1, limit = 10 } = req.query;
@@ -52,7 +53,7 @@ const getReservaciones= async (req, res) => {
 //   } catch (error) {
 //     res.status(500).json({ error: error.message });
 //   }
-}
+//}
 
 const getReservacionById = async (req,res) => {
   const {id} = req.params;
@@ -84,7 +85,7 @@ const getReservacionById = async (req,res) => {
     reservacion.nombres.paquete = nombresHabitaciones;
     reservacion.nombres.servicios = nombresServicios;
     
-    return res.status(200).json(paquete);
+    return res.status(200).json(reservacion);
   } 
   catch (error) {
       return res.status(500).send("Internal server error");
@@ -208,8 +209,27 @@ const postReservacion = async (req,res) => {
 
   today = mm + '/' + dd + '/' + yyyy;
   try {
-    const data = new Reservacion ({usuario:usuarioCorreo,habitaciones:arrHabitacion,servicios:arrServicio,paquetes:arrPaquete,fechaInicio:fechaInicio,fechaFin:fechaFin,costo:costo,estado:'I',fechaReserva:today,nroPerson:nroPerson});  
-    await checkReservation({usuarioCorreo,arrHabitacion,arrServicio,arrPaquete,fechaInicio,fechaFin,costo})
+    const data = new Reservacion ({usuario:usuarioCorreo,habitaciones:arrHabitacion,servicios:arrServicio,paquetes:arrPaquete,fechaInicio:fechaInicio,fechaFin:fechaFin,costo:costo,estado:'I',fechaReserva:today,nroPerson:nroPerson});
+      
+    let nombresHabitaciones = [];
+      for (let habId of arrHabitacion ) {
+       const habitacion = await Habitacion.findOne({_id:habId});
+       nombresHabitaciones.push(habitacion.nombre);
+      }
+
+      let nombresPaquetes = [];
+      for (let paqueteId of arrPaquete) {
+       const paquete = await Paquete.findById(paqueteId);
+       nombresPaquetes.push(paquete.nombre);
+      }
+
+      let nombresServicios = [];
+      for (let servicioId of arrServicio) {
+       const servicio = await Servicio.findById(servicioId);
+       nombresServicios.push(servicio.nombre); 
+      }
+
+    await checkReservation({usuarioCorreo,nombresHabitaciones,nombresServicios,nombresPaquetes,fechaInicio,fechaFin,costo})
     await data.save();
     res.status(201).json("Se registró con éxito su reserva, pero esta pendiente el pago");
   }

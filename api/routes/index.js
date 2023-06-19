@@ -6,7 +6,7 @@ const habitacionesRoute = require('./habitaciones.route')
 const serviciosRoute = require('./servicios.route')
 const usuariosRoute = require('./usuarios.route')
 const paquetesRoute = require('./paquetes.route');
-const {resenaRoute,infoUsuarioRoute }= require('./resena.route');
+const {resenaRoute,infoUsuarioRoute, infoUsuarioReserva }= require('./resena.route');
 const paymentRoute = require('./payment.route');
 const tiposRoute = require('./tipos.route');
 const router = Router();
@@ -21,6 +21,7 @@ router.use('/payment', paymentRoute)
 router.use('/resena', resenaRoute)
 router.use('/infoUsuario', infoUsuarioRoute)
 router.use('/tipo', tiposRoute)
+router.use('/infoUsuarioReserva', infoUsuarioReserva)
 
 
 module.exports=router;

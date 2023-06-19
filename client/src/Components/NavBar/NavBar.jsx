@@ -12,7 +12,7 @@ import { faCartPlus, faUser } from "@fortawesome/free-solid-svg-icons";
 import imagen from "./logo hotel.png";
 import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { deleteUsuario,getUsuarioByCorreo } from "../redux/action";
+import { deleteUsuario,getUsuarioByCorreo, deleteStateResenaAndUserArr} from "../redux/action";
 import { useDispatch, useSelector } from "react-redux";
 import Carrito from "../Carrito/Carrito";
 import { onAuthStateChanged } from "firebase/auth";
@@ -98,6 +98,7 @@ const NavBar = () => {
     Cookies.remove('token');
     Cookies.remove('emailToken');
     dispatch(deleteUsuario());
+    dispatch(deleteStateResenaAndUserArr());
     
     if (usuario){
       await auth.signOut();

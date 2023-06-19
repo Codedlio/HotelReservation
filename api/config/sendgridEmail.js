@@ -41,9 +41,9 @@ async function sendWelcomeEmail(correo,nombre) {
         <h1 style="font-size: 36px;">Bienvenido al Hotel Eterno</h1>
         <img src="https://i.pinimg.com/564x/04/19/60/0419601405d7508a8a92c042675bee2d.jpg" alt="Logo del Hotel Eterno" style="max-width: 200px;">
         <p>¡Nos complace darle la bienvenida, al Hotel Eterno ! Estamos encantados de que sea parte de la comunidad y esperamos que pronto pueda visitar las instalaciones.</p>
+        <p>Algunas de las comodidades que disfrutara son amenas habitaciones, deliciosas opciones gastronómicas, instalaciones de lujo y servicios exclusivos durante su estadía en el Hotel Eterno.</p>
         <p>Desde nuestro equipo, nos esforzaremos al máximo para brindarle una experiencia inolvidable y asegurarnos de que todas sus necesidades sean atendidas.</p>
         <p>Si tiene alguna pregunta o solicitud especial, no dude en ponerse en contacto con nuestro amable personal de recepción. Estamos aquí para ayudarlo en todo momento.</p>
-        <p>Disfrute de nuestras cómodas habitaciones, deliciosas opciones gastronómicas, instalaciones de lujo y servicios exclusivos durante su estadía en el Hotel Eterno.</p>
         <p>¡Esperamos que tenga una estancia inolvidable!</p>
         <p>Atentamente,</p>
         <p>Llovera Franco Gerente General.</p>
@@ -51,7 +51,7 @@ async function sendWelcomeEmail(correo,nombre) {
           <hr> 
           <span>Tucuman, Termas Huife,Calle Principal 123</span>
           <br>
-          <span>Email:hoteltermaleterno@gmail.com</span>
+          <span>Email:hoteleterno5@gmail.com</span>
           <br>
           <span>Teléfono: (+123) 456-7890</span>
           <hr>
@@ -69,17 +69,16 @@ try {
    
   };
 
-    async function checkReservation({ usuarioCorreo, arrHabitacion, arrServicio, arrPaquete, fechaInicio, fechaFin, costo }) {
-      
-      
-      
+    async function checkReservation({ usuarioCorreo,nombresHabitaciones,nombresServicios,nombresPaquetes,fechaInicio,fechaFin,costo }) {
+                                      
+    
       const msg = {
       to:usuarioCorreo,
       from: 'hoteleterno5@gmail.com',
       subject:`Reserva, Hotel Eterno`,
       html: `<html>
       <head>
-        <title>Confirmación de Reserva - Hotel Eterno</title>
+        <title>Detalle de Reserva - Hotel Eterno</title>
         <style>
           @media screen and (max-width: 600px) {
             .container {
@@ -102,7 +101,7 @@ try {
       </head>
       <body>
         <div class="container" style="text-align: center; max-width: 600px; margin: 0 auto;">
-          <h1 style="font-size: 36px;">Confirmación de Reserva - Hotel Eterno</h1>
+          <h1 style="font-size: 36px;">Detalle de Reserva - Hotel Eterno</h1>
           <img src="https://i.pinimg.com/564x/04/19/60/0419601405d7508a8a92c042675bee2d.jpg" alt="Logo del Hotel Eterno" style="max-width: 200px;">
           <p>Estimado/a miembro,</p>
           <p>Le agradecemos por su reserva en el Hotel Eterno. A continuación, le proporcionamos los detalles de su reserva:</p>
@@ -110,19 +109,19 @@ try {
           <p><strong>Fecha de Salida:</strong> ${fechaFin}</p>
           <p><strong>Habitaciones:</strong></p>
           <ul>
-           ${arrHabitacion}
+          ${nombresHabitaciones}
           </ul>
           <p><strong>Servicios Adicionales:</strong></p>
           <ul>
-            ${arrServicio}
+          ${nombresServicios}
           </ul>
           <p><strong>Paquetes Especiales:</strong></p>
           <ul>
-            ${arrPaquete}
+          ${nombresPaquetes}
           </ul>
           <p><strong>Costo:</strong></p>
           <ul>
-            USD ${costo}
+          USD ${costo}
           </ul>
           <p>Si tiene alguna pregunta o requiere asistencia adicional, no dude en contactarnos. ¡Estamos aquí para ayudarlo!</p>
           <p>Esperamos que disfrute de su estadía en el Hotel Eterno y que tenga una experiencia inolvidable.</p>

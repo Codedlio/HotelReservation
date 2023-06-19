@@ -1,5 +1,7 @@
 const Resena = require("../models/Resena");
-
+const Habitacion = require("../models/Habitacion");
+const Servicio = require("../models/Servicio");
+const Reservacion= require('../models/Reservacion');
 const Usuario= require('../models/Usuario');
 
 
@@ -74,5 +76,93 @@ const deleteResena = async (req, res) => {
 
     }
   }
+  const getReservacionUsuario = async (req,res) => {
+    const {usuario} = req.params;
+    try {
+          
+      let ReservaUsu = [];
+      let reservacion = await Reservacion.find({usuario:usuario,activo:true,estado:'I'});       
+      if (reservacion.length==0) {    
+        return res.status(200).send(ReservaUsu)
+      };
+      let ReservacionDeUsuario=reservacion.slice(-1);        
+      for (let habitacionId of ReservacionDeUsuario) {
+          
+          let hab=[];     
+          let habFin=[];     
+          for (let habId of habitacionId.habitaciones) { 
+            let habitacionXReserva = await Habitacion.findOne({_id:habId});
+            hab.push(habitacionXReserva);        
+            
+            for (let h of hab) {           
+              var obj={
+                _id:habId,
+                nombre:h.nombre,
+                capacidad: h.capacidad,
+                precio: h.precio,
+                image: h.image
+              };        
+            }
+            habFin.push(obj);        
+                    
+          }
+          let serv=[];     
+          let servFin=[]; 
+          for (let servId of habitacionId.servicios) {         
+            
+            let servXReserva = await Servicio.findOne({_id:servId});
+            serv.push(servXReserva);    
+            for (let s of serv) {           
+              var obj={
+                _id:servId,
+                nombre:s.nombre,
+                descripcion: s.descripcion,
+                precio: s.precio
+              };        
+            }
+            servFin.push(obj);        
+                    
+          }
+          let paq=[];     
+          let paqFin=[]; 
+          for (let paqId of habitacionId.paquetes) { 
+            let paqXReserva = await Paquete.findOne({_id:paqId});
+            paq.push(paqXReserva);        
+            console.log("paq");
+            console.log(paq);
+            for (let p of paq) {           
+              var obj={
+                _id:paqId,
+                nombre:p.nombre,
+                // capacidad: p.capacidad,
+                precio: p.costo,
+                image: p.image
+              };        
+            }
+            paqFin.push(obj);        
+                    
+          }
+  
+          var objh={
+            _id:habitacionId._id,
+            usuario: habitacionId.usuario,
+            fechaInicio: habitacionId.fechaInicio,
+            fechaFin:habitacionId.fechaFin,
+            image:habitacionId.image,
+            costo:habitacionId.costo,
+            Arrayhabitaciones:habFin,
+            Arraypaquete:paqFin,
+            ArrayServicio:servFin,
+            fechaReserva:habitacionId.fechaReserva,
+            nroPerson:habitacionId.nroPerson
+          };  
+      }
+      ReservaUsu.push(objh);
+      return res.status(200).json(ReservaUsu);
+  } 
+  catch (error) {
+      return res.status(500).send("Internal server error");
+  }
+  };
 
-module.exports = {getResena, getEmailResena,postResena, deleteResena, getUsuarioEmail }
+module.exports = {getResena, getEmailResena,postResena, deleteResena, getUsuarioEmail, getReservacionUsuario}

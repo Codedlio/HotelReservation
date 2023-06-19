@@ -39,9 +39,11 @@ import {
   GET_SERVICIOS,
   GET_TIPOS,
   GET_HABITACIONES_ADMIN,
+  DELETE_STATE_PERFIL,
   GET_USUARIOS,
   GET_PAQUETES_ADMIN,
   FILTER_PAQUETES_ADMIN
+
 
 } from "./action";
 
@@ -379,6 +381,8 @@ const reducer = (state = initialState, action) => {
         ? action.paylaod
         : [action.paylaod];
       return { ...state, reservaUsuario: dataReservacion };
+      case DELETE_STATE_PERFIL:
+        return{...state, reserva:[],resenaByUsuario:[],usuarioArray:[]}
     default:
       return state;
   }

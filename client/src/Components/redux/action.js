@@ -43,6 +43,7 @@ export const GET_TIPOS = "GET_TIPOS";
 export const GET_PAQUETES_ADMIN = "GET_PAQUETES_ADMIN";
 export const ACTI_DESACTI_PAQUETE = "ACTI_DESACTI_PAQUETE";
 export const FILTER_PAQUETES_ADMIN="FILTER_PAQUETES_ADMIN";
+export const DELETE_STATE_PERFIL='DELETE_STATE_PERFIL';
 
 export const GET_USUARIOS = "GET_USUARIOS";
 
@@ -185,7 +186,7 @@ export const set_Currents_Page = (currentPage) => {
 export const getHabitaciones = () => {
   return async function(dispatch) {
     try {
-      let { data } = await axios.get("http://localhost:3001/habitacion");
+      let { data } = await axios.get("/habitacion");
       data = data.filter(habitacion => habitacion.activo);
       return dispatch({
         type: GET_HABITACIONES,
@@ -203,7 +204,7 @@ export const getHabitaciones = () => {
 export const getHabitacionesAdmin = () => {
   return async function (dispatch) {
     try {
-      const { data } = await axios.get("http://localhost:3001/habitacion");
+      const { data } = await axios.get("/habitacion");
       return dispatch({
         type: GET_HABITACIONES_ADMIN,
         payload: data,
@@ -375,6 +376,7 @@ export const getTipos = () => {
     }
   }
 };
+
 export const getPaquetesAdmin = () => {
   return async function(dispatch) {    
     const response = (await axios.get(`/paquete/admin`)).data;
@@ -411,4 +413,8 @@ export const ActualizaPaquete = (paqueteMod) => {
 
 export const filterPaquetesAdmin = (filter) => {
   return { type: FILTER_PAQUETES_ADMIN, payload: filter };
+};
+
+export const deleteStateResenaAndUserArr=()=>{
+  return {type:DELETE_STATE_PERFIL}
 };
