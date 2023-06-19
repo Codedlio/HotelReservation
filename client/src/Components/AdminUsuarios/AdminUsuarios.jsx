@@ -2,11 +2,21 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import NavBar from '../NavBar/NavBar';
 import FooterBar from '../FooterBar/FooterBar';
+import { useSelector } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
+import style from './AdminUsuarios.module.css'
+import Table from "react-bootstrap/Table";
 import { getUsuarios } from '../redux/action';
+import { useDispatch } from 'react-redux';
+import Swal from "sweetalert2";
+import AdminEditaUsuario from "./AdminEditaUsuario";
+import AdminCreaUsuario from "./AdminCreaUsuario";
 
 const AdminUsuario = () => {
+  const dispatch = useDispatch();
   const [usuarios, setUsuarios] = useState([]);
-  let data = useSelector((state) => state.allusarios);
+  let data = useSelector((state) => state.allusuarios);
   const [modoEdicion, setModoEdicion] = useState(false);
   const [modoCreacion, setModoCreacion] = useState(false);
   const [usuarioEditado, setUsuarioEditado] = useState({
@@ -21,9 +31,10 @@ const AdminUsuario = () => {
   }, [dispatch]);
 
   const handleSaveEdit = async (usuarioEditado) => {
+    
     try {
       await axios.put(
-        `http://localhost:3001/servicio/${usuarioEditado._id}`,
+        `http://localhost:3001/infoUsuario/${usuarioEditado._id}`,
         usuarioEditado
       );
       dispatch(getUsuarios());
@@ -43,7 +54,7 @@ const AdminUsuario = () => {
     console.log("Este es el id" + id);
     console.log("Estoy en el boton delete");
     try {
-      await axios.delete(`http://localhost:3001/usuario/${id}`, {
+      await axios.delete(`http://localhost:3001/infoUsuario/${id}`, {
         activo: false,
       });
       dispatch(getUsuarios());
@@ -112,9 +123,11 @@ const AdminUsuario = () => {
               <tr key={id}>
                 <td>{id + 1}</td>
                 <td>{atributo.nombre}</td>
-                <td className="expand">{atributo.descricion}</td>
+                        
                 <td>{atributo.correo}</td>
+                <td>{atributo.contraseña}</td> 
                 <td>{atributo.telefono}</td>
+                
                 <td>{atributo.activo === true ? "Activo" : "Desactivo"}</td>
                 <td className={style.fit}>
                   <span className={style.actions}>
@@ -146,12 +159,13 @@ const AdminUsuario = () => {
       {modoCreacion ? (
         <AdminCreaUsuario handleCancelEdit={() => setModoCreacion(false)} />
       ) : (
-        <div className="btn_crearusuario">
+        <div className="btn_crearsusuario">
           <button className={style.boton} onClick={() => setModoCreacion(true)}>
             Crear Usuario
           </button>
         </div>
       )}
+
       <br />
       <br />
       <br />
