@@ -195,15 +195,18 @@ const NavBar = () => {
 
 {/* Agrega el enlace al perfil de usuario */}
 {usuario && (
-  <Link to="/perfilUsuario">
-    <h4>{usuarioArray.nombre}</h4>
-    {usuarioArray.image && usuarioArray.image.length > 0 ? (
-      <img src={usuarioArray.image} alt="" />
-    ) : (
-      <FontAwesomeIcon className={style.imagenusuario} icon={faUser} />
-    )}
+  <Link className={style.linkusuario} to="/perfilUsuario">
+    <div className={style.iconContainer}>
+      {usuarioArray.image && usuarioArray.image.length > 0 ? (
+        <img src={usuarioArray.image} alt="" />
+      ) : (
+        <FontAwesomeIcon className={style.imagenusuario} icon={faUser} />
+      )}
+      <h4 className={style.perfilusuario}>{usuarioArray.nombre}</h4>
+    </div>
   </Link>
 )}
+
 
 {mostrarCarrito ? (
   reserva ? (
