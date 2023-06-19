@@ -41,7 +41,6 @@ export const USUARIO_RESERVACION = "USUARIO_RESERVACION";
 export const GET_SERVICIOS = "GET_SERVICIOS";
 export const GET_TIPOS = "GET_TIPOS";
 export const GET_SERVICIOS_ADMIN = "GET_SERVICIOS_ADMIN";
-
 export const GET_USUARIOS = "GET_USUARIOS";
 export const setOrderByName = (orderType) => {
   return {
@@ -86,6 +85,22 @@ export const getServicios = () => {
   };
 };
 
+export const getServiciosAdmin = () => {
+  return async function(dispatch) {
+    try {
+      const { data } = await axios.get("http://localhost:3001/servicio");
+      return dispatch({
+        type: GET_SERVICIOS_ADMIN,
+        payload: data,
+      });
+    } catch (error) {
+      return dispatch({
+        type: ERROR,
+        payload: error,
+      });
+    }
+  };
+};
 export function getPaquetesDisponibles(fechaInicio, fechaFin) {
   return async function(dispatch) {
     try {

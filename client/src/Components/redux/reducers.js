@@ -40,6 +40,7 @@ import {
   GET_TIPOS,
   GET_HABITACIONES_ADMIN,
   GET_SERVICIOS_ADMIN,
+  GET_USUARIOS,
 } from "./action";
 
 const initialState = {
@@ -73,7 +74,7 @@ const initialState = {
     selectedPaquete: [],
   },
   tipos: [],
-  allusarios : [],
+  allusarios: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -155,7 +156,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         allservicios: action.payload,
       };
-      case GET_USUARIOS:
+    case GET_USUARIOS:
       return {
         ...state,
         allusarios: action.payload,
