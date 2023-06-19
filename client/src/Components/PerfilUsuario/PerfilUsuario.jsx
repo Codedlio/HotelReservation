@@ -127,6 +127,7 @@ const PerfilUsuario=()=>{
   };
 
   return (
+    <div className={style.containertotal}>
     <div className={style.container}>
       <div className={style.usuario}>
         <div>
@@ -150,9 +151,9 @@ const PerfilUsuario=()=>{
             </div>
             )}
 
-        <div>
+        <div className={style.contenedor}>
         {!editing && (
-          <button onClick={handleEditarClick}>Editar</button>
+          <button className={style.comentariobutton} onClick={handleEditarClick}>Editar</button>
         )}
         {editing && (
           <form onSubmit={handleUpUser}>
@@ -181,7 +182,7 @@ const PerfilUsuario=()=>{
         </div>
       </div>
       <div className={style.resena}>
-        <h2>Reserva del usuario:</h2>
+        <h2 className={style.resenatitulo}>Reserva del usuario:</h2>
           {!Array.isArray(dataReservacion)||dataReservacion.length <= 0? (
           <p>No hay reservacion.</p>
           ) : (
@@ -189,7 +190,7 @@ const PerfilUsuario=()=>{
               <div key={reserva._id}>
         {reserva.Arrayhabitaciones && (
         <div>
-          <h4>Habitaciones:</h4>
+          <h4 className={style.resenahabitaciones}>Habitaciones:</h4>
           {reserva.Arrayhabitaciones.map((habitacion) => (
             <div key={habitacion._id}>
               <p>Nombre: {habitacion.nombre}</p>
@@ -244,7 +245,7 @@ const PerfilUsuario=()=>{
         { resenaArray.length === 0? (<p>No hay comentarios.</p>)
         :(resenaArray.map((item) => (
               <div key={item._id}>
-                <h4>⭐️{item.puntuacion}</h4>
+                <h4 className={style.puntuacion}>⭐️{item.puntuacion}</h4>
                 <h4>{item.descripcion}</h4>
                 <div> <button onClick={handlerDelete} 
                         value={item._id} name={"id"}>❌</button></div>
@@ -253,15 +254,16 @@ const PerfilUsuario=()=>{
           
         <div className={style.comentario}>
           <form>
-            <h2>Edite un comentario y puntuacion</h2>
+            <h2 className={style.resenahabitaciones}>Edite un comentario y puntuacion</h2>
             {!validateResena(dataReservacion) &&<p>No se puden dejar comentario y puntuacion, hasta que realice una reservacion y comience su estadia</p>}
-            <label>Puntuacion:
+            <l abel>Puntuacion:
               <input type="number" min="0" max="5" step="1" name={"puntuacion"}
               value={resena.puntuacion} onChange={handleChange}placeholder="..."/>
-            </label>
-            {error.puntuacion && <p>{error.puntuacion}</p>}
+            </l>
+            {error.puntuacion && <p className={style.puntuacion}> {error.puntuacion}</p>}
             
             <textarea
+            className={style.escribe}
               id="descripcion"
               value={resena.descripcion}
               onChange={handleChange}
@@ -274,6 +276,7 @@ const PerfilUsuario=()=>{
           </form>
         </div>
       </div>
+    </div>
     </div>
   );
 };
