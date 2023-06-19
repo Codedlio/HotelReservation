@@ -2,7 +2,12 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import NavBar from '../NavBar/NavBar';
 import FooterBar from '../FooterBar/FooterBar';
+import { useSelector } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
 import { getUsuarios } from '../redux/action';
+import Swal from "sweetalert2";
 
 const AdminUsuario = () => {
   const [usuarios, setUsuarios] = useState([]);
@@ -112,7 +117,7 @@ const AdminUsuario = () => {
               <tr key={id}>
                 <td>{id + 1}</td>
                 <td>{atributo.nombre}</td>
-                <td className="expand">{atributo.descricion}</td>
+                <td className="expand">{atributo.descripcion}</td>
                 <td>{atributo.correo}</td>
                 <td>{atributo.telefono}</td>
                 <td>{atributo.activo === true ? "Activo" : "Desactivo"}</td>
@@ -137,21 +142,22 @@ const AdminUsuario = () => {
         </tbody>
       </Table>
       {modoEdicion && (
-        <AdminEditaUsuario
-          servicio={usuarioEditado}
-          handleCancelEdit={() => setModoEdicion(false)}
-          onSaveEdit={handleSaveEdit}
-        />
-      )}
-      {modoCreacion ? (
-        <AdminCreaUsuario handleCancelEdit={() => setModoCreacion(false)} />
-      ) : (
-        <div className="btn_crearusuario">
-          <button className={style.boton} onClick={() => setModoCreacion(true)}>
-            Crear Usuario
-          </button>
-        </div>
-      )}
+  <ComponenteDeEdicion
+    servicio={usuarioEditado}
+    handleCancelEdit={() => setModoEdicion(false)}
+    onSaveEdit={handleSaveEdit}
+  />
+)}
+
+{modoCreacion ? (
+  <ComponenteDeCreacion handleCancelEdit={() => setModoCreacion(false)} />
+) : (
+  <div className="btn_crearusuario">
+    <button className={style.boton} onClick={() => setModoCreacion(true)}>
+      Crear Usuario
+    </button>
+  </div>
+)}
       <br />
       <br />
       <br />
