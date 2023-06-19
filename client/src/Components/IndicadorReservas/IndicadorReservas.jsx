@@ -3,6 +3,8 @@ import style from "./IndicadorReservas.module.css";
 import NavBar from '../NavBar/NavBar';
 import FooterBar from '../FooterBar/FooterBar'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import PaymentStatusChart from "./PaymentStatusChart";
+import ReservationCount from "./ReservationCount";
 //import roomData from "../../../src/reservacions.json";
 function IndicadorReservas() {
 //   const servicios = data.servicios.map(servicio => servicio);
@@ -16,9 +18,12 @@ function IndicadorReservas() {
 
     <div className={style.body}>
     <NavBar />   
+
     <div className={style.container}>         
-      <h2>Indicador de Reclamos</h2>  
+      <h2>Indicador de Reservas</h2>  
       <div className={style.centerleft}></div>  
+      <PaymentStatusChart/>
+      <ReservationCount/>
       <p></p><BarChart width={600} height={300} data={roomData}>
       <CartesianGrid strokeDasharray="3 3" />
       <XAxis dataKey="roomType" />
