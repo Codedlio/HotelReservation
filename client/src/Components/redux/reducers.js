@@ -39,6 +39,7 @@ import {
   GET_SERVICIOS,
   GET_TIPOS,
   GET_HABITACIONES_ADMIN,
+  GET_SERVICIOS_ADMIN,
 } from "./action";
 
 const initialState = {
@@ -148,6 +149,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         allservicios: action.payload,
       };
+    case GET_SERVICIOS_ADMIN:
+      return {
+        ...state,
+        allservicios: action.payload,
+      };
     case GET_PAQUETES_DISPONIBLES:
       return {
         ...state,
@@ -235,7 +241,7 @@ const reducer = (state = initialState, action) => {
     case GET_HABITACIONES_ADMIN:
       return {
         ...state,
-        gethabitaciones: action.payload
+        gethabitaciones: action.payload,
       };
     case SET_FILTERED_HABITACIONES:
       return {
@@ -311,7 +317,7 @@ const reducer = (state = initialState, action) => {
     case GET_TIPOS:
       return {
         ...state,
-        tipos: action.payload
+        tipos: action.payload,
       };
 
     case ALL_RESENA:
