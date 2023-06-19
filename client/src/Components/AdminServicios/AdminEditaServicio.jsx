@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getServicios } from "../redux/action";
+import { getServiciosAdmin } from "../redux/action";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 import style from "./AdminEditaServicios.module.css";
@@ -48,7 +48,7 @@ const AdminEditaServicio = ({ servicio, handleCancelEdit, onSaveEdit }) => {
         servicioEditado
       );
 
-      dispatch(getServicios());
+      dispatch(getServiciosAdmin());
       console.log("Borrado lógico exitoso");
       Swal.fire({
         icon: "success",

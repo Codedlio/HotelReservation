@@ -42,9 +42,9 @@ import {
   DELETE_STATE_PERFIL,
   GET_USUARIOS,
   GET_PAQUETES_ADMIN,
-  FILTER_PAQUETES_ADMIN
-
-
+  FILTER_PAQUETES_ADMIN,
+  GET_SERVICIOS_ADMIN,
+  GET_USUARIOS_ADMIN,
 } from "./action";
 
 const initialState = {
@@ -78,9 +78,9 @@ const initialState = {
     selectedPaquete: [],
   },
   tipos: [],
-  allusuarios : [],
+  allusuarios: [],
   allpaquetesAdm: [],
-  filterPaquetesAdmin:[],
+  filterPaquetesAdmin: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -152,53 +152,80 @@ const reducer = (state = initialState, action) => {
         orderPaquetes: action.payload, //aca lleno
         filterPaquetes: action.payload,
       };
-      case GET_PAQUETES_ADMIN:
-        return {
-          ...state,
-          allpaquetesAdm: action.payload,
-          filterPaquetesAdmin: action.payload,
-        }; 
-    case FILTER_PAQUETES_ADMIN:      
-      let filtros=action.payload;
-      let FilterFinal =[...state.allpaquetesAdm]; 
-      if(filtros.costo === '' && filtros.nombre === '' && filtros.desc === ''){
-          const PaquetesAdm = [...state.allpaquetesAdm]; 
-          FilterFinal = (filtros.costo === '' && filtros.nombre === '' && filtros.desc === '')? PaquetesAdm 
-          : PaquetesAdm.filter((p)=>{
-              return  p.desc.toUpperCase().includes(filtros.desc.toUpperCase()) ;
-          })
-      }
-      else{
-          const PaquetesAdm = [...state.allpaquetesAdm];   
-          const FilterName = (filtros.nombre === '')? PaquetesAdm 
-                : PaquetesAdm.filter((p)=>{
-                    return  p.nombre.toUpperCase().includes(filtros.nombre.toUpperCase()) ;
-                })      
-          const PaquetesNameAdm = [...FilterName];  
-          const FilterDesPaq = (filtros.desc === '')? PaquetesNameAdm 
-          : PaquetesNameAdm.filter((p)=>{
-              return  p.desc.toUpperCase().includes(filtros.desc.toUpperCase()) ;
-          })
-          const PaquetesCostoAdm = [...FilterDesPaq];  
-          FilterFinal = (filtros.costo === '')? PaquetesCostoAdm 
-          : PaquetesCostoAdm.filter((p)=>{
-            return  p.costo ==filtros.costo ;
-          })  
-      }
-      return {      
-        ...state,             
-          filterPaquetesAdmin: FilterFinal
+    case GET_PAQUETES_ADMIN:
+      return {
+        ...state,
+        allpaquetesAdm: action.payload,
+        filterPaquetesAdmin: action.payload,
       };
-         
+    case FILTER_PAQUETES_ADMIN:
+      let filtros = action.payload;
+      let FilterFinal = [...state.allpaquetesAdm];
+      if (
+        filtros.costo === "" &&
+        filtros.nombre === "" &&
+        filtros.desc === ""
+      ) {
+        const PaquetesAdm = [...state.allpaquetesAdm];
+        FilterFinal =
+          filtros.costo === "" && filtros.nombre === "" && filtros.desc === ""
+            ? PaquetesAdm
+            : PaquetesAdm.filter((p) => {
+                return p.desc
+                  .toUpperCase()
+                  .includes(filtros.desc.toUpperCase());
+              });
+      } else {
+        const PaquetesAdm = [...state.allpaquetesAdm];
+        const FilterName =
+          filtros.nombre === ""
+            ? PaquetesAdm
+            : PaquetesAdm.filter((p) => {
+                return p.nombre
+                  .toUpperCase()
+                  .includes(filtros.nombre.toUpperCase());
+              });
+        const PaquetesNameAdm = [...FilterName];
+        const FilterDesPaq =
+          filtros.desc === ""
+            ? PaquetesNameAdm
+            : PaquetesNameAdm.filter((p) => {
+                return p.desc
+                  .toUpperCase()
+                  .includes(filtros.desc.toUpperCase());
+              });
+        const PaquetesCostoAdm = [...FilterDesPaq];
+        FilterFinal =
+          filtros.costo === ""
+            ? PaquetesCostoAdm
+            : PaquetesCostoAdm.filter((p) => {
+                return p.costo == filtros.costo;
+              });
+      }
+      return {
+        ...state,
+        filterPaquetesAdmin: FilterFinal,
+      };
+
     case GET_SERVICIOS:
       return {
         ...state,
         allservicios: action.payload,
       };
-      case GET_USUARIOS:
+    case GET_SERVICIOS_ADMIN:
+      return {
+        ...state,
+        allservicios: action.payload,
+      };
+    case GET_USUARIOS:
       return {
         ...state,
         allusarios: action.payload,
+      };
+    case GET_USUARIOS_ADMIN:
+      return {
+        ...state,
+        allusuarios: action.payload,
       };
     case GET_PAQUETES_DISPONIBLES:
       return {
@@ -287,7 +314,7 @@ const reducer = (state = initialState, action) => {
     case GET_HABITACIONES_ADMIN:
       return {
         ...state,
-        gethabitaciones: action.payload
+        gethabitaciones: action.payload,
       };
     case SET_FILTERED_HABITACIONES:
       return {
@@ -363,7 +390,7 @@ const reducer = (state = initialState, action) => {
     case GET_TIPOS:
       return {
         ...state,
-        tipos: action.payload
+        tipos: action.payload,
       };
 
     case ALL_RESENA:
@@ -381,8 +408,8 @@ const reducer = (state = initialState, action) => {
         ? action.paylaod
         : [action.paylaod];
       return { ...state, reservaUsuario: dataReservacion };
-      case DELETE_STATE_PERFIL:
-        return{...state, reserva:[],resenaByUsuario:[],usuarioArray:[]}
+    case DELETE_STATE_PERFIL:
+      return { ...state, reserva: [], resenaByUsuario: [], usuarioArray: [] };
     default:
       return state;
   }

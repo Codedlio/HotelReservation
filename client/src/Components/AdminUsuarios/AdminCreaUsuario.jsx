@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import axios from "axios";
-import { getUsuarios } from "../redux/action";
+import { getUsuariosAdmin } from "../redux/action";
 import style from "./AdminEditaUsuarios.module.css";
 import Swal from "sweetalert2";
 
@@ -10,13 +10,17 @@ const AdminCreaUsuario = ({ handleCancelEdit }) => {
   const [usuarioEditado, setUsuarioEditado] = useState({
     nombre: "",
     correo: "",
+    contraseña: "",
     telefono: "",
   });
 
   const handleSave = async () => {
     try {
-      await axios.post("http://localhost:3001/usuario", usuarioEditado);
-      dispatch(getUsuarios());
+      await axios.post(
+        "http://localhost:3001/usuarios/registro",
+        usuarioEditado
+      );
+      dispatch(getUsuariosAdmin());
       Swal.fire({
         icon: "success",
         title: "Usuario creado exitosamente",
@@ -59,7 +63,7 @@ const AdminCreaUsuario = ({ handleCancelEdit }) => {
               }
             />
           </div>
-          <br />
+
           <div className="col-1">
             <label>correo:</label>
           </div>
@@ -73,7 +77,23 @@ const AdminCreaUsuario = ({ handleCancelEdit }) => {
               onChange={(e) =>
                 setUsuarioEditado({
                   ...usuarioEditado,
-                 correo: e.target.value,
+                  correo: e.target.value,
+                })
+              }
+            />
+          </div>
+          <div className="col-1">
+            <label>contraseña:</label>
+          </div>
+          <div className="col-2">
+            <input
+              id="contenedor"
+              type="text"
+              value={usuarioEditado.contraseña}
+              onChange={(e) =>
+                setUsuarioEditado({
+                  ...usuarioEditado,
+                  contraseña: e.target.value,
                 })
               }
             />
@@ -89,7 +109,7 @@ const AdminCreaUsuario = ({ handleCancelEdit }) => {
               onChange={(e) =>
                 setUsuarioEditado({
                   ...usuarioEditado,
-                  telefono: (e.target.value),
+                  telefono: e.target.value,
                 })
               }
             />

@@ -1,63 +1,81 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import NavBar from '../NavBar/NavBar';
-import FooterBar from '../FooterBar/FooterBar';
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import NavBar from "../NavBar/NavBar";
+import FooterBar from "../FooterBar/FooterBar";
+import { useSelector, useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
-import style from './AdminUsuarios.module.css'
+import { faTrash, faEdit, faUndo } from "@fortawesome/free-solid-svg-icons";
+import style from "./AdminUsuarios.module.css";
 import Table from "react-bootstrap/Table";
-import { getUsuarios } from '../redux/action';
-import { useDispatch } from 'react-redux';
+import { getUsuariosAdmin, setFilters } from "../redux/action";
 import Swal from "sweetalert2";
-import AdminEditaUsuario from "./AdminEditaUsuario";
-import AdminCreaUsuario from "./AdminCreaUsuario";
+// import AdminEditaUsuario from "./AdminEditaUsuario";
+
+// import AdminCreaUsuario from "./AdminCreaUsuario";
 
 const AdminUsuario = () => {
   const dispatch = useDispatch();
-  const [usuarios, setUsuarios] = useState([]);
+  let filters = useSelector((state) => state.filters);
   let data = useSelector((state) => state.allusuarios);
   const [modoEdicion, setModoEdicion] = useState(false);
-  const [modoCreacion, setModoCreacion] = useState(false);
+  // const [modoCreacion, setModoCreacion] = useState(false);
   const [usuarioEditado, setUsuarioEditado] = useState({
-    nombre:"",
+    nombre: "",
     correo: "",
-    telefono: "",})
-   
+    contraseña: "",
+    telefono: "",
+  });
 
- 
   useEffect(() => {
-    dispatch(getUsuarios());
+    dispatch(getUsuariosAdmin());
   }, [dispatch]);
 
-  const handleSaveEdit = async (usuarioEditado) => {
-    
+  if (filters.searchQuery !== "") {
+    data = data.filter((usuario) =>
+      usuario.nombre.toLowerCase().includes(filters.searchQuery.toLowerCase())
+    );
+  }
+  const handleFiltersChange = (event) => {
+    dispatch(setFilters(event.target.name, event.target.value));
+  };
+  // const handleSaveEdit = async (usuarioEditado) => {
+  //   try {
+  //     await axios.put(
+  //       `http://localhost:3001/usuarios/usuarioPut/${usuarioEditado._id}`,
+  //       usuarioEditado
+  //     );
+  //     dispatch(getUsuariosAdmin());
+  //     console.log("Usuario actualizado exitosamente");
+  //     setModoEdicion(false);
+  //   } catch (error) {
+  //     console.error("Error al actualizar el usuario", error);
+  //   }
+  // };
+  // const handleEdit = (usuarioId) => {
+  //   console.log("Entre al handleEdit");
+  //   setModoEdicion(true);
+  //   const usuario = data.find((usuario) => usuario._id === usuarioId);
+  //   setUsuarioEditado(usuario);
+  // };
+  const handleActivate = async (id) => {
     try {
-      await axios.put(
-        `http://localhost:3001/infoUsuario/${usuarioEditado._id}`,
-        usuarioEditado
-      );
-      dispatch(getUsuarios());
-      console.log("Usuario actualizado exitosamente");
-      setModoEdicion(false);
+      await axios.put(`http://localhost:3001/usuarios/activar/${id}`);
+      dispatch(getUsuariosAdmin());
+      Swal.fire({
+        icon: "success",
+        title: "Usuario activado con éxito",
+        text: "El usuario ha sido activado exitosamente.",
+      });
     } catch (error) {
-      console.error("Error al actualizar el usuario", error);
+      console.error("Error al realizar la activación", error);
     }
   };
-  const handleEdit = (usuarioId) => {
-    setModoEdicion(true);
-    const usuario = data.find((usuario) =>usuario._id === usuarioId);
-    setUsuarioEditado(usuario);
-  };
-
   const handleDelete = async (id) => {
-    console.log("Este es el id" + id);
-    console.log("Estoy en el boton delete");
     try {
-      await axios.delete(`http://localhost:3001/infoUsuario/${id}`, {
+      await axios.delete(`http://localhost:3001/usuarios/usuarioDelete/${id}`, {
         activo: false,
       });
-      dispatch(getUsuarios());
+      dispatch(getUsuariosAdmin());
       console.log("Borrado lógico exitoso");
       Swal.fire({
         icon: "success",
@@ -68,7 +86,6 @@ const AdminUsuario = () => {
       console.error("Error al realizar el borrado lógico", error);
     }
   };
-  
 
   return (
     <div>
@@ -77,44 +94,30 @@ const AdminUsuario = () => {
         <h2>Lista de Usuarios</h2>{" "}
       </center>
       <br />
-      <div
-        className="d-flex align-items-start bg-light mb-12"
-        style={{ height: "30px" }}
-      >
-        <div className="col-1">
-          <label>Nombre:</label>
-        </div>
-        <div className="col-2">
-          <input type="text" />
-        </div>
-        <div className="col-1">
-          <label>Descripcion:</label>
-        </div>
-        <div className="col-1">
-          <label>Correo:</label>
-        </div>
-        <div className="col-1">
-          <label>Telefono:</label>
-        </div>
-        
-        <div className="col-1">
-          <input type="text" />
-        </div>
-        <div className="col-2"></div>
-        <div className="col-1">
-          <button className={style.boton}>Buscar</button>
+      <div className="col-md-4">
+        <div className="form-inline">
+          <input
+            type="text"
+            placeholder="Buscar usuarios"
+            name="searchQuery"
+            value={filters.searchQuery}
+            onChange={handleFiltersChange}
+            className={`form-control + ${style.searchInput}`}
+          />
         </div>
       </div>
+
       <br />
       <Table striped bordered hover responsive>
         <thead>
           <tr>
             <th>#</th>
             <th>Nombre</th>
-            <th>Descripción</th>
             <th>Correo</th>
+            {/* <th>Contraseña</th> */}
             <th>Telefono</th>
-            
+            <th>Estado</th>
+            <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -123,25 +126,30 @@ const AdminUsuario = () => {
               <tr key={id}>
                 <td>{id + 1}</td>
                 <td>{atributo.nombre}</td>
-                        
                 <td>{atributo.correo}</td>
-                <td>{atributo.contraseña}</td> 
+                {/* <td>{atributo.contraseña}</td> */}
                 <td>{atributo.telefono}</td>
-                
-                <td>{atributo.activo === true ? "Activo" : "Desactivo"}</td>
+                <td>{atributo.activo === true ? "Activo" : "Inactivo"}</td>
                 <td className={style.fit}>
                   <span className={style.actions}>
-                    <FontAwesomeIcon
-                      className={style.delete_btn}
-                      onClick={() => handleDelete(atributo._id)}
-                      icon={faTrash}
-                    />
-
-                    <FontAwesomeIcon
+                    {atributo.activo === true ? (
+                      <FontAwesomeIcon
+                        className={style.delete_btn}
+                        onClick={() => handleDelete(atributo._id)}
+                        icon={faTrash}
+                      />
+                    ) : (
+                      <FontAwesomeIcon
+                        className={style.delete_btn}
+                        onClick={() => handleActivate(atributo._id)}
+                        icon={faUndo}
+                      />
+                    )}
+                    {/* <FontAwesomeIcon
                       className={style.edit_btn}
                       onClick={() => handleEdit(atributo._id)}
                       icon={faEdit}
-                    />
+                    /> */}
                   </span>
                 </td>
               </tr>
@@ -149,14 +157,14 @@ const AdminUsuario = () => {
           })}
         </tbody>
       </Table>
-      {modoEdicion && (
+      {/* {modoEdicion && (
         <AdminEditaUsuario
           servicio={usuarioEditado}
           handleCancelEdit={() => setModoEdicion(false)}
           onSaveEdit={handleSaveEdit}
         />
-      )}
-      {modoCreacion ? (
+      )} */}
+      {/* {modoCreacion ? (
         <AdminCreaUsuario handleCancelEdit={() => setModoCreacion(false)} />
       ) : (
         <div className="btn_crearsusuario">
@@ -164,7 +172,7 @@ const AdminUsuario = () => {
             Crear Usuario
           </button>
         </div>
-      )}
+      )} */}
 
       <br />
       <br />
@@ -176,6 +184,6 @@ const AdminUsuario = () => {
       <FooterBar />
     </div>
   );
-}
+};
 
 export default AdminUsuario;
