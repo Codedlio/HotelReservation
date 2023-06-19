@@ -39,6 +39,8 @@ import {
   GET_SERVICIOS,
   GET_TIPOS,
   GET_HABITACIONES_ADMIN,
+  GET_USUARIOS,
+
   GET_SERVICIOS_ADMIN,
   GET_USUARIOS,
 } from "./action";
@@ -74,7 +76,7 @@ const initialState = {
     selectedPaquete: [],
   },
   tipos: [],
-  allusarios: [],
+  allusarios : [],
 };
 
 const reducer = (state = initialState, action) => {
