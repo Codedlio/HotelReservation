@@ -41,7 +41,7 @@ function DetalleReserva() {
     const localData = window.localStorage.getItem("client");
     const localReservation = window.localStorage.getItem("dataReservation");
   
-    if (localData && localReservation && reserva) {
+    if (localData && reserva) {
       const data = JSON.parse(localData);
       const datares = JSON.parse(localReservation);
       console.log(reserva);
@@ -49,9 +49,9 @@ function DetalleReserva() {
       const paquetes=reserva[0].Arraypaquete
       try {
         const response = await axios.post("http://localhost:3001/payment/checkout", {
-          custumerId: data,
-          arrIdHabitaciones: habitaciones,
-          arrIdPaquetes: paquetes
+          "custumerId": data,
+          "arrIdHabitaciones": habitaciones,
+          "arrIdPaquetes": paquetes
         });
   
         const { payment, sessionId } = response.data;
@@ -85,7 +85,6 @@ function DetalleReserva() {
         console.log("El pago no fue exitoso");
         window.location.href = stripePay;
       }
-    
   };
   
   const renderDetailHabiReserva = (habi) => {  
