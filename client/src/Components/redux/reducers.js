@@ -40,6 +40,9 @@ import {
   GET_TIPOS,
   GET_HABITACIONES_ADMIN,
   DELETE_STATE_PERFIL,
+  GET_USUARIOS,
+
+
 } from "./action";
 
 const initialState = {
@@ -73,6 +76,7 @@ const initialState = {
     selectedPaquete: [],
   },
   tipos: [],
+  allusuarios : [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -148,6 +152,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         allservicios: action.payload,
+      };
+      case GET_USUARIOS:
+      return {
+        ...state,
+        allusarios: action.payload,
       };
     case GET_PAQUETES_DISPONIBLES:
       return {

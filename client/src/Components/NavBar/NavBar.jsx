@@ -6,8 +6,9 @@ import {
   faInstagram,
   faFacebook,
   faTwitter,
+  
 } from "@fortawesome/free-brands-svg-icons";
-import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
+import { faCartPlus, faUser } from "@fortawesome/free-solid-svg-icons";
 import imagen from "./logo hotel.png";
 import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -128,6 +129,7 @@ const NavBar = () => {
             <Link className={style.link} to='/adminHabitaciones'>Habitaciones</Link>
             <Link className={style.link} to='/adminPaquetes'>Paquetes</Link>
             <Link className={style.link} to='/adminServicios'>Servicios</Link>
+            <Link className={style.link} to='/adminUsuarios'>Usuarios</Link>
           </div>
         </div>   
         <div className={style.dropdown} > 
@@ -175,39 +177,48 @@ const NavBar = () => {
         <Nav.Item  href="#" onClick={handleTwitterClick} className={style.icon}><FontAwesomeIcon icon={faTwitter} /></Nav.Item>
         <Link  to='/reserva' className={style.button}>RESERVAR AHORA</Link>
         
-      {/* Agrega el botón para mostrar el carrito */}
-      <button className={style.carrito} onClick={() => {
+        <button className={style.carrito} onClick={() => {
   if (mostrarCarrito) {
     setMostrarCarrito(false);
     setMostrarMensaje(false); // Restablecer el estado de mostrarMensaje al ocultar el carrito
   } else {
     setMostrarCarrito(true);
   }
-}}>     {usuario && (
-  <Link to="/perfilUsuario" className={style.container}>
-    <h4>{usuarioArray.nombre}</h4>
-      {usuarioArray.image && usuarioArray.image.length > 0  ? (
-    <img style={{ borderRadius: '1vh', width: '6vh', }} src={usuarioArray.image} alt="" />
-    ) : (
-    <img style={{ borderRadius: '1vh', width: '6vh', }} 
-    src={"https://res.cloudinary.com/djm04ajb0/image/upload/v1687125700/usuarioImage/czdnwyiy4ngf9frawohq.png"} alt="" />
-     )}
-  </Link> )}
-
-  {usuarioReg.admin !== true &&
+}}>
+  {/* Agrega el botón para mostrar el carrito */}
+  {usuarioReg.admin !== true && (
     <Link className={style.carritolink} to="/detallereserva">
-    <FontAwesomeIcon icon={faCartPlus} />
-  </Link>}
-  </button>
+      <FontAwesomeIcon icon={faCartPlus} />
+    </Link>
+  )}
+</button>
+
+{/* Agrega el enlace al perfil de usuario */}
+{usuario && (
+  <Link to="/perfilUsuario">
+    <h4>{usuarioArray.nombre}</h4>
+    {usuarioArray.image && usuarioArray.image.length > 0 ? (
+      <img src={usuarioArray.image} alt="" />
+    ) : (
+      <FontAwesomeIcon className={style.imagenusuario} icon={faUser} />
+    )}
+  </Link>
+)}
+
 {mostrarCarrito ? (
-          reserva ? (
-            <Carrito reserva={reserva} />
-          ) : (
-            
-            mostrarMensaje && <div className={style.contenedormensaje}><p className={style.mensajeee}>Aun no posee Reservas</p>
-            </div>
-          )
-        ) : null}
+  reserva ? (
+    <Carrito reserva={reserva} />
+  ) : (
+    mostrarMensaje && <div className={style.contenedormensaje}><p className={style.mensajeee}>Aun no posee Reservas</p></div>
+  )
+) : null}
+
+
+
+
+
+
+
         </Nav>
         </Navbar.Collapse>
       </Container>

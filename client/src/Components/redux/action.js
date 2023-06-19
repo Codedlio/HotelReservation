@@ -42,6 +42,8 @@ export const GET_SERVICIOS = "GET_SERVICIOS";
 export const GET_TIPOS = "GET_TIPOS";
 export const DELETE_STATE_PERFIL='DELETE_STATE_PERFIL';
 
+export const GET_USUARIOS = "GET_USUARIOS";
+
 export const setOrderByName = (orderType) => {
   return {
     type: SET_ORDER_BY_NAME,
@@ -80,6 +82,17 @@ export const getServicios = () => {
     return dispatch({
       type: GET_SERVICIOS,
       payload: response,
+    });
+  };
+};
+export const getUsuarios = () => {
+  return async function(dispatch) {
+    console.log("entro a usuario");
+    let {data} = await axios.get(`/infoUsuario`)
+    data = data.filter((usuario)=>usuario.activo)
+    return dispatch({
+      type: GET_USUARIOS,
+      payload: data,
     });
   };
 };

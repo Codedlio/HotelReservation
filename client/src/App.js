@@ -36,6 +36,7 @@ import ExitoReserva from './Components/ExitoReserva/ExitoReserva'
 import AdminHabitaciones from './Components/AdminHabitaciones/AdminHabitaciones';
 import AdminPaquetes from './Components/AdminPaquetes/AdminPaquetes';
 import AdminServicios from './Components/AdminServicios/AdminServicios';
+import AdminUsuarios from './Components/AdminUsuarios/AdminUsuarios';
 import IndicadorReservas from './Components/IndicadorReservas/IndicadorReservas';
 import IndicadorReclamos from './Components/IndicadorReclamos/IndicadorReclamos';
 import IndicadorUsuarios from './Components/IndicadorUsuarios/IndicadorUsuarios';
@@ -84,6 +85,7 @@ function App() {
           <Route path="/adminHabitaciones" element={<AdminHabitaciones />} />
           <Route path="/adminPaquetes" element={<AdminPaquetes />} />
           <Route path="/adminServicios" element={<AdminServicios />} />
+          <Route path="/adminUsuarios" element={<AdminUsuarios />} />
           <Route path="/indicadorReservas" element={<IndicadorReservas />} />
           <Route path="/indicadorReclamos" element={<IndicadorReclamos />} />
           <Route path="/indicadorUsuarios" element={<IndicadorUsuarios />} />        
