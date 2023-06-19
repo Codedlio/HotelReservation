@@ -69,6 +69,7 @@ const initialState = {
     precio: 0,
     selectedPaquete: [],
   },
+  allusarios : [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -144,6 +145,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         allservicios: action.payload,
+      };
+      case GET_USUARIOS:
+      return {
+        ...state,
+        allusarios: action.payload,
       };
     case GET_PAQUETES_DISPONIBLES:
       return {
