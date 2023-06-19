@@ -1,16 +1,16 @@
 const Habitacion = require("../models/Habitacion");
 const Tipo_habitacion = require("../models/Tipo_habitacion");
 const Reservacion = require('../models/Reservacion');
-const { habitacionImage } = require("../cloudinary/cloudinary.js");
+const { habitacionImage, deleteImage } = require("../cloudinary/cloudinary.js");
 const fs = require("fs-extra");
 
 const getHabitaciones = async (req, res) => {
   try {
-    const habitaciones = await Habitacion.find({ activo: true });
+    const habitaciones = await Habitacion.find();
 
     // for (let habitacion of habitaciones) {
-    //     const {nombre} = await Tipo_habitacion.findOne({_id:habitacion.tipo});
-    //     habitacion.tipo = nombre;
+    //   const tipo = await Tipo_habitacion.findById(habitacion.tipo);
+    //   habitacion.tipo = tipo.nombre;
     // }
     return res.status(200).json(habitaciones);
   } catch (error) {
@@ -53,13 +53,12 @@ const getHabitacionesDisponibles = async (req, res) => {
         
         for (let reservacion of reservaciones) {
             for (let habitacionReservada of reservacion.habitaciones) {
-                let habitacion = habitaciones.find(a => a._id === habitacionReservada);
+                let habitacion = habitaciones.find(a => a._id.equals(habitacionReservada));
                 if (habitacion) {
-                    habitacion.disponible = false;
+                  habitacion.disponible = false;
                 }
             }
         };
-      
         return res.status(200).json(habitaciones);
     } 
     catch (error) {
@@ -68,22 +67,20 @@ const getHabitacionesDisponibles = async (req, res) => {
 };
 
 const postHabitacion = async (req,res) => {
-    let {nombre, numero, tipoId, descripcion, capacidad, precio, puntuacion} = req.body;
-    if (!nombre || !numero || !tipoId || !descripcion || !capacidad || !precio || !puntuacion) {return res.status(400).send("Error. No se enviaron los datos necesarios para crear la habitacion")};
+    let {nombre, numero, tipo, descripcion, capacidad, precio} = req.body;
+    if (!nombre || !numero || !tipo || !descripcion || !capacidad || !precio) {return res.status(400).send("Error. No se enviaron los datos necesarios para crear la habitacion")};
 
   try {
     numero = Number(numero);
     capacidad = Number(capacidad);
     precio = Number(precio);
-    puntuacion = Number(puntuacion);
     const data = new Habitacion({
       nombre,
       numero,
-      tipo: tipoId,
+      tipo,
       descripcion,
       capacidad,
-      precio,
-      puntuacion,
+      precio
     });
     if (req.files) {
       for (const key of Object.keys(req.files)) {
@@ -108,53 +105,50 @@ const postHabitacion = async (req,res) => {
 
 const putHabitacion = async (req, res) => {
   const { id } = req.params;
-  let {
-    nombre,
-    numero,
-    tipoId,
-    descripcion,
-    capacidad,
-    precio,
-    puntuacion,
-    disponible,
-  } = req.body;
+  let {nombre, numero, tipo, descripcion, capacidad, precio} = req.body;
 
-  if (
-    !nombre ||
-    !numero ||
-    !tipoId ||
-    !descripcion ||
-    !capacidad ||
-    !precio ||
-    !puntuacion ||
-    disponible === undefined
-  ) {
-    return res
-      .status(400)
-      .send("Error. No se enviaron los datos necesarios para actualizar");
+  if (!nombre || !numero || !tipo || !descripcion || !capacidad || !precio) {
+    return res.status(400).send("Error. No se enviaron los datos necesarios para actualizar");
   }
+
   try {
-    let habitacion = await Habitacion.findOne({ _id: id, activo: true });
+    let habitacion = await Habitacion.findById(id);
     if (!habitacion) {
       return res.status(400).send("La habitación no existe");
     }
+
     if (req.files) {
+      while (habitacion.image.length > 0) {
+        deleteImage(habitacion.image.pop());
+      }
       for (const key of Object.keys(req.files)) {
         const file = req.files[key];
         const result = await habitacionImage(file.tempFilePath);
-        data.image.push(result.secure_url);
+        habitacion.image.push(result.secure_url);
         await fs.unlink(file.tempFilePath);
       }
     }
     habitacion.nombre = nombre;
     habitacion.numero = numero;
-    habitacion.tipo = tipoId;
+    habitacion.tipo = tipo;
     habitacion.descripcion = descripcion;
     habitacion.capacidad = capacidad;
     habitacion.precio = precio;
-    habitacion.puntuacion = puntuacion;
     let savedData = await habitacion.save();
     return res.status(200).json(savedData);
+  } catch (error) {
+    return res.status(500).send("Internal server error");
+  }
+};
+
+const putActivarHabitacion = async (req,res) => {
+  const { id } = req.params;
+  
+  try {
+    let habitacion = await Habitacion.findById(id);
+    habitacion.activo = true;
+    habitacion.save();
+    return res.status(200).send("Se activó correctamente");
   } catch (error) {
     return res.status(500).send("Internal server error");
   }
@@ -164,7 +158,7 @@ const deleteHabitacion = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const habitacion = await Habitacion.findOne({ _id: id });
+    const habitacion = await Habitacion.findById(id);
     if (!habitacion) {
       return res
         .status(400)
@@ -180,4 +174,4 @@ const deleteHabitacion = async (req, res) => {
     }
 };
 
-module.exports = {getHabitaciones,getHabitacionById,getHabitacionesDisponibles,postHabitacion,putHabitacion,deleteHabitacion};
+module.exports = {getHabitaciones,getHabitacionById,getHabitacionesDisponibles,postHabitacion,putHabitacion,putActivarHabitacion,deleteHabitacion};

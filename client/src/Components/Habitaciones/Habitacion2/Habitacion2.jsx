@@ -8,28 +8,59 @@ import style from './Habitacion2.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBed, faMoneyBill, faPersonBooth  } from '@fortawesome/free-solid-svg-icons';
 import Paginado from '../../Paginate/Paginate';
-import { set_Currents_Page } from '../../redux/action';
+import { set_Currents_Page, getHabitaciones } from '../../redux/action';
 import { useEffect } from 'react';
+import { Link, animateScroll as scroll } from "react-scroll";
+import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
 
 const Habitacion2 = () => {
   const [index, setIndex] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
   const dispatch = useDispatch();
-  const habitaciones = useSelector((state) => state.set_Current_Page); // Cambiar "state.set_Current_Page" por el nombre correcto
- 
+  const habitaciones = useSelector((state) => state.gethabitaciones);
   const [currentPage, setCurrentPage] = useState(2);
   const habsPerPage = 1;
   const indexofLastRoom = currentPage * habsPerPage;
   const indexofFirstRoom = indexofLastRoom - habsPerPage;
-  const visibleHabitaciones = habitaciones.slice(indexofFirstRoom, indexofLastRoom);
 
-  const imagenes = useSelector(state => state.gethabitaciones[1].image);
+  const imagenes = useSelector(state => state.gethabitaciones[1]);
 
+  useEffect(() => {
+    if (!imagenes) {
+      dispatch(getHabitaciones());
+    }
+  }, []);
+  
   useEffect(() => {
     dispatch(set_Currents_Page(currentPage));
   }, [dispatch, currentPage]);
 
   const handleSelect = (selectedIndex, e) => {
     setIndex(selectedIndex);
+  };
+
+  
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const handleScroll = () => {
+    if (window.pageYOffset > 300) {
+      setIsVisible(true);
+    } else {
+      setIsVisible(false);
+    }
+  };
+
+  const scrollToTop = () => {
+    scroll.scrollToTop({
+      duration: 900, // Duración de la animación en milisegundos
+      smooth: true, // Desplazamiento suave habilitado
+    });
   };
 
   return (
@@ -78,9 +109,9 @@ const Habitacion2 = () => {
         </section>
       <div 
       className="container w-100">
-        {imagenes.length && 
+        {imagenes && 
         <Carousel activeIndex={index} onSelect={handleSelect}>
-          {imagenes.map(imagen => {
+          {imagenes.image.map(imagen => {
             return (
             <Carousel.Item>
               <img
@@ -119,22 +150,20 @@ const Habitacion2 = () => {
             <li>TV por cable</li>
           </ul>
         </section>
-
-
-        <div className={style.titulodisponibilidad}><h2>Disponibilidad</h2></div>
-        <section className={style.disponibilidad}>
-          
-          <p>Verifica la disponibilidad y realiza tu reserva en línea:</p>
-        
-        </section>
-        <div className={style.containerlink}><a className={style.linka} href="#">Ver disponibilidad</a></div>
-        <habitaciones habitaciones={visibleHabitaciones} />
+        <Link
+        to="top"
+        spy={true}
+        smooth={true}
+        duration={500}
+        className={`${style.scroll} ${isVisible ? style.show : ""}`}
+        onClick={scrollToTop}
+      >
+        <FontAwesomeIcon icon={faArrowUp} />
+      </Link>
       
         <Paginado gamesPerPage={habsPerPage} habitaciones={habitaciones.length} paginado={setCurrentPage} currentPage={currentPage} />
 
         <FooterBar className={style.footer} />
-      
-      
     </div>
   );
 };

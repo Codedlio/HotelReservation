@@ -60,15 +60,16 @@ function PreguntasFrecuentes() {
   return (
     <div className={style.container}>
       <h2 className={style.title}>Preguntas Frecuentes</h2>
+      
       <Accordion>
         {preguntas.map((pregunta, index) => (
-          <Accordion.Item key={index} eventKey={index.toString()}>
+          <Accordion.Item className={style.acordeon} key={index} eventKey={index.toString()}>
             <Accordion.Header className={style.pregunta} onClick={() => toggleAccordion(index)}>
               {pregunta.pregunta}
               
             </Accordion.Header>
             <Accordion.Body>
-              <p className={style.respuesta}>{pregunta.respuesta}</p>
+              <p className={`${style.respuesta} ${style.overflow}`}>{pregunta.respuesta}</p>
             </Accordion.Body>
           </Accordion.Item>
         ))}

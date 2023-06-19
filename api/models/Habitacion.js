@@ -7,11 +7,10 @@ const habitacionSchema = new mongoose.Schema({
   descripcion: { type: String },
   capacidad: { type: Number, required: true},
   precio: { type: Number, required: true },
-  puntuacion: { type: Number, required: true},
+  puntuacion: { type: Number},
   disponible: { type: Boolean, default: true },
   activo: { type: Boolean, default:true},
   image: {type:Array}
-  
 });
 
 const Habitacion = mongoose.model("Habitacion", habitacionSchema);

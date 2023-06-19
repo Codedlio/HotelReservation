@@ -8,6 +8,9 @@ import validate from './validate';
 import {sugerenciaCliente} from '../redux/action.js'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPhone, faEnvelope, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
+import { faComments } from "@fortawesome/free-solid-svg-icons";
+
+import { Link } from 'react-router-dom';
 
 function CentroDeAyuda() {
  const dispatch =useDispatch();
@@ -34,8 +37,6 @@ function CentroDeAyuda() {
         ...userData, [event.target.name]: event.target.value
     });
     setError(validate({...userData, [event.target.name]: event.target.value}));
-    console.log(userData)
-    console.log(error)
 
 };
 const handleSubmit=async(e)=>{
@@ -65,8 +66,6 @@ try {
   const handleReclamosClick = (event) => {
     setShowTextArea(true);
     setShowButton(false);
-   
-    
 
   };
 
@@ -94,6 +93,12 @@ try {
         <div className={style.contactItem}>
           <FontAwesomeIcon icon={faMapMarkerAlt} className={style.contactIcon} />
           <span className={style.contactLabel}>Dirección:</span> Calle Principal 123, Hotel Eterno
+        </div>
+        <div className={style.contactItem}>
+          <FontAwesomeIcon icon={faComments}  className={style.contactIcon} />
+            <Link to="/chat" className={style.contactLabellink}>
+       Chatbot
+      </Link>
         </div>
       </div>
 
