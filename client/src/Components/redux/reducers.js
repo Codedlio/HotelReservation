@@ -41,6 +41,8 @@ import {
   GET_HABITACIONES_ADMIN,
   DELETE_STATE_PERFIL,
   GET_USUARIOS,
+  GET_PAQUETES_ADMIN,
+  FILTER_PAQUETES_ADMIN
 
 
 } from "./action";
@@ -77,6 +79,8 @@ const initialState = {
   },
   tipos: [],
   allusuarios : [],
+  allpaquetesAdm: [],
+  filterPaquetesAdmin:[],
 };
 
 const reducer = (state = initialState, action) => {
@@ -148,6 +152,44 @@ const reducer = (state = initialState, action) => {
         orderPaquetes: action.payload, //aca lleno
         filterPaquetes: action.payload,
       };
+      case GET_PAQUETES_ADMIN:
+        return {
+          ...state,
+          allpaquetesAdm: action.payload,
+          filterPaquetesAdmin: action.payload,
+        }; 
+    case FILTER_PAQUETES_ADMIN:      
+      let filtros=action.payload;
+      let FilterFinal =[...state.allpaquetesAdm]; 
+      if(filtros.costo === '' && filtros.nombre === '' && filtros.desc === ''){
+          const PaquetesAdm = [...state.allpaquetesAdm]; 
+          FilterFinal = (filtros.costo === '' && filtros.nombre === '' && filtros.desc === '')? PaquetesAdm 
+          : PaquetesAdm.filter((p)=>{
+              return  p.desc.toUpperCase().includes(filtros.desc.toUpperCase()) ;
+          })
+      }
+      else{
+          const PaquetesAdm = [...state.allpaquetesAdm];   
+          const FilterName = (filtros.nombre === '')? PaquetesAdm 
+                : PaquetesAdm.filter((p)=>{
+                    return  p.nombre.toUpperCase().includes(filtros.nombre.toUpperCase()) ;
+                })      
+          const PaquetesNameAdm = [...FilterName];  
+          const FilterDesPaq = (filtros.desc === '')? PaquetesNameAdm 
+          : PaquetesNameAdm.filter((p)=>{
+              return  p.desc.toUpperCase().includes(filtros.desc.toUpperCase()) ;
+          })
+          const PaquetesCostoAdm = [...FilterDesPaq];  
+          FilterFinal = (filtros.costo === '')? PaquetesCostoAdm 
+          : PaquetesCostoAdm.filter((p)=>{
+            return  p.costo ==filtros.costo ;
+          })  
+      }
+      return {      
+        ...state,             
+          filterPaquetesAdmin: FilterFinal
+      };
+         
     case GET_SERVICIOS:
       return {
         ...state,
