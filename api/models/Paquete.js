@@ -15,10 +15,11 @@ const paqueteSchema = new mongoose.Schema({
   costo: { type: Number, required: true },
   activo: { type: Boolean, default: true },
   image: { type: Array },
-  capacidad: { type: Number, required: true },
+  capacidad: { type: Number},
   arrIdHabitaciones: [],
   arrIdServicios: [],
-  disponible: {type: Boolean, default: true}
+  disponible: {type: Boolean, default: true},
+  desc: { type: String},
   //Mas campos
 });
 

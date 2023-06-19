@@ -69,15 +69,15 @@
 }
 
 .delete_btn {
-  color: #e10d05;
+  color: #78331a;
 }
 
 .boton {
   background-color: #8b5541;
   color: #fff;
-  padding: 5px 10px; /* Ajusta el padding para reducir el tamaño del botón */
+  padding: 10px 10px 10px 10px; /* Ajusta el padding para reducir el tamaño del botón */
   font-size: 12px; /* Ajusta el tamaño de fuente para hacerlo más pequeño */
-  font-weight: 600;
+  font-weight: 800;
   border: none;
   border-radius: 3px;
   cursor: pointer;
@@ -86,8 +86,13 @@
   
 }
 .boton:hover{ 
-  background-color: #78331a;
+    background-color: #78331a;
     color: #fff;
     text-decoration: none;
-  }
+}
+
+.danger{
+  color: rgb(244, 47, 47);
+}
+
  
