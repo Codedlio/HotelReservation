@@ -54,4 +54,28 @@
    position: relative;
    top: 13%;
   }
-  
+  @media (max-width: 576px) {
+    
+  .link{
+    font-size: 14px;
+  }
+  .container1 p {
+    font-size: 20px;
+  }
+  .container img{
+    width: 10vh;
+  }
+  }
+  @media (max-width: 490px) {
+    .link{
+      font-size: 14px;
+    }
+    .container1 p {
+      font-size: 20px;
+      padding-left: 30px;
+    }
+    .container img{
+      width: 10vh;
+      
+    }
+  }
