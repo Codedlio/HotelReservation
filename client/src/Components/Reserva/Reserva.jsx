@@ -353,7 +353,8 @@ function Reserva() {
             </div>
           )}
           <br/>
-          <button type='submit' className={style.button}>Reservar ahora</button>          
+          {/* <button type='submit' className={style.button}>Reservar ahora</button>     */}
+          <button type='submit' className={style.button}>Añadir al Carrito</button>       
         </form>
       </div>
     </div>
