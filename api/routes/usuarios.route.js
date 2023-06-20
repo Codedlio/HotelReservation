@@ -11,6 +11,7 @@ const {
   deleteUsuario,
   deleteUsuarioAdmin,
   getUsuarioByCorreo,
+  postRegistroGoogle,
 } = require("../controllers/controllerUsuarios");
 const fileUpload = require("express-fileupload");
 
@@ -18,6 +19,7 @@ const fileUpload = require("express-fileupload");
 router.get("/", getUsuarios);
 // Ruta de inicio de sesión
 router.post("/registro", postRegistro);
+router.post("/registro/google", postRegistroGoogle);
 
 // Ruta de cierre de sesión
 router.post("/login", postLogin);
