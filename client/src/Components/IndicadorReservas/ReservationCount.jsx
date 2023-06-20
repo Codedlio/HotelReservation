@@ -16,7 +16,7 @@ const ReservationCountChart = () => {
       <PolarGrid />
       <PolarAngleAxis dataKey="mes" />
       <PolarRadiusAxis angle={30} domain={[0, 'dataMax']} />
-      <Radar name="Cantidad" dataKey="cantidad" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
+      <Radar name="Cantidad" dataKey="cantidad" stroke="#8884d8" fill="#f97133" fillOpacity={0.6} />
     </RadarChart>
   );
 }
