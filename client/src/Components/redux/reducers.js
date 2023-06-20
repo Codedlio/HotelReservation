@@ -23,6 +23,7 @@ import {
   SET_SELECTEDSERVICE,
   SET_SELECTEDPAQUETE,
   FILTER_NAME_PAQUETE,
+  FILTERS_NAME_PAQUETE,
   GET_PAQUETES_DISPONIBLES,
   SET_FILTERS,
   GET_USUARIO_BY_CORREO,
@@ -54,6 +55,7 @@ const initialState = {
   allpaquetes: [],
   orderPaquetes: [],
   allservicios: [],
+  filterPaquetes: [],
   filtersPaquetes: { searchQuery: "", minPrice: "", maxPrice: "" },
   set_Current_Page: [],
   allResena: [],
@@ -259,8 +261,21 @@ const reducer = (state = initialState, action) => {
         ...state,
         orderPaquetes: SortPaquetes,
       };
+      case FILTER_NAME_PAQUETE:
+      console.log("FILTER_NAME-action.payload");
+      console.log(action.payload);
+      const FilName = [...state.filterPaquetes];
+      const FilPaquet = (action.payload === '' ? FilName
+          : FilName.filter((paquete) => {
+              return paquete.nombre.toUpperCase().includes(action.payload.toUpperCase());
+          }))
 
-    case FILTER_NAME_PAQUETE:
+      return {
+          ...state,
+          //filterGames: Filter 
+          orderPaquetes: FilPaquet
+      }
+    case FILTERS_NAME_PAQUETE:
       return {
         ...state,
         filtersPaquetes: {

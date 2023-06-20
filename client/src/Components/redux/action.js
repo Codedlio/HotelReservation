@@ -27,6 +27,7 @@ export const SET_DATES = "SET_DATES";
 export const SET_PRECIO = "SET_PRECIO";
 export const SET_SELECTEDPAQUETE = "SET_SELECTEDPAQUETE";
 export const FILTER_NAME_PAQUETE = "FILTER_NAME_PAQUETE";
+export const FILTERS_NAME_PAQUETE = "FILTERS_NAME_PAQUETE";
 export const FILTER_MIN_PRECIO_PAQUETE = "FILTER_MIN_PRECIO_PAQUETE";
 export const FILTER_MAX_PRECIO_PAQUETE = "FILTER_MAX_PRECIO_PAQUETE";
 export const GET_USUARIO_BY_CORREO = "GET_USUARIO_BY_CORREO";
@@ -158,6 +159,9 @@ export const orderxPaquetes = (order) => {
 };
 export const filterNamePaquete = (filter) => {
   return { type: FILTER_NAME_PAQUETE, payload: filter };
+};
+export const filtersNamePaquete = (filter) => {
+  return { type: FILTERS_NAME_PAQUETE, payload: filter };
 };
 export const filterMinPrecioPaquete = (precio) => {
   return { type: FILTER_MIN_PRECIO_PAQUETE, payload: precio };

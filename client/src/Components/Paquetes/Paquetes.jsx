@@ -6,16 +6,16 @@ import { getPaquetes, orderxPaquetes, filterNamePaquete, filterMinPrecioPaquete,
 import { Link } from "react-router-dom";
 import FooterBar from '../FooterBar/FooterBar'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowUp, faArrowDown, faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
 
 
 const PaginationPaquetes = () => {
-  const dispatch = useDispatch();
-
   let [nombre, setName] = useState("");
   let data = useSelector((state) => state.allpaquetes);
+  data = useSelector((state) => state.orderPaquetes);
   let filtersPaquetes = useSelector((state) => state.filtersPaquetes);
-
+  const dispatch = useDispatch();
+  
   if (filtersPaquetes.searchQuery !== '') {
     data = data.filter(paquete => paquete.nombre.toLowerCase().includes(filtersPaquetes.searchQuery.toLowerCase()));
   };
@@ -29,7 +29,6 @@ const PaginationPaquetes = () => {
   useEffect(() => {
     dispatch(getPaquetes());
   }, [dispatch]);
-
   const itemsPerPage = 3;
   const [currentPage, setCurrentPage] = useState(1);
   let totalPages = Math.ceil(data.length / itemsPerPage);
@@ -39,16 +38,13 @@ const PaginationPaquetes = () => {
   };
 
   const handleSortAsc = () => {
-    dispatch(orderxPaquetes('asc'));
-  };
+    dispatch(orderxPaquetes('asc'));  };
 
   const handleCostoAsc = () => {
     dispatch(orderxPaquetes('costoAsc'));
   };
-
   const handleSortDesc = () => {
-    dispatch(orderxPaquetes('desc'));
-  };
+    dispatch(orderxPaquetes('desc'));  };
   const handleCostoDesc = () => {
     dispatch(orderxPaquetes('costoDesc'));
   };
@@ -157,11 +153,11 @@ const PaginationPaquetes = () => {
       <div >
         <NavBar></NavBar>
 
-        <div className={style.sortButtonsContainer}>
-          <button className={style.sortAscButton} onClick={handleSortAsc}><FontAwesomeIcon icon={faArrowDown} />  Días</button>
-          <button className={style.sortDescButton} onClick={handleSortDesc}> <FontAwesomeIcon icon={faArrowUp} /> Días</button>
-          <button className={style.sortAscButton} onClick={handleCostoAsc}>Costo <FontAwesomeIcon icon={faMinus} />  </button>
-          <button className={style.sortDescButton} onClick={handleCostoDesc}>Costo <FontAwesomeIcon icon={faPlus} /> </button>
+        <div className={style.sortButtonsContainer}>       
+            <button className={style.sortAscButton} onClick={handleSortAsc}>Días<FontAwesomeIcon icon={faMinus} /> </button>
+          <button className={style.sortDescButton} onClick={handleSortDesc}>Días<FontAwesomeIcon icon={faPlus} /> </button>
+          <button className={style.sortAscButton} onClick={handleCostoAsc}>Menor Costo<FontAwesomeIcon/>  </button>
+          <button className={style.sortDescButton} onClick={handleCostoDesc}>Mayor Costo<FontAwesomeIcon/> </button>
 
           <div className={style.ContainerSearch}>
             <input placeholder="Buscar Paquetes" value={nombre} onChange={handleChange} className={style.searchInput} nombre="search" onKeyDown={handleKeyDown} />
