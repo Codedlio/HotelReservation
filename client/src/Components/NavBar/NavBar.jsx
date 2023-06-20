@@ -141,7 +141,8 @@ const NavBar = () => {
             <Link className={style.link} to='/indicadorReclamos'>Reclamos</Link>
             <Link className={style.link} to='/indicadorUsuarios'>Usuarios</Link>
           </div>
-        </div>     
+        </div> 
+        <div className={style.dropdown} >     
         {usuarioReg.admin !== true &&                         
             <Link className={style.link} >El hotel</Link>   
           }         
@@ -150,7 +151,7 @@ const NavBar = () => {
             <Link className={style.link} to='/filosofia'>Filosofía</Link>
             <Link className={style.link} to='/bienestar'>Bienestar</Link>
           </div>
-     
+        </div> 
         {usuarioReg.admin !== true &&                 
           <Link className={style.link} to='/paquetes'>Paquetes</Link>
         } 
