@@ -125,6 +125,9 @@ const PerfilUsuario=()=>{
     if(!editing){setEditing(true)
     }else{setEditing(false)};
   };
+  console.log(resena)
+  console.log(error)
+  console.log(resena)
 
   return (
     <div className={style.containertotal}>
@@ -227,8 +230,7 @@ const PerfilUsuario=()=>{
       ) : (
         <p>Servicios: No hay servicios.</p>
       )}
-          <h4>Estado: {reserva.estado}</h4>
-        
+          {reserva.estado? <h4>Estado: {reserva.estado}</h4>:<h4>Estado: No activo</h4>}
         {reserva.costo && (
           <h4>Costo:USD {reserva.costo}</h4>
         )}
@@ -252,28 +254,37 @@ const PerfilUsuario=()=>{
               </ div>
           )))}
           
-        <div className={style.comentario}>
-          <form>
-            <h2>Edite un comentario y puntuacion</h2>
-            {!validateResena(dataReservacion) &&<p>No se puden dejar comentario y puntuacion, hasta que realice una reservacion y comience su estadia</p>}
-            <label>Puntuacion:
-              <input type="number" min="0" max="5" step="1" name={"puntuacion"}
-              value={resena.puntuacion} onChange={handleChange}placeholder="..."/>
-            </label>
-            {error.puntuacion && <p>{error.puntuacion}</p>}
+          <div className={style.comentario}>
+  <form>
+    <h2>Editar un comentario y puntuación</h2>
+    {!validateResena(dataReservacion) && <p>No se pueden dejar comentarios y puntuaciones hasta que realices una reservación y comiences tu estadía</p>}
+    <label>Puntuación:
+      <input
+        type="number"
+        min="0"
+        max="5"
+        step="1"
+        name="puntuacion"
+        value={resena && resena.puntuacion} // Agrega una verificación de nulo para resena
+        onChange={handleChange}
+        placeholder="..."
+      />
+    </label>
+    {error && error.puntuacion ? <p>{error.puntuacion}</p> : null}
             
-            <textarea
-              id="descripcion"
-              value={resena.descripcion}
-              onChange={handleChange}
-              name={"descripcion"}
-              placeholder="Escribe..."
-              required
-            ></textarea>
-                {error.descripcion && <p>{error.descripcion}</p>}
-            <button onClick={handleSubmit}>Enviar</button>
-          </form>
-        </div>
+    <textarea
+      id="descripcion"
+      value={resena && resena.descripcion} // Agrega una verificación de nulo para resena
+      onChange={handleChange}
+      name="descripcion"
+      placeholder="Escribe..."
+      required
+    ></textarea>
+    {error && error.descripcion ? <p>{error.descripcion}</p> : null}
+    <button onClick={handleSubmit}>Enviar</button>
+  </form>
+</div>
+
       </div>
     </div>
     </div>
