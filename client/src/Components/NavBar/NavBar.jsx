@@ -156,13 +156,9 @@ const NavBar = () => {
         {usuarioReg.admin !== true &&                 
           <Link className={style.link} to='/paquetes'>Paquetes</Link>
         } 
-        {usuario === undefined &&
-          <Link className={style.link} to='/contenedor'>Iniciar sesión</Link>
-        }
+       
         
-        {usuario !== undefined &&
-          <Link className={style.link} onClick={handleLogOut}>Cerrar sesión</Link>
-        }
+        
          {usuarioReg.admin !== true &&                 
           <Link className={style.link} to='/contacto'>Contacto</Link>
         } 
@@ -217,6 +213,12 @@ const NavBar = () => {
     mostrarMensaje && <div className={style.contenedormensaje}><p className={style.mensajeee}>Aun no posee Reservas</p></div>
   )
 ) : null}
+{usuario === undefined &&
+  <Link className={style.linksesion} to='/contenedor'>Iniciar sesión</Link>
+}
+{usuario !== undefined &&
+          <Link className={style.linksesion} onClick={handleLogOut}>Cerrar sesión</Link>
+        }
 
 
 

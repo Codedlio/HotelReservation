@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import ChatBot from 'react-simple-chatbot'
 import { ThemeProvider } from 'styled-components'
 import style from './Contenido.module.css'
+import { Link } from 'react-router-dom';
 
 
 const theme = {
@@ -19,8 +20,11 @@ export default class Contenido extends Component {
     render() {
         return (
             <div className={style.container}>
-            <ThemeProvider theme={theme}> 
-                <ChatBot 
+                 <Link className={style.linke}  to="/">
+                    <button className={style.closeButton}>X</button>
+                  </Link>
+            <ThemeProvider  theme={theme}> 
+                <ChatBot className={style.chat}
                     steps={[
                         {
                             id: "1",
