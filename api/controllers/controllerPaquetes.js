@@ -179,31 +179,8 @@ const deletePaquete = async (req,res) => {
 
 const getPaquetesAdmin = async (req,res) => {
     try {
-        const paquetes = await Paquete.find();
-        let paquetesCompleto=[];
-        for(let paquete of paquetes) {
-          
-            let numerosHabitaciones = [];
-            let cantHabitacion=0;
-            for (let habitacionId of paquete.arrIdHabitaciones) {               
-                let HabitacionXpaquete = await Habitacion.findOne({ _id: habitacionId, activo: true });
-                if(HabitacionXpaquete)
-                    cantHabitacion+=HabitacionXpaquete.capacidad;                
-                //numerosHabitaciones.push(nombre);
-            }
-            paquete.capacidad=cantHabitacion;
-            let nombresServicios = [];
-            for (let servicioId of paquete.arrIdServicios) {
-                const {nombre} = await Servicio.find({_id:servicioId});
-                nombresServicios.push(nombre);
-            }
-            paquete.habitaciones = numerosHabitaciones;
-            paquete.servicios = nombresServicios;
-            paquetesCompleto.push(paquete);
-        }
-
-        
-        return res.status(200).json(paquetesCompleto);
+        const paquetes = await Paquete.find();        
+        return res.status(200).json(paquetes);
     } 
     catch (error) {
         return res.status(500).send(error.message);
