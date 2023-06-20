@@ -99,10 +99,11 @@ const NavBar = () => {
     Cookies.remove('emailToken');
     dispatch(deleteUsuario());
     dispatch(deleteStateResenaAndUserArr());
-    
+    localStorage.clear();
     if (usuario){
       await auth.signOut();
       Cookies.remove('emailToken');
+      localStorage.clear();
     }
   };
 

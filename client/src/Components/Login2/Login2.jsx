@@ -49,16 +49,21 @@ function Login2() {
         correo:credentials.user.email,
         nombre:credentials.user.displayName  
       }
+      const {userGoogle}= await axios.post("/auth/registro/google", {
+    "correo":user.correo,
+    "nombre":user.nombre
+}); 
+      console.log(userGoogle);
       
-      const userCurrent = auth.currentUser;
-      if(!userCurrent.emailVerified){
-         sendEmailVerification(auth.currentUser)
-  .then(() => {
-    console.log("verification");
-    // Email verification sent!
-    // ...
-  });
-      }
+  //     const userCurrent = auth.currentUser;
+  //     if(!userCurrent.emailVerified){
+  //        sendEmailVerification(auth.currentUser)
+  // .then(() => {
+  //   console.log("verification");
+  //   // Email verification sent!
+  //   // ...
+  // });
+  //     }
      
   const {data}= await axios.post("http://localhost:3001/payment/custumer", {
     correo:user.correo,
@@ -66,14 +71,14 @@ function Login2() {
 }); 
     window.localStorage.setItem("client", JSON.stringify(data.custumer));
      
-    if (userCurrent && userCurrent.emailVerified) {
-        dispatch(setUsuario(user.correo));
-        console.log(userCurrent.emailVerified);
-    // El correo electrónico ha sido verificado
-  } else { 
-    navigate("/")
-    // El correo electrónico no ha sido verificado
-  }
+  //   if (userCurrent && userCurrent.emailVerified) {
+  //       dispatch(setUsuario(user.correo));
+  //       console.log(userCurrent.emailVerified);
+  //   // El correo electrónico ha sido verificado
+  // } else { 
+  //   navigate("/")
+  //   // El correo electrónico no ha sido verificado
+  // }
   
      
         //console.log(data.custumer);
