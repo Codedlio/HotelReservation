@@ -2,7 +2,7 @@ const Servicio = require("../models/Servicio");
 
 const getServicios = async (req, res) => {
   try {
-    const servicios = await Servicio.find({ activo: true });
+    const servicios = await Servicio.find();
 
     return res.status(200).json(servicios);
   } catch (error) {
