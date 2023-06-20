@@ -48,6 +48,8 @@ export const DELETE_STATE_PERFIL = "DELETE_STATE_PERFIL";
 export const GET_USUARIOS = "GET_USUARIOS";
 export const GET_SERVICIOS_ADMIN = "GET_SERVICIOS_ADMIN";
 export const GET_USUARIOS_ADMIN = "GET_USUARIOS_ADMIN";
+export const GET_RESERVA = "GET_RESERVA";
+
 export const setOrderByName = (orderType) => {
   return {
     type: SET_ORDER_BY_NAME,
@@ -445,4 +447,20 @@ export const filterPaquetesAdmin = (filter) => {
 
 export const deleteStateResenaAndUserArr = () => {
   return { type: DELETE_STATE_PERFIL };
+};
+
+
+export const getReserva = () => {
+  return async (dispatch) => {
+    try {
+      const {data} = await axios.get('/reservation');
+
+      return dispatch({
+        type: GET_RESERVA,
+        payload: data
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
 };
