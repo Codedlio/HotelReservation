@@ -6,32 +6,43 @@ const { checkReservation } = require("../config/sendgridEmail.js");
 
 const getReservaciones= async (req, res) => {
   try {
-    let reservaciones = await Reservacion.find({activo:true});
+    let reservaciones = await Reservacion.find();
 
-    for (let reservacion of reservaciones) {
-      let nombresHabitaciones = [];
-      for (let habId of reservacion.habitaciones) {
-        const habitacion = await Habitacion.findById(habId);
-        nombresHabitaciones.push(habitacion.nombre);
-      }
+if (!reservaciones) {
+  return res.status(200).send("Not Found");
+}
 
-      let nombresPaquetes = [];
-      for (let paqueteId of reservacion.paquetes) {
-        const paquete = await Paquete.findById(paqueteId);
-        nombresPaquetes.push(paquete.nombre);
-      }
-
-      let nombresServicios = [];
-      for (let servicioId of reservacion.servicios) {
-        const servicio = await Servicio.findById(servicioId);
-        nombresServicios.push(servicio.nombre); 
-      }
-
-      reservacion.nombres = {};
-      reservacion.nombres.habitaciones = nombresHabitaciones;
-      reservacion.nombres.paquetes = nombresPaquetes;
-      reservacion.nombres.servicios = nombresServicios;
+for (let reservacion of reservaciones) {
+  let nombresHabitaciones = [];
+  for (let habId of reservacion.habitaciones) {
+    const habitacion = await Habitacion.findById(habId);
+    if (habitacion && habitacion.nombre) {
+      nombresHabitaciones.push(habitacion.nombre);
     }
+  }
+
+  let nombresPaquetes = [];
+  for (let paqueteId of reservacion.paquetes) {
+    const paquete = await Paquete.findById(paqueteId);
+    if (paquete && paquete.nombre) {
+      nombresPaquetes.push(paquete.nombre);
+    }
+  }
+
+  let nombresServicios = [];
+  for (let servicioId of reservacion.servicios) {
+    const servicio = await Servicio.findById(servicioId);
+    if (servicio && servicio.nombre) {
+      nombresServicios.push(servicio.nombre);
+    }
+  }
+
+  reservacion.nombres = {
+    habitaciones: nombresHabitaciones,
+    paquetes: nombresPaquetes,
+    servicios: nombresServicios,
+  };
+}
     return res.status(200).json(reservaciones);
   } 
   catch (error) {
@@ -256,6 +267,20 @@ const deleteReservacion = async (req,res) => {
   catch (error) {
     return res.status(500).send('Internal server error');
   }
-};
+  
+}
+const putActivarReserva = async (req,res) => {
+    const { id } = req.params;
+    
+    try {
+      const habitacion = await Reservacion.findOne({_id:id,activo:false});
+      habitacion.activo = true;
+      habitacion.save();
+      return res.status(200).send("Se activó correctamente");
+    } catch (error) {
+      return res.status(500).send("Internal server error");
+    }
+  };
 
- module.exports={getReservaciones,getReservacionById,postReservacion,putReservacion,deleteReservacion,getReservacionByUsuario};
+
+ module.exports={getReservaciones,getReservacionById,postReservacion,putReservacion,deleteReservacion,getReservacionByUsuario,putActivarReserva};

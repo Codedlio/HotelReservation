@@ -40,6 +40,7 @@ export const DELETE_RESENA = "DELETE_RESENA";
 export const USUARIO_RESERVACION = "USUARIO_RESERVACION";
 export const GET_SERVICIOS = "GET_SERVICIOS";
 export const GET_TIPOS = "GET_TIPOS";
+export const GET_RESERVA = "GET_RESERVA";
 
 export const setOrderByName = (orderType) => {
   return {
@@ -352,6 +353,22 @@ export const getTipos = () => {
 
       return dispatch({
         type: GET_TIPOS,
+        payload: data
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+};
+
+
+export const getReserva = () => {
+  return async (dispatch) => {
+    try {
+      const {data} = await axios.get('/reservation');
+
+      return dispatch({
+        type: GET_RESERVA,
         payload: data
       });
     } catch (error) {

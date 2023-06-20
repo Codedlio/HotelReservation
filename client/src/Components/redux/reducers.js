@@ -38,6 +38,7 @@ import {
   USUARIO_RESERVACION,
   GET_SERVICIOS,
   GET_TIPOS,
+  GET_RESERVA,
   GET_HABITACIONES_ADMIN,
 } from "./action";
 
@@ -72,6 +73,7 @@ const initialState = {
     selectedPaquete: [],
   },
   tipos: [],
+  reservas: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -313,7 +315,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         tipos: action.payload
       };
-
+    case GET_RESERVA:
+      return {
+        ...state,
+        reservas: action.payload
+      };
     case ALL_RESENA:
       return { ...state, allResena: action.payload };
     case DATA_USUARIO:
