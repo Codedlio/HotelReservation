@@ -22,11 +22,12 @@ function Login2() {
   let usuarioReg = useSelector((state) => state.usuarioXid);
 
   useEffect(() => { 
-    if (usuario)    
-        dispatch(getResenaUsuario(form.correo))
-        dispatch(getUsuariobyEmail(form.correo))
+    if (usuario)  {
+      dispatch(getResenaUsuario(usuario))
+        dispatch(getUsuariobyEmail(usuario))
+        dispatch(getReservaByUsuario(usuario))
+    }  
         
-    if(usuario)dispatch(getReservaByUsuario(form.correo))
   }, [dispatch, usuario])
   function changeHandler(e){  
     const property = e.target.name;
