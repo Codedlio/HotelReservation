@@ -197,14 +197,15 @@ const PerfilUsuario=()=>{
       
       {usuarioReg.admin !== true && 
       <div className={usuarioReg.admin!==true?style.resena:style.ocultarDiv} >
-        <h2>Reserva del usuario:</h2>
+        <div >
+        <h2 className={style.titulototal}>Reserva del usuario:</h2></div>
           {!Array.isArray(dataReservacion)||dataReservacion.length <= 0? (
           <p>No hay reservacion.</p>
           ) : (
             dataReservacion.map((reserva) => (
               <div key={reserva._id}>
         {reserva.Arrayhabitaciones && (
-        <div>
+        <div className={style.titulos}>
           <h4>Habitaciones:</h4>
           {reserva.Arrayhabitaciones.map((habitacion) => (
             <div key={habitacion._id}>
@@ -216,8 +217,8 @@ const PerfilUsuario=()=>{
         </div>
       )}
         {reserva.Arraypaquete && reserva.Arraypaquete.length > 0 ? (
-        <div>
-          <h4>Paquetes:</h4>
+        <div className={style.titulos}>
+          <h4 className={style.titulos}>Paquetes:</h4>
           {reserva.Arraypaquete.map((paquete) => (
             <div key={paquete._id}>
               <p>Nombre: {paquete.nombre}</p>
@@ -229,8 +230,8 @@ const PerfilUsuario=()=>{
         <p>Paquetes: No hay paquetes.</p>
       )}
       {reserva.ArrayServicio && reserva.ArrayServicio.length > 0 ? (
-        <div>
-          <h4>Servicios:</h4>
+        <div className={style.titulos}>
+          <h4 className={style.titulos} >Servicios:</h4>
           {reserva.ArrayServicio.map((servicio) => (
             <div key={servicio._id}>
               <p>Nombre: {servicio.nombre}</p>
@@ -238,7 +239,7 @@ const PerfilUsuario=()=>{
               <p>Precio: {servicio.precio}</p>
             </div>
           ))}
-        </div>
+        </div >
       ) : (
         <p>Servicios: No hay servicios.</p>
       )}
@@ -285,6 +286,7 @@ const PerfilUsuario=()=>{
     {error && error.puntuacion ? <p>{error.puntuacion}</p> : null}
             
     <textarea
+    className={style.escribe}
       id="descripcion"
       value={resena && resena.descripcion} // Agrega una verificación de nulo para resena
       onChange={handleChange}
