@@ -5,7 +5,7 @@
   justify-content:space-around;
   align-items: center;  
   padding-top: -5px;
-  padding-left: 120px;
+  padding-left: 200px;
   z-index: 10;
   flex-direction: row;
   width: 100vw;
@@ -110,6 +110,27 @@
   text-decoration:none;
   cursor: pointer;
 }
+.linksesion{
+  
+    
+    
+    padding-left: 130px;
+    color: rgb(208, 202, 202);
+    font-weight: 700;
+    transition: 1s; 
+    
+    text-decoration:none;
+  
+}
+.linksesion:hover{
+  cursor: pointer;
+  color: #0e0e0c;
+  /* text-shadow:  rgb(111, 111, 239); */
+ 
+  transition: box-shadow 0.5s;  
+  text-decoration:none;
+  
+}
 
 
 .button {
@@ -194,9 +215,10 @@
 .carrito{
   background-color: transparent;
   margin-right: 20px;
+  margin-left: 10px;
   color:white;
   border: 0px;
-  font-size: 25px;
+  font-size: 27px;
   padding-bottom: 8px;
 }
 .carritolink{
