@@ -182,7 +182,7 @@ const PerfilUsuario=()=>{
         </div>
       </div>
       <div className={style.resena}>
-        <h2 className={style.resenatitulo}>Reserva del usuario:</h2>
+        <h2>Reserva del usuario:</h2>
           {!Array.isArray(dataReservacion)||dataReservacion.length <= 0? (
           <p>No hay reservacion.</p>
           ) : (
@@ -190,7 +190,7 @@ const PerfilUsuario=()=>{
               <div key={reserva._id}>
         {reserva.Arrayhabitaciones && (
         <div>
-          <h4 className={style.resenahabitaciones}>Habitaciones:</h4>
+          <h4>Habitaciones:</h4>
           {reserva.Arrayhabitaciones.map((habitacion) => (
             <div key={habitacion._id}>
               <p>Nombre: {habitacion.nombre}</p>
@@ -245,7 +245,7 @@ const PerfilUsuario=()=>{
         { resenaArray.length === 0? (<p>No hay comentarios.</p>)
         :(resenaArray.map((item) => (
               <div key={item._id}>
-                <h4 className={style.puntuacion}>⭐️{item.puntuacion}</h4>
+                <h4>⭐️{item.puntuacion}</h4>
                 <h4>{item.descripcion}</h4>
                 <div> <button onClick={handlerDelete} 
                         value={item._id} name={"id"}>❌</button></div>
@@ -254,16 +254,15 @@ const PerfilUsuario=()=>{
           
         <div className={style.comentario}>
           <form>
-            <h2 className={style.resenahabitaciones}>Edite un comentario y puntuacion</h2>
+            <h2>Edite un comentario y puntuacion</h2>
             {!validateResena(dataReservacion) &&<p>No se puden dejar comentario y puntuacion, hasta que realice una reservacion y comience su estadia</p>}
-            <l abel>Puntuacion:
+            <label>Puntuacion:
               <input type="number" min="0" max="5" step="1" name={"puntuacion"}
               value={resena.puntuacion} onChange={handleChange}placeholder="..."/>
-            </l>
-            {error.puntuacion && <p className={style.puntuacion}> {error.puntuacion}</p>}
+            </label>
+            {error.puntuacion && <p>{error.puntuacion}</p>}
             
             <textarea
-            className={style.escribe}
               id="descripcion"
               value={resena.descripcion}
               onChange={handleChange}

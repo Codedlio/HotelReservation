@@ -158,6 +158,9 @@
     align-items: center;
     margin-right: 30px;
   }
+  .titulo{
+    color: black;
+  }
   .botoncerrar {
     position: relative;
     
