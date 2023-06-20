@@ -180,7 +180,7 @@ function DetalleReserva() {
                 </Link>
               </div>
               <div className={style.titleCartContainerVacio}>
-                <h3>Tu carrito de Compras esta vacío :(</h3>
+                <h3 className={style.mensajevacio}>Tu carrito de Compras<br></br> esta vacío :(</h3>
               </div>
             </div>
           </div>
