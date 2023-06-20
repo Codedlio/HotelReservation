@@ -1,19 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import style from './PerfilUsuario.module.css';
-import {postResena, deleteResena, getUsuariobyEmail} from '../redux/action.js'
+import {postResena, deleteResena, getUsuariobyEmail,getUsuarioByCorreo} from '../redux/action.js'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {validate,validate2}from './validate';
 import {getResenaUsuario,getReservationUsuario } from '../redux/action';
 import axios from 'axios';
+import Cookies from "js-cookie";
 
 const PerfilUsuario=()=>{
+  const token = Cookies.get("token");
+  const emailToken = Cookies.get("emailToken");
     const dispatch = useDispatch();
+    useEffect(() => {
+      if(emailToken!=undefined)
+        dispatch(getUsuarioByCorreo(emailToken));
+    }, [dispatch])
+  
     const { resenaByUsuario, usuarioArray, reserva } = useSelector((state) => state);
     const [data ] = useState(usuarioArray);
     const dataReservacion= Array.isArray(reserva)?reserva:[reserva]
     const resenaArray = Array.isArray(resenaByUsuario) ? resenaByUsuario : [resenaByUsuario];
-    
+    let usuarioReg = useSelector((state) => state.usuarioXid);
+
     const [resena, setResena] = useState({
       nombre: "",
       correo: "",
@@ -181,7 +190,10 @@ const PerfilUsuario=()=>{
         )}
         </div>
       </div>
-      <div className={style.resena}>
+      
+      
+      {usuarioReg.admin !== true && 
+      <div className={usuarioReg.admin!==true?style.resena:style.ocultarDiv} >
         <h2>Reserva del usuario:</h2>
           {!Array.isArray(dataReservacion)||dataReservacion.length <= 0? (
           <p>No hay reservacion.</p>
@@ -275,6 +287,7 @@ const PerfilUsuario=()=>{
           </form>
         </div>
       </div>
+      }
     </div>
     </div>
   );
