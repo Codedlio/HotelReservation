@@ -124,7 +124,8 @@ try {
           <div className={style.contactItem}>
             <select id="message" name ='subject'onChange={handlerInput} className={style.contactSelect} required>
               <option value="">Asunto</option>
-              <option value="termas">Termas</option>
+              <option value="Pregunta">Pregunta</option>
+              <option value="Reclamo">Reclamo</option>
               <option value="alojamiento">Alojamiento</option>
               <option value="restaurant">Restaurant</option>
               <option value="actividades">Actividades</option>

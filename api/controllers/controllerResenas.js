@@ -76,6 +76,23 @@ const deleteResena = async (req, res) => {
 
     }
   }
+  const putImageUser = async (req, res) => {
+    const { id } = req.params;
+    try {
+      const usuario = await Usuario.findById(id);
+      if (!usuario) return res.status(404).json({ message: 'No hay Usuario' });
+  
+      usuario.image = []; // Asigna un array vacío al atributo "image"
+      await usuario.save(); // Guarda los cambios en la base de datos
+      console.log(usuario)
+      return res.status(200).json(usuario);
+
+    } catch (error) {
+      return res.status(500).json({ message: error.message });
+    }
+  };
+  
+  
   const getReservacionUsuario = async (req,res) => {
     const {usuario} = req.params;
     try {
@@ -165,4 +182,4 @@ const deleteResena = async (req, res) => {
   }
   };
 
-module.exports = {getResena, getEmailResena,postResena, deleteResena, getUsuarioEmail, getReservacionUsuario}
+module.exports = {getResena, getEmailResena,postResena, deleteResena,putImageUser, getUsuarioEmail, getReservacionUsuario}
