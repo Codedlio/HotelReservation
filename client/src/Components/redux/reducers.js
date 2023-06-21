@@ -48,6 +48,7 @@ import {
   GET_SERVICIOS_ADMIN,
   GET_USUARIOS_ADMIN,
   DELETE_IMAGE_USER,
+  GET_HABITACIONES_ID,
 } from "./action";
 
 const initialState = {
@@ -86,6 +87,7 @@ const initialState = {
   allpaquetesAdm: [],
   filterPaquetesAdmin: [],
   reservas: [],
+  habitacionId:{}
 };
 
 const reducer = (state = initialState, action) => {
@@ -414,6 +416,11 @@ const reducer = (state = initialState, action) => {
         return {
           ...state,
           reservas: action.payload
+        };
+      case GET_HABITACIONES_ID:
+        return {
+          ...state,
+          habitacionId: action.payload
         };
     case ALL_RESENA:
       return { ...state, allResena: action.payload };
