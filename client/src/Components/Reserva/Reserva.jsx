@@ -4,6 +4,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useSelector,useDispatch } from 'react-redux';
 import { getHabitacionesDisponibles , getPaquetesDisponibles, createReserva, getPaqueteById, setSelectedPaqueteA, setPrecioA, setSelectedServiceA, setSelectedRoomA, setDatesA, setAdultsA, setChildrenA, setFilteredHabitaciones } from '../redux/action';
 import axios from 'axios';
+import Swal from 'sweetalert2';
+import { navigate } from 'react-router-dom';
+
 
 
 function Reserva() {
@@ -34,7 +37,13 @@ function Reserva() {
     dispatch(setFilteredHabitaciones([]));
     axios.get('http://localhost:3001/servicio')
       .then((response) => {setServices(response.data)})
-      .catch((error) => {alert(error.message)});
+      .catch((error) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: error.message
+        });
+      });
   }, [])
 
  
@@ -62,14 +71,22 @@ function Reserva() {
         navigate("/detalleReserva")
       })
       .catch(error => {
-        alert(error.message)
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: error.message,
+        });
       });
     }else {
-      window.localStorage.setItem("dataReservation", JSON.stringify(data));
-      alert('Ingrese a su cuenta para continuar...')
-      navigate("/contenedor");
-    }
-  };
+      window.localStorage.setItem('dataReservation', JSON.stringify(data));
+      Swal.fire({
+        icon: 'warning',
+        title: 'Ingrese a su cuenta para continuar...',
+        showCancelButton: false,
+        showConfirmButton: false,
+      });
+      navigate('/contenedor');
+    }}
 
   const handleAdultsChange = (e) => {
     dispatch(setAdultsA(parseInt(e.target.value)));
