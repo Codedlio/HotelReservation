@@ -1,6 +1,6 @@
 import './App.css';
 import Home from './Components/Home/Home.jsx';
-import {  Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Habitacion1 from './Components/Habitaciones/Habitacion1/Habitacion1.jsx';
 import Habitacion2 from './Components/Habitaciones/Habitacion2/Habitacion2.jsx';
 import Habitacion3 from './Components/Habitaciones/Habitacion3/Habitacion3.jsx'
@@ -21,6 +21,7 @@ import Historia from './Components/Historia/Historia';
 import InfoHotel from './Components/InfoHotel/Infohotel';
 import Filosofia from './Components/Filosofia/Filosofia';
 import Bienestar from './Components/Bienestar/Bienestar';
+import DetailPaquete from './Components/DetailPaquete/DetailPaquete';
 import Contacto from './Components/Contacto/Contacto';
 import Login from './Components/Login/Login';
 import ContenedorLogin from './Components/ContenedorLogin/ContenedorLogin';
@@ -28,10 +29,26 @@ import Login2 from './Components/Login2/Login2'
 import Trekking from './Components/Servicios/Trekking/Trekking';
 import Piscinatermal from './Components/Servicios/Piscinatermal/Piscinatermal';
 import Yoga from './Components/Yoga/Yoga'
+import DetalleReserva from './Components/DetalleReserva/DetalleReserva'
+import Natacion from './Components/Servicios/Natacion/Natacion'
+import Contenido2 from './Components/Contenido2/Contenido2'
+import ExitoReserva from './Components/ExitoReserva/ExitoReserva'
+import AdminHabitaciones from './Components/AdminHabitaciones/AdminHabitaciones';
+import AdminPaquetes from './Components/AdminPaquetes/AdminPaquetes';
+import AdminServicios from './Components/AdminServicios/AdminServicios';
+import AdminUsuarios from './Components/AdminUsuarios/AdminUsuarios';
+import IndicadorReservas from './Components/IndicadorReservas/IndicadorReservas';
+import IndicadorReclamos from './Components/IndicadorReclamos/IndicadorReclamos';
+import IndicadorUsuarios from './Components/IndicadorUsuarios/IndicadorUsuarios';
+import PerfilUsuario from './Components/PerfilUsuario/PerfilUsuario.jsx'
+import Error from './Components/Error/Error.jsx'
+import axios from 'axios'
+import './App.css';
+axios.defaults.baseURL =  "http://localhost:3001" || "http://back-hoteleternopf-production.up.railway.app" ;
 
 function App() {
   return (
-    <div className="App">
+    <div className='zoom-in fade-in'>
 
         <Routes>
           <Route path="/habitacion1" element={<Habitacion1 />} />
@@ -60,8 +77,21 @@ function App() {
           <Route path="/infoHotel" element={<InfoHotel />} />
           <Route path="/filosofia" element={<Filosofia />} />
           <Route path="/bienestar" element={<Bienestar />} />
+          <Route path="/detail/:id" element={<DetailPaquete />} />
           <Route path="/yoga" element={<Yoga />} />
-          
+          <Route path="/detalleReserva" element={<DetalleReserva />} />
+          <Route path="/natacion" element={<Natacion />} />
+          <Route path="/chat" element={<Contenido2 />} />
+          <Route path="/exitoreserva" element={<ExitoReserva />} />
+          <Route path="/adminHabitaciones" element={<AdminHabitaciones />} />
+          <Route path="/adminPaquetes" element={<AdminPaquetes />} />
+          <Route path="/adminServicios" element={<AdminServicios />} />
+          <Route path="/adminUsuarios" element={<AdminUsuarios />} />
+          <Route path="/indicadorReservas" element={<IndicadorReservas />} />
+          <Route path="/indicadorReclamos" element={<IndicadorReclamos />} />
+          <Route path="/indicadorUsuarios" element={<IndicadorUsuarios />} />        
+          <Route path="/perfilUsuario" element={<PerfilUsuario />} />
+          <Route path='*' element={<Error />} />
 
           <Route path="/" element={<Home />} />
         </Routes>

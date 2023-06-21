@@ -3,21 +3,64 @@ import NavBar from '../../NavBar/NavBar';
 import FooterBar from '../../FooterBar/FooterBar';
 import Carousel from 'react-bootstrap/Carousel';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import image1 from './imagenes/image1.jpg'
-import image2 from './imagenes/image2.jpg'
-import image3 from './imagenes/image3.jpg'
-import image4 from './imagenes/image4.jpg'
-import image5 from './imagenes/image5.jpg'
 
 import style from './VillaTilo.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBed, faMoneyBill, faPersonBooth  } from '@fortawesome/free-solid-svg-icons';
+import { useDispatch, useSelector } from 'react-redux';
+import Paginado from '../../Paginate/Paginate';
+import { getHabitaciones, set_Currents_Page } from '../../redux/action';
+import { useEffect } from 'react';
+import { Link, animateScroll as scroll } from "react-scroll";
+import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
 
 const Habitacion1 = () => {
   const [index, setIndex] = useState(0);
+  
+  const dispatch = useDispatch();
+  const [isVisible, setIsVisible] = useState(false);
+  const habitaciones = useSelector((state) => state.gethabitaciones);
+  const [currentPage, setCurrentPage] = useState(7);
+  const habsPerPage = 1;
+  const indexofLastRoom = currentPage * habsPerPage;
+  const indexofFirstRoom = indexofLastRoom - habsPerPage;
+
+  const imagenes = useSelector(state => state.gethabitaciones[6]);
+
+  useEffect(() => {
+    if (!imagenes) {
+      dispatch(getHabitaciones());
+    }
+  }, []);
+
+  useEffect(() => {
+    dispatch(set_Currents_Page(currentPage));
+  }, [dispatch, currentPage]);
+
 
   const handleSelect = (selectedIndex, e) => {
     setIndex(selectedIndex);
+  };
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const handleScroll = () => {
+    if (window.pageYOffset > 300) {
+      setIsVisible(true);
+    } else {
+      setIsVisible(false);
+    }
+  };
+
+  const scrollToTop = () => {
+    scroll.scrollToTop({
+      duration: 900, // Duración de la animación en milisegundos
+      smooth: true, // Desplazamiento suave habilitado
+    });
   };
 
   return (
@@ -77,78 +120,26 @@ const Habitacion1 = () => {
         </section>
       <div 
       className="container w-100">
+        {imagenes && 
         <Carousel activeIndex={index} onSelect={handleSelect}>
-          <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src={image1}
-              alt="First slide"
-              width={"100%"}
-              height={"750px"}
-            />
-            
-            <Carousel.Caption>
-              {/* <h3>First slide label</h3>
-              <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> */}
-            </Carousel.Caption>
-          </Carousel.Item>
-          <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src={image2}
-              alt="First slide"
-              width="100%"
-              height="750px"
-            />
-            <Carousel.Caption>
-              {/* <h3>First slide label</h3>
-              <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> */}
-            </Carousel.Caption>
-          </Carousel.Item>
-          <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src={image3}
-              alt="First slide"
-              width="100%"
-              height="750px"
-            />
-            <Carousel.Caption>
-              {/* <h3>First slide label</h3>
-              <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> */}
-            </Carousel.Caption>
-          </Carousel.Item>
-          <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src={image4}
-              alt="First slide"
-              width="100%"
-              height="750px"
-            />
-            <Carousel.Caption>
-              {/* <h3>First slide label</h3>
-              <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> */}
-            </Carousel.Caption>
-          </Carousel.Item>
-          <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src={image5}
-              alt="First slide"
-              width="100%"
-              height="750px"
-            />
-            <Carousel.Caption>
-              {/* <h3>First slide label</h3>
-              <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> */}
-            </Carousel.Caption>
-          </Carousel.Item>
-          
-            
-            
-         
+          {imagenes.image.map(imagen => {
+            return (
+            <Carousel.Item>
+              <img
+                className="d-block w-100"
+                src={imagen}
+                alt="Slide"
+                width="100%"
+                height="750px"
+              />
+              <Carousel.Caption>
+                {/* <h3>Second slide label</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p> */}
+              </Carousel.Caption> 
+            </Carousel.Item> 
+            )
+          })}
         </Carousel>
+        }
       </div>
       
         <div >
@@ -171,19 +162,19 @@ const Habitacion1 = () => {
             <li>Bañeritas, sillitas altas y cuna para bebés</li>
           </ul>
         </section>
+        <Link
+        to="top"
+        spy={true}
+        smooth={true}
+        duration={500}
+        className={`${style.scroll} ${isVisible ? style.show : ""}`}
+        onClick={scrollToTop}
+      >
+        <FontAwesomeIcon icon={faArrowUp} />
+      </Link>
 
-
-        <div className={style.titulodisponibilidad}><h2>Disponibilidad</h2></div>
-        <section className={style.disponibilidad}>
-          
-          <p>Verifica la disponibilidad y realiza tu reserva en línea:</p>
-        
-        </section>
-        <div className={style.containerlink}><a className={style.linka} href="#">Ver disponibilidad</a></div>
-        
+        <Paginado gamesPerPage={habsPerPage} habitaciones={habitaciones.length} paginado={setCurrentPage} currentPage={currentPage} />
         <FooterBar className={style.footer} />
-      
-      
     </div>
   );
 };
