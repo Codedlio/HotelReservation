@@ -60,11 +60,23 @@ const putServicio = async (req, res) => {
   }
 };
 
+const putActivarServicio = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    let servicio = await Servicio.findById(id);
+    servicio.activo = true;
+    servicio.save();
+    return res.status(200).send("Se activó correctamente");
+  } catch (error) {
+    return res.status(500).send("Internal server error");
+  }
+};
 const deleteServicio = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const servicio = await Servicio.findOne({ _id: id });
+    const servicio = await Servicio.findOne(id);
 
     servicio.activo = false;
     await servicio.save();
@@ -74,4 +86,10 @@ const deleteServicio = async (req, res) => {
     return res.status(500).send("Internal server error");
   }
 };
-module.exports = { getServicios, postServicio, putServicio, deleteServicio };
+module.exports = {
+  getServicios,
+  postServicio,
+  putServicio,
+  putActivarServicio,
+  deleteServicio,
+};

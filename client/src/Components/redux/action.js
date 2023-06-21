@@ -84,11 +84,12 @@ export const getPaquetes = () => {
 
 export const getServicios = () => {
   return async function(dispatch) {
-    console.log("entro a paquetes");
-    const response = (await axios.get(`/servicio`)).data;
+    console.log("entro a servicios");
+    let { data } = await axios.get("http://localhost:3001/servicio");
+    data = data.filter((servicio) => servicio.activo);
     return dispatch({
       type: GET_SERVICIOS,
-      payload: response,
+      payload: data,
     });
   };
 };
@@ -108,26 +109,16 @@ export const getServiciosAdmin = () => {
     }
   };
 };
-export const getUsuarios = () => {
+
+
   return async function(dispatch) {
-    console.log("entro a usuario");
-    let { data } = await axios.get(`/infoUsuario`);
-    data = data.filter((usuario) => usuario.activo);
+    console.log("entro a servicios");
+    const response = (await axios.get(`/infoUsuario`)).data;
     return dispatch({
       type: GET_USUARIOS,
-      payload: data,
+      payload: response,
     });
   };
-};
-export const getUsuariosAdmin = () => {
-  return async function(dispatch) {
-    let { data } = await axios.get(`/usuarios/`);
-    return dispatch({
-      type: GET_USUARIOS_ADMIN,
-      payload: data,
-    });
-  };
-};
 export function getPaquetesDisponibles(fechaInicio, fechaFin) {
   return async function(dispatch) {
     try {
@@ -400,76 +391,8 @@ export const getTipos = () => {
 
       return dispatch({
         type: GET_TIPOS,
-        payload: data,
-      });
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-};
-
-export const getPaquetesAdmin = () => {
-  return async function(dispatch) {
-    const response = (await axios.get(`/paquete/admin`)).data;
-    return dispatch({
-      type: GET_PAQUETES_ADMIN,
-      payload: response,
-    });
-  };
-};
-
-export const actiDesactiPaquete = (paquete) => {
-  let url = `http://localhost:3001/paquete/admin`;
-  const response = axios.post(url, paquete);
-  return response;
-};
-
-export const crearPaquete = (paquete) => {
-  let url = `http://localhost:3001/paquete/admin/paquete`;
-  const response = axios.post(url, paquete);
-  return response;
-};
-
-export const deletePaquete = (id) => {
-  let url = `http://localhost:3001/paquete/${id}`;
-  const response = axios.delete(url);
-  return response;
-};
-
-export const ActualizaPaquete = (paqueteMod) => {
-  let url = `/paquete/${paqueteMod._id}`;
-  const response = axios.put(url, paqueteMod);
-  return response;
-};
-
-export const filterPaquetesAdmin = (filter) => {
-  return { type: FILTER_PAQUETES_ADMIN, payload: filter };
-};
-
-export const deleteStateResenaAndUserArr = () => {
-  return { type: DELETE_STATE_PERFIL };
-};
-
-
-export const getReserva = () => {
-  return async (dispatch) => {
-    try {
-      const {data} = await axios.get('/reservation');
-
-      return dispatch({
-        type: GET_RESERVA,
         payload: data
       });
-    } catch (error) {
-      console.log(error.message);
-    }
-  }
-};
-export const deleteImageUser = (id) => {
-  return async (dispatch) => {
-    try {
-      await axios.delete(`/infoUsuario/${id}`,);
-      return dispatch({ type: DELETE_IMAGE_USER });
     } catch (error) {
       console.log(error.message);
     }

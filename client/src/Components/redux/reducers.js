@@ -48,6 +48,8 @@ import {
   GET_SERVICIOS_ADMIN,
   GET_USUARIOS_ADMIN,
   DELETE_IMAGE_USER,
+  GET_SERVICIOS_ADMIN,
+  GET_USUARIOS,
 } from "./action";
 
 const initialState = {
@@ -82,10 +84,7 @@ const initialState = {
     selectedPaquete: [],
   },
   tipos: [],
-  allusuarios: [],
-  allpaquetesAdm: [],
-  filterPaquetesAdmin: [],
-  reservas: [],
+  allusarios : [],
 };
 
 const reducer = (state = initialState, action) => {
