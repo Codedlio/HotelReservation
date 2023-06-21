@@ -7,6 +7,8 @@ import {validate,validate2}from './validate';
 import {getResenaUsuario,getReservationUsuario,getUsuariobyEmail,getReservaByUsuario} from '../redux/action';
 import axios from 'axios';
 import Cookies from "js-cookie";
+import Swal from 'sweetalert2';
+import { navigate } from 'react-router-dom';
 
 const PerfilUsuario=()=>{
    const token = Cookies.get("token");
@@ -71,13 +73,18 @@ const PerfilUsuario=()=>{
         }
       })
       .then(response => {
-        alert("Actualizacion exitosa")
-        setTimeout(()=>{
-          dispatch(getUsuarioByCorreo( usuario ))
-          dispatch(getUsuariobyEmail( usuario ))}, 1100)
-          
+        Swal.fire({
+          icon: 'success',
+          title: '¡Éxito!',
+          text: 'Actualización exitosa',
+        }).then(() => {
+          setTimeout(() => {
+            dispatch(getUsuarioByCorreo(usuario));
+            dispatch(getUsuariobyEmail(usuario));
+          }, 100);
           setImageKey(Date.now()); // Actualiza la clave de imagen
-    })
+        });
+      })
       .catch(error => { 
         console.error(error);
       });
@@ -126,13 +133,25 @@ const PerfilUsuario=()=>{
           puntuacion: 0,
           descripcion: "",
         });
-        alert("Envio exitoso")
-        setTimeout(()=>{
-          dispatch(getResenaUsuario(data.correo)) }
-          , 1000)
-     } else { return alert('No puede realizar comentario');
+        Swal.fire({
+          icon: 'success',
+          title: '¡Éxito!',
+          text: 'Envío exitoso',
+          timer: 1500,
+          showConfirmButton: false
+        });
+        
+        setTimeout(() => {
+          dispatch(getResenaUsuario(data.correo));
+        }, 1000);
+     } else { return Swal.fire({
+      icon: 'warning',
+      title: 'No puede realizar comentario',
+      showConfirmButton: false,
+      timer: 1500
+    })};
 
-      }
+      
     };
     const validateResena=(dataReservacion)=> {
       const currentDate = new Date();
@@ -155,16 +174,16 @@ const PerfilUsuario=()=>{
         setImageKey(Date.now()); // Actualiza la clave de imagen
         },700 )
         
-    alert("Imagen eliminada");
+        Swal.fire({
+          icon: 'success',
+          title: 'Imagen eliminada',
+          showConfirmButton: false,
+          timer: 1500
+        });;
   
   };
   
-  //  console.log(usuarioArray.image.length)
-
-  // console.log(error2)
-  // console.log(usuarioArray)
-  // console.log(resena)
-  // console.log(datos)
+ 
 
   return (
     <div className={style.containertotal}>
@@ -181,12 +200,12 @@ const PerfilUsuario=()=>{
         
         {!editing && (
           <div>
-            {data.image && data.image.length <=0? (
+            {data.image && data.image?.length <=0? (
             <img key={imageKey} src={"https://res.cloudinary.com/djm04ajb0/image/upload/v1687125700/usuarioImage/czdnwyiy4ngf9frawohq.png"} />
             ) : (
               <div>
               <img  src={data.image} alt={"imagen"} />
-              <button value={data._id} onClick={() => deleteImageUsuario(data._id)}>eliminar img</button>
+              <button className={style.buttoneliminarimagen} value={data._id} onClick={() => deleteImageUsuario(data._id)}>Eliminar Img</button>
             </div>
             )}
             <h3>{data.nombre}</h3>

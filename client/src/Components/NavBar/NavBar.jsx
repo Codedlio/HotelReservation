@@ -167,6 +167,10 @@ const NavBar = () => {
           <Nav.Item  href="#" onClick={handleTwitterClick} className={style.icon}><FontAwesomeIcon icon={faTwitter} /></Nav.Item>
           <Link  to='/reserva' className={style.button}>RESERVAR AHORA</Link>
         
+        
+       
+
+        
           <button className={style.carrito} onClick={() => {
             if (mostrarCarrito) {
               setMostrarCarrito(false);
@@ -183,32 +187,43 @@ const NavBar = () => {
             )}
           </button>
 
-          {/* Agrega el enlace al perfil de usuario */}
-          {usuario && (
-            <Link className={style.linkusuario} to="/perfilUsuario">
-              <div className={style.iconContainer}>
-                {usuarioArray?.image && usuarioArray?.image?.length > 0 ? (
-                  <img className={style.imagenup}src={usuarioArray?.image} alt="" />
-                ) : (
-                  <FontAwesomeIcon className={style.imagenusuario} icon={faUser} />
-                )}
-                <h4 className={style.perfilusuario}>{usuarioArray?.nombre}</h4>
-              </div>
-            </Link>
-          )}
-          {mostrarCarrito ? (
-            reserva ? (
-              <Carrito reserva={reserva} />
-            ) : (
-              mostrarMensaje && <div className={style.contenedormensaje}><p className={style.mensajeee}>Aun no posee Reservas</p></div>
-            )
-          ) : null}
-          {usuario === undefined &&
-            <Link className={style.linksesion} to='/contenedor'>Iniciar sesión</Link>
-          }
-          {usuario !== undefined &&
-            <Link className={style.linksesion} onClick={handleLogOut}>Cerrar sesión</Link>
-          }
+{/* Agrega el enlace al perfil de usuario */}
+{usuario && (
+  <Link className={style.linkusuario} to="/perfilUsuario">
+    <div className={style.iconContainer}>
+      {usuarioArray?.image && usuarioArray?.image?.length > 0 ? (
+        <FontAwesomeIcon className={style.imagenusuario} icon={faUser} />
+      ) : (
+        <FontAwesomeIcon className={style.imagenusuario} icon={faUser} />
+      )}
+      <h4 className={style.perfilusuario}>{usuarioArray?.nombre}</h4>
+    </div>
+  </Link>
+)}
+
+
+{mostrarCarrito ? (
+  reserva ? (
+    <Carrito reserva={reserva} />
+  ) : (
+    mostrarMensaje && <div className={style.contenedormensaje}><p className={style.mensajeee}>Aun no posee Reservas</p></div>
+  )
+) : null}
+{usuario === undefined &&
+  <Link className={style.linksesion} to='/contenedor'>Iniciar sesión</Link>
+}
+{usuario !== undefined &&
+          <Link className={style.linksesion} onClick={handleLogOut}>Cerrar sesión</Link>
+        }
+
+
+
+
+
+
+
+       
+          
         </Nav>
         </Navbar.Collapse>
       </Container>

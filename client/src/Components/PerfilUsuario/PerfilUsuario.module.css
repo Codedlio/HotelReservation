@@ -10,6 +10,26 @@
   justify-content: center;
   padding-top: 30px;
 }
+.buttoneliminarimagen{
+ 
+    
+    background-color: #ccc;
+    color: #fff;
+    border: none;
+    margin-left: 10px;
+   border-radius: 8px;
+    width: fit-content;
+    height:fit-content;
+  
+    background-color: rgb(227, 117, 117);
+    font-size: 12px;
+    cursor: pointer;
+}
+.buttoneliminarimagen:hover{
+ 
+    background-color: #8a3e3e;
+  
+}
 .container {
     display: flex;
     flex-direction: row;

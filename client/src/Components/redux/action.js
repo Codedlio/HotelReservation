@@ -50,6 +50,8 @@ export const GET_SERVICIOS_ADMIN = "GET_SERVICIOS_ADMIN";
 export const GET_USUARIOS_ADMIN = "GET_USUARIOS_ADMIN";
 export const GET_RESERVA = "GET_RESERVA";
 export const DELETE_IMAGE_USER = "DELETE_IMAGE_USER";
+export const GET_HABITACIONES_ID = "GET_HABITACIONES_ID";
+
 
 export const setOrderByName = (orderType) => {
   return {
@@ -475,3 +477,24 @@ export const deleteImageUser = (id) => {
     }
   };
 };
+
+export const habitacionById = (id) => {
+  return async function (dispatch) {
+    try {
+      const {data} = await axios.get(
+        `/habitacion/numero/${id}`
+      );
+      
+      return dispatch({
+        type: GET_HABITACIONES_ID,
+        payload: data,
+      });
+    } catch (error) {
+      return dispatch({
+        type: ERROR,
+        payload: error,
+      });
+    }
+  };
+};
+
