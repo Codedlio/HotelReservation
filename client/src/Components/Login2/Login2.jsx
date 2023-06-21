@@ -66,7 +66,7 @@ function Login2() {
   // });
   //     }
      
-  const {data}= await axios.post("http://localhost:3001/payment/custumer", {
+  const {data}= await axios.post("/payment/custumer", {
     correo:user.correo,
     nombre:user.nombre
 }); 
@@ -110,7 +110,7 @@ function Login2() {
     
     // Aquí puedes realizar acciones con los datos enviados, como enviarlos a un servidor
     // Envío de datos al servidor
-    fetch('http://localhost:3001/auth/login', {
+    fetch('https://hotelreservation-production.up.railway.app/auth/login', {
   method: 'POST',
   body: JSON.stringify({
     correo: form.correo,
@@ -145,7 +145,7 @@ function Login2() {
       
     
     dispatch(setUsuario(form.correo));
-    fetch("http://localhost:3001/payment/custumer", {
+    fetch("https://hotelreservation-production.up.railway.app/payment/custumer", {
         method: 'POST',
         body: JSON.stringify({correo:user.email,nombre:data.usuario}),
         headers: {

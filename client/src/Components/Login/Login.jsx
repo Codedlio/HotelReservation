@@ -41,7 +41,7 @@ function Login() {
     e.preventDefault();
     // Aquí puedes realizar acciones con los datos enviados, como enviarlos a un servidor
     // Envío de datos al servidor
-    fetch('http://localhost:3001/auth/registro', {
+    fetch('https://hotelreservation-production.up.railway.app/auth/registro', {
       method: 'POST',
       body: JSON.stringify({
         nombre: form.nombre,
