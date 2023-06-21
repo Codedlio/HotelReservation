@@ -46,11 +46,13 @@ function DetalleReserva() {
         console.log(reserva);
         const habitaciones = reserva[0].Arrayhabitaciones;
         const paquetes = reserva[0].Arraypaquete;
+        const servicios = reserva[0].ArrayServicio;
         try {
           const response = await axios.post("http://localhost:3001/payment/checkout", {
             "custumerId": data,
             "arrIdHabitaciones": habitaciones,
-            "arrIdPaquetes": paquetes
+            "arrIdPaquetes": paquetes,
+            "arrServicios":servicios
           });
 
           const { payment, sessionId } = response.data;
