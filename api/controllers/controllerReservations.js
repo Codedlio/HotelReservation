@@ -121,16 +121,18 @@ const getReservacionByUsuario = async (req,res) => {
           let habitacionXReserva = await Habitacion.findOne({_id:habId});
           hab.push(habitacionXReserva);        
           
-          for (let h of hab) {           
-            var obj={
-              _id:habId,
-              nombre:h.nombre,
-              capacidad: h.capacidad,
-              precio: h.precio,
-              image: h.image
-            };        
-          }
-          habFin.push(obj);        
+          for (let h of hab) {
+            if (h) {
+              var obj = {
+                _id: habId,
+                nombre: h.nombre,
+                capacidad: h.capacidad,
+                precio: h.precio,
+                image: h.image
+              };
+              habFin.push(obj);
+            }
+          }       
                   
         }
         let serv=[];     
@@ -139,15 +141,18 @@ const getReservacionByUsuario = async (req,res) => {
           
           let servXReserva = await Servicio.findOne({_id:servId});
           serv.push(servXReserva);    
-          for (let s of serv) {           
-            var obj={
+          for (let s of serv) {  
+            if(s) {
+               var obj={
               _id:servId,
               nombre:s.nombre,
               descripcion: s.descripcion,
               precio: s.precio
             };        
           }
-          servFin.push(obj);        
+          servFin.push(obj);
+            }        
+                   
                   
         }
         let paq=[];     
@@ -155,10 +160,11 @@ const getReservacionByUsuario = async (req,res) => {
         for (let paqId of habitacionId.paquetes) { 
           let paqXReserva = await Paquete.findOne({_id:paqId});
           paq.push(paqXReserva);        
-          console.log("paq");
-          console.log(paq);
-          for (let p of paq) {           
-            var obj={
+          //console.log("paq");
+          //console.log(paq);
+          for (let p of paq) {    
+            if(p){
+              var obj={
               _id:paqId,
               nombre:p.nombre,
               // capacidad: p.capacidad,
@@ -166,7 +172,9 @@ const getReservacionByUsuario = async (req,res) => {
               image: p.image
             };        
           }
-          paqFin.push(obj);        
+          paqFin.push(obj); 
+            }       
+                   
                   
         }
 
@@ -188,7 +196,7 @@ const getReservacionByUsuario = async (req,res) => {
     return res.status(200).json(ReservaUsu);
 } 
 catch (error) {
-    return res.status(500).send("Internal server error");
+    return res.status(500).send(error.message);
 }
 };
 
