@@ -197,11 +197,11 @@ const NavBar = () => {
   <Link className={style.linkusuario} to="/perfilUsuario">
     <div className={style.iconContainer}>
       {usuarioArray?.image && usuarioArray?.image?.length > 0 ? (
-        <img className={style.imagenup}src={usuarioArray.image} alt="" />
+        <img className={style.imagenup}src={usuarioArray?.image} alt="" />
       ) : (
         <FontAwesomeIcon className={style.imagenusuario} icon={faUser} />
       )}
-      <h4 className={style.perfilusuario}>{usuarioArray.nombre}</h4>
+      <h4 className={style.perfilusuario}>{usuarioArray?.nombre}</h4>
     </div>
   </Link>
 )}

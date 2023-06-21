@@ -54,7 +54,7 @@ function Login2() {
     "correo":user.correo,
     "nombre":user.nombre
 }); 
-      console.log(userGoogle);
+      //console.log(userGoogle);
       
   //     const userCurrent = auth.currentUser;
   //     if(!userCurrent.emailVerified){

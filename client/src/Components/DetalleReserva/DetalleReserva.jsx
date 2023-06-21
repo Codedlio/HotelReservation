@@ -30,6 +30,8 @@ function DetalleReserva() {
   const handleClearAllCarrito = (event) => {
     event.preventDefault();
     dispatch(ClearAllCarrito("clear"));
+    Cookies.remove('stripe');
+    Cookies.remove('stripePay');
     window.localStorage.setItem("dataReservation", []);
   };
   const handlePayment = async () => {
@@ -46,11 +48,13 @@ function DetalleReserva() {
         console.log(reserva);
         const habitaciones = reserva[0].Arrayhabitaciones;
         const paquetes = reserva[0].Arraypaquete;
+        const servicios = reserva[0].ArrayServicio;
         try {
           const response = await axios.post("http://localhost:3001/payment/checkout", {
             "custumerId": data,
             "arrIdHabitaciones": habitaciones,
-            "arrIdPaquetes": paquetes
+            "arrIdPaquetes": paquetes,
+            "arrServicios":servicios
           });
 
           const { payment, sessionId } = response.data;
@@ -61,16 +65,19 @@ function DetalleReserva() {
           console.error(error);
         }
       }
-    }
-
-
-    const paymentStatusResponse = await axios.post("http://localhost:3001/payment/status", { "sessionId": stripe });
+    }else{
+      const paymentStatusResponse = await axios.post("http://localhost:3001/payment/status", { "sessionId": stripe });
     console.log(paymentStatusResponse.data);
 
     if (paymentStatusResponse.status === 202) {
       console.log("El pago no fue exitoso");
       window.location.href = stripePay;
     }
+
+    }
+
+
+    
   };
 
   const renderDetailHabiReserva = (habi) => {
