@@ -115,7 +115,7 @@ const putHabitacion = async (req, res) => {
       return res.status(400).send("La habitación no existe");
     }
 
-    if (req.files.image) {
+    if (req.files !== null) {
       while (habitacion.image.length > 0) {
         deleteImage(habitacion.image.pop());
       }

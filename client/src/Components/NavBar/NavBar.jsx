@@ -124,78 +124,79 @@ const NavBar = () => {
         <Navbar.Collapse id="navbarScroll">
 
       <Nav className={style.navHotel}>
-      {location.pathname !== "/" && usuarioReg.admin !== true &&         
+        {location.pathname !== "/" && usuarioReg.admin !== true &&         
           <Link className={style.link} to='/'>Inicio</Link>          
         }  
-        <div className={style.dropdown} > 
-        {usuarioReg.admin === true &&                         
-          <Link className={style.link} >Administrar</Link> 
-        } 
+          <div className={style.dropdown} > 
+            {usuarioReg.admin === true &&                         
+              <Link className={style.link} >Administrar</Link> 
+            } 
        
-          <div className={style.dropdowncontent}>
-            <Link className={style.link} to='/adminHabitaciones'>Habitaciones</Link>
-            <Link className={style.link} to='/adminPaquetes'>Paquetes</Link>
-            <Link className={style.link} to='/adminServicios'>Servicios</Link>
-            <Link className={style.link} to='/adminUsuarios'>Usuarios</Link>
-          </div>
-        </div>   
-        <div className={style.dropdown} > 
-          {usuarioReg.admin === true &&                         
-            <Link className={style.link} >Indicadores</Link> 
-          } 
-          <div className={style.dropdowncontent}>
-            <Link className={style.link} to='/indicadorReservas'>Reservas</Link>
-            <Link className={style.link} to='/indicadorReclamos'>Reclamos</Link>
-            <Link className={style.link} to='/indicadorUsuarios'>Usuarios</Link>
-          </div>
-        </div> 
-        <div className={style.dropdown} >     
-        {usuarioReg.admin !== true &&                         
+            <div className={style.dropdowncontent}>
+              <Link className={style.link} to='/adminHabitaciones'>Habitaciones</Link>
+              <Link className={style.link} to='/adminPaquetes'>Paquetes</Link>
+              <Link className={style.link} to='/adminServicios'>Servicios</Link>
+              <Link className={style.link} to='/adminUsuarios'>Usuarios</Link>
+            </div>
+          </div>   
+          <div className={style.dropdown} > 
+            {usuarioReg.admin === true &&                         
+              <Link className={style.link} >Indicadores</Link> 
+            } 
+            <div className={style.dropdowncontent}>
+              <Link className={style.link} to='/indicadorReservas'>Reservas</Link>
+              <Link className={style.link} to='/indicadorReclamos'>Reclamos</Link>
+              <Link className={style.link} to='/indicadorUsuarios'>Usuarios</Link>
+            </div>
+          </div> 
+          <div className={style.dropdown} >     
+          {usuarioReg.admin !== true &&                         
             <Link className={style.link} >El hotel</Link>   
           }         
-          <div className={style.dropdowncontent}>
-            <Link className={style.link} to='/historia'>Historia</Link>
-            <Link className={style.link} to='/filosofia'>Filosofía</Link>
-            <Link className={style.link} to='/bienestar'>Bienestar</Link>
-          </div>
-        </div> 
-        {usuarioReg.admin !== true &&                 
-          <Link className={style.link} to='/paquetes'>Paquetes</Link>
-        } 
-       
+            <div className={style.dropdowncontent}>
+              <Link className={style.link} to='/historia'>Historia</Link>
+              <Link className={style.link} to='/filosofia'>Filosofía</Link>
+              <Link className={style.link} to='/bienestar'>Bienestar</Link>
+            </div>
+          </div> 
+          {usuarioReg.admin !== true &&                 
+            <Link className={style.link} to='/paquetes'>Paquetes</Link>
+          } 
+                
+          {usuarioReg.admin !== true &&                 
+            <Link className={style.link} to='/contacto'>Contacto</Link>
+          } 
+
+          <Nav.Item  href="#" onClick={handleInstagramClick} className={style.icon}><FontAwesomeIcon icon={faInstagram} /></Nav.Item>
+          <Nav.Item  href="#" onClick={handleFacebookClick} className={style.icon}><FontAwesomeIcon icon={faFacebook} /></Nav.Item>
+          <Nav.Item  href="#" onClick={handleTwitterClick} className={style.icon}><FontAwesomeIcon icon={faTwitter} /></Nav.Item>
+          <Link  to='/reserva' className={style.button}>RESERVAR AHORA</Link>
         
         
          {usuarioReg.admin !== true &&                 
           <Link className={style.link} to='/contacto'>Contacto</Link>
         } 
 
-
-
-
-
-
-       
+          <Nav.Item  href="#" onClick={handleInstagramClick} className={style.icon}><FontAwesomeIcon icon={faInstagram} /></Nav.Item>
+          <Nav.Item  href="#" onClick={handleFacebookClick} className={style.icon}><FontAwesomeIcon icon={faFacebook} /></Nav.Item>
+          <Nav.Item  href="#" onClick={handleTwitterClick} className={style.icon}><FontAwesomeIcon icon={faTwitter} /></Nav.Item>
+          <Link  to='/reserva' className={style.button}>RESERVAR AHORA</Link>
         
-        <Nav.Item  href="#" onClick={handleInstagramClick} className={style.icon}><FontAwesomeIcon icon={faInstagram} /></Nav.Item>
-        <Nav.Item  href="#" onClick={handleFacebookClick} className={style.icon}><FontAwesomeIcon icon={faFacebook} /></Nav.Item>
-        <Nav.Item  href="#" onClick={handleTwitterClick} className={style.icon}><FontAwesomeIcon icon={faTwitter} /></Nav.Item>
-        <Link  to='/reserva' className={style.button}>RESERVAR AHORA</Link>
-        
-        <button className={style.carrito} onClick={() => {
-  if (mostrarCarrito) {
-    setMostrarCarrito(false);
-    setMostrarMensaje(false); // Restablecer el estado de mostrarMensaje al ocultar el carrito
-  } else {
-    setMostrarCarrito(true);
-  }
-}}>
-  {/* Agrega el botón para mostrar el carrito */}
-  {usuarioReg.admin !== true && (
-    <Link className={style.carritolink} to="/detallereserva">
-      <FontAwesomeIcon icon={faCartPlus} />
-    </Link>
-  )}
-</button>
+          <button className={style.carrito} onClick={() => {
+            if (mostrarCarrito) {
+              setMostrarCarrito(false);
+              setMostrarMensaje(false); // Restablecer el estado de mostrarMensaje al ocultar el carrito
+            } else {
+              setMostrarCarrito(true);
+                    }
+          }}>
+            {/* Agrega el botón para mostrar el carrito */}
+            {usuarioReg.admin !== true && (
+              <Link className={style.carritolink} to="/detallereserva">
+                <FontAwesomeIcon icon={faCartPlus} />
+              </Link>
+            )}
+          </button>
 
 {/* Agrega el enlace al perfil de usuario */}
 {usuario && (
@@ -232,6 +233,32 @@ const NavBar = () => {
 
 
 
+          {/* Agrega el enlace al perfil de usuario */}
+          {usuario && (
+            <Link className={style.linkusuario} to="/perfilUsuario">
+              <div className={style.iconContainer}>
+                {usuarioArray?.image && usuarioArray?.image?.length > 0 ? (
+                  <img className={style.imagenup}src={usuarioArray?.image} alt="" />
+                ) : (
+                  <FontAwesomeIcon className={style.imagenusuario} icon={faUser} />
+                )}
+                <h4 className={style.perfilusuario}>{usuarioArray?.nombre}</h4>
+              </div>
+            </Link>
+          )}
+          {mostrarCarrito ? (
+            reserva ? (
+              <Carrito reserva={reserva} />
+            ) : (
+              mostrarMensaje && <div className={style.contenedormensaje}><p className={style.mensajeee}>Aun no posee Reservas</p></div>
+            )
+          ) : null}
+          {usuario === undefined &&
+            <Link className={style.linksesion} to='/contenedor'>Iniciar sesión</Link>
+          }
+          {usuario !== undefined &&
+            <Link className={style.linksesion} onClick={handleLogOut}>Cerrar sesión</Link>
+          }
         </Nav>
         </Navbar.Collapse>
       </Container>
