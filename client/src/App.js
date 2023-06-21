@@ -43,11 +43,12 @@ import IndicadorUsuarios from './Components/IndicadorUsuarios/IndicadorUsuarios'
 import PerfilUsuario from './Components/PerfilUsuario/PerfilUsuario.jsx'
 import Error from './Components/Error/Error.jsx'
 import axios from 'axios'
+import './App.css';
 axios.defaults.baseURL =  "http://localhost:3001" || "http://back-hoteleternopf-production.up.railway.app" ;
 
 function App() {
   return (
-    <div className="App">
+    <div className='zoom-in fade-in'>
 
         <Routes>
           <Route path="/habitacion1" element={<Habitacion1 />} />
