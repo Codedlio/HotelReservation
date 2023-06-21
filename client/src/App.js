@@ -45,7 +45,7 @@ import Error from './Components/Error/Error.jsx'
 import axios from 'axios'
 import './App.css';
 import HabitacionCreada from './Components/HabitacionCreada/HabitacionCreada';
-axios.defaults.baseURL =  "http://localhost:3001" || "https://hotelreservation-production.up.railway.app/" ;
+axios.defaults.baseURL ="https://hotelreservation-production.up.railway.app" ;
 
 function App() {
   return (
