@@ -63,16 +63,19 @@ function DetalleReserva() {
           console.error(error);
         }
       }
-    }
-
-
-    const paymentStatusResponse = await axios.post("http://localhost:3001/payment/status", { "sessionId": stripe });
+    }else{
+      const paymentStatusResponse = await axios.post("http://localhost:3001/payment/status", { "sessionId": stripe });
     console.log(paymentStatusResponse.data);
 
     if (paymentStatusResponse.status === 202) {
       console.log("El pago no fue exitoso");
       window.location.href = stripePay;
     }
+
+    }
+
+
+    
   };
 
   const renderDetailHabiReserva = (habi) => {
