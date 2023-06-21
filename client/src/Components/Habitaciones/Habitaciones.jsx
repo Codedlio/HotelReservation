@@ -74,7 +74,7 @@ class Habitaciones extends React.Component {
     }    
 
     let habitacionLinks = habitacionesFiltradas.map((habitacion, index) => (
-      <Link to={`/habitacion${habitacion.numero}`} className={`${style.link} + btn btn`} key={index}>
+      <Link to={`/habitacion/${habitacion.numero}`} className={`${style.link} + btn btn`} key={index}>
         {habitacion.nombre}<br></br>
        <label for="Name">Precio:$</label>
         {habitacion.precio}

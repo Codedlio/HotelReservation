@@ -28,7 +28,7 @@ function Paginado({ habsPerPage, habitaciones, paginado, currentPage }) {
       <div className={style.paginado}>
         {currentPage !== 1 && !filteredhabitaciones.length && (
           <div className={style.number}>
-            <a className={style.link} href={`/habitacion${currentPage - 1}`} onClick={(e) => (e.preventDefault(), navigate(`/habitacion${currentPage - 1}`))}>
+            <a className={style.link} href={`/habitacion/${currentPage - 1}`} onClick={(e) => (e.preventDefault(), navigate(`/habitacion/${currentPage - 1}`))}>
               <FontAwesomeIcon  className={style.flecha} icon={faChevronLeft} />
             </a>
           </div>
@@ -38,7 +38,7 @@ function Paginado({ habsPerPage, habitaciones, paginado, currentPage }) {
             <div key={number} className={style.number}>
               <a
                 className={`${style.link} ${currentPage === number ? style.active : ''}`}
-                href={`/habitacion${number}`} onClick={(e) => (e.preventDefault(), navigate(`/habitacion${number}`))}
+                href={`/habitacion/${number}`} onClick={(e) => (e.preventDefault(), navigate(`/habitacion/${number}`))}
               >
                 {number }
               </a>
@@ -49,7 +49,7 @@ function Paginado({ habsPerPage, habitaciones, paginado, currentPage }) {
         )}
         {currentPage !== pageNumbers.length && !filteredhabitaciones.length && (
           <div className={style.number}>
-            <a className={style.link} href={`/habitacion${currentPage + 1}`} onClick={(e) => (e.preventDefault(), navigate(`/habitacion${currentPage + 1}`))}>
+            <a className={style.link} href={`/habitacion/${currentPage + 1}`} onClick={(e) => (e.preventDefault(), navigate(`/habitacion/${currentPage + 1}`))}>
               <FontAwesomeIcon className={style.flecha} icon={faChevronRight} />
             </a>
           </div>
