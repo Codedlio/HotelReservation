@@ -108,24 +108,25 @@ const putUsuario = async (req, res) => {
   };
 
   if (req.files) {
-    for (const key of Object.keys(req.files)) {
-      const file = req.files[key];
-      const result = await usuarioImage(file.tempFilePath);
-      usuarioActualizado.image.push(result.secure_url);
-      await fs.unlink(file.tempFilePath);
+    try {
+      for (const key of Object.keys(req.files)) {
+        const file = req.files[key];
+        const result = await usuarioImage(file.tempFilePath);
+        usuarioActualizado.image.push(result.secure_url);
+        await fs.unlink(file.tempFilePath);
+      }
+    } catch (error) {
+      console.error("Error al procesar las imágenes:", error);
+      return res.status(500).json({ mensaje: "Error al procesar las imágenes" });
     }
   }
 
-  // Actualizar el documento de usuario en tu base de datos propia
   try {
-    await Usuario.findByIdAndUpdate(id, usuarioActualizado);
-
+    await Usuario.findOneAndUpdate({ _id: id }, usuarioActualizado);
     res.status(200).json({ mensaje: "Usuario actualizado exitosamente" });
   } catch (error) {
     console.error("Error al actualizar usuario:", error);
-    res
-      .status(500)
-      .json({ mensaje: "Error al actualizar usuario en la base de datos" });
+    res.status(500).json({ mensaje: "Error al actualizar usuario en la base de datos" });
   }
 };
 //TODOS se agrega este controller para activar usuarios

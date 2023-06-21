@@ -12,7 +12,7 @@ import { faCartPlus, faUser } from "@fortawesome/free-solid-svg-icons";
 import imagen from "./logo hotel.png";
 import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { deleteUsuario,getUsuarioByCorreo, deleteStateResenaAndUserArr} from "../redux/action";
+import { deleteUsuario,getUsuarioByCorreo, getUsuariobyEmail, deleteStateResenaAndUserArr} from "../redux/action";
 import { useDispatch, useSelector } from "react-redux";
 import Carrito from "../Carrito/Carrito";
 import { onAuthStateChanged } from "firebase/auth";
@@ -36,6 +36,7 @@ const NavBar = () => {
   useEffect(() => {
     if(emailToken!=undefined)
       dispatch(getUsuarioByCorreo(emailToken));
+
   }, [dispatch])
 
   useEffect(() => {
@@ -105,6 +106,11 @@ const NavBar = () => {
       Cookies.remove('emailToken');
     }
   };
+  useEffect(()=>{
+    if(usuario!==undefined) dispatch(getUsuariobyEmail(usuario))
+
+  }
+  , [usuario])
 
   return (
     <>
@@ -199,7 +205,7 @@ const NavBar = () => {
   <Link className={style.linkusuario} to="/perfilUsuario">
     <div className={style.iconContainer}>
       {usuarioArray.image && usuarioArray.image.length > 0 ? (
-        <img src={usuarioArray.image} alt="" />
+        <FontAwesomeIcon className={style.imagenusuario} icon={faUser} />
       ) : (
         <FontAwesomeIcon className={style.imagenusuario} icon={faUser} />
       )}

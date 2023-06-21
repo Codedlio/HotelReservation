@@ -47,6 +47,7 @@ import {
   FILTER_PAQUETES_ADMIN,
   GET_SERVICIOS_ADMIN,
   GET_USUARIOS_ADMIN,
+  DELETE_IMAGE_USER,
 } from "./action";
 
 const initialState = {
@@ -431,6 +432,8 @@ const reducer = (state = initialState, action) => {
       return { ...state, reservaUsuario: dataReservacion };
     case DELETE_STATE_PERFIL:
       return { ...state, reserva: [], resenaByUsuario: [], usuarioArray: [] };
+    case DELETE_IMAGE_USER:
+      return {...state, usuarioXid:action.payload,}
     default:
       return state;
   }
