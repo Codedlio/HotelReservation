@@ -26,13 +26,13 @@ function Paginado({ habsPerPage, habitaciones, paginado, currentPage }) {
   return (
     <nav>
       <div className={style.paginado}>
-        {currentPage !== 1 && !filteredhabitaciones.length && (
+        {/* {currentPage !== 1 && !filteredhabitaciones.length && (
           <div className={style.number}>
             <a className={style.link} href={`/habitacion/${currentPage - 1}`} onClick={(e) => (e.preventDefault(), navigate(`/habitacion/${currentPage - 1}`))}>
               <FontAwesomeIcon  className={style.flecha} icon={faChevronLeft} />
             </a>
           </div>
-        )}
+        )} */}
         {pageNumbers.length ? (
           pageNumbers.map((number) => (
             <div key={number} className={style.number}>
@@ -47,13 +47,13 @@ function Paginado({ habsPerPage, habitaciones, paginado, currentPage }) {
         ) : (
           ''
         )}
-        {currentPage !== pageNumbers.length && !filteredhabitaciones.length && (
+        {/* {currentPage !== pageNumbers.length && !filteredhabitaciones.length && (
           <div className={style.number}>
             <a className={style.link} href={`/habitacion/${currentPage + 1}`} onClick={(e) => (e.preventDefault(), navigate(`/habitacion/${currentPage + 1}`))}>
               <FontAwesomeIcon className={style.flecha} icon={faChevronRight} />
             </a>
           </div>
-        )}
+        )} */}
       </div>
     </nav>
   );

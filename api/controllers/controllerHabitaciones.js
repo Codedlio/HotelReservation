@@ -37,7 +37,7 @@ const getHabitacionByNo = async (req, res) => {
   let { id } = req.params;
 
   try {
-    let habitacion = await Habitacion.findOne({ numero: id, activo: true });
+    const habitacion = await Habitacion.findOne({ numero: id, activo: true });
     if (!habitacion) {
       return res.status(400).send("La habitación no existe");
     }

@@ -15,9 +15,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import Paginado from "../Paginate/Paginate";
-import { set_Currents_Page, getHabitaciones } from "../redux/action";
-
-const HabitacionCreada = ({match}) => {
+import { set_Currents_Page, getHabitaciones,habitacionById } from "../redux/action";
+import { useParams } from 'react-router-dom';
+import Loading from '../Loading/Loading'
+const HabitacionCreada = () => {
+  const { id } = useParams();
   const dispatch = useDispatch();
   const habitaciones = useSelector((state) => state.gethabitaciones);
   const habitacion = useSelector((state) => state.habitacionId);
@@ -26,35 +28,31 @@ const HabitacionCreada = ({match}) => {
   const [isVisible, setIsVisible] = useState(false);
   const habsPerPage = 1;
 
-  let imagenes = useSelector(state => state.gethabitaciones);
-  
-  useEffect(() => {
-    if (!imagenes) {
-      dispatch(getHabitaciones());
-    }
-  }, []);
+  // let imagenes = useSelector(state => state.gethabitaciones);
+  console.log(habitacion);
+  console.log(id);
+
 
   const handleSelect = (selectedIndex, e) => {
     setIndex(selectedIndex);
+    dispatch(habitacionById(id))
+    
   };
 
   useEffect(() => {
+    dispatch(getHabitaciones())
+    dispatch(habitacionById(id))
     dispatch(set_Currents_Page(currentPage));
-  }, [dispatch, currentPage]);
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+  }, [dispatch, currentPage,id]);
+  
 
-  const handleScroll = () => {
-    if (window.pageYOffset > 300) {
-      setIsVisible(true);
-    } else {
-      setIsVisible(false);
-    }
-  };
+  // const handleScroll = () => {
+  //   if (window.pageYOffset > 300) {
+  //     setIsVisible(true);
+  //   } else {
+  //     setIsVisible(false);
+  //   }
+  // };
 
   const scrollToTop = () => {
     scroll.scrollToTop({
@@ -66,7 +64,7 @@ const HabitacionCreada = ({match}) => {
     <div className={style.containertotal}>
       <NavBar></NavBar>
       <section>
-        <h1 className={style.titulo}>Suite Roma</h1>
+        <h1 className={style.titulo}>{habitacion.nombre}</h1>
         <div className={style.texto}>
           <p>
           {`Disfruta de la máxima comodidad en ${habitacion.nombre}.`} <br></br>La
@@ -99,8 +97,8 @@ const HabitacionCreada = ({match}) => {
               <FontAwesomeIcon icon={faPersonBooth} />
             </div>
             <p>
-              Este tipo de habitación se encuentra disponible para <br></br>un
-              máximo de dos personas.
+              Este tipo de habitación se encuentra disponible para <br></br>{`un
+              máximo de ${habitacion?.capacidad} personas.` }
             </p>
           </div>
 
@@ -118,8 +116,8 @@ const HabitacionCreada = ({match}) => {
       </section>
 
       <div className="container w-100">
-        {imagenes && <Carousel activeIndex={index} onSelect={handleSelect}>
-          {imagenes?.image?.map(imagen => {
+        {habitacion && <Carousel activeIndex={index} onSelect={handleSelect}>
+          {habitacion?.image?.map(imagen => {
             return (
             <Carousel.Item>
               <img

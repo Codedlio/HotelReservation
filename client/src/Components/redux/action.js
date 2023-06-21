@@ -466,11 +466,11 @@ export const getReserva = () => {
     }
   }
 };
-export const ghabitacionById = (id) => {
+export const habitacionById = (id) => {
   return async function (dispatch) {
     try {
       const {data} = await axios.get(
-        `/habitacion/${id}`
+        `/habitacion/numero/${id}`
       );
       
       return dispatch({
