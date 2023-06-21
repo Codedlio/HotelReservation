@@ -44,6 +44,7 @@ import PerfilUsuario from './Components/PerfilUsuario/PerfilUsuario.jsx'
 import Error from './Components/Error/Error.jsx'
 import axios from 'axios'
 import './App.css';
+import HabitacionCreada from './Components/HabitacionCreada/HabitacionCreada';
 axios.defaults.baseURL =  "http://localhost:3001" || "http://back-hoteleternopf-production.up.railway.app" ;
 
 function App() {
@@ -51,6 +52,7 @@ function App() {
     <div className='zoom-in fade-in'>
 
         <Routes>
+          <Route path="/habitacion/:id" element={<HabitacionCreada />} />
           <Route path="/habitacion1" element={<Habitacion1 />} />
           <Route path="/habitacion2" element={<Habitacion2 />} />
           <Route path="/habitacion3" element={<Habitacion3 />} />
