@@ -9,7 +9,8 @@ import {sugerenciaCliente} from '../redux/action.js'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPhone, faEnvelope, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { faComments } from "@fortawesome/free-solid-svg-icons";
-
+import Swal from 'sweetalert2';
+import { navigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 function CentroDeAyuda() {
@@ -43,10 +44,18 @@ const handleSubmit=async(e)=>{
   e.preventDefault();
 try {
   if(Object.values(error).length >0) {
-    return alert('Verifique si los campos fueron llenados adecuadamente');
+    return Swal.fire({
+      icon: 'warning',
+      title: 'Verifique los campos',
+      text: 'Verifique si los campos fueron llenados adecuadamente',
+    });
   } else {
     dispatch(sugerenciaCliente(userData));
-    alert("Envio exitoso");
+    Swal.fire({
+      icon: 'success',
+      title: 'Éxito',
+      text: 'Envío exitoso'
+    });
     setUserData({
       name:'',
       email:'',
@@ -58,7 +67,11 @@ try {
      
 
 } catch (error) {
-  alert("Error cargue los datos Nuevo");
+  Swal.fire({
+    icon: 'error',
+    title: 'Error',
+    text: 'Cargue los datos nuevamente'
+  });;
 }
 
 }
