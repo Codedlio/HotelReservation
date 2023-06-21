@@ -91,17 +91,14 @@ export default class Contenido extends Component {
                         id: 'seleccionHabitaciones',
                         options: [
                             { label: 'Capacidad', trigger: 'capacidad' },
-                          { label: 'Precio', trigger: 'precio' },
                           
-                          { label: 'Disponibilidad', trigger: 'disponibilidad' },
                         ],
                       },
                         {
                             id: "seleccionPaquetes",
                             options: [
-                                { label: "Paquetes", trigger: "9D"},
-                                {label: "Precios", trigger: "9E"},
-                                {label: "Dias", trigger: "9F"},
+                                { label: "Detalles paquetes", trigger: "9D"},
+                              
                             ]
                         },
                         {
@@ -109,42 +106,12 @@ export default class Contenido extends Component {
                             message: 'La capacidad de nuestras habitaciones es de 2 a 7 personas',
                             trigger: 'preguntaVuelta',
                           },
-                          {
-                            id: 'disponibilidad',
-                            message: 'Puedes consultar la disponibilidad de las mismas ingresando a la opción RESERVAR',
-                            trigger: 'preguntaVuelta',
-                          },
-                        {
-                            id: 'precio',
-                            message: 'Nuestras habitaciones tienen un precio desde $200 a $700 la noche dependiendo de la capacidad',
-                            trigger: 'preguntaVuelta',
-                          },
-                          {
-                            id: 'capacidad',
-                            message: 'La capacidad de nuestras habitaciones es de 2 a 7 personas',
-                            trigger: 'preguntaVuelta',
-                          },
-                          {
-                            id: 'disponibilidad',
-                            message: 'Puedes consultar la disponibilidad de las mismas ingresando a la opción RESERVAR',
-                            trigger: 'preguntaVuelta',
-                          },
+                         
+                        
                         {
                             id: "9D",
                             message: "Para conocer nuestros paquetes puedes ingresar en nuesta pagina de inicia a la opcion Paquetes",
-                            trigger: "preguntaVuelta",
-                        },
-                        {
-                            id: "9E",
-                            message: "Los precios de nuestros paquetes son de $370 a $580 dependiendo de la cantidad de dias",
-                            trigger: "preguntaVuelta",
-                        
-                        },
-                        {
-                            id: "9F",
-                            message: "El paquete mas chico es de 3 dias y 2 noches y el mas grande es de 6 dias y 5 noches",
-                            trigger: "preguntaVuelta",
-                            
+                            trigger: "preguntaVuelta"
                         },
                         {
                             id: "preguntaVuelta",
