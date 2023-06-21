@@ -30,6 +30,8 @@ function DetalleReserva() {
   const handleClearAllCarrito = (event) => {
     event.preventDefault();
     dispatch(ClearAllCarrito("clear"));
+    Cookies.remove('stripe');
+    Cookies.remove('stripePay');
     window.localStorage.setItem("dataReservation", []);
   };
   const handlePayment = async () => {
