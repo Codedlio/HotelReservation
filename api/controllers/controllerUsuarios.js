@@ -58,6 +58,34 @@ const postRegistro = async (req, res) => {
   }
 };
 
+const postRegistroGoogle = async (req, res) => {
+  try {
+    const { correo, nombre } = req.body;
+   
+    const usuarioExistente = await Usuario.findOne({ correo });
+    if (usuarioExistente) {
+      return res.status(200).json({ mensaje: "Login Completado con google" });
+    }else{
+       
+    const nuevoUsuario = new Usuario({
+      nombre,
+      correo,
+      telefono:"+()",
+      activo:true,
+      contraseña:"123",
+      });
+    await sendWelcomeEmail(correo, nombre);
+    await nuevoUsuario.save();
+
+    res.status(201).json({ mensaje: "Usuario google registrado exitosamente" });
+    }
+   
+  } catch (error) {
+    console.error("Error al registrar usuario:", error);
+    res.status(500).json({ mensaje: "Error al registrar usuario" });
+  }
+};
+
 const postLogin = async (req, res) => {
   try {
     const { correo, contraseña } = req.body;
@@ -232,4 +260,5 @@ module.exports = {
   putActivarUsuario,
   postNotification,
   getUsuarioByCorreo,
+  postRegistroGoogle
 };

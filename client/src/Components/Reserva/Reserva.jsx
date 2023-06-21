@@ -4,6 +4,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useSelector,useDispatch } from 'react-redux';
 import { getHabitacionesDisponibles , getPaquetesDisponibles, createReserva, getPaqueteById, setSelectedPaqueteA, setPrecioA, setSelectedServiceA, setSelectedRoomA, setDatesA, setAdultsA, setChildrenA, setFilteredHabitaciones } from '../redux/action';
 import axios from 'axios';
+import Swal from 'sweetalert2';
+import { navigate } from 'react-router-dom';
+
 
 
 function Reserva() {
@@ -34,7 +37,13 @@ function Reserva() {
     dispatch(setFilteredHabitaciones([]));
     axios.get('http://localhost:3001/servicio')
       .then((response) => {setServices(response.data)})
-      .catch((error) => {alert(error.message)});
+      .catch((error) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: error.message
+        });
+      });
   }, [])
 
  
@@ -62,14 +71,22 @@ function Reserva() {
         navigate("/detalleReserva")
       })
       .catch(error => {
-        alert(error.message)
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: error.message,
+        });
       });
     }else {
-      window.localStorage.setItem("dataReservation", JSON.stringify(data));
-      alert('Ingrese a su cuenta para continuar...')
-      navigate("/contenedor");
-    }
-  };
+      window.localStorage.setItem('dataReservation', JSON.stringify(data));
+      Swal.fire({
+        icon: 'warning',
+        title: 'Ingrese a su cuenta para continuar...',
+        showCancelButton: false,
+        showConfirmButton: false,
+      });
+      navigate('/contenedor');
+    }}
 
   const handleAdultsChange = (e) => {
     dispatch(setAdultsA(parseInt(e.target.value)));
@@ -143,21 +160,21 @@ function Reserva() {
         <form onSubmit={handleSubmit}  >
           <div className="d-flex align-items-start bg-light mb-3" style={{ height: "30px" }}>
             <label htmlFor="check-in" className={style.label}>
-              Fecha de entrada:&nbsp;&nbsp;&nbsp;
+              Fecha de entrada:
             </label>
             <input type="date" id="check-in" name="checkIn" value={loadedForm.dates.checkIn} onChange={handleDatesChange} className={style.inputFecha} required />
             <label htmlFor="check-in" className={style.label}>
-              &nbsp;&nbsp;&nbsp;
+              
             </label>
             <label htmlFor="check-in" className={style.label}>
-              Fecha de salida:&nbsp;&nbsp;&nbsp;
+              Fecha de salida:
             </label>
             <input type="date" id="check-out" name="checkOut" value={loadedForm.dates.checkOut} onChange={handleDatesChange} className={style.inputFecha} required />
             <label htmlFor="check-in" className={style.label}>
-              &nbsp;&nbsp;&nbsp;
+             
             </label>
             <label htmlFor="check-in" className={style.label}>
-              Adultos:&nbsp;&nbsp;&nbsp;
+              Adultos:
             </label>
             <input
               type="number"
@@ -170,10 +187,10 @@ function Reserva() {
             />
 
             <label htmlFor="check-in" className={style.label}>
-              &nbsp;&nbsp;&nbsp;
+             
             </label>
             <label htmlFor="check-in" className={style.label}>
-              Niños:&nbsp;&nbsp;&nbsp;
+              Niños:
             </label>
             <input
               type="number"
@@ -206,7 +223,7 @@ function Reserva() {
               )} 
               {loadedForm.selectedPaquete.length > 0 && (
                 <><label className={style.label}>
-                  Paquete/s seleccionado/s:&nbsp;
+                  Paquete/s seleccionado/s:
                   {loadedForm.selectedPaquete.map(paqueteId => {
                     const paq = paquetes.find(pa => pa._id === paqueteId);
                     if (paq) {
@@ -218,7 +235,7 @@ function Reserva() {
               )}
               {loadedForm.selectedService.length > 0 && (
                 <><label className={style.label}>
-                  Servicio/s seleccionado/s:&nbsp;
+                  Servicio/s seleccionado/s:
                   {loadedForm.selectedService.map(servicioId => {
                     const ser = services.find(se => se._id === servicioId);
                     if (ser) {
@@ -238,7 +255,7 @@ function Reserva() {
               </label>
               <div className={style.containercheckbox}>
                 {rooms.map((room) =>
-                  <label key={room._id}>
+                  <label className={style.nomobrehab} key={room._id}>
                   {room.disponible === false ? (
                     <>
                       <input
@@ -247,7 +264,7 @@ function Reserva() {
                         value={room._id}
                         onChange={handleRoomChange}
                       />
-                        <span>
+                        <span className={style.nombrehab}>
                           No disponible: {room.nombre}
                           <Link className={style.linkkk} to={`/habitacion/${room._id}`}>
                             <button className={style.hab}>Ver Habitación</button>
@@ -262,7 +279,7 @@ function Reserva() {
                         onChange={handleRoomChange}
                         checked={loadedForm.selectedRoom.includes(room._id)}
                       />
-                      <span>
+                      <span className={style.nombrehab}>
                         <br></br>
                         {room.nombre} Capacidad: {room.capacidad}<br></br> Precio: ${room.precio}
                         <Link className={style.linkkk} to={`/habitacion${room.numero}`}>
@@ -295,7 +312,7 @@ function Reserva() {
                         value={paquete._id}
                         onChange={handlePaqueteChange}
                       />
-                      <span>
+                      <span className={style.nombrehab}>
                         No disponible: {paquete.nombre}
                         <Link className={style.linkkk} to={`/detail/${paquete._id}`}>
                           <button className={style.hab}>Ver Paquete</button>
@@ -310,7 +327,7 @@ function Reserva() {
                         onChange={handlePaqueteChange}
                         checked={loadedForm.selectedPaquete.includes(paquete._id)}
                       />
-                      <span>
+                      <span className={style.nombrehab}>
                         {paquete.nombre} Capacidad: {paquete.capacidad}
                         <br></br>
                         Precio: ${paquete.costo}
@@ -342,7 +359,7 @@ function Reserva() {
                         onChange={handleServiceChange}
                         checked={loadedForm.selectedService.includes(servicio._id)}
                       />
-                      <span>
+                      <span className={style.nombreservicio}>
                         {servicio.nombre} 
                         <br></br>
                         Precio: ${servicio.precio}

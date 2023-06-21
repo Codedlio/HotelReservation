@@ -1,13 +1,14 @@
 const Pago= require('../models/Pago');
 const Habitacion= require('../models/Habitacion');
 const Paquete= require('../models/Paquete');
+const Servicio = require('../models/Servicio');
 require('dotenv').config()
 const keyStripe = process.env.STRIPE_PRIVATE_KEY
 const stripe = require('stripe')(keyStripe);
 
 
 const createSession = async (req, res) => {
-  const { arrIdHabitaciones, customerId,arrIdPaquetes } = req.body;
+  const { arrIdHabitaciones, customerId,arrIdPaquetes,arrServicios } = req.body;
   try {
     const lineItems = [];
     if (arrIdHabitaciones){
@@ -42,7 +43,22 @@ const createSession = async (req, res) => {
       });
     }
     }
-    
+    if (arrServicios){
+      for (const IdServicio of arrServicios) {
+      const servicio = await Servicio.findById(IdServicio);
+      lineItems.push({
+        price_data: {
+          currency: 'usd',
+          product_data: {
+            name: servicio.nombre,
+            description: servicio.descripcion
+          },
+          unit_amount: servicio.precio * 100 // Asegúrate de convertir el precio a centavos si Stripe trabaja con la menor unidad monetaria
+        },
+        quantity: 1
+      });
+    }
+    }
     
 
     const session = await stripe.checkout.sessions.create({

@@ -67,14 +67,12 @@ const getHabitacionesDisponibles = async (req, res) => {
 };
 
 const postHabitacion = async (req,res) => {
-    let {nombre, numero, tipo, descripcion, capacidad, precio} = req.body;
-    if (!nombre || !numero || !tipo || !descripcion || !capacidad || !precio) {return res.status(400).send("Error. No se enviaron los datos necesarios para crear la habitacion")};
+  let {nombre, numero, tipo, descripcion, precio, capacidad} = req.body;
+  if (!nombre || !numero || !tipo || !descripcion || !capacidad || !precio) {return res.status(400).send("Error. No se enviaron los datos necesarios para crear la habitacion")};
+  
 
   try {
-    numero = Number(numero);
-    capacidad = Number(capacidad);
-    precio = Number(precio);
-    const data = new Habitacion({
+    let data = new Habitacion({
       nombre,
       numero,
       tipo,
@@ -82,12 +80,12 @@ const postHabitacion = async (req,res) => {
       capacidad,
       precio
     });
-    if (req.files) {
-      for (const key of Object.keys(req.files)) {
-        const file = req.files[key];
-        const result = await habitacionImage(file.tempFilePath);
+
+    if (req.files.image) {
+      for (const imagen of req.files.image) {
+        const result = await habitacionImage(imagen.tempFilePath);
         data.image.push(result.secure_url);
-        await fs.unlink(file.tempFilePath);
+        await fs.unlink(imagen.tempFilePath);
       }
     }
 
@@ -117,15 +115,15 @@ const putHabitacion = async (req, res) => {
       return res.status(400).send("La habitación no existe");
     }
 
-    if (req.files) {
+    if (req.files.image) {
       while (habitacion.image.length > 0) {
         deleteImage(habitacion.image.pop());
       }
-      for (const key of Object.keys(req.files)) {
-        const file = req.files[key];
-        const result = await habitacionImage(file.tempFilePath);
+      
+      for (const imagen of req.files.image) {
+        const result = await habitacionImage(imagen.tempFilePath);
         habitacion.image.push(result.secure_url);
-        await fs.unlink(file.tempFilePath);
+        await fs.unlink(imagen.tempFilePath);
       }
     }
     habitacion.nombre = nombre;

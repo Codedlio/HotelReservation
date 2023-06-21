@@ -57,6 +57,7 @@ class Habitaciones extends React.Component {
     if (this.props.filters.searchQuery) {
       habitacionesFiltradas = habitacionesFiltradas.filter((habitacion) =>
         habitacion.nombre.toLowerCase().includes(this.props.filters.searchQuery.toLowerCase())
+      
       );
     }
 
@@ -74,7 +75,9 @@ class Habitaciones extends React.Component {
 
     let habitacionLinks = habitacionesFiltradas.map((habitacion, index) => (
       <Link to={`/habitacion${habitacion.numero}`} className={`${style.link} + btn btn`} key={index}>
-        {habitacion.nombre}
+        {habitacion.nombre}<br></br>
+       <label for="Name">Precio:$</label>
+        {habitacion.precio}
       </Link>
     ));
 

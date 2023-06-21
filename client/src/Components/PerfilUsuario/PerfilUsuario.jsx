@@ -6,14 +6,23 @@ import { Link } from 'react-router-dom';
 import {validate,validate2}from './validate';
 import {getResenaUsuario,getReservationUsuario,getUsuariobyEmail,getReservaByUsuario} from '../redux/action';
 import axios from 'axios';
+import Cookies from "js-cookie";
 
 const PerfilUsuario=()=>{
-    const dispatch = useDispatch();
-    const { resenaByUsuario, usuarioArray, reserva, usuario} = useSelector((state) => state);
-    const [data,setData ] = useState(usuarioArray);
-    const dataReservacion= Array.isArray(reserva)?reserva:[reserva]
-    const resenaArray = Array.isArray(resenaByUsuario) ? resenaByUsuario : [resenaByUsuario];
-    
+   const token = Cookies.get("token");
+   const emailToken = Cookies.get("emailToken");
+     const dispatch = useDispatch();
+     useEffect(() => {
+       if(emailToken!=undefined)
+         dispatch(getUsuarioByCorreo(emailToken));
+     }, [dispatch])
+     const { resenaByUsuario, usuarioArray, reserva, usuario} = useSelector((state) => state);
+     const [data,setData ] = useState(usuarioArray);
+     const dataReservacion= Array.isArray(reserva)?reserva:[reserva]
+     const resenaArray = Array.isArray(resenaByUsuario) ? resenaByUsuario : [resenaByUsuario];
+     let usuarioReg = useSelector((state) => state.usuarioXid);
+     
+   
     const [resena, setResena] = useState({
       nombre: "",
       correo: "",
@@ -103,8 +112,9 @@ const PerfilUsuario=()=>{
        
     }, [resenaByUsuario.length, usuario]);
     useEffect(() => {
+      dispatch(getUsuarioByCorreo(usuario))
       setData(usuarioArray)
-    },[ usuarioArray.image.length])
+    },[ usuarioArray.image.length, ])
     const handleSubmit = (event) => {
       event.preventDefault();
       
@@ -149,8 +159,10 @@ const PerfilUsuario=()=>{
   
   };
   
-   console.log(usuarioArray.image.length)
+  //  console.log(usuarioArray.image.length)
+
   // console.log(error2)
+  // console.log(usuarioArray)
   // console.log(resena)
   // console.log(datos)
 
@@ -169,11 +181,11 @@ const PerfilUsuario=()=>{
         
         {!editing && (
           <div>
-            {data.image && !data.image.length ? (
+            {data.image && data.image.length <=0? (
             <img key={imageKey} src={"https://res.cloudinary.com/djm04ajb0/image/upload/v1687125700/usuarioImage/czdnwyiy4ngf9frawohq.png"} />
             ) : (
               <div>
-              <img key={imageKey} src={data.image} alt={"imagen"} />
+              <img  src={data.image} alt={"imagen"} />
               <button value={data._id} onClick={() => deleteImageUsuario(data._id)}>eliminar img</button>
             </div>
             )}
@@ -197,7 +209,7 @@ const PerfilUsuario=()=>{
             {error2.nombre&& <p>{error2.nombre}</p>}
             <div>
               <label htmlFor="correo">Correo:</label>
-              <input type="correo" name="correo" value={data.correo}  />
+              <input type="correo" name="correo" defaultValue={data.correo}  />
             </div>
             <div>
               <label htmlFor="phone">Telefono:</label>
@@ -213,15 +225,19 @@ const PerfilUsuario=()=>{
         )}
         </div>
       </div>
-      <div className={style.resena}>
-        <h2>Reserva del usuario:</h2>
+      
+      
+      {usuarioReg&&usuarioReg.admin === false && 
+      <div className={usuarioReg.admin === false?style.resena:style.ocultarDiv} >
+        <div >
+        <h2 className={style.titulototal}>Reserva del usuario:</h2></div>
           {!Array.isArray(dataReservacion)||dataReservacion.length <= 0? (
           <p>No hay reservacion.</p>
           ) : (
             dataReservacion.map((reserva) => (
               <div key={reserva._id}>
         {reserva.Arrayhabitaciones && (
-        <div>
+        <div className={style.titulos}>
           <h4>Habitaciones:</h4>
           {reserva.Arrayhabitaciones.map((habitacion) => (
             <div key={habitacion._id}>
@@ -233,8 +249,8 @@ const PerfilUsuario=()=>{
         </div>
       )}
         {reserva.Arraypaquete && reserva.Arraypaquete.length > 0 ? (
-        <div>
-          <h4>Paquetes:</h4>
+        <div className={style.titulos}>
+          <h4 className={style.titulos}>Paquetes:</h4>
           {reserva.Arraypaquete.map((paquete) => (
             <div key={paquete._id}>
               <p>Nombre: {paquete.nombre}</p>
@@ -246,16 +262,16 @@ const PerfilUsuario=()=>{
         <p>Paquetes: No hay paquetes.</p>
       )}
       {reserva.ArrayServicio && reserva.ArrayServicio.length > 0 ? (
-        <div>
-          <h4>Servicios:</h4>
-          {reserva.ArrayServicio.map((servicio) => (
-            <div key={servicio._id}>
+        <div className={style.titulos}>
+          <h4 className={style.titulos} >Servicios:</h4>
+          {reserva.ArrayServicio.map((servicio,index) => (
+            <div key={servicio.index}>
               <p>Nombre: {servicio.nombre}</p>
               <p>Descripción: {servicio.descripcion}</p>
               <p>Precio: {servicio.precio}</p>
             </div>
           ))}
-        </div>
+        </div >
       ) : (
         <p>Servicios: No hay servicios.</p>
       )}
@@ -302,6 +318,7 @@ const PerfilUsuario=()=>{
     {error && error.puntuacion ? <p>{error.puntuacion}</p> : null}
             
     <textarea
+    className={style.escribe}
       id="descripcion"
       value={resena && resena.descripcion} // Agrega una verificación de nulo para resena
       onChange={handleChange}
@@ -315,6 +332,7 @@ const PerfilUsuario=()=>{
 </div>
 
       </div>
+      }
     </div>
     </div>
   );

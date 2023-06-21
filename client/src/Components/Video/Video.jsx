@@ -22,7 +22,7 @@ const VideoPlayer = () => {
           <h2  className={ style.overlay + "text-white mt-5  text-left"} >La experiencia de<br></br> Eterno te revitaliza!</h2>
           <h3 className={style.overlay + "text-white  text-left"}  >¡Descubre la belleza y la tranquilidad de la montaña en<br></br> nuestro hotel único!
               Imagina despertar cada mañana con<br></br> vistas panorámicas de majestuosas montañas, respirar el<br></br> aire fresco y puro mientras te relajas en nuestro entorno<br></br> natural y disfrutar de actividades<br></br>  emocionantes al aire libre.</h3>
-            <Link to="/historia">
+            <Link to='/historia'>
               <button className= {style.overlay + "btn btn-lg btn-primary btn-sm text-left" }>Conózcanos</button>
             </Link>
           </div>

@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 
 const AdminEditaHabitaciones = ({ habitacion, handleCancelEdit }) => {
   const dispatch = useDispatch();
-  const [habitacionEditada, setHabitacionEditada] = useState(habitacion);
+  const [habitacionEditada, setHabitacionEditada] = useState({...habitacion, imageEdit: []});
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
@@ -44,10 +44,9 @@ const AdminEditaHabitaciones = ({ habitacion, handleCancelEdit }) => {
       formData.append("precio", habitacionEditada.precio);
       formData.append("capacidad", habitacionEditada.capacidad);
 
-      for (let i = 0; i < habitacionEditada.image.length; i++) {
-        formData.append("imageEdit", habitacionEditada.imageEdit[i]);
+      for (let i = 0; i < habitacionEditada.imageEdit.length; i++) {
+        formData.append("image", habitacionEditada.imageEdit[i]);
       }
-
       await axios.put(`http://localhost:3001/habitacion/${habitacionEditada._id}`, formData, {
         headers: {"Content-Type": "multipart/form-data"}
       });

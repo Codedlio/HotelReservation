@@ -12,7 +12,7 @@ import { faCartPlus, faUser } from "@fortawesome/free-solid-svg-icons";
 import imagen from "./logo hotel.png";
 import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { deleteUsuario,getUsuarioByCorreo, getUsuariobyEmail, deleteStateResenaAndUserArr} from "../redux/action";
+import { deleteUsuario,getUsuarioByCorreo, deleteStateResenaAndUserArr,getUsuariobyEmail} from "../redux/action";
 import { useDispatch, useSelector } from "react-redux";
 import Carrito from "../Carrito/Carrito";
 import { onAuthStateChanged } from "firebase/auth";
@@ -36,7 +36,7 @@ const NavBar = () => {
   useEffect(() => {
     if(emailToken!=undefined)
       dispatch(getUsuarioByCorreo(emailToken));
-
+      dispatch(getUsuariobyEmail(emailToken))
   }, [dispatch])
 
   useEffect(() => {
@@ -95,16 +95,17 @@ const NavBar = () => {
   };
 
   const handleLogOut = async() => {
-    
+    if (usuario){
+      await auth.signOut();
+      Cookies.remove('emailToken');
+      localStorage.clear();
+    }
     Cookies.remove('token');
     Cookies.remove('emailToken');
     dispatch(deleteUsuario());
     dispatch(deleteStateResenaAndUserArr());
+    localStorage.clear();
     
-    if (usuario){
-      await auth.signOut();
-      Cookies.remove('emailToken');
-    }
   };
   useEffect(()=>{
     if(usuario!==undefined) dispatch(getUsuariobyEmail(usuario))
@@ -161,13 +162,9 @@ const NavBar = () => {
         {usuarioReg.admin !== true &&                 
           <Link className={style.link} to='/paquetes'>Paquetes</Link>
         } 
-        {usuario === undefined &&
-          <Link className={style.link} to='/contenedor'>Iniciar sesión</Link>
-        }
+       
         
-        {usuario !== undefined &&
-          <Link className={style.link} onClick={handleLogOut}>Cerrar sesión</Link>
-        }
+        
          {usuarioReg.admin !== true &&                 
           <Link className={style.link} to='/contacto'>Contacto</Link>
         } 
@@ -209,7 +206,7 @@ const NavBar = () => {
       ) : (
         <FontAwesomeIcon className={style.imagenusuario} icon={faUser} />
       )}
-      <h4 className={style.perfilusuario}>{usuarioArray.nombre}</h4>
+      <h4 className={style.perfilusuario}>{usuarioArray?.nombre}</h4>
     </div>
   </Link>
 )}
@@ -222,6 +219,12 @@ const NavBar = () => {
     mostrarMensaje && <div className={style.contenedormensaje}><p className={style.mensajeee}>Aun no posee Reservas</p></div>
   )
 ) : null}
+{usuario === undefined &&
+  <Link className={style.linksesion} to='/contenedor'>Iniciar sesión</Link>
+}
+{usuario !== undefined &&
+          <Link className={style.linksesion} onClick={handleLogOut}>Cerrar sesión</Link>
+        }
 
 
 
