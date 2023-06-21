@@ -200,7 +200,7 @@ const PerfilUsuario=()=>{
         
         {!editing && (
           <div>
-            {data.image && data.image.length <=0? (
+            {data.image && data.image?.length <=0? (
             <img key={imageKey} src={"https://res.cloudinary.com/djm04ajb0/image/upload/v1687125700/usuarioImage/czdnwyiy4ngf9frawohq.png"} />
             ) : (
               <div>

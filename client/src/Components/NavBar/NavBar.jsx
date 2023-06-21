@@ -196,7 +196,7 @@ const NavBar = () => {
 {usuario && (
   <Link className={style.linkusuario} to="/perfilUsuario">
     <div className={style.iconContainer}>
-      {usuarioArray.image && usuarioArray.image.length > 0 ? (
+      {usuarioArray?.image && usuarioArray?.image?.length > 0 ? (
         <FontAwesomeIcon className={style.imagenusuario} icon={faUser} />
       ) : (
         <FontAwesomeIcon className={style.imagenusuario} icon={faUser} />
