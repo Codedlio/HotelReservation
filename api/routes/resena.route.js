@@ -1,4 +1,5 @@
-const {getResena,getEmailResena, postResena, deleteResena, getUsuarioEmail,getReservacionUsuario} = require('../controllers/controllerResenas');
+const {getResena,getEmailResena, postResena, deleteResena, getUsuarioEmail,
+    getReservacionUsuario, putImageUser} = require('../controllers/controllerResenas');
 const express =require('express')
 const resenaRoute=express.Router()
 const infoUsuarioRoute=express.Router()
@@ -12,6 +13,7 @@ resenaRoute
 
 infoUsuarioRoute 
 .get('/:email', getUsuarioEmail)
+.delete('/:id', putImageUser)
 
 infoUsuarioReserva
 .get('/:email', getReservacionUsuario)

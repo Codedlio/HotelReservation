@@ -49,6 +49,7 @@ export const GET_USUARIOS = "GET_USUARIOS";
 export const GET_SERVICIOS_ADMIN = "GET_SERVICIOS_ADMIN";
 export const GET_USUARIOS_ADMIN = "GET_USUARIOS_ADMIN";
 export const GET_RESERVA = "GET_RESERVA";
+export const DELETE_IMAGE_USER = "DELETE_IMAGE_USER";
 
 export const setOrderByName = (orderType) => {
   return {
@@ -94,7 +95,7 @@ export const getServicios = () => {
 export const getServiciosAdmin = () => {
   return async function(dispatch) {
     try {
-      const { data } = await axios.get("http://localhost:3001/servicio");
+      const { data } = await axios.get("/servicio");
       return dispatch({
         type: GET_SERVICIOS_ADMIN,
         payload: data,
@@ -120,7 +121,7 @@ export const getUsuarios = () => {
 };
 export const getUsuariosAdmin = () => {
   return async function(dispatch) {
-    let { data } = await axios.get(`http://localhost:3001/usuarios/`);
+    let { data } = await axios.get(`/usuarios/`);
     return dispatch({
       type: GET_USUARIOS_ADMIN,
       payload: data,
@@ -436,7 +437,7 @@ export const deletePaquete = (id) => {
 };
 
 export const ActualizaPaquete = (paqueteMod) => {
-  let url = `http://localhost:3001/paquete/${paqueteMod._id}`;
+  let url = `/paquete/${paqueteMod._id}`;
   const response = axios.put(url, paqueteMod);
   return response;
 };
@@ -463,4 +464,14 @@ export const getReserva = () => {
       console.log(error.message);
     }
   }
+};
+export const deleteImageUser = (id) => {
+  return async (dispatch) => {
+    try {
+      await axios.delete(`/infoUsuario/${id}`,);
+      return dispatch({ type: DELETE_IMAGE_USER });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 };

@@ -33,31 +33,6 @@ const AdminEditaHabitaciones = ({ habitacion, handleCancelEdit }) => {
     ));
   };
 
-  const handleSaveEdit = async (e, habitacionEditada) => {
-    e.preventDefault();
-    try {
-      const formData = new FormData();
-      formData.append("nombre", habitacionEditada.nombre);
-      formData.append("numero", habitacionEditada.numero);
-      formData.append("tipo", habitacionEditada.tipo);
-      formData.append("descripcion", habitacionEditada.descripcion);
-      formData.append("precio", habitacionEditada.precio);
-      formData.append("capacidad", habitacionEditada.capacidad);
-
-      for (let i = 0; i < habitacionEditada.imageEdit.length; i++) {
-        formData.append("image", habitacionEditada.imageEdit[i]);
-      }
-      await axios.put(`http://localhost:3001/habitacion/${habitacionEditada._id}`, formData, {
-        headers: {"Content-Type": "multipart/form-data"}
-      });
-      dispatch(getHabitacionesAdmin());
-      handleCancelEdit();
-    } 
-    catch (error) {
-      console.error("Error al actualizar la habitación", error);
-    }
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validateForm();
@@ -71,17 +46,32 @@ const AdminEditaHabitaciones = ({ habitacion, handleCancelEdit }) => {
       return;
     }
     try {
-      await axios.put(
-        `http://localhost:3001/habitacion/${habitacionEditada._id}`,
-        habitacionEditada
-      );
+      const formData = new FormData();
+      formData.append("nombre", habitacionEditada.nombre);
+      formData.append("numero", habitacionEditada.numero);
+      formData.append("tipo", habitacionEditada.tipo);
+      formData.append("descripcion", habitacionEditada.descripcion);
+      formData.append("precio", habitacionEditada.precio);
+      formData.append("capacidad", habitacionEditada.capacidad);
+
+      if (habitacionEditada.imageEdit) {
+        for (let i = 0; i < habitacionEditada.imageEdit.length; i++) {
+          formData.append("image", habitacionEditada.imageEdit[i]);
+        }
+      }
+
+      await axios.put(`http://localhost:3001/habitacion/${habitacionEditada._id}`, formData, {
+        headers: {"Content-Type": "multipart/form-data"}
+      });
       dispatch(getHabitacionesAdmin());
       Swal.fire({
         icon: "success",
         title: "Habitación actualizada exitosamente",
         text: "Los cambios han sido guardados exitosamente.",
       });
-    } catch (error) {
+      handleCancelEdit();
+    } 
+    catch (error) {
       console.error("Error al actualizar la habitación", error);
     }
   };
@@ -221,7 +211,6 @@ const AdminEditaHabitaciones = ({ habitacion, handleCancelEdit }) => {
             <button
               className={style.boton}
               type="submit"
-              onClick={(e) => handleSaveEdit(e,habitacionEditada)}
             >
               Guardar cambios
             </button>
