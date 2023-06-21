@@ -173,14 +173,8 @@ const NavBar = () => {
           <Link  to='/reserva' className={style.button}>RESERVAR AHORA</Link>
         
         
-         {usuarioReg.admin !== true &&                 
-          <Link className={style.link} to='/contacto'>Contacto</Link>
-        } 
+       
 
-          <Nav.Item  href="#" onClick={handleInstagramClick} className={style.icon}><FontAwesomeIcon icon={faInstagram} /></Nav.Item>
-          <Nav.Item  href="#" onClick={handleFacebookClick} className={style.icon}><FontAwesomeIcon icon={faFacebook} /></Nav.Item>
-          <Nav.Item  href="#" onClick={handleTwitterClick} className={style.icon}><FontAwesomeIcon icon={faTwitter} /></Nav.Item>
-          <Link  to='/reserva' className={style.button}>RESERVAR AHORA</Link>
         
           <button className={style.carrito} onClick={() => {
             if (mostrarCarrito) {
@@ -233,32 +227,8 @@ const NavBar = () => {
 
 
 
-          {/* Agrega el enlace al perfil de usuario */}
-          {usuario && (
-            <Link className={style.linkusuario} to="/perfilUsuario">
-              <div className={style.iconContainer}>
-                {usuarioArray?.image && usuarioArray?.image?.length > 0 ? (
-                  <img className={style.imagenup}src={usuarioArray?.image} alt="" />
-                ) : (
-                  <FontAwesomeIcon className={style.imagenusuario} icon={faUser} />
-                )}
-                <h4 className={style.perfilusuario}>{usuarioArray?.nombre}</h4>
-              </div>
-            </Link>
-          )}
-          {mostrarCarrito ? (
-            reserva ? (
-              <Carrito reserva={reserva} />
-            ) : (
-              mostrarMensaje && <div className={style.contenedormensaje}><p className={style.mensajeee}>Aun no posee Reservas</p></div>
-            )
-          ) : null}
-          {usuario === undefined &&
-            <Link className={style.linksesion} to='/contenedor'>Iniciar sesión</Link>
-          }
-          {usuario !== undefined &&
-            <Link className={style.linksesion} onClick={handleLogOut}>Cerrar sesión</Link>
-          }
+       
+          
         </Nav>
         </Navbar.Collapse>
       </Container>
