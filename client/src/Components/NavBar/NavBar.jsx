@@ -107,11 +107,6 @@ const NavBar = () => {
     localStorage.clear();
     
   };
-  useEffect(()=>{
-    if(usuario!==undefined) dispatch(getUsuariobyEmail(usuario))
-
-  }
-  , [usuario])
 
   return (
     <>
