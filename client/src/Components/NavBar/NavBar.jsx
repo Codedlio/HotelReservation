@@ -140,8 +140,8 @@ const NavBar = () => {
             } 
             <div className={style.dropdowncontent}>
               <Link className={style.link} to='/indicadorReservas'>Reservas</Link>
-              <Link className={style.link} to='/indicadorReclamos'>Reclamos</Link>
-              <Link className={style.link} to='/indicadorUsuarios'>Usuarios</Link>
+              {/* <Link className={style.link} to='/indicadorReclamos'>Reclamos</Link>
+              <Link className={style.link} to='/indicadorUsuarios'>Usuarios</Link> */}
             </div>
           </div> 
           <div className={style.dropdown} >     
