@@ -6,7 +6,7 @@ import { getHabitacionesDisponibles , getPaquetesDisponibles, createReserva, get
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { navigate } from 'react-router-dom';
-
+import Cookies from 'js-cookie';
 
 
 function Reserva() {
@@ -50,7 +50,8 @@ function Reserva() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+    Cookies.remove('stripePay');
+    Cookies.remove('stripe');
     const data = {
       usuarioCorreo: usuario,      
       arrHabitacion: loadedForm.selectedRoom,
