@@ -50,7 +50,7 @@ function DetalleReserva() {
         const paquetes = reserva[0].Arraypaquete;
         const servicios = reserva[0].ArrayServicio;
         try {
-          const response = await axios.post("http://localhost:3001/payment/checkout", {
+          const response = await axios.post("/payment/checkout", {
             "custumerId": data,
             "arrIdHabitaciones": habitaciones,
             "arrIdPaquetes": paquetes,
@@ -66,7 +66,7 @@ function DetalleReserva() {
         }
       }
     }else{
-      const paymentStatusResponse = await axios.post("http://localhost:3001/payment/status", { "sessionId": stripe });
+      const paymentStatusResponse = await axios.post("/payment/status", { "sessionId": stripe });
     console.log(paymentStatusResponse.data);
 
     if (paymentStatusResponse.status === 202) {
