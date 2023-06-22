@@ -66,8 +66,8 @@ function Reserva() {
   
     if(usuario){
       createReserva(data).then((response) => {    
-        console.log("response.data");                        
-        console.log(response.data);
+        //console.log("response.data");                        
+        //console.log(response.data);
         window.localStorage.setItem("dataReservation", JSON.stringify(data));
         navigate("/detalleReserva")
       })

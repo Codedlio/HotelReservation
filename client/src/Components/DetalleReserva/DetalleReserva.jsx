@@ -115,7 +115,7 @@ function DetalleReserva() {
            
             <p className={style.label}></p>
             
-            <p className={style.label}>Precio: ${h.precio}</p>
+            <p className={style.label}>Precio: ${h.costo}</p>
           </div>
         );
       });
