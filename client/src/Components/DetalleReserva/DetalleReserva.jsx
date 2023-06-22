@@ -82,6 +82,7 @@ function DetalleReserva() {
 
   const renderDetailHabiReserva = (habi) => {
     if (Array.isArray(habi)) {
+      console.log(habi);
       return habi?.map((h) => {
         return (
           <div  key={h._id}>
@@ -136,13 +137,13 @@ function DetalleReserva() {
 
   if (Array.isArray(reserva)) {
     if (reserva.length > 0) {
-      console.log("mayor a cero");
-      console.log(reserva.length);
+      //console.log("mayor a cero");
+      //console.log(reserva);
       return (
         <div className={style.container}>
           <NavBar></NavBar>
           <div className={style.Body}>
-            {reserva.map((re) => (
+            {reserva?.map((re) => (
               <div className={`wholeCart ${style.encierro}`} key={re._id}>
                 
                 <div className={style.label}>
@@ -150,9 +151,9 @@ function DetalleReserva() {
                   <div>
                 
                 </div>
-                  {re.Arrayhabitaciones && <div>{renderDetailHabiReserva(re.Arrayhabitaciones)}</div>}
-                  {re.Arrayhabitaciones && re.Arraypaquete && <div>{renderDetailPaqReserva(re.Arraypaquete)}</div>}
-                  {re.Arrayhabitaciones && <div>{renderDetailServReserva(re.ArrayServicio)}</div>}
+                  {re.habitaciones && <div>{renderDetailHabiReserva(re.habitaciones)}</div>}
+                  {re.habitaciones && re.paquetes && <div>{renderDetailPaqReserva(re.paquetes)}</div>}
+                  {re.habitaciones && <div>{renderDetailServReserva(re.servicios)}</div>}
                   <div>
                     <p className={style.label3}>Total Compra:</p>
                     <p className={style.label3}>${re.costo}</p>
