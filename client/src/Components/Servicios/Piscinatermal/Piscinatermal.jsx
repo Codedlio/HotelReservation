@@ -14,6 +14,7 @@ import image8 from './image8.jpg'
 import style from './Piscinatermal.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTree, faTemperatureLow, faSwimmer } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 
 const Piscinatermal = () => {
   const [index, setIndex] = useState(0);
@@ -25,6 +26,11 @@ const Piscinatermal = () => {
   return (
     <div className={style.containertotal}>
       <NavBar></NavBar>
+      <Link  to="/">
+          <button className={style.closeButton} >
+            X
+          </button>
+        </Link>
       <section >
       <h1 className={style.titulo}>Piscina Semitechada Hidroterapéutica</h1>
         <div className={style.texto}>

@@ -12,6 +12,7 @@ import image6 from './imagenes/image6.jpg'
 import style from './Trekking.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHippo, faRunning, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 
 
 
@@ -25,6 +26,11 @@ const Trekking = () => {
   return (
     <div className={style.containertotal}>
       <NavBar></NavBar>
+      <Link  to="/">
+          <button className={style.closeButton} >
+            X
+          </button>
+        </Link>
       <section >
       <h1 className={style.titulo}>Trekking</h1>
         <div className={style.texto}>

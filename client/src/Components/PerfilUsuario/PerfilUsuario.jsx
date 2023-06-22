@@ -294,10 +294,7 @@ const PerfilUsuario=()=>{
       ) : (
         <p>Servicios: No hay servicios.</p>
       )}
-          {reserva.estado? <h4>Estado: {reserva.estado}</h4>:<h4>Estado: No activo</h4>}
-        {reserva.costo && (
-          <h4>Costo:USD {reserva.costo}</h4>
-        )}
+          {reserva.estado&&reserva.estado!=='I'? <h4>Estado: Pagado.</h4>:<h4>Estado: Pendiente de Pago.</h4>}
         {reserva && reserva.fechaInicio && (
           <h4>Fecha de inicio: {reserva.fechaInicio.substring(0, 10)}</h4>
         )}

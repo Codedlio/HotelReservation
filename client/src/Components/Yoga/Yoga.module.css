@@ -11,6 +11,26 @@ body{
   min-height: 100vh;
   z-index: 0;
 }
+Link{
+  text-decoration: none;
+}
+.closeButton {
+  position: relative; 
+  text-decoration: none;   
+  left:1100px;
+  top: 100px;
+  background-color: #252222;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  cursor: pointer;
+}
 .scroll {
 position: fixed;
 bottom: 90px;
@@ -261,7 +281,7 @@ color: #333333;
 
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1200px) {
   .titulo {
     display: flex;
     align-items: center;
@@ -281,6 +301,23 @@ color: #333333;
     margin: 0;
     padding: 0;
     margin-top: 10px;
+  }
+  .closeButton {
+    position: relative; 
+    text-decoration: none;   
+    left:900px;
+    top: 100px;
+    background-color: #252222;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    cursor: pointer;
   }
   .container{
     display: flex;
@@ -414,6 +451,23 @@ color: #333333;
     padding: 0;
     margin-top: 40px;
     font-size: 25px;
+  }
+  .closeButton {
+    position: relative; 
+    text-decoration: none;   
+    left:700px;
+    top: 100px;
+    background-color: #252222;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    cursor: pointer;
   }
   .title{
     font-size: 23px;
@@ -559,6 +613,23 @@ color: #333333;
     padding: 0;
     margin-top: 40px;
     font-size: 25px;
+  }
+  .closeButton {
+    position: relative; 
+    text-decoration: none;   
+    left:400px;
+    top: 50px;
+    background-color: #252222;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    cursor: pointer;
   }
   .title{
     font-size: 23px;
@@ -709,6 +780,23 @@ color: #333333;
     padding: 0;
     margin-top: 40px;
     font-size: 20px;
+  }
+  .closeButton {
+    position: relative; 
+    text-decoration: none;   
+    left:300px;
+    top: 50px;
+    background-color: #252222;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    cursor: pointer;
   }
   .title{
     font-size: 20px;
