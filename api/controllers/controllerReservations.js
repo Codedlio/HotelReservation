@@ -107,7 +107,7 @@ const getReservacionByUsuario = async (req,res) => {
   const {usuario} = req.params;
   try {  
     let ReservaUsu = [];
-    let reservacion = await Reservacion.find({usuario:usuario,activo:true});       
+    let reservacion = await Reservacion.find({usuario:usuario,activo:true,estado:"I"});       
     if (reservacion.length==0) {    
       return res.status(200).send(ReservaUsu)
     };

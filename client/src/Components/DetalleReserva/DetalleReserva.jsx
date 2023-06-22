@@ -20,7 +20,7 @@ function DetalleReserva() {
       dispatch(getReservaByUsuario(emailToken));
   }, [dispatch]);
   //console.log(reserva);
-  //console.log(reserva[0].servicios);
+  //console.log(reserva[0]);
   const handleSelect = (selectedIndex, e) => {
     setIndex(selectedIndex);
   };
@@ -45,8 +45,9 @@ function DetalleReserva() {
 
       if (localData && reserva) {
         const data = JSON.parse(localData);
-        const datares = JSON.parse(localReservation);
+        //const datares = JSON.parse(localReservation);
         //console.log(reserva.habitaciones);
+        
         const habitaciones = reserva[0].habitaciones;
         const paquetes = reserva[0].paquetes;
         const servicios = reserva[0].servicios;
