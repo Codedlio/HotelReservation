@@ -60,7 +60,7 @@ const AdminEditaHabitaciones = ({ habitacion, handleCancelEdit }) => {
         }
       }
 
-      await axios.put(`http://localhost:3001/habitacion/${habitacionEditada._id}`, formData, {
+      await axios.put(`/habitacion/${habitacionEditada._id}`, formData, {
         headers: {"Content-Type": "multipart/form-data"}
       });
       dispatch(getHabitacionesAdmin());

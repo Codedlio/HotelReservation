@@ -66,8 +66,8 @@ const createSession = async (req, res) => {
       line_items: lineItems,
       customer: customerId,
       mode: 'payment',
-      success_url: "http://localhost:3000/exitoreserva",
-      cancel_url: "http://localhost:3000/detallereserva",
+      success_url: "https://hotel-reservation-14qq.vercel.app/exitoreserva",
+      cancel_url: "https://hotel-reservation-14qq.vercel.app/detallereserva",
     });
 
     //console.log(session);

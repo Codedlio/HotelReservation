@@ -59,7 +59,7 @@ const AdminUsuario = () => {
   // };
   const handleActivate = async (id) => {
     try {
-      await axios.put(`http://localhost:3001/usuarios/activar/${id}`);
+      await axios.put(`/usuarios/activar/${id}`);
       dispatch(getUsuariosAdmin());
       Swal.fire({
         icon: "success",
@@ -72,7 +72,7 @@ const AdminUsuario = () => {
   };
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:3001/usuarios/usuarioDelete/${id}`, {
+      await axios.delete(`/usuarios/usuarioDelete/${id}`, {
         activo: false,
       });
       dispatch(getUsuariosAdmin());

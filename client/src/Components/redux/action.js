@@ -421,19 +421,19 @@ export const getPaquetesAdmin = () => {
 };
 
 export const actiDesactiPaquete = (paquete) => {
-  let url = `http://localhost:3001/paquete/admin`;
+  let url = `/paquete/admin`;
   const response = axios.post(url, paquete);
   return response;
 };
 
 export const crearPaquete = (paquete) => {
-  let url = `http://localhost:3001/paquete/admin/paquete`;
+  let url = `/admin/paquete`;
   const response = axios.post(url, paquete);
   return response;
 };
 
 export const deletePaquete = (id) => {
-  let url = `http://localhost:3001/paquete/${id}`;
+  let url = `/paquete/${id}`;
   const response = axios.delete(url);
   return response;
 };

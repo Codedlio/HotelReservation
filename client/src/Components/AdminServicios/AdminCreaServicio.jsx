@@ -15,7 +15,7 @@ const AdminCreaServicio = ({ handleCancelEdit }) => {
 
   const handleSave = async () => {
     try {
-      await axios.post("http://localhost:3001/servicio", servicioEditado);
+      await axios.post("/servicio", servicioEditado);
       dispatch(getServiciosAdmin());
       Swal.fire({
         icon: "success",

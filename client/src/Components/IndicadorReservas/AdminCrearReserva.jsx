@@ -34,7 +34,7 @@ const AdminCreaHabitaciones = ({ handleCancelCreate }) => {
         formData.append("image", habitacionCreada.image[i]);
       }
 
-      await axios.post("http://localhost:3001/habitacion", formData, {
+      await axios.post("/habitacion", formData, {
         headers: { "Content-Type": "multipart/form-data" }
       })
       dispatch(getHabitacionesAdmin());

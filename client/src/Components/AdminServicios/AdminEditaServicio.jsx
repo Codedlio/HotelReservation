@@ -44,7 +44,7 @@ const AdminEditaServicio = ({ servicio, handleCancelEdit, onSaveEdit }) => {
     }
     try {
       await axios.put(
-        `http://localhost:3001/servicio/${servicioEditado._id}`,
+        `/servicio/${servicioEditado._id}`,
         servicioEditado
       );
 

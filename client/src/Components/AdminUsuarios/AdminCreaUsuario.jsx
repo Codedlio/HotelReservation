@@ -17,7 +17,7 @@ const AdminCreaUsuario = ({ handleCancelEdit }) => {
   const handleSave = async () => {
     try {
       await axios.post(
-        "http://localhost:3001/usuarios/registro",
+        "/usuarios/registro",
         usuarioEditado
       );
       dispatch(getUsuariosAdmin());

@@ -26,14 +26,14 @@ function ExitoReserva() {
 
     }
     const handleBack = async() => {
-    const paymentStatusResponse = await axios.post("http://localhost:3001/payment/status", { "sessionId":stripe });
+    const paymentStatusResponse = await axios.post("/payment/status", { "sessionId":stripe });
         console.log(paymentStatusResponse.data);
       if (paymentStatusResponse.status === 200) {
         
         if (reserva && reserva.length > 0) {
           const idReserva = reserva[0]._id;
           console.log(idReserva);
-          const reservaPaid = await axios.put(`http://localhost:3001/reservation/${idReserva}`,{"estado":"pagado"});
+          const reservaPaid = await axios.put(`/reservation/${idReserva}`,{"estado":"pagado"});
           console.log(reservaPaid.data);
           Cookies.remove('stripePay');
           Cookies.remove('stripe');

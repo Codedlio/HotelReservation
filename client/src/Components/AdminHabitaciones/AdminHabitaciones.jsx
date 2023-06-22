@@ -62,7 +62,7 @@ function AdminHabitaciones() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:3001/habitacion/${id}`, {
+      await axios.delete(`/habitacion/${id}`, {
         activo: false,
       });
       dispatch(getHabitacionesAdmin());
@@ -77,7 +77,7 @@ function AdminHabitaciones() {
   };
   const handleActivate = async (id) => {
     try {
-      await axios.put(`http://localhost:3001/habitacion/activar/${id}`);
+      await axios.put(`/habitacion/activar/${id}`);
       dispatch(getHabitacionesAdmin());
       Swal.fire({
         icon: "success",

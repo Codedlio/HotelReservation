@@ -35,7 +35,7 @@ function Reserva() {
 
   useEffect( () => {
     dispatch(setFilteredHabitaciones([]));
-    axios.get('http://localhost:3001/servicio')
+    axios.get('/servicio')
       .then((response) => {setServices(response.data)})
       .catch((error) => {
         Swal.fire({

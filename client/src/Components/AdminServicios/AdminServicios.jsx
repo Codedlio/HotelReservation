@@ -46,7 +46,7 @@ function AdminServicios() {
   const handleSaveEdit = async (servicioEditado) => {
     try {
       await axios.put(
-        `http://localhost:3001/servicio/${servicioEditado._id}`,
+        `/servicio/${servicioEditado._id}`,
         servicioEditado
       );
       dispatch(getServiciosAdmin());
@@ -64,7 +64,7 @@ function AdminServicios() {
   };
   const handleActivate = async (id) => {
     try {
-      await axios.put(`http://localhost:3001/servicio/activar/${id}`);
+      await axios.put(`/servicio/activar/${id}`);
       dispatch(getServiciosAdmin());
       Swal.fire({
         icon: "success",
@@ -77,7 +77,7 @@ function AdminServicios() {
   };
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:3001/servicio/${id}`, {
+      await axios.delete(`/servicio/${id}`, {
         activo: false,
       });
       dispatch(getServiciosAdmin());
