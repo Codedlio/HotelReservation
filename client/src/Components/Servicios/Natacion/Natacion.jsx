@@ -8,6 +8,7 @@ import image2 from './image2.jpg'
 import image3 from './image3.jpg'
 import image4 from './image4.jpg'
 import image5 from './image5.jpg'
+import { Link } from 'react-router-dom';
 
 import style from './Natacion.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -23,6 +24,11 @@ const Natacion = () => {
   return (
     <div className={style.containertotal}>
       <NavBar></NavBar>
+      <Link  to="/">
+          <button className={style.closeButton} >
+            X
+          </button>
+        </Link>
       <section >
       <h1 className={style.titulo}>Natacion</h1>
         <div className={style.texto}>
