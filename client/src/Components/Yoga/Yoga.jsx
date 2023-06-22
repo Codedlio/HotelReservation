@@ -10,6 +10,7 @@ import image3 from './image3.jpg'
 import style from './Yoga.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChild, faPeace, faOm } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 
 
 
@@ -22,7 +23,13 @@ const Yoga = () => {
 
   return (
     <div className={style.containertotal}>
+      
       <NavBar></NavBar>
+      <Link  to="/">
+          <button className={style.closeButton} >
+            X
+          </button>
+        </Link>
       <section >
       <h1 className={style.titulo}>Yoga</h1>
         <div className={style.texto}>
