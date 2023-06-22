@@ -244,28 +244,27 @@ const reducer = (state = initialState, action) => {
         ...state,
         paqueteXid: action.payload,
       };
-    case ORDER_PAQUETES:
-      console.log("ORDER_PAQUETES-action.payload");
-      console.log(action.payload);
-      const Paquetes = [...state.allpaquetes];
-      const SortPaquetes =
-        action.payload === "asc"
-          ? Paquetes.sort((a, b) => a.nombre.localeCompare(b.nombre))
-          : action.payload === "desc"
-          ? Paquetes.sort((a, b) => b.nombre.localeCompare(a.nombre))
-          : action.payload === "costoAsc"
-          ? Paquetes.sort((a, b) => a.costo - b.costo)
-          : action.payload === "costoDesc"
-          ? Paquetes.sort((c1, c2) => {
-              if (c1.costo < c2.costo) return 1;
-              if (c1.costo > c2.costo) return -1;
-              return 0;
-            })
-          : Paquetes;
-      return {
-        ...state,
-        orderPaquetes: SortPaquetes,
-      };
+      case ORDER_PAQUETES:
+        console.log(action.payload);     
+        const Paquetes = [...state.allpaquetes];  
+        const SortPaquetes =
+          action.payload === "asc"
+            ? Paquetes.sort((a, b) => parseInt(a.nombre.substring(0,a.nombre.indexOf(" ")))  - parseInt(b.nombre.substring(0,b.nombre.indexOf(" "))) ) //b.nombre.localeCompare(a.nombre))
+            : action.payload === "desc"
+            ? Paquetes.sort((a, b) =>parseInt(b.nombre.substring(0,b.nombre.indexOf(" ")))  - parseInt(a.nombre.substring(0,a.nombre.indexOf(" "))) )// a.nombre.localeCompare(b.nombre))            
+            : action.payload === "costoAsc"
+            ? Paquetes.sort((a, b) => a.costo - b.costo)
+            : action.payload === "costoDesc"
+            ? Paquetes.sort((c1, c2) => {
+                if (c1.costo < c2.costo) return 1;
+                if (c1.costo > c2.costo) return -1;
+                return 0;
+              })
+            : Paquetes;
+        return {
+          ...state,
+          orderPaquetes: SortPaquetes,
+        };
       case FILTER_NAME_PAQUETE:
       console.log("FILTER_NAME-action.payload");
       console.log(action.payload);
